@@ -1,0 +1,55 @@
+Dificultades
+
+    Estilo de código:
+        Evitar prefijos y sufijos redundantes.
+            ContratoVistaGeneralViewModel -> Contratos/ViewModel/VistaGeneral
+
+    Extensión:
+        Es complejo crear una nueva sección de operaciones.
+        Notificaciones.
+        Modularización.
+        Composición compleja.
+
+    Modularización:
+        Separar:
+            Cada utilería.
+            Todos `ValueConverter`
+
+    Servicios:
+        Broadcasting: 
+            Facilitaría la implementación de múltiples funciones:
+                Notificaciones.
+
+        Configuración:
+            Facil integración.
+            Acceso universal.
+            JSON
+        
+        Navegación:
+            Compleja y con llamadas a interfaces con funciones no bien definidas.
+            No tiene soporte asíncrono.
+            Bajo rendimiento.
+
+        Notificaciones:
+            Son díficiles de extender.
+
+            Separación de tipos de notificaciones:
+                Recuadros: Permanente y no obstrusiva.
+                Pantalla: Temporal y obstrusiva.
+
+        Repositorios:
+
+    Optimización:
+        Quitar el patrón `Observable` de las entidades.
+        
+        
+    Visualización:
+        Evitar cambios constantes de paginas.
+        `HamburgerMenus` 
+
+Nuevas características
+    
+    Gráficas.
+    Auto-completar.
+    Logros.
+    Ayuda.
