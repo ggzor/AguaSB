@@ -22,6 +22,13 @@ namespace AguaSB
     {
         public MainWindow()
         {
+            var num = Console.ReadLine();
+
+            if(int.TryParse(num, out var i))
+            {
+                Console.WriteLine($"Por 10: {i * 10}");
+            }
+
             InitializeComponent();
         }
     }
