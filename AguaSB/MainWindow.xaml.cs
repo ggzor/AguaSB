@@ -18,17 +18,10 @@ namespace AguaSB
     /// <summary>
     /// Lógica de interacción para MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         public MainWindow()
-        {
-            var num = Console.ReadLine();
-
-            if(int.TryParse(num, out var i))
-            {
-                Console.WriteLine($"Por 10: {i * 10}");
-            }
-
+        {            
             InitializeComponent();
         }
     }
