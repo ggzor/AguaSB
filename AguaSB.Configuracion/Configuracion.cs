@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 
 using Newtonsoft.Json;
 
@@ -33,26 +32,37 @@ namespace AguaSB.Configuracion
         /// <param name="subdirectorio"></param>
         /// <returns></returns>
         public static T Cargar<T>(string subdirectorio = SubdirectorioDeConfiguracion, string extension = ".json") =>
-            Cargar<T>(new FileInfo(Combinar(subdirectorio, typeof(T), extension)));
+            Cargar<T>(new FileInfo(Combinar(subdirectorio, typeof(T).Name, extension)));
 
+        public static T Cargar<T>(string nombre, string subdirectorio = SubdirectorioDeConfiguracion, string extension = ExtensionDeArchivos) =>
+            Cargar<T>(new FileInfo(Combinar(subdirectorio, nombre, extension)));
 
-        public static string Combinar(string subdirectorio, Type tipo, string extension)
+        public static string Combinar(string subdirectorio, string nombre, string extension)
         {
             string Simplificar(string s) => s.Trim('/', '\\');
 
-            return Simplificar(Simplificar(subdirectorio) + "/" + tipo.Name + extension);
+            return Simplificar(Simplificar(subdirectorio) + "/" + nombre + extension);
         }
 
 
-        public static void Guardar(object objeto, FileInfo direccion)
+        public static void Guardar(object objeto, FileInfo direccion, bool indentar = true)
         {
-            var texto = JsonConvert.SerializeObject(objeto);
+            if (!direccion.Directory.Exists)
+                direccion.Directory.Create();
+
+            var formato = indentar ? Formatting.Indented : Formatting.None;
+            var texto = JsonConvert.SerializeObject(objeto, formato);
 
             using (var stream = new StreamWriter(direccion.Open(FileMode.Create)))
                 stream.Write(texto);
         }
 
-        public static void Guardar(object objeto, string subdirectorio = SubdirectorioDeConfiguracion, string extension = ExtensionDeArchivos) =>
-            Guardar(objeto, new FileInfo(Combinar(subdirectorio, objeto.GetType(), extension)));
+        public static void Guardar(object objeto, bool indentar = true, string subdirectorio = SubdirectorioDeConfiguracion,
+            string extension = ExtensionDeArchivos) =>
+            Guardar(objeto, new FileInfo(Combinar(subdirectorio, objeto.GetType().Name, extension)), indentar);
+
+        public static void Guardar(object objeto, string nombre, bool indentar = true, string subdirectorio = SubdirectorioDeConfiguracion,
+            string extension = ExtensionDeArchivos) =>
+            Guardar(objeto, new FileInfo(Combinar(subdirectorio, nombre, extension)), indentar);
     }
 }

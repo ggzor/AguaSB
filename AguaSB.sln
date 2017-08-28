@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Configuracion", "Agu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Configuracion.Tests", "AguaSB.Configuracion.Tests\AguaSB.Configuracion.Tests.csproj", "{6CF603F4-0244-4C34-BAB7-350487185B40}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Configuracion.Tests.Integracion", "AguaSB.Configuracion.Tests.Integracion\AguaSB.Configuracion.Tests.Integracion.csproj", "{89189851-21AE-4F17-8127-80CABE1170C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{6CF603F4-0244-4C34-BAB7-350487185B40}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6CF603F4-0244-4C34-BAB7-350487185B40}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6CF603F4-0244-4C34-BAB7-350487185B40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89189851-21AE-4F17-8127-80CABE1170C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89189851-21AE-4F17-8127-80CABE1170C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89189851-21AE-4F17-8127-80CABE1170C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89189851-21AE-4F17-8127-80CABE1170C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
