@@ -23,7 +23,7 @@ namespace AguaSB.Configuracion.Tests.Integracion
             ImprimirConfiguracion(configuracion);
             Console.WriteLine("Guardando configuracion...");
 
-            Configuracion.Guardar(configuracion, indentar: true, subdirectorio: "Configuracion/General/tmp/test/");
+            Configuracion.Guardar(configuracion, subdirectorio: "Configuracion/General/tmp/test/", indentar: true);
 
             Console.WriteLine("Volviendo a leer...");
             var leida = Configuracion.Cargar<ConfiguracionGeneral>(subdirectorio: "Configuracion/General/tmp/test/");
