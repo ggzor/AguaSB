@@ -4,7 +4,10 @@ namespace AguaSB.Configuracion
 {
     public static class UtileriasDirectorios
     {
-
+        /// <summary>
+        /// Crea la dirección al archivo "<paramref name="subdirectorio"/>/<paramref name="nombre"/>.<paramref name="extension"/>"
+        /// limpiando los caracteres laterales en los argumentos y en el resultado.
+        /// </summary>
         public static string Combinar(string subdirectorio, string nombre, string extension)
         {
             if (nombre == null)
