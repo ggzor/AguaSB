@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AguaSB.Configuracion
+namespace AguaSB.Utilerias.IO
 {
     public static class UtileriasDirectorios
     {

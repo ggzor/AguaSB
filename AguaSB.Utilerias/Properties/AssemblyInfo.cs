@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // La información general de un ensamblado se controla mediante el siguiente 
 // conjunto de atributos. Cambie estos valores de atributo para modificar la información
 // asociada con un ensamblado.
-[assembly: AssemblyTitle("AguaSB.Extensiones.Tests.LibreriaBase")]
+[assembly: AssemblyTitle("AguaSB.Utilerias")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Hewlett-Packard")]
-[assembly: AssemblyProduct("AguaSB.Extensiones.Tests.LibreriaBase")]
+[assembly: AssemblyProduct("AguaSB.Utilerias")]
 [assembly: AssemblyCopyright("Copyright © Hewlett-Packard 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // El siguiente GUID sirve como id. de typelib si este proyecto se expone a COM.
-[assembly: Guid("4a3f4561-cd7e-41c1-b19a-0f0510b780cb")]
+[assembly: Guid("61188b63-728a-4c7b-b19d-11abd1f64f4f")]
 
 // La información de versión de un ensamblado consta de los cuatro valores siguientes:
 //

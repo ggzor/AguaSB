@@ -4,12 +4,12 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace AguaSB.Extensiones
+namespace AguaSB.Utilerias.IO
 {
     /// <summary>
     /// Carga archivos *.dll especificados que contengan la clase especificada.
     /// </summary>
-    public static class CargadorExtensiones
+    public static class CargadorModulos
     {
 
         public static IEnumerable<T> Cargar<T>(FileInfo archivo) where T : class

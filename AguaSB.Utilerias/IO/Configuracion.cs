@@ -3,9 +3,9 @@ using System.IO;
 
 using Newtonsoft.Json;
 
-using static AguaSB.Configuracion.UtileriasDirectorios;
+using static AguaSB.Utilerias.IO.UtileriasDirectorios;
 
-namespace AguaSB.Configuracion
+namespace AguaSB.Utilerias.IO
 {
     /// <summary>
     /// Utilerías para cargar configuraciones con facilidad. Es básicamente un adaptador para JSON.
