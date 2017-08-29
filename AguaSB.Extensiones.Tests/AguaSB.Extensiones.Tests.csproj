@@ -48,5 +48,15 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AguaSB.Extensiones.Tests.LibreriaBase\AguaSB.Extensiones.Tests.LibreriaBase.csproj">
+      <Project>{4a3f4561-cd7e-41c1-b19a-0f0510b780cb}</Project>
+      <Name>AguaSB.Extensiones.Tests.LibreriaBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AguaSB.Extensiones\AguaSB.Extensiones.csproj">
+      <Project>{da3233eb-8f3d-43d1-91d2-da2585b4434e}</Project>
+      <Name>AguaSB.Extensiones</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

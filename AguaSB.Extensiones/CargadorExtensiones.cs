@@ -9,18 +9,23 @@ namespace AguaSB.Extensiones
     /// <summary>
     /// Carga archivos *.dll especificados que contengan la clase especificada.
     /// </summary>
-    public class CargadorDeExtensiones
+    public static class CargadorExtensiones
     {
 
-        public IEnumerable<T> Cargar<T>(FileInfo archivo) where T : class
+        public static IEnumerable<T> Cargar<T>(FileInfo archivo) where T : class
         {
             if (archivo == null)
                 throw new ArgumentNullException(nameof(archivo));
 
+            var tipoAEncontrar = typeof(T);
+
+            if (tipoAEncontrar.IsSealed)
+                return Enumerable.Empty<T>();                          
+
             var ensamblado = Assembly.LoadFile(archivo.FullName);
 
             return from tipo in ensamblado.GetTypes()
-                   where tipo.IsSubclassOf(typeof(T))
+                   where tipoAEncontrar.IsAssignableFrom(tipo)
                    select Activator.CreateInstance(tipo) as T;
         }
     }
