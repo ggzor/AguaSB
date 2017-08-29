@@ -43,9 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CargadorExtensiones.cs" />
-    <Compile Include="DescriptorExtension.cs" />
-    <Compile Include="DescriptorExtensionAtributte.cs" />
+    <Compile Include="CargadorDeExtensiones.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
