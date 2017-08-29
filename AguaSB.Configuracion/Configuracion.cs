@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 using Newtonsoft.Json;
 
@@ -16,6 +17,9 @@ namespace AguaSB.Configuracion
 
         public static T Cargar<T>(FileInfo direccion)
         {
+            if (direccion == null)
+                throw new ArgumentNullException(nameof(direccion));
+
             string ExtraerTexto()
             {
                 using (var stream = direccion.OpenText())
@@ -37,16 +41,16 @@ namespace AguaSB.Configuracion
         public static T Cargar<T>(string nombre, string subdirectorio = SubdirectorioDeConfiguracion, string extension = ExtensionDeArchivos) =>
             Cargar<T>(new FileInfo(Combinar(subdirectorio, nombre, extension)));
 
-        public static string Combinar(string subdirectorio, string nombre, string extension)
-        {
-            string Simplificar(string s) => s.Trim('/', '\\');
-
-            return Simplificar(Simplificar(subdirectorio) + "/" + nombre + extension);
-        }
-
 
         public static void Guardar(object objeto, FileInfo direccion, bool indentar = true)
         {
+            if (objeto == null)
+                throw new ArgumentNullException(nameof(objeto));
+
+            if (direccion == null)
+                throw new ArgumentNullException(nameof(direccion));
+
+
             if (!direccion.Directory.Exists)
                 direccion.Directory.Create();
 
@@ -64,5 +68,17 @@ namespace AguaSB.Configuracion
         public static void Guardar(object objeto, string nombre, bool indentar = true, string subdirectorio = SubdirectorioDeConfiguracion,
             string extension = ExtensionDeArchivos) =>
             Guardar(objeto, new FileInfo(Combinar(subdirectorio, nombre, extension)), indentar);
+
+
+        public static string Combinar(string subdirectorio, string nombre, string extension)
+        {
+            if (nombre == null)
+                throw new ArgumentNullException(nameof(nombre));
+
+
+            string Simplificar(string s) => s.Trim('/', '\\');
+
+            return Simplificar(Simplificar(subdirectorio ?? string.Empty) + "/" + nombre + (extension ?? string.Empty));
+        }
     }
 }
