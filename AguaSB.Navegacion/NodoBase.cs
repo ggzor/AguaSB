@@ -15,16 +15,16 @@ namespace AguaSB.Navegacion
         /// <summary>
         /// Función llamada exactamente una vez en la primera entrada. Precede al primer <see cref="INodo.Entrar"/>
         /// </summary>
-        public Func<Task> Inicializacion { get; set; }
+        public virtual Func<Task> Inicializacion { get; set; }
 
         /// <summary>
         /// Funcion llamada exactamente una vez cuando el navegador está finalizando. 
         /// Función que habilita <see cref="INodo.Finalizar"/> usando composición.
         /// </summary>
-        public Func<Task> Finalizacion { get; set; }
+        public virtual Func<Task> Finalizacion { get; set; }
 
 
-        private bool primeraVez = false;
+        private bool primeraVez = true;
 
         public virtual async Task Entrar(ColaNavegacion informacion)
         {
