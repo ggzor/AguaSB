@@ -33,7 +33,8 @@ namespace AguaSB.Navegacion.Nodos
 
             if (Subnodos.ContainsKey(nuevoNodoClave))
             {
-                SeleccionSubnodo?.Invoke(nuevoNodoClave);
+                if (SeleccionSubnodo != null)
+                    await SeleccionSubnodo(nuevoNodoClave);
 
                 NodoActual = nuevoNodoClave;
 

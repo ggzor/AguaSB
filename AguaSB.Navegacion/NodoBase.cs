@@ -30,11 +30,18 @@ namespace AguaSB.Navegacion
         {
             if (primeraVez)
             {
-                await Inicializacion?.Invoke();
+                if (Inicializacion != null)
+                    await Inicializacion();
+
                 primeraVez = false;
             }
         }
 
-        public virtual async Task Finalizar() => await Finalizacion?.Invoke();
+        public virtual async Task Finalizar()
+        {
+            if (Finalizacion != null)
+                await Finalizacion();
+        }
+
     }
 }

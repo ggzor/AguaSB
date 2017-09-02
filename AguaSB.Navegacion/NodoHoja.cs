@@ -17,7 +17,8 @@ namespace AguaSB.Navegacion
         {
             await base.Entrar(informacion);
 
-            await Entrada?.Invoke(informacion);
+            if (Entrada != null)
+                await Entrada(informacion);
         }
 
     }
