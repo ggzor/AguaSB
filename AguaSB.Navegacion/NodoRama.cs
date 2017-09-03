@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace AguaSB.Navegacion.Nodos
+namespace AguaSB.Navegacion
 {
     /// <summary>
     /// Clase que representa un nodo que puede tener múltiples hijos. 
@@ -18,6 +18,10 @@ namespace AguaSB.Navegacion.Nodos
         /// </summary>
         public Func<string, Task> SeleccionSubnodo { get; set; }
 
+        /// <summary>
+        /// Llamado cuando se ingresa a este nodo y el argumento no es un subnodo.
+        /// </summary>
+        public Func<Task> EntradaSinArgumentos { get; set; }
 
         public IReadOnlyDictionary<string, INodo> Subnodos { get; private set; }
 
@@ -31,7 +35,7 @@ namespace AguaSB.Navegacion.Nodos
 
             var nuevoNodoClave = informacion.Siguiente<string>();
 
-            if (Subnodos.ContainsKey(nuevoNodoClave))
+            if (nuevoNodoClave != null && Subnodos.ContainsKey(nuevoNodoClave))
             {
                 if (SeleccionSubnodo != null)
                     await SeleccionSubnodo(nuevoNodoClave);
@@ -42,6 +46,11 @@ namespace AguaSB.Navegacion.Nodos
                 nuevoNodo.Navegador = Navegador;
 
                 await nuevoNodo.Entrar(informacion);
+            }
+            else
+            {
+                if (EntradaSinArgumentos != null)
+                    await EntradaSinArgumentos.Invoke();
             }
         }
 

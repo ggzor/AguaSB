@@ -9,6 +9,8 @@ namespace AguaSB.Navegacion.Tests
 
         public bool Llamado { get; private set; }
 
+        public DateTime Timestamp { get; private set; }
+
         public int NumeroDeVeces { get; private set; }
 
         public VerificadorFuncionLlamada()
@@ -17,6 +19,7 @@ namespace AguaSB.Navegacion.Tests
             {
                 NumeroDeVeces++;
                 Llamado = true;
+                Timestamp = DateTime.Now;
                 return Task.CompletedTask;
             };
         }
