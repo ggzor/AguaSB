@@ -57,6 +57,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ColaNavegacionTests.cs" />
+    <Compile Include="DireccionTests.cs" />
+    <Compile Include="NavegadorTests.cs" />
     <Compile Include="NodoRamaTests.cs" />
     <Compile Include="NodosTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
