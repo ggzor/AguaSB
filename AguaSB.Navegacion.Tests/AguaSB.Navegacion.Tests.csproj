@@ -56,6 +56,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ColaNavegacionTests.cs" />
     <Compile Include="NodoRamaTests.cs" />
     <Compile Include="NodosTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
