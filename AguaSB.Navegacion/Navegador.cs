@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace AguaSB.Navegacion
 {
-    public class Navegador : INavegador
+    public abstract class Navegador
     {
-        
-        public INodo NodoPrincipal { get; }
+        public Task<bool> NavegarA(string direccion) => NavegarA(Direccion.Descomponer(direccion));
 
-        public async Task<bool> NavegarA(string direccion)
-        {
-            return true;
-        }
+        public Task<bool> NavegarA(params string[] elementos) => NavegarA(new ColaNavegacion(elementos));
+
+        public abstract Task<bool> NavegarA(ColaNavegacion direccion);
     }
 }

@@ -104,7 +104,7 @@ namespace AguaSB.Navegacion.Tests
         [Test]
         public async Task DeberiaEstablecer_NavegadorEnSubnodo_CuandoSeLlamaEntrar_Con_SubnodoExistente()
         {
-            var navegador = Substitute.For<INavegador>();
+            var navegador = Substitute.For<Navegador>();
             var nodo = new NodoRama(Subnodos)
             {
                 Navegador = navegador

@@ -10,7 +10,7 @@ namespace AguaSB.Navegacion
     public abstract class NodoBase : INodo
     {
 
-        public INavegador Navegador { get; set; }
+        public Navegador Navegador { get; set; }
 
         /// <summary>
         /// Función llamada exactamente una vez en la primera entrada. Precede al primer <see cref="INodo.Entrar"/>

@@ -10,7 +10,7 @@ namespace AguaSB.Navegacion
         /// <summary>
         /// El navegador que ha accedido a esta página.
         /// </summary>
-        INavegador Navegador { get; set; }
+        Navegador Navegador { get; set; }
 
         /// <summary>
         /// Entrar con la <see cref="ColaNavegacion"/> especificada.
