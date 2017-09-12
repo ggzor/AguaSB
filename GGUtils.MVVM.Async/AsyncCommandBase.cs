@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 
 namespace GGUtils.MVVM.Async
 {
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     public abstract class AsyncCommandBase : IAsyncCommand
     {
         public event EventHandler CanExecuteChanged;

@@ -147,6 +147,14 @@ namespace AguaSB.Navegacion.Tests
         }
 
         [Test]
+        public async Task DeberiaNoLanzarExcepcion_CuandoNoTieneNodosYSeLlamaFinalizar()
+        {
+            var nodo = new NodoRama(new Dictionary<string, INodo>());
+
+            await nodo.Finalizar();
+        }
+
+        [Test]
         public async Task DeberiaLlamar_FinalizarEnNodoRama_DespuesDeNodoHijo()
         {
             var verificadorSubnodo = new VerificadorFuncionLlamada();

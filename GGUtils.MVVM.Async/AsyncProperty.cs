@@ -12,7 +12,7 @@ namespace GGUtils.MVVM.Async
     public class AsyncProperty<T> : INotifyPropertyChanged
     {
 
-        public Task<T> Task { get; set; }
+        public Task<T> Task { get; }
 
         public Task TaskCompletion { get; }
 
@@ -22,20 +22,19 @@ namespace GGUtils.MVVM.Async
         {
             Task = task ?? throw new ArgumentNullException(nameof(task));
 
-            if (!task.IsCompleted)
-                TaskCompletion = WatchTaskAsync(task);
+            TaskCompletion = WatchTaskAsync(task);
         }
 
-        private static readonly IEnumerable<string> OnCompletionChangingProperties =
+        public static readonly IEnumerable<string> OnCompletionChangingProperties =
             new[] { nameof(IsCompleted), nameof(IsNotCompleted) };
 
-        private static readonly IEnumerable<string> OnCanceledChangingProperties =
+        public static readonly IEnumerable<string> OnCanceledChangingProperties =
             new[] { nameof(IsCanceled) };
 
-        private static readonly IEnumerable<string> OnFaultedChangingProperties =
+        public static readonly IEnumerable<string> OnFaultedChangingProperties =
             new[] { nameof(IsFaulted), nameof(Exception), nameof(InnerException), nameof(ExceptionMessage) };
 
-        private static readonly IEnumerable<string> OnSuccessChangingProperties =
+        public static readonly IEnumerable<string> OnSuccessChangingProperties =
             new[] { nameof(Result), nameof(IsSuccessfullyCompleted) };
 
         private async Task WatchTaskAsync(Task<T> task)

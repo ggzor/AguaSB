@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Navegacion.Tests", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GGUtils.MVVM.Async", "GGUtils.MVVM.Async\GGUtils.MVVM.Async.csproj", "{0B78E13E-F73B-4A97-8AF4-133A111E4416}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GGUtils.MVVM.Async.Tests", "GGUtils.MVVM.Async.Tests\GGUtils.MVVM.Async.Tests.csproj", "{324D196B-579B-4A2C-8D44-A8DC6B9A1995}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{0B78E13E-F73B-4A97-8AF4-133A111E4416}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B78E13E-F73B-4A97-8AF4-133A111E4416}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B78E13E-F73B-4A97-8AF4-133A111E4416}.Release|Any CPU.Build.0 = Release|Any CPU
+		{324D196B-579B-4A2C-8D44-A8DC6B9A1995}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{324D196B-579B-4A2C-8D44-A8DC6B9A1995}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{324D196B-579B-4A2C-8D44-A8DC6B9A1995}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{324D196B-579B-4A2C-8D44-A8DC6B9A1995}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
