@@ -9,7 +9,6 @@ namespace GGUtils.MVVM.Async
     /// </summary>
     public class AsyncDelegateCommand<T> : AsyncCommandBase, INotifyPropertyChanged
     {
-
         private Func<Task<T>> Command { get; }
 
         public Func<bool> CanExecuteFunction { get; }
@@ -26,12 +25,7 @@ namespace GGUtils.MVVM.Async
 
         public AsyncDelegateCommand(Func<Task<T>> command) : this(command, null) { }
 
-        public AsyncDelegateCommand()
-        {
-
-        }
-
-        // Execute if not executing
+        // Only execute if not executing
         public override bool CanExecute(object parameter) =>
             CanExecuteFunction?.Invoke() ?? Execution == null || Execution.IsCompleted;
 
