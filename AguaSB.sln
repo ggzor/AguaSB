@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB", "AguaSB\AguaSB.csproj", "{FC378380-823E-4FDE-8525-73C2D4992B3A}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Navegacion", "AguaSB.Navegacion\AguaSB.Navegacion.csproj", "{B51B553C-10D5-47EA-93BB-DECED914D5F6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Navegacion.Tests", "AguaSB.Navegacion.Tests\AguaSB.Navegacion.Tests.csproj", "{5608EDD1-CDEE-4331-A4D2-3BC6F88656E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GGUtils.MVVM.Async", "GGUtils.MVVM.Async\GGUtils.MVVM.Async.csproj", "{0B78E13E-F73B-4A97-8AF4-133A111E4416}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,8 +35,15 @@ Global
 		{5608EDD1-CDEE-4331-A4D2-3BC6F88656E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5608EDD1-CDEE-4331-A4D2-3BC6F88656E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5608EDD1-CDEE-4331-A4D2-3BC6F88656E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B78E13E-F73B-4A97-8AF4-133A111E4416}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B78E13E-F73B-4A97-8AF4-133A111E4416}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B78E13E-F73B-4A97-8AF4-133A111E4416}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B78E13E-F73B-4A97-8AF4-133A111E4416}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AB8E59BD-E37F-4EC8-92A8-48AFB0D42481}
 	EndGlobalSection
 EndGlobal
