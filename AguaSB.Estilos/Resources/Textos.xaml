@@ -1,0 +1,44 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Sys="clr-namespace:System;assembly=mscorlib">
+    <Sys:Double x:Key="TamanoTextoBase">16.0</Sys:Double>
+
+    <Sys:Double x:Key="TamanoH1">36.0</Sys:Double>
+    <Sys:Double x:Key="TamanoH2">24.0</Sys:Double>
+    <Sys:Double x:Key="TamanoH3">21.0</Sys:Double>
+    <Sys:Double x:Key="TamanoH4">18.0</Sys:Double>
+    <Sys:Double x:Key="TamanoH5">16.0</Sys:Double>
+    <Sys:Double x:Key="TamanoH6">14.0</Sys:Double>
+
+    <!--Texto estandar-->
+    <Style x:Key="TextoBase" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="Segoe UI Semilight"/>
+    </Style>
+
+    <Style x:Key="h1" TargetType="TextBlock" BasedOn="{StaticResource TextoBase}">
+        <Setter Property="FontSize" Value="{StaticResource TamanoH1}"/>
+    </Style>
+
+    <Style x:Key="h2" TargetType="TextBlock" BasedOn="{StaticResource TextoBase}">
+        <Setter Property="FontSize" Value="{StaticResource TamanoH2}"/>
+    </Style>
+
+    <Style x:Key="h3" TargetType="TextBlock" BasedOn="{StaticResource TextoBase}">
+        <Setter Property="FontSize" Value="{StaticResource TamanoH3}"/>
+    </Style>
+
+    <Style x:Key="h4" TargetType="TextBlock" BasedOn="{StaticResource TextoBase}">
+        <Setter Property="FontSize" Value="{StaticResource TamanoH4}"/>
+    </Style>
+
+    <Style x:Key="h5" TargetType="TextBlock" BasedOn="{StaticResource TextoBase}">
+        <Setter Property="FontSize" Value="{StaticResource TamanoH5}"/>
+    </Style>
+
+    <Style x:Key="h6" TargetType="TextBlock" BasedOn="{StaticResource TextoBase}">
+        <Setter Property="FontSize" Value="{StaticResource TamanoH6}"/>
+    </Style>
+
+    <!--Texto por default-->
+    <Style TargetType="TextBlock" BasedOn="{StaticResource h5}"/>
+</ResourceDictionary>
