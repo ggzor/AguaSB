@@ -16,6 +16,17 @@ namespace GGUtils.MVVM.Async.Tests
         private static readonly Func<CancellationToken, Task<string>> CancelableCommand = _ => Command();
         private static readonly Func<CancellationToken, Task<string>> UnfinishableCancelableCommand = _ => UnfinishableCommand();
 
+        private static readonly (double, string) ProgressReportingCommandValue = (100.0, "Completed");
+
+        private static readonly Func<IProgress<(double, string)>, Task<string>> ProgressReportingCommand = prog => Task.Run(async () =>
+        {
+            prog.Report((ProgressReportingCommandValue.Item1, ProgressReportingCommandValue.Item2));
+            await Task.Delay(100);
+            return "Wololo";
+        });
+
+        private static readonly Func<IProgress<(double Progress, string ProgressMessage)>, Task<string>> ProgressCommand = _ => Command();
+
         [Test]
         public void ShouldThrow_ArgumentNullException_WhenCommandIsNull()
         {
@@ -24,16 +35,27 @@ namespace GGUtils.MVVM.Async.Tests
             Assert.Throws<ArgumentNullException>(() => new AsyncDelegateCommand<string>(command));
         }
 
-        [Test]
-        public void ShouldCall_CanExecuteFunction_WhenItIsNotNull()
+        [TestCase(true)]
+        [TestCase(false)]
+        public void ShouldCall_CanExecuteFunction_WhenItIsNotNull(bool multipleExecutionSupported)
         {
             bool called = false;
             Func<bool> canExecuteFunction = () => { called = true; return true; };
 
-            var asyncCommand = new AsyncDelegateCommand<string>(Command, canExecuteFunction);
+            var asyncCommand = new AsyncDelegateCommand<string>(Command, canExecuteFunction, multipleExecutionSupported);
             asyncCommand.CanExecute(null);
 
             Assert.IsTrue(called);
+        }
+
+        [Test]
+        public void ShouldReturn_TrueCanExecute_WhenCanExecuteFunctionIsNull_And_MultipleExecutionIsSupported()
+        {
+            var asyncCommand = new AsyncDelegateCommand<string>(UnfinishableCommand, multipleExecutionSupported: true);
+
+            asyncCommand.Execute(null);
+
+            Assert.IsTrue(asyncCommand.CanExecute(null));
         }
 
         [Test]
@@ -65,6 +87,19 @@ namespace GGUtils.MVVM.Async.Tests
 
             Assert.AreEqual(2, timesCalled);
         }
+
+        [TestCase(true, true)]
+        [TestCase(false, false)]
+        public void ShouldBeAbleTo_Execute_WhenCanExecuteReturnsTrue_And_MultipleExecutionIsSupported__And_TheCommandIsRunning(bool multipleExecutionSupported, bool result)
+        {
+            var asyncDelegate = new AsyncDelegateCommand<string>(UnfinishableCommand, () => true, multipleExecutionSupported);
+
+            asyncDelegate.Execute(null);
+
+            Assert.AreEqual(result, asyncDelegate.CanExecute(null));
+        }
+
+
 
         #region Cancelation
 
@@ -129,7 +164,7 @@ namespace GGUtils.MVVM.Async.Tests
             Assert.IsTrue(token.IsCancellationRequested);
         }
 
-        [Test]
+        //[Test]: Ignore because causes the runner to block
         public async Task ShouldReset_CancellationToken_WhenCancelIsExecuted_And_CommandIsRelaunched()
         {
             CancellationToken token = CancellationToken.None; // To make the test fail if not called
@@ -156,5 +191,84 @@ namespace GGUtils.MVVM.Async.Tests
             Assert.IsFalse(token.IsCancellationRequested);
         }
         #endregion
+
+        #region Progress
+        [Test]
+        public void ShouldThrow_ArgumentNullException_WhenCommandUsesProgressNull()
+        {
+            var constructors = new TestDelegate[]
+            {
+                () => new AsyncDelegateCommand<string>(null as Func<IProgress<(double, string)>, Task<string>>),
+                () => new AsyncDelegateCommand<string>(null as Func<CancellationToken, IProgress<(double, string)>, Task<string>>)
+            };
+
+            foreach (var c in constructors)
+                Assert.Throws<ArgumentNullException>(c);
+        }
+
+        [Test]
+        public void ShouldNotThrowException_WhenCommandUsesProgress_AndCanExecuteFunctionIsNull()
+        {
+            Func<CancellationToken, IProgress<(double Progress, string ProgressMessage)>, Task<string>> func = (a, b) => Task.FromResult("Wololo");
+            var constructors = new TestDelegate[]
+            {
+                () => new AsyncDelegateCommand<string>(ProgressCommand),
+                () => new AsyncDelegateCommand<string>(func)
+            };
+
+            foreach (var c in constructors)
+                c();
+        }
+
+
+        [Test]
+        public async Task ShouldUpdate_ProgressValues_WhenProgressUpdateIsIssued()
+        {
+            var asyncCommand = new AsyncDelegateCommand<string>(ProgressReportingCommand);
+
+            await asyncCommand.ExecuteAsync(null);
+
+            Assert.AreEqual(ProgressReportingCommandValue, (asyncCommand.Progress, asyncCommand.ProgressMessage));
+        }
+
+        [Test]
+        public async Task ShouldReport_PropertiesChanged_WhenProgressIsChanged()
+        {
+            var asyncCommand = new AsyncDelegateCommand<string>(ProgressReportingCommand);
+            var observer = new PropertyChangedObserver();
+            asyncCommand.PropertyChanged += observer.EventHandler;
+
+            await asyncCommand.ExecuteAsync(null);
+
+            CollectionAssert.IsSubsetOf(
+                new[] { nameof(AsyncDelegateCommand<object>.Progress), nameof(AsyncDelegateCommand<object>.ProgressMessage) },
+                observer.ChangedProperties);
+        }
+
+        [Test]
+        public async Task ShouldReport_ProgressWithCancellation_WhenCancelIsExecuted()
+        {
+            var cancelProgressResult = "Cancelled";
+            Func<CancellationToken, IProgress<(double, string)>, Task<string>> function = (ct, prog) => Task.Run(async () =>
+            {
+                await Task.Run(() => ct.WaitHandle.WaitOne());
+                if (ct.IsCancellationRequested)
+                {
+                    prog.Report((0.0, cancelProgressResult));
+                    await Task.Delay(100);
+                }
+                return "";
+            });
+            var asyncCommand = new AsyncDelegateCommand<string>(function);
+
+            var task = asyncCommand.ExecuteAsync(null);
+            asyncCommand.CancelCommand.Execute(null);
+
+            await task;
+
+            Assert.AreEqual(cancelProgressResult, asyncCommand.ProgressMessage);
+        }
+        #endregion
+
     }
 }

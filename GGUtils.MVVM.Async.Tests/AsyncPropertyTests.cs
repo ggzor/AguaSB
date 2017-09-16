@@ -167,15 +167,5 @@ namespace GGUtils.MVVM.Async.Tests
 
             return await task;
         }
-
-        private class PropertyChangedObserver
-        {
-            public List<string> ChangedProperties { get; } = new List<string>();
-
-            public PropertyChangedEventHandler EventHandler { get; }
-
-            public PropertyChangedObserver() =>
-                EventHandler = (src, args) => ChangedProperties.Add(args.PropertyName);
-        }
     }
 }
