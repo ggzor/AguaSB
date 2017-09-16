@@ -11,7 +11,9 @@
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
 
         <ResourceDictionary Source="Animaciones.xaml"/>
+        <ResourceDictionary Source="Textos.xaml"/>
+
         <ResourceDictionary Source="Controles/Botones.xaml"/>
-        <ResourceDictionary Source="Controles/EntradaTexto.xaml"/>
+        <ResourceDictionary Source="Controles/EntradaTexto.xaml"/>        
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
