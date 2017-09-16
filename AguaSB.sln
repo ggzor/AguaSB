@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Estilos", "AguaSB.Es
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Usuarios.Views", "AguaSB.Usuarios.Views\AguaSB.Usuarios.Views.csproj", "{E5D9409A-5D0D-45D9-B899-2917B4003491}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Views.Tests", "AguaSB.Views.Tests\AguaSB.Views.Tests.csproj", "{234E3065-289E-4BDC-AB89-356B81035ED8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{E5D9409A-5D0D-45D9-B899-2917B4003491}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5D9409A-5D0D-45D9-B899-2917B4003491}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5D9409A-5D0D-45D9-B899-2917B4003491}.Release|Any CPU.Build.0 = Release|Any CPU
+		{234E3065-289E-4BDC-AB89-356B81035ED8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{234E3065-289E-4BDC-AB89-356B81035ED8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{234E3065-289E-4BDC-AB89-356B81035ED8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{234E3065-289E-4BDC-AB89-356B81035ED8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

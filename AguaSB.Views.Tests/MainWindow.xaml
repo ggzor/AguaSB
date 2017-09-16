@@ -1,0 +1,19 @@
+﻿<Window x:Class="AguaSB.Views.Tests.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:local="clr-namespace:AguaSB.Views.Tests"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Window.Resources>
+        <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Estilos.xaml"/>
+    </Window.Resources>
+    <Grid>
+        <StackPanel>
+            <Button Content="XD" Padding="10 6" HorizontalAlignment="Center" Style="{StaticResource FadeTag}" Tag="{Binding ElementName=Toggle, Path=IsChecked}"/>
+            <CheckBox HorizontalAlignment="Center" Name="Toggle" IsChecked="False"/>
+        </StackPanel>
+    </Grid>
+</Window>
