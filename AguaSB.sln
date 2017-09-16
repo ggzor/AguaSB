@@ -15,6 +15,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GGUtils.MVVM.Async", "GGUti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GGUtils.MVVM.Async.Tests", "GGUtils.MVVM.Async.Tests\GGUtils.MVVM.Async.Tests.csproj", "{324D196B-579B-4A2C-8D44-A8DC6B9A1995}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Usuarios.ViewModels", "AguaSB.Usuarios.ViewModels\AguaSB.Usuarios.ViewModels.csproj", "{1D5A2FCA-1A34-42A8-9D7F-5C3132C71B50}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Estilos", "AguaSB.Estilos\AguaSB.Estilos.csproj", "{84C1223E-9EBC-41F4-A7D2-E447F7D6B188}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Usuarios.Views", "AguaSB.Usuarios.Views\AguaSB.Usuarios.Views.csproj", "{E5D9409A-5D0D-45D9-B899-2917B4003491}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +51,18 @@ Global
 		{324D196B-579B-4A2C-8D44-A8DC6B9A1995}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{324D196B-579B-4A2C-8D44-A8DC6B9A1995}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{324D196B-579B-4A2C-8D44-A8DC6B9A1995}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D5A2FCA-1A34-42A8-9D7F-5C3132C71B50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D5A2FCA-1A34-42A8-9D7F-5C3132C71B50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D5A2FCA-1A34-42A8-9D7F-5C3132C71B50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D5A2FCA-1A34-42A8-9D7F-5C3132C71B50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84C1223E-9EBC-41F4-A7D2-E447F7D6B188}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84C1223E-9EBC-41F4-A7D2-E447F7D6B188}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84C1223E-9EBC-41F4-A7D2-E447F7D6B188}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84C1223E-9EBC-41F4-A7D2-E447F7D6B188}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5D9409A-5D0D-45D9-B899-2917B4003491}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5D9409A-5D0D-45D9-B899-2917B4003491}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5D9409A-5D0D-45D9-B899-2917B4003491}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5D9409A-5D0D-45D9-B899-2917B4003491}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
