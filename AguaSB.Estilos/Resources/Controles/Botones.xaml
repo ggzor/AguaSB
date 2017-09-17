@@ -3,6 +3,7 @@
                     xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/materialdesigntheme.Button.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="Button" BasedOn="{StaticResource SquareButtonStyle}">
@@ -14,4 +15,6 @@
         <Setter Property="metro:ButtonHelper.PreserveTextCase" Value="True"/>
         <Setter Property="BorderThickness" Value="1"/>
     </Style>
+
+    <Style x:Key="ToggleButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}"/>
 </ResourceDictionary>
