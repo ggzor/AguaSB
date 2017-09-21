@@ -44,8 +44,14 @@
     <Reference Include="MaterialDesignThemes.Wpf, Version=2.3.1.953, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignThemes.2.3.1.953\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="MoreLinq, Version=2.6.20831.0, Culture=neutral, PublicKeyToken=384d532d7e88985d, processorArchitecture=MSIL">
+      <HintPath>..\packages\morelinq.2.7.0\lib\net40\MoreLinq.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net462\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -63,6 +69,8 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Color.cs" />
+    <Compile Include="Colores.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
