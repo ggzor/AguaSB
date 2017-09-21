@@ -38,7 +38,4 @@
     <Style x:Key="h6" TargetType="TextBlock" BasedOn="{StaticResource TextoBase}">
         <Setter Property="FontSize" Value="{StaticResource TamanoH6}"/>
     </Style>
-
-    <!--Texto por default-->
-    <Style TargetType="TextBlock" BasedOn="{StaticResource h5}"/>
 </ResourceDictionary>

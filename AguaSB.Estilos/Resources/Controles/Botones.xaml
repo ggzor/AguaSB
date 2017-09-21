@@ -9,6 +9,7 @@
     <Style TargetType="Button" BasedOn="{StaticResource SquareButtonStyle}">
         <Setter Property="metro:ButtonHelper.PreserveTextCase" Value="True"/>
         <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="FontWeight" Value="DemiBold"/>
     </Style>
 
     <Style x:Key="HighlightButton" TargetType="Button" BasedOn="{StaticResource AccentedSquareButtonStyle}">
