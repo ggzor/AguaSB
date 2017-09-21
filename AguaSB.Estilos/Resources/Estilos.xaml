@@ -17,5 +17,6 @@
         <ResourceDictionary Source="Controles/EntradaTexto.xaml"/>
         <ResourceDictionary Source="Controles/PanelDeslizable.xaml"/>
         <ResourceDictionary Source="Controles/ListaSeleccionables.xaml"/>
+        <ResourceDictionary Source="Controles/Listas.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

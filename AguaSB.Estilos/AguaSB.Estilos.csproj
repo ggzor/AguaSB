@@ -108,6 +108,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Resources\Controles\Listas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\Controles\ListaSeleccionables.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
