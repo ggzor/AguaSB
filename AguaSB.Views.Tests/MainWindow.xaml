@@ -14,6 +14,13 @@
         <StackPanel>
             <Button Content="XD" Padding="10 6" HorizontalAlignment="Center" Style="{StaticResource FadeTag}" Tag="{Binding ElementName=Toggle, Path=IsChecked}"/>
             <CheckBox HorizontalAlignment="Center" Name="Toggle" IsChecked="False"/>
+            <ScrollViewer Height="100">
+                <StackPanel>
+                    <TextBox Tag="Larvonear"/>
+                    <TextBox Tag="XD"/>
+                    <TextBox Tag="Oruguendo"/>
+                </StackPanel>
+            </ScrollViewer>
         </StackPanel>
     </Grid>
 </Window>
