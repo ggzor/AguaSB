@@ -1,6 +1,4 @@
-﻿using AguaSB.Extensiones;
-using GGUtils.MVVM.Async;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -8,24 +6,35 @@ using System.Threading.Tasks;
 using System.Waf.Applications;
 using System.Waf.Foundation;
 
+using GGUtils.MVVM.Async;
+
+using AguaSB.Extensiones;
+
 namespace AguaSB
 {
     public class MainWindowViewModel : Model
     {
+        #region Configuracion
         private static readonly string DirectorioExtensiones = Path.Combine(Directory.GetCurrentDirectory(), "Extensiones");
         private const string PatronExtensiones = @"AguaSB\.[A-Za-z]+\.Views\.dll";
+        #endregion
 
+        #region Propiedades
         public AsyncProperty<IEnumerable<IExtension>> Extensiones { get; }
 
-        public DelegateCommand EjecutarOperacionComando { get; }
-
         public IAdministradorViews Views { get; }
+        #endregion
+
+        #region Comandos
+        public DelegateCommand EjecutarOperacionComando { get; }
+        #endregion
 
         public MainWindowViewModel(IAdministradorViews administradorViews)
         {
             Extensiones = new AsyncProperty<IEnumerable<IExtension>>(CargarExtensiones());
-            EjecutarOperacionComando = new DelegateCommand(EjecutarOperacion);
             Views = administradorViews ?? throw new ArgumentNullException(nameof(administradorViews));
+
+            EjecutarOperacionComando = new DelegateCommand(EjecutarOperacion);
         }
 
         private Task<IEnumerable<IExtension>> CargarExtensiones() => Task.Run(() =>

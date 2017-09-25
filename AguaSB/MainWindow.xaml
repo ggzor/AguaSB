@@ -3,15 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AguaSB"
         xmlns:mvvm="http://waf.codeplex.com/schemas"
         xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="AguaSB" TitleCharacterCasing="Normal" WindowTitleBrush="#FF119EDA"
-        TitleAlignment="Center"
-        GlowBrush="Black" BorderThickness="0" WindowTransitionsEnabled="False"
+        Title="AguaSB" TitleCharacterCasing="Normal" TitleAlignment="Center"      
+        GlowBrush="Black" BorderThickness="0"
         ResizeMode="CanResizeWithGrip"
         Height="600" Width="800">
     <Window.Resources>
@@ -19,6 +16,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Estilos.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
             <mvvm:BoolToVisibilityConverter x:Key="BoolToVisibility"/>
         </ResourceDictionary>
     </Window.Resources>
@@ -42,7 +40,8 @@
 
             <TextBlock Margin="16 0" Opacity="0.5" Text="Módulos" Style="{StaticResource h1}"/>
 
-            <ListView Grid.Row="1" Margin="0 10 0 0" ItemsSource="{Binding Extensiones.Result}"
+            <ListView Grid.Row="1" Margin="0 10 0 0" 
+                      ItemsSource="{Binding Extensiones.Result}"
                       ItemTemplate="{StaticResource PlantillaExtension}"
                       ItemContainerStyle="{StaticResource PlainItem}"/>
 
@@ -50,7 +49,7 @@
                         Visibility="{Binding Extensiones.IsNotCompleted, Converter={StaticResource BoolToVisibility}}">
                 <metro:ProgressRing/>
                 <TextBlock Margin="20" HorizontalAlignment="Center" Style="{StaticResource h3}">
-                    <Run>Cargando extensiones...</Run>
+                    Cargando extensiones...
                 </TextBlock>
             </StackPanel>
         </Grid>

@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:AguaSB"
-                    xmlns:operaciones="clr-namespace:AguaSB.Extensiones"
                     xmlns:extensiones="clr-namespace:AguaSB.Extensiones;assembly=AguaSB.Extensiones">
     <Style x:Key="Enlace" TargetType="Hyperlink">
         <Setter Property="TextDecorations" Value=""/>
@@ -36,8 +35,10 @@
 
             <StackPanel Grid.Row="1" Grid.Column="1" Focusable="False">
                 <ContentControl Content="{Binding Icono.Value}"/>
+
                 <TextBlock Margin="0 10 0 0" Text="{Binding Nombre}" Style="{StaticResource h3}" 
                            HorizontalAlignment="Center"/>
+
                 <TextBlock Text="{Binding Version}" Style="{StaticResource h6}"
                            Opacity="0.5" HorizontalAlignment="Center"/>
             </StackPanel>
@@ -48,7 +49,10 @@
             <StackPanel Grid.Row="1" Grid.Column="4" Margin="20 0">
                 <TextBlock Text="{Binding Descripcion}" TextAlignment="Justify" TextWrapping="Wrap" 
                            Style="{StaticResource h4}"/>
-                <ListView Margin="0 10 0 0" ItemsSource="{Binding Operaciones}" ItemTemplate="{StaticResource PlantillaOperacion}"
+
+                <ListView Margin="0 10 0 0" 
+                          ItemsSource="{Binding Operaciones}" 
+                          ItemTemplate="{StaticResource PlantillaOperacion}"
                           ItemContainerStyle="{StaticResource PlainItem}"/>
             </StackPanel>
 
