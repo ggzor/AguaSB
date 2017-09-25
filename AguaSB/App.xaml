@@ -6,7 +6,6 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Conversores/Conversores.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Estilos.xaml" />
                 <ResourceDictionary Source="Controles/Plantillas/Extensiones.xaml"/>
             </ResourceDictionary.MergedDictionaries>
