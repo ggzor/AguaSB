@@ -17,7 +17,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition MinWidth="400" Width="Auto"/>
+            <ColumnDefinition MinWidth="450" Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
@@ -30,6 +30,11 @@
                 </Grid.RowDefinitions>
                 <ListBox Name="TipoUsuario" HorizontalAlignment="Center" SelectedIndex="0" 
                          Style="{StaticResource ToggleList}">
+                    <ListBox.Resources>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="Black"/>
+                        </Style>
+                    </ListBox.Resources>
                     <ListBox.ItemTemplate>
                         <DataTemplate DataType="{x:Type Button}">
                             <StackPanel Orientation="Horizontal">
@@ -47,8 +52,8 @@
                 </ListBox>
 
                 <metro:FlipView Grid.Row="2" SelectedIndex="{Binding ElementName=TipoUsuario, Path=SelectedIndex}" 
-                                IsBannerEnabled="False" IsNavigationEnabled="False">
-                    <ScrollViewer Name="CamposPersona" VerticalScrollBarVisibility="Auto">
+                                IsBannerEnabled="False" IsNavigationEnabled="False" MouseHoverBorderEnabled="False">
+                    <ScrollViewer Name="CamposPersona" Focusable="False">
                         <StackPanel VerticalAlignment="Center">
                             <TextBox Tag="Nombre"/>
                             <TextBox Tag="Apellido paterno"/>
