@@ -3,5 +3,8 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/HamburgerMenu.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="ScrollViewer" BasedOn="{StaticResource HamburgerScrollViewerStyle}"/>
+    <Style TargetType="ScrollViewer" BasedOn="{StaticResource HamburgerScrollViewerStyle}">
+        <Setter Property="Padding" Value="5 0"/>
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+    </Style>
 </ResourceDictionary>
