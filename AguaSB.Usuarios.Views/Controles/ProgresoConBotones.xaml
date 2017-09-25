@@ -17,7 +17,7 @@
                     Style="{StaticResource FadeTag}">
             <metro:ProgressRing Width="30" Height="30" VerticalAlignment="Center"/>
             <TextBlock Margin="10" Text="{Binding ElementName=This, Path=TextoProgreso}" 
-                       FontFamily="Segoe UI Semilight" FontSize="16"
+                       FontFamily="Segoe UI" FontSize="16"
                        VerticalAlignment="Center"/>
         </StackPanel>
 

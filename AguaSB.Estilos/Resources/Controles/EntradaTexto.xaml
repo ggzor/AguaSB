@@ -33,9 +33,16 @@
         <Setter Property="material:HintAssist.FloatingScale" Value="0.9"/>
         <Setter Property="material:HintAssist.FloatingOffset" Value="0, -20"/>
 
-        <Setter Property="FontFamily" Value="Segoe UI Semilight"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FontSize" Value="18"/>
         <Setter Property="Margin" Value="0,0,0,15"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
+        
+        <!--Correccion de visualizacion-->
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"/>
     </Style>
 </ResourceDictionary>

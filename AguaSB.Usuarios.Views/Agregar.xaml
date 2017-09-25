@@ -14,7 +14,7 @@
         <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Estilos.xaml"/>
     </UserControl.Resources>
 
-    <Grid>
+    <Grid TextOptions.TextFormattingMode="Display" SnapsToDevicePixels="True" RenderOptions.BitmapScalingMode="NearestNeighbor" UseLayoutRounding="True" RenderOptions.ClearTypeHint="Enabled">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition MinWidth="450" Width="Auto"/>
