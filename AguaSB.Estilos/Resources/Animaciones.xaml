@@ -16,7 +16,6 @@
                         </Storyboard>
                     </BeginStoryboard>
                 </Trigger.EnterActions>
-
                 <Trigger.ExitActions>
                     <BeginStoryboard>
                         <Storyboard>
