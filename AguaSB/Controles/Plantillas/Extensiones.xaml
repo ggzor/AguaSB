@@ -1,0 +1,57 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:AguaSB"
+                    xmlns:operaciones="clr-namespace:AguaSB.Extensiones"
+                    xmlns:extensiones="clr-namespace:AguaSB.Extensiones;assembly=AguaSB.Extensiones">
+    <Style x:Key="Enlace" TargetType="Hyperlink">
+        <Setter Property="TextDecorations" Value=""/>
+    </Style>
+
+    <DataTemplate x:Key="PlantillaOperacion" DataType="{x:Type extensiones:Operacion}">
+        <TextBlock Style="{StaticResource h5}">
+            <Hyperlink Style="{StaticResource Enlace}" Focusable="False" 
+                       Command="{Binding DataContext.EjecutarOperacionComando, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:MainWindow}}"
+                       CommandParameter="{Binding}">
+                <Run Text="{Binding Nombre, Mode=OneWay}"/>
+            </Hyperlink>
+        </TextBlock>
+    </DataTemplate>
+
+    <DataTemplate x:Key="PlantillaExtension" DataType="{x:Type extensiones:IExtension}">
+        <Grid Focusable="False">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="16"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="8"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="8"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="1" Grid.Column="1" Focusable="False">
+                <ContentControl Content="{Binding Icono.Value}"/>
+                <TextBlock Margin="0 10 0 0" Text="{Binding Nombre}" Style="{StaticResource h3}" 
+                           HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding Version}" Style="{StaticResource h6}"
+                           Opacity="0.5" HorizontalAlignment="Center"/>
+            </StackPanel>
+
+            <Rectangle Grid.Row="1" Grid.Column="3" Width="1" Stroke="Black" Opacity="0.3" 
+                       HorizontalAlignment="Center" VerticalAlignment="Stretch"/>
+
+            <StackPanel Grid.Row="1" Grid.Column="4" Margin="20 0">
+                <TextBlock Text="{Binding Descripcion}" TextAlignment="Justify" TextWrapping="Wrap" 
+                           Style="{StaticResource h4}"/>
+                <ListView Margin="0 10 0 0" ItemsSource="{Binding Operaciones}" ItemTemplate="{StaticResource PlantillaOperacion}"
+                          ItemContainerStyle="{StaticResource PlainItem}"/>
+            </StackPanel>
+
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>
