@@ -1,28 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace AguaSB
 {
-    /// <summary>
-    /// Lógica de interacción para MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow
+    public partial class MainWindow : IAdministradorViews
     {
         public MainWindow()
-        {            
+        {
+            DataContext = new MainWindowViewModel(this);
             InitializeComponent();
         }
+
+        public async void TraerAlFrente(FrameworkElement element)
+        {
+            await Animaciones.MostrarEnPanel(Vista, element);
+            BotonAtras.Visibility = Visibility.Visible;
+        }
+
+        public void VolverAPrincipal() => VolverAPrincipal(this, null);
+
+        private async void VolverAPrincipal(object sender, RoutedEventArgs e)
+        {
+            if (Vista.Children.Count > 1 && Vista.Children.OfType<FrameworkElement>().Last() is var elem)
+            {
+                await Animaciones.RemoverDeVista(Vista, elem);
+                BotonAtras.Visibility = Visibility.Collapsed;
+            }
+        }
+
     }
 }
