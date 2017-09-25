@@ -30,12 +30,12 @@
 
         <Setter Property="material:HintAssist.IsFloating" Value="True"/>
         <Setter Property="material:HintAssist.Hint" Value="{Binding Path=Tag, RelativeSource={RelativeSource Mode=Self}}"/>
-        <Setter Property="material:HintAssist.FloatingScale" Value="0.9"/>
-        <Setter Property="material:HintAssist.FloatingOffset" Value="0, -20"/>
+        <Setter Property="material:HintAssist.FloatingScale" Value="1"/>
+        <Setter Property="material:HintAssist.FloatingOffset" Value="0, -25"/>
 
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FontSize" Value="18"/>
-        <Setter Property="Margin" Value="0,0,0,15"/>
+        <Setter Property="Margin" Value="0,0,0,20"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
         
         <!--Correccion de visualizacion-->
