@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\AguaSB\bin\Debug\Extensiones\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -38,8 +38,8 @@
     <Reference Include="MahApps.Metro, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.6.0-alpha016\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
-    <Reference Include="MahApps.Metro.IconPacks, Version=1.9.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.IconPacks.1.9.0\lib\net46\MahApps.Metro.IconPacks.dll</HintPath>
+    <Reference Include="MahApps.Metro.IconPacks, Version=1.9.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.IconPacks.1.9.1\lib\net46\MahApps.Metro.IconPacks.dll</HintPath>
     </Reference>
     <Reference Include="MaterialDesignColors, Version=1.1.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignColors.1.1.3\lib\net45\MaterialDesignColors.dll</HintPath>
@@ -74,6 +74,7 @@
     <Compile Include="Controles\ProgresoConBotones.xaml.cs">
       <DependentUpon>ProgresoConBotones.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DescriptorExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -91,7 +92,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -111,6 +114,14 @@
     <ProjectReference Include="..\AguaSB.Estilos\AguaSB.Estilos.csproj">
       <Project>{84c1223e-9ebc-41f4-a7d2-e447f7d6b188}</Project>
       <Name>AguaSB.Estilos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AguaSB.Extensiones\AguaSB.Extensiones.csproj">
+      <Project>{e912e081-7f7f-4b93-83ac-35f8fbf07dbe}</Project>
+      <Name>AguaSB.Extensiones</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AguaSB.Navegacion\AguaSB.Navegacion.csproj">
+      <Project>{b51b553c-10d5-47ea-93bb-deced914d5f6}</Project>
+      <Name>AguaSB.Navegacion</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
