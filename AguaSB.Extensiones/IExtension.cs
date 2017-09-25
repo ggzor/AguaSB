@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace AguaSB.Extensiones
@@ -9,7 +10,9 @@ namespace AguaSB.Extensiones
 
         string Version { get; }
 
-        FrameworkElement CrearIcono();
+        string Descripcion { get; }
+
+        Lazy<FrameworkElement> Icono { get; }
 
         IEnumerable<Operacion> Operaciones { get; }
     }

@@ -9,17 +9,17 @@ namespace AguaSB.Extensiones
     {
         public string Nombre { get; }
 
-        public FrameworkElement Visualizacion { get; }
+        public Lazy<FrameworkElement> Visualizacion { get; }
 
         public INodo Nodo { get; }
 
-        public Operacion(string nombre, FrameworkElement visualizacion, INodo nodo)
+        public Operacion(string nombre, Func<FrameworkElement> visualizacion, INodo nodo)
         {
             if (string.IsNullOrWhiteSpace(nombre))
                 throw new ArgumentException("El nombre de la operación debe tener al menos un caracter");
 
             Nombre = nombre;
-            Visualizacion = visualizacion ?? throw new ArgumentNullException(nameof(visualizacion));
+            Visualizacion = new Lazy<FrameworkElement>(visualizacion ?? throw new ArgumentNullException(nameof(visualizacion)));
             Nodo = nodo ?? throw new ArgumentNullException(nameof(nodo));
         }
     }
