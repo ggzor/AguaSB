@@ -12,7 +12,9 @@ namespace AguaSB.Extensiones
     {
         public static IEnumerable<(string Archivo, TryResult<IExtension> Extension)> En(string directorio, Func<string, bool> filtro)
         {
-            var archivosAVerificar = Directory.EnumerateFiles(directorio).Where(filtro);
+            var archivosAVerificar = Directory.EnumerateFiles(directorio)
+                .Where(s => s.EndsWith(".dll"))
+                .Where(filtro);
 
             return from archivo in archivosAVerificar
                    let intento = IntentarCargarExtension(archivo)
