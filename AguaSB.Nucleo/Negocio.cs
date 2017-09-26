@@ -9,6 +9,7 @@ namespace AguaSB.Nucleo
     {
         private string nombre;
         private string rfc;
+        private Persona representante;
 
         [Required(ErrorMessage = Validacion.CampoRequerido)]
         public string Nombre
@@ -22,5 +23,13 @@ namespace AguaSB.Nucleo
             get { return rfc; }
             set { N.Validate(ref rfc, value); }
         }
+        
+        [Required(ErrorMessage = Validacion.CampoRequerido)]
+        public Persona Representante
+        {
+            get { return representante; }
+            set { N.Validate(ref representante, value); }
+        }
+
     }
 }
