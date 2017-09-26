@@ -3,6 +3,7 @@
                     xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/materialdesigntheme.TextBox.xaml" />
+        <ResourceDictionary Source="Validacion.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignTextBox}">
@@ -31,13 +32,14 @@
         <Setter Property="material:HintAssist.IsFloating" Value="True"/>
         <Setter Property="material:HintAssist.Hint" Value="{Binding Path=Tag, RelativeSource={RelativeSource Mode=Self}}"/>
         <Setter Property="material:HintAssist.FloatingScale" Value="1"/>
-        <Setter Property="material:HintAssist.FloatingOffset" Value="0, -25"/>
+        <Setter Property="material:HintAssist.FloatingOffset" Value="0, -24"/>
+        <Setter Property="Validation.ErrorTemplate" Value="{StaticResource PlantillaValidacion}"/>
 
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FontSize" Value="18"/>
-        <Setter Property="Margin" Value="0,0,0,20"/>
+        <Setter Property="Margin" Value="0,0,0,30"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
-        
+
         <!--Correccion de visualizacion-->
         <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
