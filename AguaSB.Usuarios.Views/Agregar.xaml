@@ -7,22 +7,40 @@
              xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:Controles="clr-namespace:AguaSB.Usuarios.Views.Controles"
+             xmlns:Converters="clr-namespace:GGUtils.WPF.ValueConverters;assembly=GGUtils.WPF"
+             xmlns:Views="clr-namespace:AguaSB.Views.Controles;assembly=AguaSB.Views.Controles"
              mc:Ignorable="d"
              Background="White"
              d:DesignHeight="600" d:DesignWidth="800"
              Style="{StaticResource CorrectTextRendering}">
     <UserControl.Resources>
-        <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Estilos.xaml"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Estilos.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            
+            <Converters:EqualsTo x:Key="EqualsTo"/>
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition MinWidth="500" Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <material:Card Grid.Column="1" Margin="10" Padding="40 20" 
+        <Views:BarraSuperior Grid.ColumnSpan="3" Titulo="Agregar nuevo usuario">
+            <Views:BarraSuperior.Icono>
+                <icons:PackIconModern Kind="Add" Foreground="White" Width="20" Height="20"/>
+            </Views:BarraSuperior.Icono>
+        </Views:BarraSuperior>
+
+        <material:Card Grid.Column="1" Grid.Row="1" Margin="10" Padding="40 20" 
                        VerticalAlignment="Stretch">
             <Grid>
                 <Grid.RowDefinitions>
@@ -40,7 +58,7 @@
                         <DataTemplate DataType="{x:Type Button}">
                             <StackPanel Orientation="Horizontal">
                                 <ContentControl Content="{Binding Content}" VerticalAlignment="Center"/>
-                                <TextBlock Margin="10 0" FontFamily="Segoe UI" Text="{Binding Tag}" Style="{StaticResource h6}"/>
+                                <TextBlock Margin="10 0" FontFamily="Segoe UI" Text="{Binding Tag}" Style="{StaticResource h5}"/>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
@@ -52,8 +70,8 @@
                     </Button>
                 </ListBox>
 
-                <metro:FlipView Grid.Row="2" SelectedIndex="{Binding ElementName=TipoUsuario, Path=SelectedIndex}" 
-                                IsBannerEnabled="False" IsNavigationEnabled="False" MouseHoverBorderEnabled="False">
+                <metro:FlipView Name="Campos" Grid.Row="2" Margin="0 20 0 0" SelectedIndex="{Binding ElementName=TipoUsuario, Path=SelectedIndex}" 
+                                IsBannerEnabled="False" IsNavigationEnabled="False" MouseHoverBorderEnabled="False" SelectionChanged="FlipView_SelectionChanged">
                     <ScrollViewer Name="CamposPersona" Focusable="False">
                         <StackPanel VerticalAlignment="Center">
                             <TextBox Tag="Nombre"/>
@@ -80,6 +98,15 @@
                         </StackPanel>
                     </ScrollViewer>
                 </metro:FlipView>
+                
+                <StackPanel Grid.Row="1" IsHitTestVisible="False" Style="{StaticResource FadeTag}" Opacity="0"
+                            Tag="{Binding ElementName=Campos, Path=SelectedIndex, Converter={StaticResource EqualsTo}, ConverterParameter=-1}"
+                            HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" 
+                               Width="400"
+                               Text="Seleccione alguna de las opciones que aparece en la parte superior"
+                               Style="{StaticResource h3}"/>
+                </StackPanel>
             </Grid>
         </material:Card>
     </Grid>

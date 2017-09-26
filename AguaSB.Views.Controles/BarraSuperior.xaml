@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d" Name="This"
-             Height="48" d:DesignWidth="600">
+             Height="48" HorizontalAlignment="Stretch" d:DesignWidth="600">
     <UserControl.Resources>
         <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Estilos.xaml"/>
     </UserControl.Resources>
@@ -13,11 +13,12 @@
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <ContentControl Content="{Binding ElementName=This, Path=Icono}" VerticalAlignment="Center"/>
             <TextBlock Margin="15,0,0,0"
-                           FontSize="20"
-                           Foreground="White"
-                           VerticalAlignment="Center"
-                           Text="{Binding ElementName=This, Path=Titulo}"
-                           Style="{StaticResource h1}"/>
+                       FontSize="20"
+                       FontFamily="Segoe UI"
+                       Foreground="White"
+                       VerticalAlignment="Center"
+                       Text="{Binding ElementName=This, Path=Titulo}"
+                       Style="{StaticResource h1}"/>
         </StackPanel>
     </Border>
 </UserControl>

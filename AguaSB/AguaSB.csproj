@@ -47,6 +47,9 @@
     <Reference Include="GGUtils.MVVM.Async">
       <HintPath>..\GGUtils.MVVM.Async\bin\Debug\GGUtils.MVVM.Async.dll</HintPath>
     </Reference>
+    <Reference Include="GGUtils.WPF">
+      <HintPath>..\..\GGUtils\GGUtils.WPF\bin\Release\GGUtils.WPF.dll</HintPath>
+    </Reference>
     <Reference Include="MahApps.Metro, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.6.0-alpha016\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
@@ -160,6 +163,10 @@
     <ProjectReference Include="..\AguaSB.Utilerias\AguaSB.Utilerias.csproj">
       <Project>{61188b63-728a-4c7b-b19d-11abd1f64f4f}</Project>
       <Name>AguaSB.Utilerias</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AguaSB.Views.Controles\AguaSB.Views.Controles.csproj">
+      <Project>{3e538c15-8e98-4254-b257-8fc71d2522b6}</Project>
+      <Name>AguaSB.Views.Controles</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
