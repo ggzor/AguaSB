@@ -130,13 +130,21 @@
       <Project>{b51b553c-10d5-47ea-93bb-deced914d5f6}</Project>
       <Name>AguaSB.Navegacion</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AguaSB.Nucleo\AguaSB.Nucleo.csproj">
+      <Project>{10e1e718-ea42-4519-baa2-7cd3c21b442a}</Project>
+      <Name>AguaSB.Nucleo</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AguaSB.Usuarios.ViewModels\AguaSB.Usuarios.ViewModels.csproj">
       <Project>{1d5a2fca-1a34-42a8-9d7f-5c3132c71b50}</Project>
       <Name>AguaSB.Usuarios.ViewModels</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AguaSB.Views.Controles\AguaSB.Views.Controles.csproj">
-      <Project>{3e538c15-8e98-4254-b257-8fc71d2522b6}</Project>
-      <Name>AguaSB.Views.Controles</Name>
+    <ProjectReference Include="..\AguaSB.Utilerias\AguaSB.Utilerias.csproj">
+      <Project>{61188b63-728a-4c7b-b19d-11abd1f64f4f}</Project>
+      <Name>AguaSB.Utilerias</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AguaSB.Views\AguaSB.Views.csproj">
+      <Project>{2fb7cb7e-cab1-47cc-a509-8daa4408b580}</Project>
+      <Name>AguaSB.Views</Name>
     </ProjectReference>
     <ProjectReference Include="..\GGUtils.MVVM.Async\GGUtils.MVVM.Async.csproj">
       <Project>{0b78e13e-f73b-4a97-8af4-133a111e4416}</Project>

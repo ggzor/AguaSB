@@ -55,6 +55,10 @@
       <Project>{b51b553c-10d5-47ea-93bb-deced914d5f6}</Project>
       <Name>AguaSB.Navegacion</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AguaSB.Nucleo\AguaSB.Nucleo.csproj">
+      <Project>{10e1e718-ea42-4519-baa2-7cd3c21b442a}</Project>
+      <Name>AguaSB.Nucleo</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AguaSB.Utilerias\AguaSB.Utilerias.csproj">
       <Project>{61188b63-728a-4c7b-b19d-11abd1f64f4f}</Project>
       <Name>AguaSB.Utilerias</Name>
