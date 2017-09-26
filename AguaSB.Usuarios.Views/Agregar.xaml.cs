@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,8 +22,11 @@ namespace AguaSB.Usuarios.Views
     /// </summary>
     public partial class Agregar : UserControl
     {
+        public ViewModels.Agregar ViewModel { get; }
+
         public Agregar()
         {
+            ViewModel = new ViewModels.Agregar();
             InitializeComponent();
         }
     }

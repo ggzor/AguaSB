@@ -11,6 +11,7 @@
              xmlns:Views="clr-namespace:AguaSB.Views.Controles;assembly=AguaSB.Views.Controles"
              mc:Ignorable="d"
              Background="White"
+             Name="This"
              d:DesignHeight="600" d:DesignWidth="800"
              Style="{StaticResource CorrectTextRendering}">
     <UserControl.Resources>
@@ -23,7 +24,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid>
+    <Grid DataContext="{Binding ElementName=This, Path=ViewModel}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -71,7 +72,7 @@
                 </ListBox>
 
                 <metro:FlipView Name="Campos" Grid.Row="2" Margin="0 20 0 0" SelectedIndex="{Binding ElementName=TipoUsuario, Path=SelectedIndex}" 
-                                IsBannerEnabled="False" IsNavigationEnabled="False" MouseHoverBorderEnabled="False" SelectionChanged="FlipView_SelectionChanged">
+                                IsBannerEnabled="False" IsNavigationEnabled="False" MouseHoverBorderEnabled="False">
                     <ScrollViewer Name="CamposPersona" Focusable="False">
                         <StackPanel VerticalAlignment="Center">
                             <TextBox Tag="Nombre"/>

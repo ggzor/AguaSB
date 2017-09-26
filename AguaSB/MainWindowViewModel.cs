@@ -15,7 +15,7 @@ namespace AguaSB
     public class MainWindowViewModel : Model
     {
         #region Configuracion
-        private static readonly string DirectorioExtensiones = Path.Combine(Directory.GetCurrentDirectory(), "Extensiones");
+        private static readonly string DirectorioExtensiones = Path.Combine(Directory.GetCurrentDirectory());
         private const string PatronExtensiones = @"AguaSB\.[A-Za-z]+\.Views\.dll";
         #endregion
 
