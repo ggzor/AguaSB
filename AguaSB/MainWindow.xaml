@@ -10,7 +10,8 @@
         Title="AguaSB" TitleCharacterCasing="Normal" TitleAlignment="Center"      
         GlowBrush="Black" BorderThickness="0"
         ResizeMode="CanResizeWithGrip"
-        Height="600" Width="800">
+        Height="600" Width="800"
+        MinWidth="600" MinHeight="500">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
