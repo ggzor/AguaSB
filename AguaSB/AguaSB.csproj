@@ -164,10 +164,6 @@
       <Project>{61188b63-728a-4c7b-b19d-11abd1f64f4f}</Project>
       <Name>AguaSB.Utilerias</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AguaSB.Views.Controles\AguaSB.Views.Controles.csproj">
-      <Project>{3e538c15-8e98-4254-b257-8fc71d2522b6}</Project>
-      <Name>AguaSB.Views.Controles</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

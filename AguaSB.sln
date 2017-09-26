@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.12
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB", "AguaSB\AguaSB.csproj", "{FC378380-823E-4FDE-8525-73C2D4992B3A}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -29,7 +29,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Views.Tests", "AguaS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Extensiones", "AguaSB.Extensiones\AguaSB.Extensiones.csproj", "{E912E081-7F7F-4B93-83AC-35F8FBF07DBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Views.Controles", "AguaSB.Views.Controles\AguaSB.Views.Controles.csproj", "{3E538C15-8E98-4254-B257-8FC71D2522B6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.ViewModels", "AguaSB.ViewModels\AguaSB.ViewModels.csproj", "{66436B98-0E59-4DF2-A29F-B14D157C1FA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Nucleo", "AguaSB.Nucleo\AguaSB.Nucleo.csproj", "{10E1E718-EA42-4519-BAA2-7CD3C21B442A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Datos", "AguaSB.Datos\AguaSB.Datos.csproj", "{965235B6-229E-4AEE-A759-F16DD1EE58F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Views", "AguaSB.Views\AguaSB.Views.csproj", "{2FB7CB7E-CAB1-47CC-A509-8DAA4408B580}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,10 +87,22 @@ Global
 		{E912E081-7F7F-4B93-83AC-35F8FBF07DBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E912E081-7F7F-4B93-83AC-35F8FBF07DBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E912E081-7F7F-4B93-83AC-35F8FBF07DBE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3E538C15-8E98-4254-B257-8FC71D2522B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3E538C15-8E98-4254-B257-8FC71D2522B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3E538C15-8E98-4254-B257-8FC71D2522B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3E538C15-8E98-4254-B257-8FC71D2522B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66436B98-0E59-4DF2-A29F-B14D157C1FA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66436B98-0E59-4DF2-A29F-B14D157C1FA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66436B98-0E59-4DF2-A29F-B14D157C1FA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66436B98-0E59-4DF2-A29F-B14D157C1FA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10E1E718-EA42-4519-BAA2-7CD3C21B442A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10E1E718-EA42-4519-BAA2-7CD3C21B442A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10E1E718-EA42-4519-BAA2-7CD3C21B442A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10E1E718-EA42-4519-BAA2-7CD3C21B442A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{965235B6-229E-4AEE-A759-F16DD1EE58F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{965235B6-229E-4AEE-A759-F16DD1EE58F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{965235B6-229E-4AEE-A759-F16DD1EE58F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{965235B6-229E-4AEE-A759-F16DD1EE58F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FB7CB7E-CAB1-47CC-A509-8DAA4408B580}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FB7CB7E-CAB1-47CC-A509-8DAA4408B580}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FB7CB7E-CAB1-47CC-A509-8DAA4408B580}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FB7CB7E-CAB1-47CC-A509-8DAA4408B580}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
