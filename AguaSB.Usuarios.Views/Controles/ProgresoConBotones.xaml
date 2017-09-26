@@ -13,7 +13,7 @@
     </UserControl.Resources>
 
     <StackPanel>
-        <StackPanel Orientation="Horizontal" Tag="{Binding ElementName=This, Path=MostrarProgreso}" 
+        <StackPanel Orientation="Horizontal" Opacity="0" Tag="{Binding ElementName=This, Path=MostrarProgreso}" 
                     Style="{StaticResource FadeTag}">
             <metro:ProgressRing Width="30" Height="30" VerticalAlignment="Center"/>
             <TextBlock Margin="10" Text="{Binding ElementName=This, Path=TextoProgreso}" 
