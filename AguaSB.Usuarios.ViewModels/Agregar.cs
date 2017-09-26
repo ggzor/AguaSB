@@ -1,12 +1,11 @@
-﻿using AguaSB.Nucleo;
-using GGUtils.MVVM.Async;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
 using System.Threading.Tasks;
 using System.Waf.Applications;
 using System.Waf.Foundation;
+
+using GGUtils.MVVM.Async;
+
+using AguaSB.Nucleo;
 
 namespace AguaSB.Usuarios.ViewModels
 {
@@ -15,6 +14,11 @@ namespace AguaSB.Usuarios.ViewModels
         #region Campos
 
         private Persona persona = new Persona();
+        private Negocio negocio = new Negocio() { Representante = new Persona() };
+
+        private string telefonoPersona;
+        private string telefonoNegocio;
+        private string telefonoRepresentante;
 
         #endregion
 
@@ -28,6 +32,30 @@ namespace AguaSB.Usuarios.ViewModels
             set { SetProperty(ref persona, value); }
         }
 
+        public Negocio Negocio
+        {
+            get { return negocio; }
+            set { SetProperty(ref negocio, value); }
+        }
+
+        public string TelefonoPersona
+        {
+            get { return telefonoPersona; }
+            set { SetPropertyAndValidate(ref telefonoPersona, value); }
+        }
+
+        public string TelefonoNegocio
+        {
+            get { return telefonoNegocio; }
+            set { SetPropertyAndValidate(ref telefonoNegocio, value); }
+        }
+
+        public string TelefonoRepresentante
+        {
+            get { return telefonoRepresentante; }
+            set { SetPropertyAndValidate(ref telefonoRepresentante, value); }
+        }
+
         #endregion
 
         #region Comandos
@@ -35,7 +63,6 @@ namespace AguaSB.Usuarios.ViewModels
         public DelegateCommand ReestablecerPersonaComando { get; }
         public DelegateCommand ReestablecerNegocioComando { get; }
 
-        public AsyncDelegateCommand<int> AgregarUsuarioComando { get; }
         public AsyncDelegateCommand<int> AgregarPersonaComando { get; }
         public AsyncDelegateCommand<int> AgregarNegocioComando { get; }
 
@@ -43,51 +70,40 @@ namespace AguaSB.Usuarios.ViewModels
 
         public Agregar()
         {
-            ReestablecerPersonaComando = new DelegateCommand(() => Persona = new Persona());
-            ReestablecerNegocioComando = new DelegateCommand(() => Persona = new Persona());
+            ReestablecerPersonaComando = new DelegateCommand(() => { Persona = new Persona(); TelefonoPersona = ""; });
+            ReestablecerNegocioComando = new DelegateCommand(() =>
+            {
+                Negocio = new Negocio() { Representante = new Persona() };
+                TelefonoNegocio = "";
+                TelefonoRepresentante = "";
+            });
 
-            AgregarUsuarioComando = new AsyncDelegateCommand<int>(AgregarUsuario, PuedeAgregarUsuario);
             AgregarPersonaComando = new AsyncDelegateCommand<int>(AgregarPersona, PuedeAgregarPersona);
             AgregarNegocioComando = new AsyncDelegateCommand<int>(AgregarNegocio, PuedeAgregarNegocio);
         }
 
-        private bool PuedeAgregarNegocio()
+        private bool PuedeAgregarNegocio() => !Negocio.HasErrors;
+
+        private async Task<int> AgregarNegocio(IProgress<(double, string)> progreso)
         {
-            return true;
+            Usuario = Negocio;
+            return await AgregarUsuario(progreso);
         }
 
-        private async Task<int> AgregarNegocio()
-        {
-            //TODO: Usuario = Negocio;
-            return await EjecutarAgregarUsuario();
-        }
+        private bool PuedeAgregarPersona() => !Persona.HasErrors;
 
-        private bool PuedeAgregarPersona()
-        {
-            return true;
-        }
-
-        private async Task<int> AgregarPersona()
+        private async Task<int> AgregarPersona(IProgress<(double, string)> progreso)
         {
             Usuario = Persona;
-            return await EjecutarAgregarUsuario();
+            return await AgregarUsuario(progreso);
         }
 
-
-        private async Task<int> EjecutarAgregarUsuario()
-        {
-            await AgregarUsuarioComando.ExecuteAsync(null);
-            return AgregarUsuarioComando.Execution.Result;
-        }
-
-        private bool PuedeAgregarUsuario() => !Usuario.HasErrors;
-
-        private async Task<int> AgregarUsuario(IProgress<(double, string)> progreso)
+        private async Task<int> AgregarUsuario(IProgress<(double, string)> progreso = null)
         {
             async Task Reportar(string textoProgreso)
             {
-                progreso.Report((0.0, textoProgreso));
-                await Task.Delay(1000);
+                progreso?.Report((0.0, textoProgreso));
+                await Task.Delay(5000);
             }
 
             await Reportar("Comenzando ejecución...");

@@ -9,8 +9,7 @@
              xmlns:Controles="clr-namespace:AguaSB.Usuarios.Views.Controles"
              xmlns:Converters="clr-namespace:GGUtils.WPF.ValueConverters;assembly=GGUtils.WPF"
              xmlns:Views="clr-namespace:AguaSB.Views.Controles;assembly=AguaSB.Views"
-             xmlns:Foco="clr-namespace:AguaSB.Usuarios.Views"
-             xmlns:interactivity="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:Sys="clr-namespace:System;assembly=mscorlib"
              xmlns:ViewModel="clr-namespace:AguaSB.Usuarios.ViewModels;assembly=AguaSB.Usuarios.ViewModels"
              mc:Ignorable="d"
              Background="White"
@@ -24,6 +23,7 @@
 
             <ViewModel:Agregar x:Key="ViewModel"/>
             <Converters:EqualsTo x:Key="EqualsTo"/>
+            <Sys:Int32 x:Key="Retraso">800</Sys:Int32>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -76,23 +76,24 @@
 
                 <metro:FlipView Name="Campos" Grid.Row="2" Margin="0 20 0 0" SelectedIndex="{Binding ElementName=TipoUsuario, Path=SelectedIndex}" 
                                 IsBannerEnabled="False" IsNavigationEnabled="False" MouseHoverBorderEnabled="False">
-                    <metro:FlipView.Resources>
-                        <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
-                            <Setter Property="IsReadOnly" Value="{Binding AgregarUsuarioComando.Execution.IsNotCompleted}"/>
-                        </Style>
-                    </metro:FlipView.Resources>
-
                     <ScrollViewer Name="CamposPersona" Focusable="False">
                         <StackPanel VerticalAlignment="Center">
+                            <StackPanel.Resources>
+                                <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Setter Property="IsReadOnly" Value="{Binding AgregarPersonaComando.Execution.IsNotCompleted}"/>
+                                </Style>
+                            </StackPanel.Resources>
+
                             <TextBox Margin="0 10 0 30" Tag="Nombre"
-                                     Text="{Binding Persona.Nombre, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged, Delay=1000}"/>
-                            
+                                     Text="{Binding Persona.Nombre, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged, Delay={StaticResource Retraso}}"/>
+
                             <TextBox Tag="Apellido paterno" 
-                                     Text="{Binding Persona.ApellidoPaterno, UpdateSourceTrigger=PropertyChanged, Delay=1000}"/>
-                            
-                            <TextBox Tag="Apellido materno" Text="{Binding Persona.ApellidoMaterno, UpdateSourceTrigger=PropertyChanged, Delay=1000}"/>
-                            
-                            <TextBox Tag="Número telefónico"/>
+                                     Text="{Binding Persona.ApellidoPaterno, UpdateSourceTrigger=PropertyChanged, Delay={StaticResource Retraso}}"/>
+
+                            <TextBox Tag="Apellido materno" Text="{Binding Persona.ApellidoMaterno, UpdateSourceTrigger=PropertyChanged, Delay={StaticResource Retraso}}"/>
+
+                            <TextBox Tag="Número telefónico"
+                                     Text="{Binding TelefonoPersona, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, Delay={StaticResource Retraso}}"/>
 
                             <Controles:ProgresoConBotones MostrarProgreso="{Binding AgregarPersonaComando.Execution.IsNotCompleted}" 
                                                           TextoProgreso="{Binding AgregarPersonaComando.ProgressMessage}"
@@ -104,14 +105,35 @@
 
                     <ScrollViewer Name="CamposNegocio">
                         <StackPanel VerticalAlignment="Center">
-                            <TextBox Margin="0 10 0 30" Tag="Nombre del negocio"/>
-                            <TextBox Tag="RFC"/>
-                            <TextBox Tag="Número telefónico"/>
+                            <StackPanel.Resources>
+                                <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Setter Property="IsReadOnly" Value="{Binding AgregarNegocioComando.Execution.IsNotCompleted}"/>
+                                </Style>
+                            </StackPanel.Resources>
+
+                            <TextBox Margin="0 10 0 30" Tag="Nombre del negocio"
+                                     Text="{Binding Negocio.Nombre, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged, Delay={StaticResource Retraso}}"/>
+
+                            <TextBox Tag="RFC"
+                                     Text="{Binding Negocio.Rfc, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged, Delay={StaticResource Retraso}}"/>
+
+                            <TextBox Tag="Número telefónico"
+                                     Text="{Binding TelefonoNegocio, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, Delay={StaticResource Retraso}}"/>
+
+                            <!--Representante-->
                             <TextBlock Margin="0 20" Text="Representante:" Style="{StaticResource h3}"/>
-                            <TextBox Tag="Nombre"/>
-                            <TextBox Tag="Apellido paterno"/>
-                            <TextBox Tag="Apellido materno"/>
-                            <TextBox Tag="Número telefónico"/>
+
+                            <TextBox Tag="Nombre"
+                                     Text="{Binding Negocio.Representante.Nombre, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, Delay={StaticResource Retraso}}"/>
+
+                            <TextBox Tag="Apellido paterno"
+                                     Text="{Binding Negocio.Representante.ApellidoPaterno, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, Delay={StaticResource Retraso}}"/>
+
+                            <TextBox Tag="Apellido materno"
+                                     Text="{Binding Negocio.Representante.ApellidoMaterno, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, Delay={StaticResource Retraso}}"/>
+
+                            <TextBox Tag="Número telefónico"
+                                     Text="{Binding TelefonoRepresentante, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, Delay={StaticResource Retraso}}"/>
 
                             <Controles:ProgresoConBotones MostrarProgreso="{Binding AgregarNegocioComando.Execution.IsNotCompleted}" 
                                                           TextoProgreso="{Binding AgregarNegocioComando.ProgressMessage}"
