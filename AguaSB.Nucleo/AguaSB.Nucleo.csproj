@@ -42,9 +42,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contacto.cs" />
     <Compile Include="Mensajes\Validacion.cs" />
     <Compile Include="Negocio.cs" />
     <Compile Include="Persona.cs" />
+    <Compile Include="TipoContacto.cs" />
     <Compile Include="Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

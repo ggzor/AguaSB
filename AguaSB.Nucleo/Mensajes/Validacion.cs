@@ -1,4 +1,9 @@
-﻿namespace AguaSB.Nucleo.Mensajes
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text.RegularExpressions;
+
+namespace AguaSB.Nucleo.Mensajes
 {
     public static class Validacion
     {
@@ -15,5 +20,18 @@
         public const string NombrePersonaInvalido = "El nombre proporcionado no es válido.";
 
         public const string ApellidoInvalido = "El apellido proporcionado no es válido.";
+
+        public static ValidationResult RegexValido(string regex)
+        {
+            try
+            {
+                new Regex(regex);
+                return ValidationResult.Success;
+            }
+            catch (Exception ex)
+            {
+                return new ValidationResult(ex.Message.Split('-').Last().Trim());
+            }
+        }
     }
 }
