@@ -1,6 +1,7 @@
-﻿using AguaSB.Nucleo.Mensajes;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+
+using AguaSB.Nucleo.Mensajes;
 
 namespace AguaSB.Nucleo
 {
@@ -23,7 +24,7 @@ namespace AguaSB.Nucleo
             get { return rfc; }
             set { N.Validate(ref rfc, value); }
         }
-        
+
         [Required(ErrorMessage = Validacion.CampoRequerido)]
         public Persona Representante
         {
@@ -31,5 +32,7 @@ namespace AguaSB.Nucleo
             set { N.Validate(ref representante, value); }
         }
 
+        [NotMapped]
+        public bool TieneCamposRequeridosVacios => string.IsNullOrWhiteSpace(Nombre);
     }
 }

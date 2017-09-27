@@ -1,6 +1,8 @@
-﻿using AguaSB.Nucleo.Mensajes;
+﻿using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+
+using AguaSB.Nucleo.Mensajes;
 
 namespace AguaSB.Nucleo
 {
@@ -34,5 +36,8 @@ namespace AguaSB.Nucleo
             get { return apellidoMaterno; }
             set { N.Validate(ref apellidoMaterno, value); }
         }
+
+        [NotMapped]
+        public bool TieneCamposRequeridosVacios => new[] { Nombre, ApellidoPaterno, apellidoMaterno }.Any(string.IsNullOrWhiteSpace);
     }
 }
