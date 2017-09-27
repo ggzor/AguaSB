@@ -9,6 +9,9 @@ namespace AguaSB.Utilerias
     {
         public static IObservable<(object Source, PropertyChangedEventArgs Args)> ToObservableProperties(this INotifyPropertyChanged notifier)
         {
+            if (notifier == null)
+                throw new ArgumentNullException(nameof(notifier));
+
             return Observable.FromEventPattern<PropertyChangedEventHandler, PropertyChangedEventArgs>(
                 handler => notifier.PropertyChanged += handler,
                 handler => notifier.PropertyChanged -= handler)
