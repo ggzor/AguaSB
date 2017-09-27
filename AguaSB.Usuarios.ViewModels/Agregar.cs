@@ -124,19 +124,27 @@ namespace AguaSB.Usuarios.ViewModels
 
             ReestablecerPersonaComando = new DelegateCommand(() =>
             {
-                Persona = new Persona();
-                Persona.Contactos.Add(new Contacto() { TipoContacto = telefono });
+                var persona = new Persona();
+                persona.Contactos.Add(new Contacto() { TipoContacto = telefono });
+
+                Persona = persona;
+
+                VerificarPuedeEjecutar();
             }, () => PuedeReestablecerPersona);
 
             ReestablecerNegocioComando = new DelegateCommand(() =>
             {
-                Negocio = new Negocio()
+                var negocio = new Negocio()
                 {
                     Representante = new Persona()
                 };
 
-                Negocio.Contactos.Add(new Contacto() { TipoContacto = telefono });
-                Negocio.Representante.Contactos.Add(new Contacto() { TipoContacto = telefono });
+                negocio.Contactos.Add(new Contacto() { TipoContacto = telefono });
+                negocio.Representante.Contactos.Add(new Contacto() { TipoContacto = telefono });
+
+                Negocio = negocio;
+
+                VerificarPuedeEjecutar();
             }, () => PuedeReestablecerNegocio);
 
             ReestablecerPersonaComando.Execute(null);
