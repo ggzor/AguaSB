@@ -23,7 +23,7 @@
 
             <ViewModel:Agregar x:Key="ViewModel"/>
             <Converters:EqualsTo x:Key="EqualsTo"/>
-            <Sys:Int32 x:Key="Retraso">800</Sys:Int32>
+            <Sys:Int32 x:Key="Retraso">200</Sys:Int32>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -93,7 +93,7 @@
                             <TextBox Tag="Apellido materno" Text="{Binding Persona.ApellidoMaterno, UpdateSourceTrigger=PropertyChanged, Delay={StaticResource Retraso}}"/>
 
                             <TextBox Tag="Número telefónico"
-                                     Text="{Binding TelefonoPersona, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, Delay={StaticResource Retraso}}"/>
+                                     Text="{Binding Persona.Contactos[0].Informacion, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged, Delay={StaticResource Retraso}}"/>
 
                             <Controles:ProgresoConBotones MostrarProgreso="{Binding AgregarPersonaComando.Execution.IsNotCompleted}" 
                                                           TextoProgreso="{Binding AgregarPersonaComando.ProgressMessage}"
@@ -118,22 +118,22 @@
                                      Text="{Binding Negocio.Rfc, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged, Delay={StaticResource Retraso}}"/>
 
                             <TextBox Tag="Número telefónico"
-                                     Text="{Binding TelefonoNegocio, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, Delay={StaticResource Retraso}}"/>
+                                     Text="{Binding Negocio.Contactos[0].Informacion, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged, Delay={StaticResource Retraso}}"/>
 
                             <!--Representante-->
                             <TextBlock Margin="0 20" Text="Representante:" Style="{StaticResource h3}"/>
 
                             <TextBox Tag="Nombre"
-                                     Text="{Binding Negocio.Representante.Nombre, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, Delay={StaticResource Retraso}}"/>
+                                     Text="{Binding Negocio.Representante.Nombre, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged, Delay={StaticResource Retraso}}"/>
 
                             <TextBox Tag="Apellido paterno"
-                                     Text="{Binding Negocio.Representante.ApellidoPaterno, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, Delay={StaticResource Retraso}}"/>
+                                     Text="{Binding Negocio.Representante.ApellidoPaterno, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged, Delay={StaticResource Retraso}}"/>
 
                             <TextBox Tag="Apellido materno"
-                                     Text="{Binding Negocio.Representante.ApellidoMaterno, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, Delay={StaticResource Retraso}}"/>
+                                     Text="{Binding Negocio.Representante.ApellidoMaterno, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged, Delay={StaticResource Retraso}}"/>
 
                             <TextBox Tag="Número telefónico"
-                                     Text="{Binding TelefonoRepresentante, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, Delay={StaticResource Retraso}}"/>
+                                     Text="{Binding Negocio.Representante.Contactos[0].Informacion, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged, Delay={StaticResource Retraso}}"/>
 
                             <Controles:ProgresoConBotones MostrarProgreso="{Binding AgregarNegocioComando.Execution.IsNotCompleted}" 
                                                           TextoProgreso="{Binding AgregarNegocioComando.ProgressMessage}"

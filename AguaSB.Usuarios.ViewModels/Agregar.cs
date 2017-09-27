@@ -13,12 +13,8 @@ namespace AguaSB.Usuarios.ViewModels
     {
         #region Campos
 
-        private Persona persona = new Persona();
-        private Negocio negocio = new Negocio() { Representante = new Persona() };
-
-        private string telefonoPersona;
-        private string telefonoNegocio;
-        private string telefonoRepresentante;
+        private Persona persona;
+        private Negocio negocio;
 
         #endregion
 
@@ -38,24 +34,6 @@ namespace AguaSB.Usuarios.ViewModels
             set { SetProperty(ref negocio, value); }
         }
 
-        public string TelefonoPersona
-        {
-            get { return telefonoPersona; }
-            set { SetPropertyAndValidate(ref telefonoPersona, value); }
-        }
-
-        public string TelefonoNegocio
-        {
-            get { return telefonoNegocio; }
-            set { SetPropertyAndValidate(ref telefonoNegocio, value); }
-        }
-
-        public string TelefonoRepresentante
-        {
-            get { return telefonoRepresentante; }
-            set { SetPropertyAndValidate(ref telefonoRepresentante, value); }
-        }
-
         #endregion
 
         #region Comandos
@@ -70,13 +48,27 @@ namespace AguaSB.Usuarios.ViewModels
 
         public Agregar()
         {
-            ReestablecerPersonaComando = new DelegateCommand(() => { Persona = new Persona(); TelefonoPersona = ""; });
+            var telefono = new TipoContacto() { Nombre = "Teléfono", ExpresionRegular = @"\A[0-9 ]*\z" };
+
+            ReestablecerPersonaComando = new DelegateCommand(() =>
+            {
+                Persona = new Persona();
+                Persona.Contactos.Add(new Contacto() { TipoContacto = telefono });
+            });
+
             ReestablecerNegocioComando = new DelegateCommand(() =>
             {
-                Negocio = new Negocio() { Representante = new Persona() };
-                TelefonoNegocio = "";
-                TelefonoRepresentante = "";
+                Negocio = new Negocio()
+                {
+                    Representante = new Persona()
+                };
+
+                Negocio.Contactos.Add(new Contacto() { TipoContacto = telefono });
+                Negocio.Representante.Contactos.Add(new Contacto() { TipoContacto = telefono });
             });
+
+            ReestablecerPersonaComando.Execute(null);
+            ReestablecerNegocioComando.Execute(null);
 
             AgregarPersonaComando = new AsyncDelegateCommand<int>(AgregarPersona, PuedeAgregarPersona);
             AgregarNegocioComando = new AsyncDelegateCommand<int>(AgregarNegocio, PuedeAgregarNegocio);
