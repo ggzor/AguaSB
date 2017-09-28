@@ -99,7 +99,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ProveedorServicios.cs" />
+    <Compile Include="Proveedores\ProveedorRepositorios.cs" />
+    <Compile Include="Proveedores\ProveedorServicios.cs" />
+    <Compile Include="Proveedores\RepositorioEnMemoria.cs" />
     <Page Include="Controles\Plantillas\Extensiones.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -151,6 +153,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AguaSB.Datos\AguaSB.Datos.csproj">
+      <Project>{965235B6-229E-4AEE-A759-F16DD1EE58F1}</Project>
+      <Name>AguaSB.Datos</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AguaSB.Estilos\AguaSB.Estilos.csproj">
       <Project>{84c1223e-9ebc-41f4-a7d2-e447f7d6b188}</Project>
       <Name>AguaSB.Estilos</Name>
@@ -162,6 +168,10 @@
     <ProjectReference Include="..\AguaSB.Navegacion\AguaSB.Navegacion.csproj">
       <Project>{b51b553c-10d5-47ea-93bb-deced914d5f6}</Project>
       <Name>AguaSB.Navegacion</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AguaSB.Nucleo\AguaSB.Nucleo.csproj">
+      <Project>{10E1E718-EA42-4519-BAA2-7CD3C21B442A}</Project>
+      <Name>AguaSB.Nucleo</Name>
     </ProjectReference>
     <ProjectReference Include="..\AguaSB.Utilerias\AguaSB.Utilerias.csproj">
       <Project>{61188b63-728a-4c7b-b19d-11abd1f64f4f}</Project>

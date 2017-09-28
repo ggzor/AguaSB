@@ -17,11 +17,11 @@ namespace AguaSB.Usuarios.Views
         public string Descripcion =>
             "Agregar, actualizar o inhabilitar usuarios de la base de datos. Así como ver estadísticas sobre los adeudos de los usuarios.";
 
-        public IEnumerable<Operacion> Operaciones => new[] {
-            new Operacion("Agregar usuario", vm => new Agregar(), new ViewModels.Agregar())
+        public IEnumerable<Operacion> Operaciones { get; } = new[] {
+            new Operacion("Agregar usuario", vm => new Agregar((ViewModels.Agregar)vm), () => new ViewModels.Agregar())
         };
 
-        public Lazy<FrameworkElement> Icono => new Lazy<FrameworkElement>(() => new PackIconModern()
+        public Lazy<FrameworkElement> Icono { get; } = new Lazy<FrameworkElement>(() => new PackIconModern()
         {
             Width = 80,
             Height = 80,

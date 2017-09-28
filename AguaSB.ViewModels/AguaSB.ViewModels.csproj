@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IProveedorRepositorios.cs" />
     <Compile Include="IProveedorServicios.cs" />
     <Compile Include="IViewModel.cs" />
     <Compile Include="ViewModel.cs" />
@@ -58,9 +59,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AguaSB.Datos\AguaSB.Datos.csproj">
+      <Project>{965235B6-229E-4AEE-A759-F16DD1EE58F1}</Project>
+      <Name>AguaSB.Datos</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AguaSB.Navegacion\AguaSB.Navegacion.csproj">
       <Project>{b51b553c-10d5-47ea-93bb-deced914d5f6}</Project>
       <Name>AguaSB.Navegacion</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AguaSB.Nucleo\AguaSB.Nucleo.csproj">
+      <Project>{10E1E718-EA42-4519-BAA2-7CD3C21B442A}</Project>
+      <Name>AguaSB.Nucleo</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

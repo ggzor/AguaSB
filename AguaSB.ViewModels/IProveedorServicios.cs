@@ -1,6 +1,8 @@
-﻿namespace AguaSB.ViewModels
+﻿
+namespace AguaSB.ViewModels
 {
     public interface IProveedorServicios
     {
+        IProveedorRepositorios Repositorios { get; }
     }
 }

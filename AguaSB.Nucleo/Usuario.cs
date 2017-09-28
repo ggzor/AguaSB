@@ -9,8 +9,9 @@ using AguaSB.Utilerias;
 namespace AguaSB.Nucleo
 {
     [Table("Usuarios")]
-    public abstract class Usuario : INotifyPropertyChanged, INotifyDataErrorInfo
+    public abstract class Usuario : IEntidad, INotifyPropertyChanged, INotifyDataErrorInfo
     {
+        public int Id { get; set; }
 
         private ICollection<Contacto> contactos;
 

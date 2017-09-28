@@ -59,6 +59,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AguaSB.Datos\AguaSB.Datos.csproj">
+      <Project>{965235B6-229E-4AEE-A759-F16DD1EE58F1}</Project>
+      <Name>AguaSB.Datos</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AguaSB.Navegacion\AguaSB.Navegacion.csproj">
       <Project>{b51b553c-10d5-47ea-93bb-deced914d5f6}</Project>
       <Name>AguaSB.Navegacion</Name>

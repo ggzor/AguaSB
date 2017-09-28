@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contacto.cs" />
+    <Compile Include="IEntidad.cs" />
     <Compile Include="Mensajes\Validacion.cs" />
     <Compile Include="Negocio.cs" />
     <Compile Include="Persona.cs" />

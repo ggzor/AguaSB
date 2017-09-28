@@ -15,9 +15,9 @@ namespace AguaSB.Navegacion.Tests
         private const string NodoExistente = "NodoExistente";
         private const string NodoInexistente = "NodoInexistente";
 
-        public static readonly IReadOnlyDictionary<string, INodo> Subnodos = new Dictionary<string, INodo>()
+        public static readonly IReadOnlyDictionary<string, INodo<string>> Subnodos = new Dictionary<string, INodo<string>>()
         {
-            [NodoExistente] = new NodoHoja(),
+            [NodoExistente] = new NodoHoja<string>(),
         };
 
         private static readonly Fixture Cualquiera = new Fixture();
@@ -39,7 +39,7 @@ namespace AguaSB.Navegacion.Tests
         [TestCase(false, NodoInexistente)]
         public async Task Deberia__Llamar_SeleccionSubnodo_CuandoSeEntraConUnNombreDeNodo__(bool resultado, string nombreDeNodo)
         {
-            var nodo = new NodoRama(Subnodos)
+            var nodo = new NodoRama<string>(Subnodos)
             {
                 SeleccionSubnodo = _ => Verificador.Funcion()
             };
@@ -53,7 +53,7 @@ namespace AguaSB.Navegacion.Tests
         [Test]
         public async Task DeberiaLlamar_EntradaSinArgumentos_CuandoSeLlamaEntrar_Con_ColaSinArgumentos()
         {
-            var nodo = new NodoRama(Subnodos)
+            var nodo = new NodoRama<string>(Subnodos)
             {
                 EntradaSinArgumentos = Verificador.Funcion
             };
@@ -66,7 +66,7 @@ namespace AguaSB.Navegacion.Tests
         [Test]
         public async Task DeberiaLlamar_EntradaSinArgumentos_CuandoSeLlamaEntrar_Y_ElArgumentoEnColaNavegacionEsUnSubnodoInexistente()
         {
-            var nodo = new NodoRama(Subnodos)
+            var nodo = new NodoRama<string>(Subnodos)
             {
                 EntradaSinArgumentos = Verificador.Funcion
             };
@@ -80,7 +80,7 @@ namespace AguaSB.Navegacion.Tests
         [Test]
         public async Task DeberiaNoLanzarExcepcion_CuandoSeLlamaEntrar_Con_ColaSubnodoExistente_Y_SeleccionSubnodoEsNulo()
         {
-            var nodo = new NodoRama(Subnodos)
+            var nodo = new NodoRama<string>(Subnodos)
             {
                 SeleccionSubnodo = null
             };
@@ -91,7 +91,7 @@ namespace AguaSB.Navegacion.Tests
         [Test]
         public async Task DeberiaNoLanzarExcepcion_CuandoSeLlamaEntrar_Con_ColaSinArgumentos_Y_EntradaSinArgumentosEsNulo()
         {
-            var nodo = new NodoRama(Subnodos)
+            var nodo = new NodoRama<string>(Subnodos)
             {
                 EntradaSinArgumentos = null
             };
@@ -105,7 +105,7 @@ namespace AguaSB.Navegacion.Tests
         public async Task DeberiaEstablecer_NavegadorEnSubnodo_CuandoSeLlamaEntrar_Con_SubnodoExistente()
         {
             var navegador = Substitute.For<Navegador>();
-            var nodo = new NodoRama(Subnodos)
+            var nodo = new NodoRama<string>(Subnodos)
             {
                 Navegador = navegador
             };
@@ -119,12 +119,12 @@ namespace AguaSB.Navegacion.Tests
         [Test]
         public async Task DeberiaLlamar_EntrarEnSubnodo_CuandoSeLlamaEntrar_Con_SubnodoExistente()
         {
-            var subnodo = Substitute.For<INodo>();
-            var subnodos = new Dictionary<string, INodo>()
+            var subnodo = Substitute.For<INodo<string>>();
+            var subnodos = new Dictionary<string, INodo<string>>()
             {
                 [NodoExistente] = subnodo
             };
-            var nodo = new NodoRama(subnodos);
+            var nodo = new NodoRama<string>(subnodos);
 
             await nodo.Entrar(ColaConSubnodoValido);
 
@@ -136,9 +136,9 @@ namespace AguaSB.Navegacion.Tests
         {
             var conteoSubnodos = Aleatorio.Next(1, 10);
             var subnodos = Enumerable.Range(0, conteoSubnodos)
-                .Select(_ => (Cualquiera.Create<string>(), Substitute.For<INodo>()))
+                .Select(_ => (Cualquiera.Create<string>(), Substitute.For<INodo<string>>()))
                 .ToDictionary(i => i.Item1, i => i.Item2);
-            var nodo = new NodoRama(subnodos);
+            var nodo = new NodoRama<string>(subnodos);
 
             await nodo.Finalizar();
 
@@ -149,7 +149,7 @@ namespace AguaSB.Navegacion.Tests
         [Test]
         public async Task DeberiaNoLanzarExcepcion_CuandoNoTieneNodosYSeLlamaFinalizar()
         {
-            var nodo = new NodoRama(new Dictionary<string, INodo>());
+            var nodo = new NodoRama<string>(new Dictionary<string, INodo<string>>());
 
             await nodo.Finalizar();
         }
@@ -158,7 +158,7 @@ namespace AguaSB.Navegacion.Tests
         public async Task DeberiaLlamar_FinalizarEnNodoRama_DespuesDeNodoHijo()
         {
             var verificadorSubnodo = new VerificadorFuncionLlamada();
-            var subnodo = new NodoHoja()
+            var subnodo = new NodoHoja<string>()
             {
                 Finalizacion = async () =>
                 {
@@ -166,11 +166,11 @@ namespace AguaSB.Navegacion.Tests
                     await verificadorSubnodo.Funcion();
                 }
             };
-            var subnodos = new Dictionary<string, INodo>()
+            var subnodos = new Dictionary<string, INodo<string>>()
             {
                 [NodoExistente] = subnodo
             };
-            var nodo = new NodoRama(subnodos)
+            var nodo = new NodoRama<string>(subnodos)
             {
                 Finalizacion = Verificador.Funcion
             };

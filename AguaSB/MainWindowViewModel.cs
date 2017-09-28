@@ -9,6 +9,7 @@ using System.Waf.Foundation;
 using GGUtils.MVVM.Async;
 
 using AguaSB.Extensiones;
+using AguaSB.Proveedores;
 
 namespace AguaSB
 {
@@ -59,7 +60,7 @@ namespace AguaSB
 
             foreach (var extension in extensionesARegistrar)
                 foreach (var operacion in extension.Operaciones)
-                    await operacion.ViewModel.Nodo.Inicializar(ProveedorServicios);
+                    await operacion.ViewModel.Value.Nodo.Inicializar(ProveedorServicios);
 
             return extensionesARegistrar;
         }
@@ -70,7 +71,7 @@ namespace AguaSB
             {
                 Views.TraerAlFrente(operacion.View.Value);
 
-                operacion.ViewModel.Nodo.Entrar(null);
+                operacion.ViewModel.Value.Nodo.Entrar(null);
             }
         }
     }

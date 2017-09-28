@@ -27,7 +27,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid DataContext="{StaticResource ViewModel}" Style="{StaticResource CorrectTextRendering}">
+    <Grid Name="Principal" DataContext="{StaticResource ViewModel}" Style="{StaticResource CorrectTextRendering}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>

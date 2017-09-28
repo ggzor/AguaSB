@@ -11,16 +11,22 @@ namespace AguaSB.Extensiones
 
         public Lazy<FrameworkElement> View { get; }
 
-        public IViewModel ViewModel { get; set; }
+        public Lazy<IViewModel> ViewModel { get; set; }
 
-        public Operacion(string nombre, Func<IViewModel, FrameworkElement> generadorView, IViewModel viewModel)
+        public Operacion(string nombre, Func<IViewModel, FrameworkElement> generadorView, Func<IViewModel> generadorViewModel)
         {
             if (string.IsNullOrWhiteSpace(nombre))
                 throw new ArgumentException("El nombre de la operación debe tener al menos un caracter");
 
+            if (generadorView == null)
+                throw new ArgumentNullException(nameof(generadorView));
+
+            if (generadorViewModel == null)
+                throw new ArgumentNullException(nameof(generadorViewModel));
+
             Nombre = nombre;
-            View = new Lazy<FrameworkElement>(() => generadorView(viewModel) ?? throw new ArgumentNullException(nameof(generadorView)));
-            ViewModel = viewModel;
+            View = new Lazy<FrameworkElement>(() => generadorView(ViewModel.Value));
+            ViewModel = new Lazy<IViewModel>(generadorViewModel);
         }
     }
 }

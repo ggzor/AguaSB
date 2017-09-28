@@ -14,6 +14,7 @@ using AguaSB.Nucleo;
 using AguaSB.Utilerias;
 using AguaSB.ViewModels;
 using AguaSB.Navegacion;
+using AguaSB.Datos;
 
 namespace AguaSB.Usuarios.ViewModels
 {
@@ -84,7 +85,7 @@ namespace AguaSB.Usuarios.ViewModels
         {
             Nodo = new NodoHoja<IProveedorServicios>()
             {
-                Entrada = Entrando
+                Inicializacion = Inicializacion
             };
 
             ConfigurarComandos();
@@ -95,9 +96,17 @@ namespace AguaSB.Usuarios.ViewModels
             RaisePropertyChanged(nameof(Persona));
         }
 
-        private async Task Entrando(ColaNavegacion arg)
-        {
+        #region Servicios
 
+        public IRepositorio<Usuario> Usuarios { get; private set; }
+
+        #endregion
+
+        private Task Inicializacion(IProveedorServicios servicios)
+        {
+            Usuarios = servicios.Repositorios.Usuarios;
+
+            return Task.CompletedTask;
         }
 
         private IDisposable ObservadorDePropiedades;
@@ -185,45 +194,41 @@ namespace AguaSB.Usuarios.ViewModels
                 .Aggregate((v1, v2) => v1 && v2);
 
 
-        private async Task<int> AgregarPersona(IProgress<(double, string)> progreso)
+        private async Task<int> AgregarPersona(IProgress<(double, string)> progreso) =>
+            await AgregarUsuarioManejando(Persona, b => PuedeReestablecerPersona = b, ReestablecerPersonaComando, progreso);
+
+        private async Task<int> AgregarNegocio(IProgress<(double, string)> progreso) =>
+            await AgregarUsuarioManejando(Negocio, b => PuedeReestablecerNegocio = b, ReestablecerNegocioComando, progreso);
+
+        private async Task<int> AgregarUsuarioManejando(Usuario usuario, Action<bool> puedeReestablecer, ICommand reestablecer, IProgress<(double, string)> progreso)
         {
-            PuedeReestablecerPersona = false;
-            Usuario = Persona;
+            puedeReestablecer(false);
+            Usuario = usuario;
 
-            var resultado = await AgregarUsuario(progreso);
+            try
+            {
+                var resultado = await AgregarUsuario(progreso);
 
-            PuedeReestablecerPersona = true;
-            ReestablecerPersonaComando.Execute(null);
+                puedeReestablecer(true);
+                reestablecer.Execute(null);
 
-            return resultado;
-        }
-
-        private async Task<int> AgregarNegocio(IProgress<(double, string)> progreso)
-        {
-            PuedeReestablecerNegocio = false;
-            Usuario = Negocio;
-
-            var resultado = await AgregarUsuario(progreso);
-
-            PuedeReestablecerNegocio = true;
-            ReestablecerNegocioComando.Execute(null);
-
-            return resultado;
+                return resultado;
+            }
+            finally
+            {
+                puedeReestablecer(true);
+            }
         }
 
         private async Task<int> AgregarUsuario(IProgress<(double, string)> progreso = null)
         {
-            async Task Reportar(string textoProgreso)
-            {
-                progreso?.Report((0.0, textoProgreso));
-                await Task.Delay(5000);
-            }
+            progreso.Report((0.0, "Agregando usuario..."));
 
-            await Reportar("Comenzando ejecución...");
-            await Reportar("Buscando duplicados...");
-            await Reportar("Registrando usuario...");
+            var usuario = await Usuarios.Agregar(Usuario);
 
-            return 0;
+            progreso.Report((100.0, "Completado."));
+
+            return usuario.Id;
         }
     }
 }
