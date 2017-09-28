@@ -24,9 +24,9 @@ namespace AguaSB.Navegacion.Tests
         [Test]
         public async Task DeberiaLlamar_Inicializacion_CuandoSeLlamaEntrar()
         {
-            INodo nodo = new NodoHoja()
+            INodo<string> nodo = new NodoHoja<string>()
             {
-                Inicializacion = Verificador.Funcion
+                Inicializacion = _ => Verificador.Funcion()
             };
 
             await ConfigurarYRealizarLlamada(nodo);
@@ -37,7 +37,7 @@ namespace AguaSB.Navegacion.Tests
         [Test]
         public async Task DeberiaLlamar_Entrada_CuandoSeLlamaEntrar()
         {
-            INodo nodo = new NodoHoja()
+            INodo<string> nodo = new NodoHoja<string>()
             {
                 Entrada = _ => Verificador.Funcion()
             };
@@ -47,12 +47,13 @@ namespace AguaSB.Navegacion.Tests
             Assert.True(Verificador.Llamado);
         }
 
+
         [Test]
         public async Task DeberiaNoLlamar_Inicializacion_CuandoSeLlamaEntrarPorSegundaVez()
         {
-            INodo nodo = new NodoHoja()
+            INodo<string> nodo = new NodoHoja<string>()
             {
-                Inicializacion = Verificador.Funcion
+                Inicializacion = _ => Verificador.Funcion()
             };
 
             await ConfigurarYRealizarLlamada(nodo);
@@ -64,7 +65,7 @@ namespace AguaSB.Navegacion.Tests
         [Test]
         public async Task DeberiaNoLanzarExcepcion_CuandoAlgunaDeLasFuncionesEsNula()
         {
-            INodo nodo = new NodoHoja()
+            INodo<string> nodo = new NodoHoja<string>()
             {
                 Inicializacion = null,
                 Entrada = null,
@@ -79,7 +80,7 @@ namespace AguaSB.Navegacion.Tests
         [Test]
         public async Task DeberiaLlamar_Finalizacion_CuandoSeLlamaFinalizar()
         {
-            INodo nodo = new NodoHoja()
+            INodo<string> nodo = new NodoHoja<string>()
             {
                 Finalizacion = Verificador.Funcion
             };
@@ -94,7 +95,7 @@ namespace AguaSB.Navegacion.Tests
 
         #region Utilerias
 
-        private static async Task ConfigurarYRealizarLlamada(INodo nodo)
+        private static async Task ConfigurarYRealizarLlamada(INodo<string> nodo)
         {
             var colaNavegacion = Cualquiera.Create<ColaNavegacion>();
 

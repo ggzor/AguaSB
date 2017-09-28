@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 
-using AguaSB.Navegacion;
+using AguaSB.ViewModels;
 
 namespace AguaSB.Extensiones
 {
@@ -9,18 +9,18 @@ namespace AguaSB.Extensiones
     {
         public string Nombre { get; }
 
-        public Lazy<FrameworkElement> Visualizacion { get; }
+        public Lazy<FrameworkElement> View { get; }
 
-        public INodo Nodo { get; }
+        public IViewModel ViewModel { get; set; }
 
-        public Operacion(string nombre, Func<FrameworkElement> visualizacion, INodo nodo)
+        public Operacion(string nombre, Func<IViewModel, FrameworkElement> generadorView, IViewModel viewModel)
         {
             if (string.IsNullOrWhiteSpace(nombre))
                 throw new ArgumentException("El nombre de la operación debe tener al menos un caracter");
 
             Nombre = nombre;
-            Visualizacion = new Lazy<FrameworkElement>(visualizacion ?? throw new ArgumentNullException(nameof(visualizacion)));
-            Nodo = nodo ?? throw new ArgumentNullException(nameof(nodo));
+            View = new Lazy<FrameworkElement>(() => generadorView(viewModel) ?? throw new ArgumentNullException(nameof(generadorView)));
+            ViewModel = viewModel;
         }
     }
 }

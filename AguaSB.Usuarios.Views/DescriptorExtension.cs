@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 
 using AguaSB.Estilos;
 using AguaSB.Extensiones;
 using MahApps.Metro.IconPacks;
-using AguaSB.Navegacion;
 
 namespace AguaSB.Usuarios.Views
 {
@@ -20,7 +18,7 @@ namespace AguaSB.Usuarios.Views
             "Agregar, actualizar o inhabilitar usuarios de la base de datos. Así como ver estadísticas sobre los adeudos de los usuarios.";
 
         public IEnumerable<Operacion> Operaciones => new[] {
-            new Operacion("Agregar usuario", () => new Agregar(), new NodoHoja())
+            new Operacion("Agregar usuario", vm => new Agregar(), new ViewModels.Agregar())
         };
 
         public Lazy<FrameworkElement> Icono => new Lazy<FrameworkElement>(() => new PackIconModern()

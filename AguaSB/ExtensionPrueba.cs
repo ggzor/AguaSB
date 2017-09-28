@@ -7,6 +7,7 @@ using System.Windows.Media;
 using AguaSB.Extensiones;
 using MahApps.Metro.IconPacks;
 using AguaSB.Navegacion;
+using AguaSB.ViewModels;
 
 namespace AguaSB
 {
@@ -28,10 +29,15 @@ namespace AguaSB
         });
 
         public IEnumerable<Operacion> Operaciones => new[] {
-            new Operacion("Agregar nueva extensión", () => new StackPanel(){ Background = Brushes.White }, new NodoHoja()),
-            new Operacion("Modificar configuración", () => new StackPanel(), new NodoHoja()),
-            new Operacion("Buscar nuevas extensiónes", () => new StackPanel(), new NodoHoja()),
-            new Operacion("Obtener ayuda", () => new StackPanel(), new NodoHoja())
+            new Operacion("Agregar nueva extensión", _ => new StackPanel(){ Background = Brushes.White }, new FakeViewModel()),
+            new Operacion("Modificar configuración", _ => new StackPanel(), new FakeViewModel()),
+            new Operacion("Buscar nuevas extensiónes", _ => new StackPanel(), new FakeViewModel()),
+            new Operacion("Obtener ayuda", _ => new StackPanel(), new FakeViewModel())
         };
+    }
+
+    public class FakeViewModel : IViewModel
+    {
+        public INodo<IProveedorServicios> Nodo => new NodoHoja<IProveedorServicios>();
     }
 }

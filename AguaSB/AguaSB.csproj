@@ -99,6 +99,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ProveedorServicios.cs" />
     <Page Include="Controles\Plantillas\Extensiones.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -165,6 +166,10 @@
     <ProjectReference Include="..\AguaSB.Utilerias\AguaSB.Utilerias.csproj">
       <Project>{61188b63-728a-4c7b-b19d-11abd1f64f4f}</Project>
       <Name>AguaSB.Utilerias</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AguaSB.ViewModels\AguaSB.ViewModels.csproj">
+      <Project>{66436B98-0E59-4DF2-A29F-B14D157C1FA4}</Project>
+      <Name>AguaSB.ViewModels</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

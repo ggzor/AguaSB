@@ -29,34 +29,48 @@ namespace AguaSB
         public DelegateCommand EjecutarOperacionComando { get; }
         #endregion
 
+        private ProveedorServicios ProveedorServicios { get; }
+
         public MainWindowViewModel(IAdministradorViews administradorViews)
         {
             Extensiones = new AsyncProperty<IEnumerable<IExtension>>(CargarExtensiones());
             Views = administradorViews ?? throw new ArgumentNullException(nameof(administradorViews));
 
             EjecutarOperacionComando = new DelegateCommand(EjecutarOperacion);
+
+            ProveedorServicios = new ProveedorServicios();
         }
 
-        private Task<IEnumerable<IExtension>> CargarExtensiones() => Task.Run(() =>
+        private async Task<IEnumerable<IExtension>> CargarExtensiones()
         {
-            var extensiones = UtileriasExtensiones.En(DirectorioExtensiones, s => Regex.IsMatch(s, PatronExtensiones));
-            var extensionesCargadas = new List<IExtension>();
+            var extensionesARegistrar = await Task.Run(() =>
+            {
+                var extensiones = UtileriasExtensiones.En(DirectorioExtensiones, s => Regex.IsMatch(s, PatronExtensiones));
+                var extensionesCargadas = new List<IExtension>();
 
-            foreach (var extension in extensiones)
-                if (!extension.Extension.IsFaulted)
-                    extensionesCargadas.Add(extension.Extension.Value);
-                else
-                    Console.WriteLine($"No se pudo cargar \"{extension.Archivo}\": {extension.Extension.Exception.Message}");
+                foreach (var extension in extensiones)
+                    if (!extension.Extension.IsFaulted)
+                        extensionesCargadas.Add(extension.Extension.Value);
+                    else
+                        Console.WriteLine($"No se pudo cargar \"{extension.Archivo}\": {extension.Extension.Exception.Message}");
 
-            return (IEnumerable<IExtension>)extensionesCargadas;
-        });
+                return (IEnumerable<IExtension>)extensionesCargadas;
+            });
+
+            foreach (var extension in extensionesARegistrar)
+                foreach (var operacion in extension.Operaciones)
+                    await operacion.ViewModel.Nodo.Inicializar(ProveedorServicios);
+
+            return extensionesARegistrar;
+        }
 
         private void EjecutarOperacion(object parametro)
         {
             if (parametro is Operacion operacion)
             {
-                Views.TraerAlFrente(operacion.Visualizacion.Value);
-                operacion.Nodo.Entrar(null);
+                Views.TraerAlFrente(operacion.View.Value);
+
+                operacion.ViewModel.Nodo.Entrar(null);
             }
         }
     }

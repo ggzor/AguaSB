@@ -71,6 +71,10 @@
       <Project>{61188b63-728a-4c7b-b19d-11abd1f64f4f}</Project>
       <Name>AguaSB.Utilerias</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AguaSB.ViewModels\AguaSB.ViewModels.csproj">
+      <Project>{66436B98-0E59-4DF2-A29F-B14D157C1FA4}</Project>
+      <Name>AguaSB.ViewModels</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GGUtils.MVVM.Async\GGUtils.MVVM.Async.csproj">
       <Project>{0b78e13e-f73b-4a97-8af4-133a111e4416}</Project>
       <Name>GGUtils.MVVM.Async</Name>

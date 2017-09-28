@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace AguaSB.Navegacion
 {
-    public class NavegadorNodos : Navegador
+    public class NavegadorNodos<T> : Navegador
     {
 
-        public INodo NodoPrincipal { get; }
+        public INodo<T> NodoPrincipal { get; }
 
         public override async Task<bool> NavegarA(ColaNavegacion direccion)
         {

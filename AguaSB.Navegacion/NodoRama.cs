@@ -8,7 +8,7 @@ namespace AguaSB.Navegacion
     /// Clase que representa un nodo que puede tener múltiples hijos. 
     /// Esta clase manejará las entradas y finalizaciones de los subnodos en automático.
     /// </summary>
-    public class NodoRama : NodoBase
+    public class NodoRama<T> : NodoBase<T>
     {
 
         public string NodoActual { get; private set; }
@@ -23,16 +23,21 @@ namespace AguaSB.Navegacion
         /// </summary>
         public Func<Task> EntradaSinArgumentos { get; set; }
 
-        public IReadOnlyDictionary<string, INodo> Subnodos { get; private set; }
+        public IReadOnlyDictionary<string, INodo<T>> Subnodos { get; private set; }
 
-        public NodoRama(IReadOnlyDictionary<string, INodo> subnodos) =>
+        public NodoRama(IReadOnlyDictionary<string, INodo<T>> subnodos) =>
             Subnodos = subnodos ?? throw new ArgumentNullException(nameof(subnodos));
 
+        public override async Task Inicializar(T parametro)
+        {
+            await Inicializar(parametro);
+
+            foreach (var nodo in Subnodos.Values)
+                await nodo.Inicializar(parametro);
+        }
 
         public override async Task Entrar(ColaNavegacion informacion)
         {
-            await base.Entrar(informacion);
-
             var nuevoNodoClave = informacion.Siguiente<string>();
 
             if (nuevoNodoClave != null && Subnodos.ContainsKey(nuevoNodoClave))

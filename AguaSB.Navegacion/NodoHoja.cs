@@ -6,7 +6,7 @@ namespace AguaSB.Navegacion
     /// <summary>
     /// Clase que maneja un nodo sin hijos, usando composición.
     /// </summary>
-    public sealed class NodoHoja : NodoBase
+    public sealed class NodoHoja<T> : NodoBase<T>
     {
         /// <summary>
         /// Función que habilita <see cref="INodo.Entrar"/> usando composición.
@@ -15,8 +15,6 @@ namespace AguaSB.Navegacion
 
         public override async Task Entrar(ColaNavegacion informacion)
         {
-            await base.Entrar(informacion);
-
             if (Entrada != null)
                 await Entrada(informacion);
         }

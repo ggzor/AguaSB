@@ -12,12 +12,15 @@ using GGUtils.MVVM.Async;
 
 using AguaSB.Nucleo;
 using AguaSB.Utilerias;
+using AguaSB.ViewModels;
+using AguaSB.Navegacion;
 
 namespace AguaSB.Usuarios.ViewModels
 {
-    public class Agregar : ValidatableModel
+    public class Agregar : ValidatableModel, IViewModel
     {
         #region Campos
+
         // Serán inicializadas junto con los comandos.
         private Persona persona;
         private Negocio negocio;
@@ -75,12 +78,26 @@ namespace AguaSB.Usuarios.ViewModels
 
         #endregion
 
+        public INodo<IProveedorServicios> Nodo { get; }
+
         public Agregar()
         {
+            Nodo = new NodoHoja<IProveedorServicios>()
+            {
+                Entrada = Entrando
+            };
+
             ConfigurarComandos();
 
             this.ToObservableProperties().Subscribe(RegistrarObservadoresDeCambios);
+
+            // Registrar observadores por primera vez
             RaisePropertyChanged(nameof(Persona));
+        }
+
+        private async Task Entrando(ColaNavegacion arg)
+        {
+
         }
 
         private IDisposable ObservadorDePropiedades;

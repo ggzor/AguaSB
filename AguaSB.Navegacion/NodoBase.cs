@@ -7,15 +7,14 @@ namespace AguaSB.Navegacion
     /// <summary>
     /// Ofrece la funcionalidad <see cref="Inicializacion"/> y <see cref="Finalizacion"/> para las subclases <see cref="INodo"/>.
     /// </summary>
-    public abstract class NodoBase : INodo
+    public abstract class NodoBase<T> : INodo<T>
     {
-
         public Navegador Navegador { get; set; }
 
         /// <summary>
-        /// Función llamada exactamente una vez en la primera entrada. Precede al primer <see cref="INodo.Entrar"/>
+        /// Función llamada exactamente una vez en la primera entrada.
         /// </summary>
-        public virtual Func<Task> Inicializacion { get; set; }
+        public virtual Func<T, Task> Inicializacion { get; set; }
 
         /// <summary>
         /// Funcion llamada exactamente una vez cuando el navegador está finalizando. 
@@ -24,24 +23,18 @@ namespace AguaSB.Navegacion
         public virtual Func<Task> Finalizacion { get; set; }
 
 
-        private bool primeraVez = true;
-
-        public virtual async Task Entrar(ColaNavegacion informacion)
+        public virtual async Task Inicializar(T parametro)
         {
-            if (primeraVez)
-            {
-                if (Inicializacion != null)
-                    await Inicializacion();
-
-                primeraVez = false;
-            }
+            if (Inicializacion != null)
+                await Inicializacion(parametro);
         }
+
+        public abstract Task Entrar(ColaNavegacion colaNavegacion);
 
         public virtual async Task Finalizar()
         {
             if (Finalizacion != null)
                 await Finalizacion();
         }
-
     }
 }
