@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{66436B98-0E59-4DF2-A29F-B14D157C1FA4}</ProjectGuid>
+    <ProjectGuid>{39485A38-6CB1-40ED-BBC4-E4E2B8F1F74F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AguaSB.ViewModels</RootNamespace>
-    <AssemblyName>AguaSB.ViewModels</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <RootNamespace>AguaSB.Notificaciones</RootNamespace>
+    <AssemblyName>AguaSB.Notificaciones</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,7 +20,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,16 +28,15 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Reactive, Version=4.0.0.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reactive.4.0.0-preview00001\lib\net46\System.Reactive.dll</HintPath>
+    </Reference>
     <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.4.0\lib\net461\System.ValueTuple.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Waf.Core, Version=4.1.0.91, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Waf.Core.4.1.0-rc1\lib\portable45-net45+win8\System.Waf.Core.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -49,32 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IRepositorios.cs" />
-    <Compile Include="IProveedorServicios.cs" />
-    <Compile Include="IViewModel.cs" />
-    <Compile Include="ViewModel.cs" />
+    <Compile Include="ManejadorNotificaciones.cs" />
+    <Compile Include="Notificacion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AguaSB.Datos\AguaSB.Datos.csproj">
-      <Project>{965235B6-229E-4AEE-A759-F16DD1EE58F1}</Project>
-      <Name>AguaSB.Datos</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AguaSB.Navegacion\AguaSB.Navegacion.csproj">
-      <Project>{b51b553c-10d5-47ea-93bb-deced914d5f6}</Project>
-      <Name>AguaSB.Navegacion</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AguaSB.Notificaciones\AguaSB.Notificaciones.csproj">
-      <Project>{39485A38-6CB1-40ED-BBC4-E4E2B8F1F74F}</Project>
-      <Name>AguaSB.Notificaciones</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AguaSB.Nucleo\AguaSB.Nucleo.csproj">
-      <Project>{10E1E718-EA42-4519-BAA2-7CD3C21B442A}</Project>
-      <Name>AguaSB.Nucleo</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

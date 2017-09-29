@@ -15,6 +15,7 @@ using AguaSB.Utilerias;
 using AguaSB.ViewModels;
 using AguaSB.Navegacion;
 using AguaSB.Datos;
+using AguaSB.Operaciones;
 
 namespace AguaSB.Usuarios.ViewModels
 {
@@ -27,7 +28,10 @@ namespace AguaSB.Usuarios.ViewModels
         private Negocio negocio;
 
         private bool puedeReestablecerPersona = true;
+        private bool mostrarMensajeErrorPersona = true;
+
         private bool puedeReestablecerNegocio = true;
+        private bool mostrarMensajeErrorNegocio = true;
 
         #endregion
 
@@ -45,6 +49,18 @@ namespace AguaSB.Usuarios.ViewModels
         {
             get { return negocio; }
             set { SetProperty(ref negocio, value); }
+        }
+
+        public bool MostrarMensajeErrorPersona
+        {
+            get { return mostrarMensajeErrorPersona; }
+            set { SetProperty(ref mostrarMensajeErrorPersona, value); }
+        }
+
+        public bool MostrarMensajeErrorNegocio
+        {
+            get { return mostrarMensajeErrorNegocio; }
+            set { SetProperty(ref mostrarMensajeErrorNegocio, value); }
         }
 
         public bool PuedeReestablecerPersona
@@ -156,6 +172,7 @@ namespace AguaSB.Usuarios.ViewModels
                 Persona = persona;
 
                 VerificarPuedeEjecutar();
+                MostrarMensajeErrorPersona = false;
             }, () => PuedeReestablecerPersona);
 
             ReestablecerNegocioComando = new DelegateCommand(() =>
@@ -171,6 +188,7 @@ namespace AguaSB.Usuarios.ViewModels
                 Negocio = negocio;
 
                 VerificarPuedeEjecutar();
+                MostrarMensajeErrorNegocio = false;
             }, () => PuedeReestablecerNegocio);
 
             ReestablecerPersonaComando.Execute(null);
@@ -194,11 +212,17 @@ namespace AguaSB.Usuarios.ViewModels
                 .Aggregate((v1, v2) => v1 && v2);
 
 
-        private async Task<int> AgregarPersona(IProgress<(double, string)> progreso) =>
-            await AgregarUsuarioManejando(Persona, b => PuedeReestablecerPersona = b, ReestablecerPersonaComando, progreso);
+        private async Task<int> AgregarPersona(IProgress<(double, string)> progreso)
+        {
+            MostrarMensajeErrorPersona = true;
+            return await AgregarUsuarioManejando(Persona, b => PuedeReestablecerPersona = b, ReestablecerPersonaComando, progreso);
+        }
 
-        private async Task<int> AgregarNegocio(IProgress<(double, string)> progreso) =>
-            await AgregarUsuarioManejando(Negocio, b => PuedeReestablecerNegocio = b, ReestablecerNegocioComando, progreso);
+        private async Task<int> AgregarNegocio(IProgress<(double, string)> progreso)
+        {
+            MostrarMensajeErrorNegocio = true;
+            return await AgregarUsuarioManejando(Negocio, b => PuedeReestablecerNegocio = b, ReestablecerNegocioComando, progreso);
+        }
 
         private async Task<int> AgregarUsuarioManejando(Usuario usuario, Action<bool> puedeReestablecer, ICommand reestablecer, IProgress<(double, string)> progreso)
         {
@@ -222,7 +246,12 @@ namespace AguaSB.Usuarios.ViewModels
 
         private async Task<int> AgregarUsuario(IProgress<(double, string)> progreso = null)
         {
-            progreso.Report((0.0, "Agregando usuario..."));
+            progreso.Report((0.0, "Buscando duplicados..."));
+
+            if (OperacionesUsuarios.BuscarDuplicados(Usuario, Usuarios) is Usuario u)
+                throw new Exception($"El usuario \"{u.NombreCompleto}\" ya está registrado en el sistema.");
+
+            progreso.Report((50.0, "Agregando usuario..."));
 
             var usuario = await Usuarios.Agregar(Usuario);
 

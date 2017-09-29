@@ -1,8 +1,12 @@
 ﻿
+using AguaSB.Notificaciones;
+
 namespace AguaSB.ViewModels
 {
     public interface IProveedorServicios
     {
-        IProveedorRepositorios Repositorios { get; }
+        IRepositorios Repositorios { get; }       
+        
+        ManejadorNotificaciones ManejadorNotificaciones { get; }
     }
 }

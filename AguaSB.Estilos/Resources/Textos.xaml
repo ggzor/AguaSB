@@ -38,4 +38,10 @@
     <Style x:Key="h6" TargetType="TextBlock" BasedOn="{StaticResource TextoBase}">
         <Setter Property="FontSize" Value="{StaticResource TamanoH6}"/>
     </Style>
+
+    <Style x:Key="error" TargetType="TextBlock" BasedOn="{StaticResource TextoBase}">
+        <Setter Property="FontSize" Value="{StaticResource TamanoH6}"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="Foreground" Value="{DynamicResource ValidationErrorBrush}"/>
+    </Style>
 </ResourceDictionary>

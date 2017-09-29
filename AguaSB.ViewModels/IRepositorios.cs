@@ -3,7 +3,7 @@ using AguaSB.Nucleo;
 
 namespace AguaSB.ViewModels
 {
-    public interface IProveedorRepositorios
+    public interface IRepositorios
     {
 
         IRepositorio<Usuario> Usuarios { get; }

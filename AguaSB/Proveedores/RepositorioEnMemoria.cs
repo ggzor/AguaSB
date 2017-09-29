@@ -10,6 +10,8 @@ namespace AguaSB.Proveedores
     {
         private List<T> Entidades = new List<T>();
 
+        public IEnumerable<T> Datos => Entidades;
+
         public Task<T> Agregar(T entidad)
         {
             Entidades.Add(entidad);

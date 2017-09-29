@@ -6,7 +6,7 @@ using AguaSB.ViewModels;
 
 namespace AguaSB.Proveedores
 {
-    internal class ProveedorRepositorios : IProveedorRepositorios
+    internal class ProveedorRepositorios : IRepositorios
     {
         private Lazy<RepositorioEnMemoria<Usuario>> usuarios = new Lazy<RepositorioEnMemoria<Usuario>>(() => new RepositorioEnMemoria<Usuario>());
 

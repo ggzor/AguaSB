@@ -37,6 +37,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Datos", "AguaSB.Dato
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Views", "AguaSB.Views\AguaSB.Views.csproj", "{2FB7CB7E-CAB1-47CC-A509-8DAA4408B580}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Notificaciones", "AguaSB.Notificaciones\AguaSB.Notificaciones.csproj", "{39485A38-6CB1-40ED-BBC4-E4E2B8F1F74F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Operaciones", "AguaSB.Operaciones\AguaSB.Operaciones.csproj", "{EE89AE19-8F49-4F82-BEAB-6A8A75D1F907}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -103,6 +107,14 @@ Global
 		{2FB7CB7E-CAB1-47CC-A509-8DAA4408B580}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FB7CB7E-CAB1-47CC-A509-8DAA4408B580}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2FB7CB7E-CAB1-47CC-A509-8DAA4408B580}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39485A38-6CB1-40ED-BBC4-E4E2B8F1F74F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39485A38-6CB1-40ED-BBC4-E4E2B8F1F74F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39485A38-6CB1-40ED-BBC4-E4E2B8F1F74F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39485A38-6CB1-40ED-BBC4-E4E2B8F1F74F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE89AE19-8F49-4F82-BEAB-6A8A75D1F907}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE89AE19-8F49-4F82-BEAB-6A8A75D1F907}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE89AE19-8F49-4F82-BEAB-6A8A75D1F907}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE89AE19-8F49-4F82-BEAB-6A8A75D1F907}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

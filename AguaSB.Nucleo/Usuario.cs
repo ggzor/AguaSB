@@ -13,6 +13,9 @@ namespace AguaSB.Nucleo
     {
         public int Id { get; set; }
 
+        [NotMapped]
+        public abstract string NombreCompleto { get; }
+
         private ICollection<Contacto> contactos;
 
         public ICollection<Contacto> Contactos

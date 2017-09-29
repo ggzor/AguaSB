@@ -16,7 +16,7 @@ namespace AguaSB.Nucleo
         public string Nombre
         {
             get { return nombre; }
-            set { N.Validate(ref nombre, value); }
+            set { N.Validate(ref nombre, value); N.Change(nameof(NombreCompleto)); }
         }
 
         public string Rfc
@@ -34,5 +34,8 @@ namespace AguaSB.Nucleo
 
         [NotMapped]
         public bool TieneCamposRequeridosVacios => string.IsNullOrWhiteSpace(Nombre);
+
+        [NotMapped]
+        public override string NombreCompleto => Nombre;
     }
 }

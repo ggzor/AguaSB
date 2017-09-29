@@ -71,6 +71,10 @@
       <Project>{10e1e718-ea42-4519-baa2-7cd3c21b442a}</Project>
       <Name>AguaSB.Nucleo</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AguaSB.Operaciones\AguaSB.Operaciones.csproj">
+      <Project>{ee89ae19-8f49-4f82-beab-6a8a75d1f907}</Project>
+      <Name>AguaSB.Operaciones</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AguaSB.Utilerias\AguaSB.Utilerias.csproj">
       <Project>{61188b63-728a-4c7b-b19d-11abd1f64f4f}</Project>
       <Name>AguaSB.Utilerias</Name>
