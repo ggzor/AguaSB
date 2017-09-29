@@ -1,9 +1,9 @@
-﻿namespace AguaSB.Notificaciones
+﻿using System;
+
+namespace AguaSB.Notificaciones
 {
     public abstract class Notificacion
     {
-        public object Origen { get; }
-
-        public Notificacion(object origen) => Origen = origen;
+        public DateTime Fecha { get; } = Utilerias.Fecha.Ahora.DateTime;
     }
 }

@@ -52,6 +52,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
+                
                 <ListBox Name="TipoUsuario" HorizontalAlignment="Center" SelectedIndex="0" 
                          Style="{StaticResource ToggleList}">
                     <ListBox.Resources>
@@ -96,7 +97,7 @@
                             <TextBox Tag="Número telefónico"
                                      Text="{Binding Persona.Contactos[0].Informacion, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged, Delay={StaticResource Retraso}}"/>
 
-                            <TextBlock Text="{Binding AgregarPersonaComando.Execution.ExceptionMessage}" Style="{StaticResource error}"
+                            <TextBlock Name="MensajeErrorPersona" Text="{Binding AgregarPersonaComando.Execution.ExceptionMessage}" Style="{StaticResource error}"
                                        Visibility="{Binding MostrarMensajeErrorPersona, Converter={StaticResource BoolToVisibility}, ConverterParameter=H}"/>
 
                             <Controles:ProgresoConBotones MostrarProgreso="{Binding AgregarPersonaComando.Execution.IsNotCompleted}" 
@@ -139,7 +140,7 @@
                             <TextBox Tag="Número telefónico"
                                      Text="{Binding Negocio.Representante.Contactos[0].Informacion, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged, Delay={StaticResource Retraso}}"/>
 
-                            <TextBlock Text="{Binding AgregarNegocioComando.Execution.ExceptionMessage}" Style="{StaticResource error}"
+                            <TextBlock Name="MensajeErrorNegocio" Text="{Binding AgregarNegocioComando.Execution.ExceptionMessage}" Style="{StaticResource error}"
                                        Visibility="{Binding MostrarMensajeErrorNegocio, Converter={StaticResource BoolToVisibility}, ConverterParameter=H}"/>
                             
                             <Controles:ProgresoConBotones MostrarProgreso="{Binding AgregarNegocioComando.Execution.IsNotCompleted}" 
@@ -151,7 +152,7 @@
                     </ScrollViewer>
                 </metro:FlipView>
 
-                <StackPanel Grid.Row="1" IsHitTestVisible="False" Style="{StaticResource FadeTag}" Opacity="0"
+                <StackPanel Name="TextoCuandoNoHaySeleccion" Grid.Row="1" IsHitTestVisible="False" Style="{StaticResource FadeTag}" Opacity="0"
                             Tag="{Binding ElementName=Campos, Path=SelectedIndex, Converter={StaticResource EqualsTo}, ConverterParameter=-1}"
                             HorizontalAlignment="Center" VerticalAlignment="Center">
                     <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" 

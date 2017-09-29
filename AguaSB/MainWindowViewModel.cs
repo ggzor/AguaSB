@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reactive.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Waf.Applications;
@@ -8,6 +9,8 @@ using System.Waf.Foundation;
 
 using GGUtils.MVVM.Async;
 
+using AguaSB.Nucleo;
+using AguaSB.Datos.Decoradores;
 using AguaSB.Extensiones;
 using AguaSB.Proveedores;
 
@@ -40,6 +43,12 @@ namespace AguaSB
             EjecutarOperacionComando = new DelegateCommand(EjecutarOperacion);
 
             ProveedorServicios = new ProveedorServicios();
+            ProveedorServicios.ManejadorNotificaciones.Notificaciones.OfType<EntidadAgregada<Usuario>>().Subscribe(MostrarUsuario);
+        }
+
+        private void MostrarUsuario(EntidadAgregada<Usuario> u)
+        {
+            Console.WriteLine($"Se agregó el usuario {u.Entidad.NombreCompleto} el {u.Fecha}");
         }
 
         private async Task<IEnumerable<IExtension>> CargarExtensiones()

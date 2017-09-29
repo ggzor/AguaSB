@@ -99,10 +99,7 @@ namespace AguaSB.Usuarios.ViewModels
 
         public Agregar()
         {
-            Nodo = new NodoHoja<IProveedorServicios>()
-            {
-                Inicializacion = Inicializacion
-            };
+            Nodo = new NodoHoja<IProveedorServicios>() { Inicializacion = Inicializacion };
 
             ConfigurarComandos();
 
