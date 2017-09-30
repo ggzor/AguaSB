@@ -102,6 +102,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Notificaciones\NotificacionView.xaml.cs">
+      <DependentUpon>NotificacionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Notificaciones\PanelNotificaciones.cs" />
     <Compile Include="Proveedores\ProveedorRepositorios.cs" />
     <Compile Include="Proveedores\ProveedorServicios.cs" />
     <Compile Include="Proveedores\RepositorioEnMemoria.cs" />
@@ -124,6 +128,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Notificaciones\NotificacionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainWindowViewModel.cs" />
@@ -189,6 +197,10 @@
       <Name>AguaSB.ViewModels</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Notificaciones\Notificacion.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
