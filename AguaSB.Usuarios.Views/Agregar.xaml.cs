@@ -9,11 +9,9 @@ namespace AguaSB.Usuarios.Views
 
         public Agregar(ViewModels.Agregar viewModel)
         {
-            ViewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
+            DataContext = ViewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
 
             InitializeComponent();
-
-            Principal.DataContext = ViewModel;
         }
     }
 }

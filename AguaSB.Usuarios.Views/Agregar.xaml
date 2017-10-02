@@ -9,11 +9,12 @@
              xmlns:Controles="clr-namespace:AguaSB.Usuarios.Views.Controles"
              xmlns:Converters="clr-namespace:GGUtils.WPF.ValueConverters;assembly=GGUtils.WPF"
              xmlns:Views="clr-namespace:AguaSB.Views.Controles;assembly=AguaSB.Views"
-             xmlns:Sys="clr-namespace:System;assembly=mscorlib"
              xmlns:ViewModel="clr-namespace:AguaSB.Usuarios.ViewModels;assembly=AguaSB.Usuarios.ViewModels"
+             xmlns:Sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d"
              Background="White"
              Name="This"
+             d:DataContext="{d:DesignInstance Type=ViewModel:Agregar, IsDesignTimeCreatable=False}"
              d:DesignHeight="600" d:DesignWidth="800">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -21,14 +22,13 @@
                 <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Estilos.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
-            <ViewModel:Agregar x:Key="ViewModel"/>
             <Converters:EqualsTo x:Key="EqualsTo"/>
             <Converters:BoolToVisibility x:Key="BoolToVisibility"/>
             <Sys:Int32 x:Key="Retraso">200</Sys:Int32>
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid Name="Principal" DataContext="{StaticResource ViewModel}" Style="{StaticResource CorrectTextRendering}">
+    <Grid Name="Principal" Style="{StaticResource CorrectTextRendering}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -52,7 +52,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                
+
                 <ListBox Name="TipoUsuario" HorizontalAlignment="Center" SelectedIndex="0" 
                          Style="{StaticResource ToggleList}">
                     <ListBox.Resources>
@@ -142,7 +142,7 @@
 
                             <TextBlock Name="MensajeErrorNegocio" Text="{Binding AgregarNegocioComando.Execution.ExceptionMessage}" Style="{StaticResource error}"
                                        Visibility="{Binding MostrarMensajeErrorNegocio, Converter={StaticResource BoolToVisibility}, ConverterParameter=H}"/>
-                            
+
                             <Controles:ProgresoConBotones MostrarProgreso="{Binding AgregarNegocioComando.Execution.IsNotCompleted}" 
                                                           TextoProgreso="{Binding AgregarNegocioComando.ProgressMessage}"
                                                           TextoBotonSecundario="Reestablecer" 

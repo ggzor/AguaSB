@@ -29,10 +29,10 @@ namespace AguaSB
         });
 
         public IEnumerable<Operacion> Operaciones => new[] {
-            new Operacion("Agregar nueva extensión", _ => new StackPanel(){ Background = Brushes.White }, () => new FakeViewModel()),
-            new Operacion("Modificar configuración", _ => new StackPanel(), () => new FakeViewModel()),
-            new Operacion("Buscar nuevas extensiónes", _ => new StackPanel(), () => new FakeViewModel()),
-            new Operacion("Obtener ayuda", _ => new StackPanel(), () => new FakeViewModel())
+            new Operacion("Agregar nueva extensión", new StackPanel(){ Background = Brushes.White }),
+            new Operacion("Modificar configuración",  new StackPanel()),
+            new Operacion("Buscar nuevas extensiónes",  new StackPanel()),
+            new Operacion("Obtener ayuda",  new StackPanel())
         };
     }
 

@@ -57,10 +57,7 @@ namespace AguaSB
 
                 return (IEnumerable<IExtension>)extensionesCargadas;
             });
-
-            foreach (var extension in extensionesARegistrar)
-                foreach (var operacion in extension.Operaciones)
-                    await operacion.ViewModel.Value.Nodo.Inicializar(ProveedorServicios);
+            
 
             return extensionesARegistrar;
         }
@@ -69,9 +66,8 @@ namespace AguaSB
         {
             if (parametro is Operacion operacion)
             {
-                Views.TraerAlFrente(operacion.View.Value);
-
-                operacion.ViewModel.Value.Nodo.Entrar(null);
+                Views.TraerAlFrente(operacion.View);
+                
             }
         }
     }
