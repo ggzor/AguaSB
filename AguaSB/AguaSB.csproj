@@ -118,6 +118,10 @@
     <Compile Include="Proveedores\ProveedorRepositorios.cs" />
     <Compile Include="Proveedores\ProveedorServicios.cs" />
     <Compile Include="Proveedores\RepositorioEnMemoria.cs" />
+    <Compile Include="VentanaPrincipal.xaml.cs">
+      <DependentUpon>VentanaPrincipal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VentanaPrincipalViewModel.cs" />
     <Page Include="Controles\Plantillas\Extensiones.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -138,6 +142,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Notificaciones\NotificacionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VentanaPrincipal.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
