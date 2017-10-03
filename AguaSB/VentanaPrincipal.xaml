@@ -50,13 +50,13 @@
                 </StackPanel>
             </Grid>
 
-            <StackPanel Grid.Row="1" Background="White">
+            <StackPanel Grid.Row="1" Background="White" SizeChanged="AjustarExtensionViews">
                 <TextBlock Margin="0 20 0 0" Text="Módulos:" HorizontalAlignment="Center" Style="{StaticResource h2}"/>
-                <WrapPanel Name="Extensiones" Margin="0 0 0 40">
-                    <Controles:ExtensionView Margin="15 0" Width="350"/>
-                    <Controles:ExtensionView Margin="15 0" Width="350"/>
-                    <Controles:ExtensionView Margin="15 0" Width="350"/>
-                    <Controles:ExtensionView Margin="15 0" Width="350"/>
+                <WrapPanel Name="Extensiones" Margin="0 0 0 40" HorizontalAlignment="Center">
+                    <Controles:ExtensionView Margin="15 0" Width="{Binding ElementName=This, Path=AnchoExtensionView}"/>
+                    <Controles:ExtensionView Margin="15 0" Width="{Binding ElementName=This, Path=AnchoExtensionView}"/>
+                    <Controles:ExtensionView Margin="15 0" Width="{Binding ElementName=This, Path=AnchoExtensionView}"/>
+                    <Controles:ExtensionView Margin="15 0" Width="{Binding ElementName=This, Path=AnchoExtensionView}"/>
                 </WrapPanel>
             </StackPanel>
         </Grid>
