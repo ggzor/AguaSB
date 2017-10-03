@@ -48,7 +48,7 @@
                 </StackPanel>
             </Grid>
 
-            <Grid Grid.Row="1" Background="White" MinHeight="500" >
+            <Grid Grid.Row="1" Background="White" MinHeight="600" >
                 
             </Grid>
         </Grid>
