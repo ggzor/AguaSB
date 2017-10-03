@@ -44,4 +44,8 @@
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="Foreground" Value="{DynamicResource ValidationErrorBrush}"/>
     </Style>
+
+    <Style x:Key="Enlace" TargetType="Hyperlink">
+        <Setter Property="TextDecorations" Value=""/>
+    </Style>
 </ResourceDictionary>

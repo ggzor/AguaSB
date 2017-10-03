@@ -5,13 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:extensiones="clr-namespace:AguaSB.Extensiones;assembly=AguaSB.Extensiones"
         xmlns:local="clr-namespace:AguaSB"
+        xmlns:Controles="clr-namespace:AguaSB.Controles"
         xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
         Title="VentanaPrincipal"
         TitleForeground="Transparent" WindowTitleBrush="#AA000000"
         BorderThickness="0" GlowBrush="Black"
         MinWidth="600" MinHeight="600"
-        Width="800" Height="600"
+        Width="1024" Height="600"
+        
         d:DataContext="{d:DesignInstance Type=local:VentanaPrincipalViewModel, IsDesignTimeCreatable=False}"
         Name="This">
     <Window.Resources>
@@ -48,9 +50,15 @@
                 </StackPanel>
             </Grid>
 
-            <Grid Grid.Row="1" Background="White" MinHeight="600" >
-                
-            </Grid>
+            <StackPanel Grid.Row="1" Background="White">
+                <TextBlock Margin="0 20 0 0" Text="Módulos:" HorizontalAlignment="Center" Style="{StaticResource h2}"/>
+                <WrapPanel Name="Extensiones" Margin="0 0 0 40">
+                    <Controles:ExtensionView Margin="15 0" Width="350"/>
+                    <Controles:ExtensionView Margin="15 0" Width="350"/>
+                    <Controles:ExtensionView Margin="15 0" Width="350"/>
+                    <Controles:ExtensionView Margin="15 0" Width="350"/>
+                </WrapPanel>
+            </StackPanel>
         </Grid>
     </ScrollViewer>
     

@@ -2,9 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:AguaSB"
                     xmlns:extensiones="clr-namespace:AguaSB.Extensiones;assembly=AguaSB.Extensiones">
-    <Style x:Key="Enlace" TargetType="Hyperlink">
-        <Setter Property="TextDecorations" Value=""/>
-    </Style>
 
     <DataTemplate x:Key="PlantillaOperacion" DataType="{x:Type extensiones:Operacion}">
         <TextBlock Style="{StaticResource h5}">

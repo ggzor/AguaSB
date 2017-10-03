@@ -114,6 +114,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controles\ExtensionView.xaml.cs">
+      <DependentUpon>ExtensionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Notificaciones\NotificacionView.xaml.cs">
       <DependentUpon>NotificacionView.xaml</DependentUpon>
     </Compile>
@@ -125,6 +128,10 @@
       <DependentUpon>VentanaPrincipal.xaml</DependentUpon>
     </Compile>
     <Compile Include="VentanaPrincipalViewModel.cs" />
+    <Page Include="Controles\ExtensionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controles\Plantillas\Extensiones.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
