@@ -1,32 +1,57 @@
-﻿<Window x:Class="AguaSB.VentanaPrincipal"
+﻿<metro:MetroWindow x:Class="AguaSB.VentanaPrincipal"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:extensiones="clr-namespace:AguaSB.Extensiones;assembly=AguaSB.Extensiones"
         xmlns:local="clr-namespace:AguaSB"
+        xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
-        Title="VentanaPrincipal" 
+        Title="VentanaPrincipal"
+        TitleForeground="Transparent" WindowTitleBrush="#AA000000"
+        BorderThickness="0" GlowBrush="Black"
+        MinWidth="600" MinHeight="600"
         Width="800" Height="600"
         d:DataContext="{d:DesignInstance Type=local:VentanaPrincipalViewModel, IsDesignTimeCreatable=False}"
         Name="This">
-    <Grid>
-        <ListView ItemsSource="{Binding Extensiones}">
-            <ListView.ItemTemplate>
-                <DataTemplate DataType="{x:Type extensiones:IExtension}">
-                    <StackPanel>
-                        <TextBlock Text="{Binding Nombre}"/>
-                        <TextBlock Text="Operaciones:"/>
-                        <ListView ItemsSource="{Binding Operaciones}">
-                            <ListView.ItemTemplate>
-                                <DataTemplate DataType="{x:Type extensiones:Operacion}">
-                                    <TextBlock Text="{Binding Nombre}"/>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </Grid>
-</Window>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Estilos.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Window.Background>
+        <ImageBrush ImageSource="Fondo.jpg" Stretch="UniformToFill">
+            <ImageBrush.Transform>
+                <TranslateTransform Y="-150"/>
+            </ImageBrush.Transform>
+        </ImageBrush>
+    </Window.Background>
+
+    <ScrollViewer Padding="0">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="300"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Background="#AA000000" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel Margin="80 20" Orientation="Horizontal">
+                    <Path Width="54" Height="54" Stretch="UniformToFill" Fill="White" VerticalAlignment="Center">
+                        <Path.Data>m 15.12667,112.87153 c 3.905278,3.90529 64.446676,-1.95263 85.9305,-23.436452 17.25711,-17.257101 17.25711,-45.236931 0,-62.494036 -17.257102,-17.2571023 -45.236932,-17.2571023 -62.494034,0 C 17.079309,48.424869 11.226191,108.97106 15.12667,112.87153</Path.Data>
+                    </Path>
+                    <TextBlock Margin="10 0 0 0" Foreground="White" FontSize="54" Style="{StaticResource h1}">
+                        Agua<Run FontWeight="DemiBold" FontFamily="Segoe UI">SB</Run>
+                    </TextBlock>
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Row="1" Background="White" MinHeight="500" >
+                
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+    
+</metro:MetroWindow>

@@ -1,9 +1,10 @@
-﻿using System;
+﻿using MahApps.Metro.Controls;
+using System;
 using System.Windows;
 
 namespace AguaSB
 {
-    public partial class VentanaPrincipal : Window
+    public partial class VentanaPrincipal : MetroWindow
     {
         public VentanaPrincipalViewModel ViewModel { get; }
 
