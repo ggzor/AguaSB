@@ -3,8 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:extensiones="clr-namespace:AguaSB.Extensiones;assembly=AguaSB.Extensiones"
-        xmlns:local="clr-namespace:AguaSB"
+                   xmlns:local="clr-namespace:AguaSB"
         xmlns:Controles="clr-namespace:AguaSB.Controles"
         xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
@@ -12,7 +11,8 @@
         TitleForeground="Transparent" WindowTitleBrush="#AA000000"
         BorderThickness="0" GlowBrush="Black"
         MinWidth="600" MinHeight="600"
-        Width="1024" Height="600"
+        WindowState="Maximized"
+        Width="1024" Height="768"
         
         d:DataContext="{d:DesignInstance Type=local:VentanaPrincipalViewModel, IsDesignTimeCreatable=False}"
         Name="This">
@@ -50,16 +50,22 @@
                 </StackPanel>
             </Grid>
 
-            <StackPanel Grid.Row="1" Background="White" SizeChanged="AjustarExtensionViews">
+            <StackPanel Grid.Row="1" Background="White" SizeChanged="AjustarAnchos">
                 <TextBlock Margin="0 20 0 0" Text="Módulos:" HorizontalAlignment="Center" Style="{StaticResource h2}"/>
                 <WrapPanel Name="Extensiones" Margin="0 0 0 40" HorizontalAlignment="Center">
-                    <Controles:ExtensionView Margin="15 0" Width="{Binding ElementName=This, Path=AnchoExtensionView}"/>
-                    <Controles:ExtensionView Margin="15 0" Width="{Binding ElementName=This, Path=AnchoExtensionView}"/>
-                    <Controles:ExtensionView Margin="15 0" Width="{Binding ElementName=This, Path=AnchoExtensionView}"/>
-                    <Controles:ExtensionView Margin="15 0" Width="{Binding ElementName=This, Path=AnchoExtensionView}"/>
+                    <WrapPanel.Resources>
+                        <Style TargetType="Controles:ExtensionView">
+                            <Setter Property="Margin" Value="15 0"/>
+                            <Setter Property="Width" Value="{Binding ElementName=This, Path=Ajustador.AnchoObjeto}"/>
+                        </Style>
+                    </WrapPanel.Resources>
+                    <Controles:ExtensionView />
+                    <Controles:ExtensionView />
+                    <Controles:ExtensionView />
+                    <Controles:ExtensionView />
                 </WrapPanel>
             </StackPanel>
         </Grid>
     </ScrollViewer>
-    
+
 </metro:MetroWindow>
