@@ -19,11 +19,8 @@ namespace AguaSB
         private const string PatronExtensiones = @"AguaSB\.[A-Za-z]+\.Views\.dll";
         #endregion
 
-        #region Propiedades
         public AsyncProperty<IEnumerable<IExtension>> Extensiones { get; }
 
-        public IAdministradorViews Views { get; }
-        #endregion
 
         #region Comandos
         public DelegateCommand EjecutarOperacionComando { get; }
@@ -31,12 +28,10 @@ namespace AguaSB
 
         private ProveedorServicios ProveedorServicios { get; }
 
-        public MainWindowViewModel(IAdministradorViews administradorViews)
+        public MainWindowViewModel()
         {
             Extensiones = new AsyncProperty<IEnumerable<IExtension>>(CargarExtensiones());
-            Views = administradorViews ?? throw new ArgumentNullException(nameof(administradorViews));
 
-            EjecutarOperacionComando = new DelegateCommand(EjecutarOperacion);
 
             ProveedorServicios = new ProveedorServicios();
         }
@@ -60,15 +55,6 @@ namespace AguaSB
             
 
             return extensionesARegistrar;
-        }
-
-        private void EjecutarOperacion(object parametro)
-        {
-            if (parametro is Operacion operacion)
-            {
-                Views.TraerAlFrente(operacion.View);
-                
-            }
         }
     }
 }

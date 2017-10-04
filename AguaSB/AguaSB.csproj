@@ -114,6 +114,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AdministradorViews.cs" />
     <Compile Include="Controles\ExtensionView.xaml.cs">
       <DependentUpon>ExtensionView.xaml</DependentUpon>
     </Compile>
@@ -147,7 +148,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ExtensionPrueba.cs" />
-    <Compile Include="IAdministradorViews.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

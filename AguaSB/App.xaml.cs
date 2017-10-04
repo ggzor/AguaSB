@@ -24,6 +24,7 @@ namespace AguaSB
             RegistrarResoluciónDeExtensiones();
 
             contenedor.Register(Component.For<VentanaPrincipalViewModel>());
+
             contenedor.Register(Component.For<VentanaPrincipal>());
 
             var ventanaPrincipal = contenedor.Resolve<VentanaPrincipal>();

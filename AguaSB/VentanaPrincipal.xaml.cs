@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 
 using MahApps.Metro.Controls;
 using MahApps.Metro.IconPacks;
+using System.Waf.Applications;
 using MoreLinq;
 
 using AguaSB.Controles;
+using AguaSB.Extensiones;
 using AguaSB.Views.Utilerias;
 
 namespace AguaSB
@@ -23,9 +26,11 @@ namespace AguaSB
             Ajustador.AnchoObjetoMinimo = 400.0;
             Ajustador.Margen = 15.0;
 
-            InitializeComponent();
+            EjecutarOperacionComando = new DelegateCommand(EjecutarOperacion);
 
+            InitializeComponent();
             MapearExtensiones();
+            administrador = new AdministradorViews(Vista);
         }
 
         private void MapearExtensiones() => ViewModel.Extensiones.Select(ext =>
@@ -37,7 +42,7 @@ namespace AguaSB
                 Elementos = ext.Operaciones,
                 Icono = ext.Icono,
                 FondoIcono = ext.Tema.BrochaSolidaWPF,
-                Command = ViewModel.EjecutarOperacionComando
+                Command = EjecutarOperacionComando
             };
 
             var icono = ext.Icono;
@@ -53,6 +58,25 @@ namespace AguaSB
 
             return view;
         }).ForEach(ext => Extensiones.Children.Add(ext));
+
+        public ICommand EjecutarOperacionComando { get; }
+
+        private AdministradorViews administrador;
+
+        private void EjecutarOperacion(object param)
+        {
+            if (param is Operacion operacion)
+            {
+                Atras.Visibility = Visibility.Visible;
+                administrador.TraerAlFrente(operacion.View);
+            }
+        }
+
+        private void VolverAPrincipal(object sender, RoutedEventArgs e)
+        {
+            Atras.Visibility = Visibility.Collapsed;
+            administrador.VolverAPrincipal();
+        }
 
         #region Ajuste de tamaños
         public AjustadorTamanoObjetos Ajustador
