@@ -98,7 +98,7 @@
                                      Text="{Binding Persona.Contactos[0].Informacion, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged, Delay={StaticResource Retraso}}"/>
 
                             <TextBlock Name="MensajeErrorPersona" Text="{Binding AgregarPersonaComando.Execution.ExceptionMessage}" Style="{StaticResource error}"
-                                       Visibility="{Binding MostrarMensajeErrorPersona, Converter={StaticResource BoolToVisibility}, ConverterParameter=H}"/>
+                                       Tag="{Binding MostrarMensajeErrorPersona}"/>
 
                             <Controles:ProgresoConBotones MostrarProgreso="{Binding AgregarPersonaComando.Execution.IsNotCompleted}" 
                                                           TextoProgreso="{Binding AgregarPersonaComando.ProgressMessage}"
@@ -141,7 +141,7 @@
                                      Text="{Binding Negocio.Representante.Contactos[0].Informacion, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged, Delay={StaticResource Retraso}}"/>
 
                             <TextBlock Name="MensajeErrorNegocio" Text="{Binding AgregarNegocioComando.Execution.ExceptionMessage}" Style="{StaticResource error}"
-                                       Visibility="{Binding MostrarMensajeErrorNegocio, Converter={StaticResource BoolToVisibility}, ConverterParameter=H}"/>
+                                       Tag="{Binding MostrarMensajeErrorNegocio}"/>
 
                             <Controles:ProgresoConBotones MostrarProgreso="{Binding AgregarNegocioComando.Execution.IsNotCompleted}" 
                                                           TextoProgreso="{Binding AgregarNegocioComando.ProgressMessage}"
