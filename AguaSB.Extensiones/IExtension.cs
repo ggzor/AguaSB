@@ -1,6 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows;
+
+using AguaSB.Estilos;
 
 namespace AguaSB.Extensiones
 {
@@ -12,7 +13,9 @@ namespace AguaSB.Extensiones
 
         string Descripcion { get; }
 
-        Lazy<FrameworkElement> Icono { get; }
+        FrameworkElement Icono { get; }
+
+        Color Tema { get; }
 
         IEnumerable<Operacion> Operaciones { get; }
     }

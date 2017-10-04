@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -20,13 +19,12 @@ namespace AguaSB
         public string Descripcion =>
             "Este módulo permite la ejecución de cosas geniales, cosas que solo son posibles en este gran programa. ;)";
 
-        public Lazy<FrameworkElement> Icono => new Lazy<FrameworkElement>(() => new PackIconMaterial()
+        public FrameworkElement Icono => new PackIconMaterial()
         {
-            Width = 80,
-            Height = 80,
-            Foreground = Brushes.MediumPurple,
             Kind = PackIconMaterialKind.Earth
-        });
+        };
+
+        public Estilos.Color Tema { get; } = Estilos.Colores.Azul;
 
         public IEnumerable<Operacion> Operaciones => new[] {
             new Operacion("Agregar nueva extensión", new StackPanel(){ Background = Brushes.White }),

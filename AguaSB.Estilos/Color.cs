@@ -13,6 +13,8 @@ namespace AguaSB.Estilos
 
         public WPF.Brush BrochaWPF { get; }
 
+        public WPF.Brush BrochaSolidaWPF { get; }
+
         public Color(string nombre, string nombreMahApps, WPF.Color colorWPF)
         {
             if (string.IsNullOrWhiteSpace(nombre))
@@ -25,6 +27,9 @@ namespace AguaSB.Estilos
             NombreMahApps = nombreMahApps;
             ColorWPF = colorWPF;
             BrochaWPF = new WPF.SolidColorBrush(colorWPF);
+
+            var colorWPFSolido = WPF.Color.FromRgb(colorWPF.R, colorWPF.G, colorWPF.B);
+            BrochaSolidaWPF = new WPF.SolidColorBrush(colorWPFSolido);
 
             BrochaWPF.Freeze();
         }

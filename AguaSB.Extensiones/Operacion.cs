@@ -17,5 +17,7 @@ namespace AguaSB.Extensiones
             Nombre = nombre;
             View = view ?? throw new ArgumentNullException(nameof(view));
         }
+
+        public override string ToString() => Nombre;
     }
 }

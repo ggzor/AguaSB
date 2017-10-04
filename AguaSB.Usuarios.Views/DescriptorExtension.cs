@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows;
 
 using AguaSB.Estilos;
 using AguaSB.Extensiones;
 using MahApps.Metro.IconPacks;
+using System.Windows.Media;
 
 namespace AguaSB.Usuarios.Views
 {
@@ -15,23 +15,23 @@ namespace AguaSB.Usuarios.Views
         public string Version => "v1.0.0";
 
         public string Descripcion =>
-            "Agregar, actualizar o inhabilitar usuarios de la base de datos. Así como ver estadísticas sobre los adeudos de los usuarios.";
+            "Agregar, actualizar o inhabilitar usuarios de la base de datos.";
 
         #region Operaciones
         public Agregar Agregar { get; set; }
         #endregion
 
-        public IEnumerable<Operacion> Operaciones => new[]
+        public FrameworkElement Icono { get; } = new PackIconModern()
         {
-            new Operacion(nameof(Agregar), Agregar)
+            Kind = PackIconModernKind.People,
+            Foreground = Brushes.White
         };
 
-        public Lazy<FrameworkElement> Icono { get; } = new Lazy<FrameworkElement>(() => new PackIconModern()
+        public Estilos.Color Tema { get; } = Colores.Azul;
+
+        public IEnumerable<Operacion> Operaciones => new[]
         {
-            Width = 80,
-            Height = 80,
-            Kind = PackIconModernKind.People,
-            Foreground = Colores.Azul.BrochaWPF
-        });
+            new Operacion("Agregar usuario", Agregar)
+        };
     }
 }

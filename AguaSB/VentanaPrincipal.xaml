@@ -60,14 +60,6 @@
                             <Setter Property="Width" Value="{Binding ElementName=This, Path=Ajustador.AnchoObjeto}"/>
                         </Style>
                     </WrapPanel.Resources>
-                    <Controles:ExtensionView Titulo="Usuarios" FondoIcono="MediumPurple" Elementos="{Binding Extensiones}" Command="{Binding EjecutarOperacionComando}">
-                        <Controles:ExtensionView.Descripcion>
-                            Este módulo permite la administración de usuarios manejada por el sistema.
-                        </Controles:ExtensionView.Descripcion>
-                        <Controles:ExtensionView.Icono>
-                            <icons:PackIconModern Kind="User" Width="60" Height="60" Foreground="White" Style="{StaticResource PackIconModernStroked}"/>
-                        </Controles:ExtensionView.Icono>
-                    </Controles:ExtensionView>
                 </WrapPanel>
             </StackPanel>
         </Grid>

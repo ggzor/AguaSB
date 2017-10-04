@@ -51,6 +51,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AguaSB.Estilos\AguaSB.Estilos.csproj">
+      <Project>{84C1223E-9EBC-41F4-A7D2-E447F7D6B188}</Project>
+      <Name>AguaSB.Estilos</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AguaSB.Navegacion\AguaSB.Navegacion.csproj">
       <Project>{b51b553c-10d5-47ea-93bb-deced914d5f6}</Project>
       <Name>AguaSB.Navegacion</Name>
