@@ -52,9 +52,7 @@
     <Compile Include="Direccion.cs" />
     <Compile Include="Navegador.cs" />
     <Compile Include="INodo.cs" />
-    <Compile Include="NavegadorNodos.cs" />
     <Compile Include="ColaNavegacion.cs" />
-    <Compile Include="NodoBase.cs" />
     <Compile Include="NodoHoja.cs" />
     <Compile Include="NodoRama.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

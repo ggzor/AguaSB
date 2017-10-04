@@ -4,6 +4,6 @@ namespace AguaSB.ViewModels
 {
     public interface IViewModel
     {
-        INodo<IProveedorServicios> Nodo { get; }
+        INodo Nodo { get; }
     }
 }

@@ -36,6 +36,6 @@ namespace AguaSB
 
     public class FakeViewModel : IViewModel
     {
-        public INodo<IProveedorServicios> Nodo => new NodoHoja<IProveedorServicios>();
+        public INodo Nodo => new NodoHoja();
     }
 }

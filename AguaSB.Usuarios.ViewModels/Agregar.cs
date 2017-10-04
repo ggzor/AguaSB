@@ -99,13 +99,13 @@ namespace AguaSB.Usuarios.ViewModels
         public IRepositorio<Usuario> Usuarios { get; set; }
         #endregion
 
-        public INodo<IProveedorServicios> Nodo { get; }
+        public INodo Nodo { get; }
 
         public Agregar(IRepositorio<Usuario> usuarios)
         {
             Usuarios = usuarios ?? throw new ArgumentNullException(nameof(usuarios));
 
-            Nodo = new NodoHoja<IProveedorServicios>();
+            Nodo = new NodoHoja();
 
             ConfigurarComandos();
 

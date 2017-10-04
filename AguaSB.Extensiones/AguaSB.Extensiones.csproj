@@ -46,7 +46,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Operacion.cs" />
-    <Compile Include="UtileriasExtensiones.cs" />
     <Compile Include="IExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

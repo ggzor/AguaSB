@@ -8,14 +8,14 @@ namespace AguaSB.Navegacion
 {
     public static class Direccion
     {
-        public static ColaNavegacion Descomponer(string direccion)
+        public static string[] Descomponer(string direccion)
         {
             if (direccion == null)
                 throw new ArgumentNullException(nameof(direccion));
 
-            if (direccion == string.Empty)
+            if (string.IsNullOrWhiteSpace(direccion))
             {
-                return ColaNavegacion.Vacia;
+                return new string[0];
             }
             else
             {
@@ -40,7 +40,7 @@ namespace AguaSB.Navegacion
                     resultadoFinal = direcciones;
                 }
 
-                return new ColaNavegacion(resultadoFinal.Select(s => s.Trim()));
+                return resultadoFinal.Select(s => s.Trim()).ToArray();
             }
         }
     }

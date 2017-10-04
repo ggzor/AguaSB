@@ -8,8 +8,10 @@ namespace AguaSB.Navegacion
     /// Clase que representa un nodo que puede tener múltiples hijos. 
     /// Esta clase manejará las entradas y finalizaciones de los subnodos en automático.
     /// </summary>
-    public class NodoRama<T> : NodoBase<T>
+    public class NodoRama : INodo
     {
+
+        public Navegador Navegador { get; set; }
 
         public string NodoActual { get; private set; }
 
@@ -21,22 +23,14 @@ namespace AguaSB.Navegacion
         /// <summary>
         /// Llamado cuando se ingresa a este nodo y el argumento no es un subnodo.
         /// </summary>
-        public Func<Task> EntradaSinArgumentos { get; set; }
+        public Func<ColaNavegacion, Task> Entrada { get; set; }
 
-        public IReadOnlyDictionary<string, INodo<T>> Subnodos { get; private set; }
+        public IReadOnlyDictionary<string, INodo> Subnodos { get; private set; }
 
-        public NodoRama(IReadOnlyDictionary<string, INodo<T>> subnodos) =>
+        public NodoRama(IReadOnlyDictionary<string, INodo> subnodos) =>
             Subnodos = subnodos ?? throw new ArgumentNullException(nameof(subnodos));
 
-        public override async Task Inicializar(T parametro)
-        {
-            await Inicializar(parametro);
-
-            foreach (var nodo in Subnodos.Values)
-                await nodo.Inicializar(parametro);
-        }
-
-        public override async Task Entrar(ColaNavegacion informacion)
+        public async Task Entrar(ColaNavegacion informacion)
         {
             var nuevoNodoClave = informacion.Siguiente<string>();
 
@@ -54,17 +48,9 @@ namespace AguaSB.Navegacion
             }
             else
             {
-                if (EntradaSinArgumentos != null)
-                    await EntradaSinArgumentos.Invoke();
+                if (Entrada != null)
+                    await Entrada(informacion);
             }
-        }
-
-        public override async Task Finalizar()
-        {
-            foreach (var nodo in Subnodos.Values)
-                await nodo.Finalizar();
-
-            await base.Finalizar();
         }
     }
 }

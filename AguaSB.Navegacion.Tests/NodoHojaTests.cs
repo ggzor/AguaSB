@@ -6,7 +6,7 @@ using Ploeh.AutoFixture;
 namespace AguaSB.Navegacion.Tests
 {
     [TestFixture]
-    public class NodosTests
+    public class NodoHojaTests
     {
 
         private static readonly Fixture Cualquiera = new Fixture();
@@ -22,11 +22,11 @@ namespace AguaSB.Navegacion.Tests
         #region Funciones de ciclo de vida
 
         [Test]
-        public async Task DeberiaLlamar_Inicializacion_CuandoSeLlamaEntrar()
+        public async Task DeberiaLlamar_PrimeraEntrar_CuandoSeLlamaEntrar()
         {
-            INodo<string> nodo = new NodoHoja<string>()
+            INodo nodo = new NodoHoja()
             {
-                Inicializacion = _ => Verificador.Funcion()
+                PrimeraEntrada = Verificador.Funcion
             };
 
             await ConfigurarYRealizarLlamada(nodo);
@@ -37,7 +37,7 @@ namespace AguaSB.Navegacion.Tests
         [Test]
         public async Task DeberiaLlamar_Entrada_CuandoSeLlamaEntrar()
         {
-            INodo<string> nodo = new NodoHoja<string>()
+            INodo nodo = new NodoHoja()
             {
                 Entrada = _ => Verificador.Funcion()
             };
@@ -49,11 +49,11 @@ namespace AguaSB.Navegacion.Tests
 
 
         [Test]
-        public async Task DeberiaNoLlamar_Inicializacion_CuandoSeLlamaEntrarPorSegundaVez()
+        public async Task DeberiaNoLlamar_PrimeraEntrada_CuandoSeLlamaEntrarPorSegundaVez()
         {
-            INodo<string> nodo = new NodoHoja<string>()
+            INodo nodo = new NodoHoja()
             {
-                Inicializacion = _ => Verificador.Funcion()
+                PrimeraEntrada = Verificador.Funcion
             };
 
             await ConfigurarYRealizarLlamada(nodo);
@@ -65,37 +65,20 @@ namespace AguaSB.Navegacion.Tests
         [Test]
         public async Task DeberiaNoLanzarExcepcion_CuandoAlgunaDeLasFuncionesEsNula()
         {
-            INodo<string> nodo = new NodoHoja<string>()
+            INodo nodo = new NodoHoja()
             {
-                Inicializacion = null,
-                Entrada = null,
-                Finalizacion = null
+                PrimeraEntrada = null,
+                Entrada = null
             };
             var colaNavegacion = Cualquiera.Create<ColaNavegacion>();
 
             await nodo.Entrar(colaNavegacion);
-            await nodo.Finalizar();
         }
-
-        [Test]
-        public async Task DeberiaLlamar_Finalizacion_CuandoSeLlamaFinalizar()
-        {
-            INodo<string> nodo = new NodoHoja<string>()
-            {
-                Finalizacion = Verificador.Funcion
-            };
-            var colaNavegacion = Cualquiera.Create<ColaNavegacion>();
-
-            await nodo.Finalizar();
-
-            Assert.True(Verificador.Llamado);
-        }
-
         #endregion
 
         #region Utilerias
 
-        private static async Task ConfigurarYRealizarLlamada(INodo<string> nodo)
+        private static async Task ConfigurarYRealizarLlamada(INodo nodo)
         {
             var colaNavegacion = Cualquiera.Create<ColaNavegacion>();
 

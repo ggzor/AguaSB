@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using AguaSB.Datos;
 using AguaSB.Nucleo;
 
-namespace AguaSB.Proveedores
+namespace AguaSB.Datos
 {
     public class RepositorioEnMemoria<T> : IRepositorio<T> where T : IEntidad
     {

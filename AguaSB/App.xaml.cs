@@ -8,7 +8,6 @@ using Castle.Windsor;
 
 using AguaSB.Datos;
 using AguaSB.Extensiones;
-using AguaSB.Proveedores;
 using AguaSB.ViewModels;
 using AguaSB.Views;
 
@@ -25,7 +24,8 @@ namespace AguaSB
 
             RegistrarResoluciónDeExtensiones();
 
-            contenedor.Register(Component.For(typeof(IRepositorio<>)).ImplementedBy(typeof(RepositorioEnMemoria<>)));
+            contenedor.Register(Component.For(typeof(IRepositorio<>))
+                .ImplementedBy(typeof(RepositorioEnMemoria<>)));
 
             contenedor.Register(Component.For<VentanaPrincipalViewModel>());
             contenedor.Register(Component.For<VentanaPrincipal>());
@@ -44,19 +44,17 @@ namespace AguaSB
             Predicate<AssemblyName> FiltroViewModels = nombre => nombre.Name.StartsWith(nameof(AguaSB)) && nombre.Name.EndsWith(nameof(ViewModels));
 
             // Esto permite que se registren multiples extensiones
-            contenedor.Kernel.Resolver.AddSubResolver(new CollectionResolver(contenedor.Kernel, allowEmptyCollections: true));
+            contenedor.Kernel.Resolver
+                .AddSubResolver(new CollectionResolver(contenedor.Kernel, allowEmptyCollections: true));
 
-            // Registrar views
             contenedor.Register(
                 Classes.FromAssemblyInDirectory(new AssemblyFilter(DirectorioViews).FilterByName(FiltroViews))
                 .BasedOn<IView>().WithService.Self());
 
-            // Registrar viewmodels
             contenedor.Register(
                 Classes.FromAssemblyInDirectory(new AssemblyFilter(DirectorioViewModels).FilterByName(FiltroViewModels))
                 .BasedOn<IViewModel>().WithService.Self());
 
-            // Registrar extensiones
             contenedor.Register(
                 Classes.FromAssemblyInDirectory(new AssemblyFilter(DirectorioViews).FilterByName(FiltroViews))
                 .BasedOn<IExtension>().WithService.Base());

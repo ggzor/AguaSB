@@ -7,11 +7,11 @@ namespace AguaSB.Navegacion.Tests
     public class NavegadorTests
     {
         [Test]
-        public void DeberiaLlamar_NavegarConColaNavegacion_CuandoSeUsaUnaCadena()
+        public void DeberiaLlamar_NavegarConCadenas_CuandoSeUsaUnaCadena()
         {
             var navegador = Substitute.For<Navegador>();
             var direccion = "Nodo1/Subnodo1";
-            var esperado = new ColaNavegacion("Nodo1", "Subnodo1");
+            var esperado = new[] { "Nodo1", "Subnodo1" };
 
             navegador.NavegarA(direccion);
 
