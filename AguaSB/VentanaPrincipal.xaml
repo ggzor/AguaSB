@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                   xmlns:local="clr-namespace:AguaSB"
+        xmlns:local="clr-namespace:AguaSB"
+        xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:Controles="clr-namespace:AguaSB.Controles"
         xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
@@ -59,10 +60,14 @@
                             <Setter Property="Width" Value="{Binding ElementName=This, Path=Ajustador.AnchoObjeto}"/>
                         </Style>
                     </WrapPanel.Resources>
-                    <Controles:ExtensionView />
-                    <Controles:ExtensionView />
-                    <Controles:ExtensionView />
-                    <Controles:ExtensionView />
+                    <Controles:ExtensionView Titulo="Usuarios" FondoIcono="MediumPurple" Elementos="{Binding Extensiones}" Command="{Binding EjecutarOperacionComando}">
+                        <Controles:ExtensionView.Descripcion>
+                            Este módulo permite la administración de usuarios manejada por el sistema.
+                        </Controles:ExtensionView.Descripcion>
+                        <Controles:ExtensionView.Icono>
+                            <icons:PackIconModern Kind="User" Width="60" Height="60" Foreground="White" Style="{StaticResource PackIconModernStroked}"/>
+                        </Controles:ExtensionView.Icono>
+                    </Controles:ExtensionView>
                 </WrapPanel>
             </StackPanel>
         </Grid>

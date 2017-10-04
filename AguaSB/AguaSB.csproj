@@ -117,6 +117,7 @@
     <Compile Include="Controles\ExtensionView.xaml.cs">
       <DependentUpon>ExtensionView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controles\ToStringConverter.cs" />
     <Compile Include="Notificaciones\NotificacionView.xaml.cs">
       <DependentUpon>NotificacionView.xaml</DependentUpon>
     </Compile>
