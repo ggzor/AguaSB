@@ -24,7 +24,8 @@
         </Grid.RowDefinitions>
 
         <Border Grid.Row="1" Grid.RowSpan="2" Background="White" Padding="10 70 10 10"
-                BorderBrush="#88000000" BorderThickness="1" SnapsToDevicePixels="True">
+                BorderBrush="#88000000" BorderThickness="1" SnapsToDevicePixels="True"
+                Style="{StaticResource DarkenBackground}">
             <StackPanel>
                 <TextBlock Text="Título" TextAlignment="Center" 
                            TextWrapping="Wrap" Style="{StaticResource h3}"/>
