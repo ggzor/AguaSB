@@ -6,7 +6,9 @@ using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.Windsor;
 
+using AguaSB.Datos;
 using AguaSB.Extensiones;
+using AguaSB.Proveedores;
 using AguaSB.ViewModels;
 using AguaSB.Views;
 
@@ -23,8 +25,9 @@ namespace AguaSB
 
             RegistrarResoluciónDeExtensiones();
 
-            contenedor.Register(Component.For<VentanaPrincipalViewModel>());
+            contenedor.Register(Component.For(typeof(IRepositorio<>)).ImplementedBy(typeof(RepositorioEnMemoria<>)));
 
+            contenedor.Register(Component.For<VentanaPrincipalViewModel>());
             contenedor.Register(Component.For<VentanaPrincipal>());
 
             var ventanaPrincipal = contenedor.Resolve<VentanaPrincipal>();

@@ -95,11 +95,17 @@ namespace AguaSB.Usuarios.ViewModels
 
         #endregion
 
+        #region Dependencias
+        public IRepositorio<Usuario> Usuarios { get; set; }
+        #endregion
+
         public INodo<IProveedorServicios> Nodo { get; }
 
-        public Agregar()
+        public Agregar(IRepositorio<Usuario> usuarios)
         {
-            Nodo = new NodoHoja<IProveedorServicios>() { Inicializacion = Inicializacion };
+            Usuarios = usuarios ?? throw new ArgumentNullException(nameof(usuarios));
+
+            Nodo = new NodoHoja<IProveedorServicios>();
 
             ConfigurarComandos();
 
@@ -107,19 +113,6 @@ namespace AguaSB.Usuarios.ViewModels
 
             // Registrar observadores por primera vez
             RaisePropertyChanged(nameof(Persona));
-        }
-
-        #region Servicios
-
-        public IRepositorio<Usuario> Usuarios { get; private set; }
-
-        #endregion
-
-        private Task Inicializacion(IProveedorServicios servicios)
-        {
-            Usuarios = servicios.Repositorios.Usuarios;
-
-            return Task.CompletedTask;
         }
 
         private IDisposable ObservadorDePropiedades;
@@ -245,7 +238,7 @@ namespace AguaSB.Usuarios.ViewModels
         {
             progreso.Report((0.0, "Buscando duplicados..."));
 
-            if (OperacionesUsuarios.BuscarDuplicados(Usuario, Usuarios) is Usuario u)
+            if (await OperacionesUsuarios.BuscarDuplicadosAsync(Usuario, Usuarios) is Usuario u)
                 throw new Exception($"El usuario \"{u.NombreCompleto}\" ya está registrado en el sistema.");
 
             progreso.Report((50.0, "Agregando usuario..."));
