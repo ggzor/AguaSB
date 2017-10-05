@@ -73,8 +73,8 @@
     <Reference Include="MaterialDesignThemes.Wpf, Version=2.3.1.953, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignThemes.2.3.1.953\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
-    <Reference Include="MoreLinq, Version=2.6.20831.0, Culture=neutral, PublicKeyToken=384d532d7e88985d, processorArchitecture=MSIL">
-      <HintPath>..\packages\morelinq.2.7.0\lib\net40\MoreLinq.dll</HintPath>
+    <Reference Include="MoreLinq, Version=2.8.21218.0, Culture=neutral, PublicKeyToken=384d532d7e88985d, processorArchitecture=MSIL">
+      <HintPath>..\packages\morelinq.2.8.0\lib\net40\MoreLinq.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -86,11 +86,11 @@
     <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.4.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
-    <Reference Include="System.Waf.Core, Version=4.1.0.91, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Waf.Core.4.1.0-rc1\lib\portable45-net45+win8\System.Waf.Core.dll</HintPath>
+    <Reference Include="System.Waf.Core, Version=4.1.0.100, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Waf.Core.4.1.0\lib\portable45-net45+win8\System.Waf.Core.dll</HintPath>
     </Reference>
-    <Reference Include="System.Waf.Wpf, Version=4.1.0.91, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Waf.Wpf.4.1.0-rc1\lib\net461\System.Waf.Wpf.dll</HintPath>
+    <Reference Include="System.Waf.Wpf, Version=4.1.0.100, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Waf.Wpf.4.1.0\lib\net461\System.Waf.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">

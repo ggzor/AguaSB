@@ -33,13 +33,16 @@
     <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MoreLinq, Version=2.8.21218.0, Culture=neutral, PublicKeyToken=384d532d7e88985d, processorArchitecture=MSIL">
+      <HintPath>..\packages\morelinq.2.8.0\lib\net40\MoreLinq.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.4.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
-    <Reference Include="System.Waf.Core, Version=4.1.0.91, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Waf.Core.4.1.0-rc1\lib\portable45-net45+win8\System.Waf.Core.dll</HintPath>
+    <Reference Include="System.Waf.Core, Version=4.1.0.100, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Waf.Core.4.1.0\lib\portable45-net45+win8\System.Waf.Core.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -51,6 +54,7 @@
   <ItemGroup>
     <Compile Include="IViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UtileriasComandos.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -72,6 +76,11 @@
       <Project>{10E1E718-EA42-4519-BAA2-7CD3C21B442A}</Project>
       <Name>AguaSB.Nucleo</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GGUtils.MVVM.Async\GGUtils.MVVM.Async.csproj">
+      <Project>{0B78E13E-F73B-4A97-8AF4-133A111E4416}</Project>
+      <Name>GGUtils.MVVM.Async</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

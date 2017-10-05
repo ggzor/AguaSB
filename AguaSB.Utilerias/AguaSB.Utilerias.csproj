@@ -57,6 +57,7 @@
     <Compile Include="Notificador.cs" />
     <Compile Include="NotifyPropertyChangedEx.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UtileriasErrores.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
