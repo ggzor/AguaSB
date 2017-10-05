@@ -6,8 +6,6 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Waf.Applications;
 using System.Waf.Foundation;
-
-using MoreLinq;
 using GGUtils.MVVM.Async;
 
 using AguaSB.Nucleo;
@@ -129,26 +127,11 @@ namespace AguaSB.Usuarios.ViewModels
             }.Where(elem => elem != null)
             .Select(NotifyPropertyChangedEx.ToObservableProperties);
 
-            ObservadorDePropiedades = Observable.Merge(propiedadesAObservar).ObserveOnDispatcher().Subscribe(_ => VerificarPuedeEjecutar());
+            ObservadorDePropiedades = Observable.Merge(propiedadesAObservar).Subscribe(_ => VerificarPuedeEjecutar());
         }
 
-        private void VerificarPuedeEjecutar() => new ICommand[]
-        {
-            AgregarPersonaComando, AgregarNegocioComando
-        }.ForEach(comando =>
-        {
-            switch (comando)
-            {
-                case DelegateCommand c:
-                    c.RaiseCanExecuteChanged();
-                    break;
-                case AsyncDelegateCommand<int> c:
-                    c.RaiseCanExecuteChanged();
-                    break;
-                default:
-                    break;
-            };
-        });
+        private void VerificarPuedeEjecutar() =>
+            UtileriasComandos.VerificarPuedeEjecutarEn(AgregarPersonaComando, AgregarNegocioComando);
 
         private void ConfigurarComandos()
         {
@@ -189,18 +172,14 @@ namespace AguaSB.Usuarios.ViewModels
         }
 
         private bool PuedeAgregarPersona() =>
-            NingunoTieneErrores(Persona, Persona.Contactos.First())
+            UtileriasErrores.NingunoTieneErrores(Persona, Persona.Contactos.First())
             && !Persona.TieneCamposRequeridosVacios;
 
         private bool PuedeAgregarNegocio() =>
-            NingunoTieneErrores(Negocio, Negocio.Representante, Negocio.Contactos.First(), Negocio.Representante.Contactos.First())
+            UtileriasErrores.NingunoTieneErrores(
+                Negocio, Negocio.Representante,
+                Negocio.Contactos.First(), Negocio.Representante.Contactos.First())
             && !Negocio.TieneCamposRequeridosVacios && !Negocio.Representante.TieneCamposRequeridosVacios;
-
-        private bool NingunoTieneErrores(params INotifyDataErrorInfo[] objetos) =>
-            objetos
-                .Select(i => !i.HasErrors)
-                .Aggregate((v1, v2) => v1 && v2);
-
 
         private async Task<int> AgregarPersona(IProgress<(double, string)> progreso)
         {
