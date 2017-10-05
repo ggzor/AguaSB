@@ -52,9 +52,6 @@
     <Reference Include="ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net462\ControlzEx.dll</HintPath>
     </Reference>
-    <Reference Include="CSharpMonad, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\csharp-monad.1.0.1\lib\net46\CSharpMonad.dll</HintPath>
-    </Reference>
     <Reference Include="GGUtils.MVVM.Async">
       <HintPath>..\GGUtils.MVVM.Async\bin\Debug\GGUtils.MVVM.Async.dll</HintPath>
     </Reference>
@@ -198,7 +195,7 @@
       <Name>AguaSB.Notificaciones</Name>
     </ProjectReference>
     <ProjectReference Include="..\AguaSB.Nucleo\AguaSB.Nucleo.csproj">
-      <Project>{10E1E718-EA42-4519-BAA2-7CD3C21B442A}</Project>
+      <Project>{10e1e718-ea42-4519-baa2-7cd3c21b442a}</Project>
       <Name>AguaSB.Nucleo</Name>
     </ProjectReference>
     <ProjectReference Include="..\AguaSB.Utilerias\AguaSB.Utilerias.csproj">

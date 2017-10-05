@@ -4,10 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB", "AguaSB\AguaSB.csproj", "{FC378380-823E-4FDE-8525-73C2D4992B3A}"
-	ProjectSection(ProjectDependencies) = postProject
-		{E5D9409A-5D0D-45D9-B899-2917B4003491} = {E5D9409A-5D0D-45D9-B899-2917B4003491}
-		{1D5A2FCA-1A34-42A8-9D7F-5C3132C71B50} = {1D5A2FCA-1A34-42A8-9D7F-5C3132C71B50}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Utilerias", "AguaSB.Utilerias\AguaSB.Utilerias.csproj", "{61188B63-728A-4C7B-B19D-11ABD1F64F4F}"
 EndProject
