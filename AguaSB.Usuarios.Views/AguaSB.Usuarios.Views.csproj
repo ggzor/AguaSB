@@ -79,9 +79,6 @@
     <Compile Include="Agregar.xaml.cs">
       <DependentUpon>Agregar.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controles\ProgresoConBotones.xaml.cs">
-      <DependentUpon>ProgresoConBotones.xaml</DependentUpon>
-    </Compile>
     <Compile Include="DescriptorExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -111,10 +108,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Agregar.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controles\ProgresoConBotones.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

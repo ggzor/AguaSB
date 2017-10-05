@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="AguaSB.Views.Controles.ParBotones"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             Name="This"
+             d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Estilos.xaml"/>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Button Command="{Binding ElementName=This, Path=ComandoSecundario}" Content="{Binding ElementName=This, Path=TextoSecundario}"/>
+        <Button Grid.Column="2" Command="{Binding ElementName=This, Path=ComandoPrimario}" Content="{Binding ElementName=This, Path=TextoPrimario}" Style="{StaticResource HighlightButton}"/>
+    </Grid>
+</UserControl>

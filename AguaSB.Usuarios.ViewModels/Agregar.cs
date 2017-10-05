@@ -6,6 +6,7 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Waf.Applications;
 using System.Waf.Foundation;
+
 using GGUtils.MVVM.Async;
 
 using AguaSB.Nucleo;
@@ -119,15 +120,20 @@ namespace AguaSB.Usuarios.ViewModels
         {
             ObservadorDePropiedades?.Dispose();
 
-            var propiedadesAObservar = new INotifyPropertyChanged[] {
+            var propiedadesAObservar = new INotifyDataErrorInfo[] {
                 Persona, Negocio, Negocio.Representante,
                 Persona.Contactos.FirstOrDefault(),
                 Negocio.Contactos.FirstOrDefault(),
                 Negocio.Representante.Contactos.FirstOrDefault()
-            }.Where(elem => elem != null)
-            .Select(NotifyPropertyChangedEx.ToObservableProperties);
+            };
 
-            ObservadorDePropiedades = Observable.Merge(propiedadesAObservar).Subscribe(_ => VerificarPuedeEjecutar());
+            var observables = from obj in propiedadesAObservar
+                              let obs = Observable.FromEventPattern<DataErrorsChangedEventArgs>(
+                                  h => obj.ErrorsChanged += h,
+                                  h => obj.ErrorsChanged -= h)
+                              select obs;
+
+            ObservadorDePropiedades = Observable.Merge(observables).Subscribe(_ => VerificarPuedeEjecutar());
         }
 
         private void VerificarPuedeEjecutar() =>
