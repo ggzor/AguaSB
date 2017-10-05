@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB", "AguaSB\AguaSB.csproj", "{FC378380-823E-4FDE-8525-73C2D4992B3A}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -40,6 +40,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Notificaciones", "AguaSB.Notificaciones\AguaSB.Notificaciones.csproj", "{39485A38-6CB1-40ED-BBC4-E4E2B8F1F74F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Operaciones", "AguaSB.Operaciones\AguaSB.Operaciones.csproj", "{EE89AE19-8F49-4F82-BEAB-6A8A75D1F907}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Contratos.Views", "AguaSB.Contratos.Views\AguaSB.Contratos.Views.csproj", "{B2E0C68D-0175-4CF2-A610-4FBCC6C715A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -115,6 +117,10 @@ Global
 		{EE89AE19-8F49-4F82-BEAB-6A8A75D1F907}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE89AE19-8F49-4F82-BEAB-6A8A75D1F907}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE89AE19-8F49-4F82-BEAB-6A8A75D1F907}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2E0C68D-0175-4CF2-A610-4FBCC6C715A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2E0C68D-0175-4CF2-A610-4FBCC6C715A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2E0C68D-0175-4CF2-A610-4FBCC6C715A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2E0C68D-0175-4CF2-A610-4FBCC6C715A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

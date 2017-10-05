@@ -6,30 +6,30 @@ using AguaSB.Extensiones;
 using MahApps.Metro.IconPacks;
 using System.Windows.Media;
 
-namespace AguaSB.Usuarios.Views
+namespace AguaSB.Contratos.Views
 {
     public class DescriptorExtension : IExtension
     {
-        public string Nombre => nameof(Usuarios);
+        public string Nombre => nameof(Contratos);
 
         public string Version => "v0.1.0";
 
         public string Descripcion =>
-            "Agregar, actualizar o inhabilitar usuarios de la base de datos.";
+            "Administrar y ver contratos de los usuarios.";
 
         public FrameworkElement Icono { get; } = new PackIconModern()
         {
-            Kind = PackIconModernKind.People,
+            Kind = PackIconModernKind.AlignJustify,
             Foreground = Brushes.White
         };
 
-        public Estilos.Color Tema { get; } = Colores.Azul;
+        public Estilos.Color Tema { get; } = Colores.Naranja;
 
         public Agregar Agregar { get; set; }
 
         public IEnumerable<Operacion> Operaciones => new[]
         {
-            new Operacion("Agregar usuario", Agregar)
+            new Operacion("Agregar contrato", Agregar)
         };
     }
 }
