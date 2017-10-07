@@ -111,7 +111,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AdministradorTemas.cs" />
     <Compile Include="AdministradorViews.cs" />
     <Compile Include="Controles\ExtensionView.xaml.cs">
       <DependentUpon>ExtensionView.xaml</DependentUpon>
