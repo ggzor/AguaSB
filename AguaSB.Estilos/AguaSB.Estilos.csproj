@@ -74,8 +74,8 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Color.cs" />
-    <Compile Include="Colores.cs" />
+    <Compile Include="Tema.cs" />
+    <Compile Include="Temas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -23,7 +23,7 @@ namespace AguaSB.Contratos.Views
             Foreground = Brushes.White
         };
 
-        public Estilos.Color Tema { get; } = Colores.Naranja;
+        public Estilos.Tema Tema { get; } = Temas.Naranja;
 
         public Agregar Agregar { get; set; }
 

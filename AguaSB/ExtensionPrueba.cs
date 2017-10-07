@@ -24,7 +24,7 @@ namespace AguaSB
             Kind = PackIconMaterialKind.Earth
         };
 
-        public Estilos.Color Tema { get; } = Estilos.Colores.Azul;
+        public Estilos.Tema Tema { get; } = Estilos.Temas.Azul;
 
         public IEnumerable<Operacion> Operaciones => new[] {
             new Operacion(this, "Agregar nueva extensión", new StackPanel(){ Background = Brushes.White }),

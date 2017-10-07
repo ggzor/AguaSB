@@ -15,7 +15,7 @@ namespace AguaSB.Extensiones
 
         FrameworkElement Icono { get; }
 
-        Color Tema { get; }
+        Tema Tema { get; }
 
         IEnumerable<Operacion> Operaciones { get; }
     }

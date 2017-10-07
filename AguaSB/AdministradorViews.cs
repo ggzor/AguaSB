@@ -16,10 +16,8 @@ namespace AguaSB
         {
             await Animaciones.MostrarEnPanel(Vista, element);
         }
-
-        public void VolverAPrincipal() => VolverAPrincipal(this, null);
-
-        private async void VolverAPrincipal(object sender, RoutedEventArgs e)
+        
+        public async void VolverAPrincipal()
         {
             if (Vista.Children.Count > 1 && Vista.Children.OfType<FrameworkElement>().Last() is var elem)
             {
