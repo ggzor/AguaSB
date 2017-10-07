@@ -11,9 +11,11 @@ using AguaSB.Utilerias;
 namespace AguaSB.Nucleo
 {
     [Table("Contactos")]
-    public class Contacto : INotifyPropertyChanged, INotifyDataErrorInfo
+    public class Contacto : IEntidad, INotifyPropertyChanged, INotifyDataErrorInfo
     {
         private string informacion;
+
+        public int Id { get; set; }
 
         [Required(ErrorMessage = Validacion.CampoRequerido)]
         public TipoContacto TipoContacto { get; set; }
