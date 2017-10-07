@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Media;
+
+using MahApps.Metro.IconPacks;
 
 using AguaSB.Estilos;
 using AguaSB.Extensiones;
-using MahApps.Metro.IconPacks;
-using System.Windows.Media;
 
 namespace AguaSB.Contratos.Views
 {
@@ -23,7 +24,7 @@ namespace AguaSB.Contratos.Views
             Foreground = Brushes.White
         };
 
-        public Estilos.Tema Tema { get; } = Temas.Naranja;
+        public Tema Tema { get; } = Temas.Naranja;
 
         public Agregar Agregar { get; set; }
 

@@ -7,7 +7,9 @@
              xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:Views="clr-namespace:AguaSB.Views.Controles;assembly=AguaSB.Views"
+             xmlns:ViewModel="clr-namespace:AguaSB.Contratos.ViewModels;assembly=AguaSB.Contratos.ViewModels"
              mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type={x:Type ViewModel:Agregar}, IsDesignTimeCreatable=False}"
              Name="This"
              Background="White"
              d:DesignHeight="768" d:DesignWidth="1024">
@@ -19,7 +21,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid Name="Principal" Style="{StaticResource CorrectTextRendering}">
+    <Grid Style="{StaticResource CorrectTextRendering}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -48,21 +50,21 @@
                         </StackPanel.Resources>
 
                         <TextBlock Text="Usuario:" Style="{StaticResource h4}"/>
-                        <TextBlock Style="{StaticResource h4}"/>
+                        <TextBlock Text="{Binding Contrato.Usuario.NombreCompleto}" Style="{StaticResource h4}"/>
 
                         <TextBlock Margin="0 10 0 0" Text="Tipo de contrato:" Style="{StaticResource h4}"/>
                         <metro:SplitButton Margin="0 10 0 0"/>
 
-                        <TextBox Margin="0 20 0 30" Tag="Tamaño de la toma"/>
+                        <TextBox Margin="0 20 0 30" Tag="Tamaño de la toma" Text="{Binding Contrato.MedidaToma}"/>
 
-                        <TextBox Tag="Adeudo inicial"/>
+                        <TextBox Text="{Binding Contrato.AdeudoInicial}" Tag="Adeudo inicial"/>
 
                         <TextBlock Margin="0 20" Text="Domicilio:" Style="{StaticResource h3}"/>
 
                         <TextBlock Text="Calle"/>
                         <metro:SplitButton Margin="0 10 0 0"/>
 
-                        <TextBox  Margin="0 10 0 30" Tag="Número"/>
+                        <TextBox Margin="0 10 0 30" Text="{Binding Contrato.Domicilio.Numero}" Tag="Número"/>
 
                         <TextBlock Name="MensajeErrorNegocio" Text="{Binding AgregarContratoComando.Execution.ExceptionMessage}" Style="{StaticResource error}"
                                    Tag="{Binding MostrarMensajeError}"/>
