@@ -27,10 +27,10 @@ namespace AguaSB
         public Estilos.Color Tema { get; } = Estilos.Colores.Azul;
 
         public IEnumerable<Operacion> Operaciones => new[] {
-            new Operacion("Agregar nueva extensión", new StackPanel(){ Background = Brushes.White }),
-            new Operacion("Modificar configuración",  new StackPanel()),
-            new Operacion("Buscar nuevas extensiónes",  new StackPanel()),
-            new Operacion("Obtener ayuda",  new StackPanel())
+            new Operacion(this, "Agregar nueva extensión", new StackPanel(){ Background = Brushes.White }),
+            new Operacion(this, "Modificar configuración",  new StackPanel()),
+            new Operacion(this, "Buscar nuevas extensiónes",  new StackPanel()),
+            new Operacion(this, "Obtener ayuda",  new StackPanel())
         };
     }
 
