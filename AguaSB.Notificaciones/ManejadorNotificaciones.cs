@@ -4,11 +4,8 @@ using System.Reactive.Linq;
 
 namespace AguaSB.Notificaciones
 {
-    public class ManejadorNotificaciones
+    public class ManejadorNotificaciones : IManejadorNotificaciones
     {
-
-        private event EventHandler<IObservable<Notificacion>> NotificadorAgregado;
-
         public IObservable<Notificacion> Notificaciones { get; }
 
         public ManejadorNotificaciones()
@@ -24,6 +21,9 @@ namespace AguaSB.Notificaciones
             notificaciones.Connect();
         }
 
-        public void AgregarProveedor(IObservable<Notificacion> proveedor) => NotificadorAgregado?.Invoke(this, proveedor);
+        private event EventHandler<IObservable<Notificacion>> NotificadorAgregado;
+
+        public void AgregarFuente(IObservable<Notificacion> fuente) =>
+            NotificadorAgregado?.Invoke(this, fuente);
     }
 }

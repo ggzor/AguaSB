@@ -15,7 +15,7 @@ namespace AguaSB.Datos.Decoradores
 
         public event EventHandler<NotificacionEntidad<T>> RepositorioCambiado;
 
-        public RepositorioNotificador(IRepositorio<T> repositorio, ManejadorNotificaciones notificaciones)
+        public RepositorioNotificador(IRepositorio<T> repositorio, IManejadorNotificaciones notificaciones)
         {
             if (notificaciones == null)
                 throw new ArgumentNullException(nameof(notificaciones));
@@ -27,7 +27,7 @@ namespace AguaSB.Datos.Decoradores
                 h => RepositorioCambiado -= h
             ).Select(e => e.EventArgs);
 
-            notificaciones.AgregarProveedor(observable);
+            notificaciones.AgregarFuente(observable);
         }
 
         public IEnumerable<T> Datos => Repositorio.Datos;

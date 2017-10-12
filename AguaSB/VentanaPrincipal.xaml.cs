@@ -17,12 +17,12 @@ using System.Reactive.Linq;
 
 namespace AguaSB
 {
-    public partial class VentanaPrincipal : MetroWindow
+    public partial class VentanaPrincipal : MetroWindow, IVentanaPrincipal
     {
         public VentanaPrincipalViewModel ViewModel { get; }
 
         public VentanaPrincipal(VentanaPrincipalViewModel viewModel,
-            ITransformadorNotificaciones transformador, ManejadorNotificaciones manejadorNotificaciones)
+            ITransformadorNotificaciones transformador, IManejadorNotificaciones manejadorNotificaciones)
         {
             if (manejadorNotificaciones == null)
                 throw new ArgumentNullException(nameof(manejadorNotificaciones));
@@ -44,6 +44,8 @@ namespace AguaSB
 
             administrador = new AdministradorViews(Vista);
         }
+
+        public void Mostrar() => ShowDialog();
 
         private void MapearExtensiones() => ViewModel.Extensiones.Select(ext =>
         {

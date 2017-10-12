@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IManejadorNotificaciones.cs" />
     <Compile Include="ManejadorNotificaciones.cs" />
     <Compile Include="Notificacion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

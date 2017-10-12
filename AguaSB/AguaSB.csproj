@@ -116,6 +116,11 @@
       <DependentUpon>ExtensionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controles\ToStringConverter.cs" />
+    <Compile Include="Instaladores\Extensiones.cs" />
+    <Compile Include="Instaladores\Interfaz.cs" />
+    <Compile Include="Instaladores\Repositorios.cs" />
+    <Compile Include="Instaladores\ServiciosNoFuncionales.cs" />
+    <Compile Include="IVentanaPrincipal.cs" />
     <Compile Include="Notificaciones\ITransformadorNotificaciones.cs" />
     <Compile Include="Notificaciones\NotificacionView.xaml.cs">
       <DependentUpon>NotificacionView.xaml</DependentUpon>
@@ -221,8 +226,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Instaladores\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
