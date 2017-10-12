@@ -18,7 +18,10 @@ namespace AguaSB.Notificaciones
                 h => NotificadorAgregado -= h
             ).Select(e => e.EventArgs);
 
-            Notificaciones = Observable.Merge(notificadores);
+            var notificaciones = Observable.Merge(notificadores).Publish();
+
+            Notificaciones = notificaciones;
+            notificaciones.Connect();
         }
 
         public void AgregarProveedor(IObservable<Notificacion> proveedor) => NotificadorAgregado?.Invoke(this, proveedor);

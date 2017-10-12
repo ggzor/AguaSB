@@ -9,13 +9,7 @@ namespace AguaSB.Notificaciones
 {
     public class PanelNotificaciones : UserControl
     {
-
         private Grid Contenido;
-
-        private bool[] espaciosOcupados;
-        private NotificacionView[] espacios;
-
-        private Queue<Notificacion> notificaciones = new Queue<Notificacion>();
 
         public PanelNotificaciones()
         {
@@ -26,11 +20,16 @@ namespace AguaSB.Notificaciones
             Content = Contenido;
         }
 
-        public void AgregarNotificacion(Notificacion notificacion)
+        private Queue<NotificacionView> notificaciones = new Queue<NotificacionView>();
+
+        public void AgregarNotificacion(NotificacionView notificacion)
         {
             notificaciones.Enqueue(notificacion);
             IntentarAgregar();
         }
+
+        private bool[] espaciosOcupados = new bool[1];
+        private NotificacionView[] espacios = new NotificacionView[1];
 
         private void IntentarAgregar()
         {
@@ -46,23 +45,14 @@ namespace AguaSB.Notificaciones
                         Contenido.Children.Remove(espacios[espacioVacioIndice]);
 
                     var notificacion = notificaciones.Dequeue();
-                    /*var icono = IconoNotificacion.De[notificacion.Tipo]();
-                    icono.Width = icono.Height = TamanoIcono;
-                    */
-                    var view = new NotificacionView()
-                    {
-                        //Notificacion = notificacion,
-                        //Background = ColorNotificacion.De[notificacion.Descripcion.Categoria],
-                        //Icono = icono
-                    };
 
-                    view.NotificacionCerrada += (src, args) => Desocupar(espacioVacioIndice);
+                    notificacion.NotificacionCerrada += (src, args) => Desocupar(espacioVacioIndice);
 
-                    Grid.SetRow(view, espacioVacioIndice * 2);
+                    Grid.SetRow(notificacion, espacioVacioIndice * 2);
 
-                    Contenido.Children.Add(view);
+                    Contenido.Children.Add(notificacion);
                     espaciosOcupados[espacioVacioIndice] = true;
-                    espacios[espacioVacioIndice] = view;
+                    espacios[espacioVacioIndice] = notificacion;
                 }
             }
         }
@@ -73,17 +63,7 @@ namespace AguaSB.Notificaciones
             IntentarAgregar();
         }
 
-        public int TamanoIcono
-        {
-            get { return (int)GetValue(TamanoIconoProperty); }
-            set { SetValue(TamanoIconoProperty, value); }
-        }
-
-        public static readonly DependencyProperty TamanoIconoProperty =
-            DependencyProperty.Register(nameof(TamanoIcono), typeof(int), typeof(PanelNotificaciones), new PropertyMetadata(40));
-
-
-
+        #region Cálculo de espacios
         /// <summary>
         /// No modificar los espacios en tiempo de ejecución.
         /// </summary>
@@ -118,5 +98,6 @@ namespace AguaSB.Notificaciones
             obj.espacios = new NotificacionView[espaciosNuevos];
             obj.espaciosOcupados = new bool[espaciosNuevos];
         }
+        #endregion
     }
 }

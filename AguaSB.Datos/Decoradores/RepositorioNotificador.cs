@@ -17,6 +17,9 @@ namespace AguaSB.Datos.Decoradores
 
         public RepositorioNotificador(IRepositorio<T> repositorio, ManejadorNotificaciones notificaciones)
         {
+            if (notificaciones == null)
+                throw new ArgumentNullException(nameof(notificaciones));
+
             Repositorio = repositorio ?? throw new ArgumentNullException(nameof(repositorio));
 
             var observable = Observable.FromEventPattern<NotificacionEntidad<T>>(

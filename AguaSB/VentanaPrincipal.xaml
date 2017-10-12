@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:AguaSB"
         xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:Controles="clr-namespace:AguaSB.Controles"
+        xmlns:Notificaciones="clr-namespace:AguaSB.Notificaciones"
         xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
         Title="VentanaPrincipal"
@@ -43,38 +44,42 @@
         </ImageBrush>
     </Window.Background>
 
-    <Grid Name="Vista">
-        <ScrollViewer Padding="0">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="300"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+    <Grid>
+        <Grid Name="Vista">
+            <ScrollViewer Padding="0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="300"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
-                <Grid Background="#AA000000" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <StackPanel Margin="80 20" Orientation="Horizontal">
-                        <Path Width="54" Height="54" Stretch="UniformToFill" Fill="White" VerticalAlignment="Center">
-                            <Path.Data>m 15.12667,112.87153 c 3.905278,3.90529 64.446676,-1.95263 85.9305,-23.436452 17.25711,-17.257101 17.25711,-45.236931 0,-62.494036 -17.257102,-17.2571023 -45.236932,-17.2571023 -62.494034,0 C 17.079309,48.424869 11.226191,108.97106 15.12667,112.87153</Path.Data>
-                        </Path>
-                        <TextBlock Margin="10 0 0 0" Foreground="White" FontSize="54" Style="{StaticResource h1}">
-                            Agua<Run FontWeight="DemiBold" FontFamily="Segoe UI">SB</Run>
-                        </TextBlock>
+                    <Grid Background="#AA000000" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <StackPanel Margin="80 20" Orientation="Horizontal">
+                            <Path Width="54" Height="54" Stretch="UniformToFill" Fill="White" VerticalAlignment="Center">
+                                <Path.Data>m 15.12667,112.87153 c 3.905278,3.90529 64.446676,-1.95263 85.9305,-23.436452 17.25711,-17.257101 17.25711,-45.236931 0,-62.494036 -17.257102,-17.2571023 -45.236932,-17.2571023 -62.494034,0 C 17.079309,48.424869 11.226191,108.97106 15.12667,112.87153</Path.Data>
+                            </Path>
+                            <TextBlock Margin="10 0 0 0" Foreground="White" FontSize="54" Style="{StaticResource h1}">
+                                Agua<Run FontWeight="DemiBold" FontFamily="Segoe UI">SB</Run>
+                            </TextBlock>
+                        </StackPanel>
+                    </Grid>
+
+                    <StackPanel Grid.Row="1" Background="White" SizeChanged="AjustarAnchos">
+                        <TextBlock Margin="0 20 0 0" Text="Módulos:" HorizontalAlignment="Center" Style="{StaticResource h2}"/>
+                        <WrapPanel Name="Extensiones" Margin="0 0 0 40" HorizontalAlignment="Center">
+                            <WrapPanel.Resources>
+                                <Style TargetType="Controles:ExtensionView">
+                                    <Setter Property="Margin" Value="15 0"/>
+                                    <Setter Property="Width" Value="{Binding ElementName=This, Path=Ajustador.AnchoObjeto}"/>
+                                </Style>
+                            </WrapPanel.Resources>
+                        </WrapPanel>
                     </StackPanel>
                 </Grid>
+            </ScrollViewer>
+        </Grid>
 
-                <StackPanel Grid.Row="1" Background="White" SizeChanged="AjustarAnchos">
-                    <TextBlock Margin="0 20 0 0" Text="Módulos:" HorizontalAlignment="Center" Style="{StaticResource h2}"/>
-                    <WrapPanel Name="Extensiones" Margin="0 0 0 40" HorizontalAlignment="Center">
-                        <WrapPanel.Resources>
-                            <Style TargetType="Controles:ExtensionView">
-                                <Setter Property="Margin" Value="15 0"/>
-                                <Setter Property="Width" Value="{Binding ElementName=This, Path=Ajustador.AnchoObjeto}"/>
-                            </Style>
-                        </WrapPanel.Resources>
-                    </WrapPanel>
-                </StackPanel>
-            </Grid>
-        </ScrollViewer>
+        <Notificaciones:PanelNotificaciones x:Name="Notificaciones" 
+                                            Margin="0 20 0 0" VerticalAlignment="Top"/>
     </Grid>
-
 </metro:MetroWindow>

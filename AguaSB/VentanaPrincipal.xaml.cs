@@ -3,15 +3,17 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Waf.Applications;
 
 using MahApps.Metro.Controls;
 using MahApps.Metro.IconPacks;
-using System.Waf.Applications;
 using MoreLinq;
 
 using AguaSB.Controles;
 using AguaSB.Extensiones;
+using AguaSB.Notificaciones;
 using AguaSB.Views.Utilerias;
+using System.Reactive.Linq;
 
 namespace AguaSB
 {
@@ -19,8 +21,12 @@ namespace AguaSB
     {
         public VentanaPrincipalViewModel ViewModel { get; }
 
-        public VentanaPrincipal(VentanaPrincipalViewModel viewModel)
+        public VentanaPrincipal(VentanaPrincipalViewModel viewModel,
+            ITransformadorNotificaciones transformador, ManejadorNotificaciones manejadorNotificaciones)
         {
+            if (manejadorNotificaciones == null)
+                throw new ArgumentNullException(nameof(manejadorNotificaciones));
+
             DataContext = ViewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
 
             Ajustador.AnchoObjetoMinimo = 400.0;
@@ -29,7 +35,13 @@ namespace AguaSB
             EjecutarOperacionComando = new DelegateCommand(EjecutarOperacion);
 
             InitializeComponent();
+
             MapearExtensiones();
+
+            manejadorNotificaciones.Notificaciones
+                .Select(transformador.Transformar)
+                .Subscribe(Notificaciones.AgregarNotificacion);
+
             administrador = new AdministradorViews(Vista);
         }
 

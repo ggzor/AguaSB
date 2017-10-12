@@ -53,9 +53,6 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutocompleteSuggestions.xaml.cs">
-      <DependentUpon>AutocompleteSuggestions.xaml</DependentUpon>
-    </Compile>
     <Compile Include="AutocompleteTextBox.xaml.cs">
       <DependentUpon>AutocompleteTextBox.xaml</DependentUpon>
     </Compile>
@@ -84,10 +81,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="AutocompleteSuggestions.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="AutocompleteTextBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

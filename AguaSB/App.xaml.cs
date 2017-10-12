@@ -10,6 +10,8 @@ using AguaSB.Datos;
 using AguaSB.Extensiones;
 using AguaSB.ViewModels;
 using AguaSB.Views;
+using AguaSB.Datos.Decoradores;
+using AguaSB.Notificaciones;
 
 namespace AguaSB
 {
@@ -23,9 +25,16 @@ namespace AguaSB
             contenedor = new WindsorContainer();
 
             RegistrarResoluciónDeExtensiones();
+            
+            contenedor.Register(Component.For(typeof(IRepositorio<>))
+                .ImplementedBy(typeof(RepositorioNotificador<>)));
 
             contenedor.Register(Component.For(typeof(IRepositorio<>))
                 .ImplementedBy(typeof(RepositorioEnMemoria<>)));
+
+            contenedor.Register(Component.For<ITransformadorNotificaciones>().ImplementedBy<TransformadorNotificaciones>());
+
+            contenedor.Register(Component.For<ManejadorNotificaciones>());
 
             contenedor.Register(Component.For<VentanaPrincipalViewModel>());
             contenedor.Register(Component.For<VentanaPrincipal>());

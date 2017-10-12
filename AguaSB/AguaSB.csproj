@@ -116,11 +116,13 @@
       <DependentUpon>ExtensionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controles\ToStringConverter.cs" />
+    <Compile Include="Notificaciones\ITransformadorNotificaciones.cs" />
     <Compile Include="Notificaciones\NotificacionView.xaml.cs">
       <DependentUpon>NotificacionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Notificaciones\PanelNotificaciones.cs" />
     <Compile Include="Datos\RepositorioEnMemoria.cs" />
+    <Compile Include="Notificaciones\TransformadorNotificaciones.cs" />
     <Compile Include="VentanaPrincipal.xaml.cs">
       <DependentUpon>VentanaPrincipal.xaml</DependentUpon>
     </Compile>
@@ -218,6 +220,9 @@
     <Content Include="Notificaciones\Notificacion.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Instaladores\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
