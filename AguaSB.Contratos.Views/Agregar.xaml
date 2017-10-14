@@ -7,6 +7,7 @@
              xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:Views="clr-namespace:AguaSB.Views.Controles;assembly=AguaSB.Views"
+             xmlns:Estilos="clr-namespace:AguaSB.Estilos;assembly=AguaSB.Estilos"
              xmlns:ViewModel="clr-namespace:AguaSB.Contratos.ViewModels;assembly=AguaSB.Contratos.ViewModels"
              xmlns:Utilerias="clr-namespace:AguaSB.Views.Utilerias;assembly=AguaSB.Views"
              mc:Ignorable="d" 
@@ -31,7 +32,7 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="550"/>
+            <ColumnDefinition Width="600"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
@@ -75,9 +76,9 @@
                         <icons:PackIconMaterial Grid.Row="1" Kind="Account"
                                                 Tag="{Binding ElementName=Usuario}" Style="{StaticResource IconoLateral}"/>
                         <TextBlock Name="Usuario" Grid.Row="1" Grid.Column="1" Text="{Binding Contrato.Usuario.NombreCompleto}" 
-                                   Style="{StaticResource h4}"/>
+                                   Style="{StaticResource h4}" />
 
-                        <icons:PackIconMaterial Grid.Row="2" Kind="ViewList" 
+                        <icons:PackIconMaterial Grid.Row="2" Kind="ViewList" Estilos:Icono.Enfocado="{Binding ElementName=TipoContrato, Path=IsKeyboardFocusWithin}"
                                                 Tag="{Binding ElementName=TipoContrato}" Style="{StaticResource IconoLateral}"/>
                         <ComboBox Name="TipoContrato" Grid.Row="2" Grid.Column="1" Tag="Tipo de contrato"/>
 
@@ -93,12 +94,12 @@
                         <TextBlock Grid.Row="5" Grid.Column="1" Margin="0 20" Text="Domicilio:" 
                                    Opacity="0.6" Style="{StaticResource h3}"/>
 
-                        <icons:PackIconMaterial Grid.Row="6" Kind="ViewGrid"
+                        <icons:PackIconMaterial Grid.Row="6" Kind="ViewGrid" Estilos:Icono.Enfocado="{Binding ElementName=Seccion, Path=IsKeyboardFocusWithin}"
                                                 Tag="{Binding ElementName=Seccion}" Style="{StaticResource IconoLateral}"/>
                         <ComboBox Name="Seccion" Grid.Row="6" Grid.Column="1" Tag="Sección" ItemsSource="{Binding Secciones}" 
                                   SelectedItem="{Binding Seccion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
 
-                        <icons:PackIconEntypo Grid.Row="7" Kind="Address"
+                        <icons:PackIconEntypo Grid.Row="7" Kind="Address" Estilos:Icono.Enfocado="{Binding ElementName=Calle, Path=IsKeyboardFocusWithin}"
                                               Tag="{Binding ElementName=Calle}" Style="{StaticResource IconoLateral}"/>
                         <ComboBox Name="Calle" Grid.Row="7" Grid.Column="1" Tag="Calle" ItemsSource="{Binding Calles}" 
                                   SelectedItem="{Binding Calle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>

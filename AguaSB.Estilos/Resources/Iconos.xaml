@@ -61,7 +61,7 @@
 
     <Style x:Key="IconoLateral" TargetType="Control">
         <Setter Property="Foreground" Value="#FFA5A5A5"/>
-        <Setter Property="Margin" Value="0 0 15 15"/>
+        <Setter Property="Margin" Value="0 0 20 15"/>
         <Setter Property="Height" Value="25"/>
         <Setter Property="Width" Value="25"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
