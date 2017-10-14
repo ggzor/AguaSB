@@ -17,6 +17,7 @@
 
         <ResourceDictionary Source="Controles/Botones.xaml"/>
         <ResourceDictionary Source="Controles/EntradaTexto.xaml"/>
+        <ResourceDictionary Source="Controles/EntradaAutocompletable.xaml"/>
         <ResourceDictionary Source="Controles/PanelDeslizable.xaml"/>
         <ResourceDictionary Source="Controles/ListaSeleccionables.xaml"/>
         <ResourceDictionary Source="Controles/Listas.xaml"/>

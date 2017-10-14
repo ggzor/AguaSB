@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows;
 
+using AguaSB.ViewModels;
+
 namespace AguaSB.Extensiones
 {
     public class Operacion
@@ -11,7 +13,9 @@ namespace AguaSB.Extensiones
 
         public FrameworkElement View { get; }
 
-        public Operacion(IExtension extension, string nombre, FrameworkElement view)
+        public IViewModel ViewModel { get; }
+
+        public Operacion(IExtension extension, string nombre, FrameworkElement view, IViewModel viewModel)
         {
             if (string.IsNullOrWhiteSpace(nombre))
                 throw new ArgumentException("El nombre de la operación debe tener al menos un caracter");
@@ -19,6 +23,7 @@ namespace AguaSB.Extensiones
             Extension = extension ?? throw new ArgumentNullException(nameof(extension));
             Nombre = nombre;
             View = view ?? throw new ArgumentNullException(nameof(view));
+            ViewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
         }
 
         public override string ToString() => Nombre;

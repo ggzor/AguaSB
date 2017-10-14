@@ -77,7 +77,7 @@
 
                 <metro:FlipView Name="Campos" Grid.Row="2" Margin="0 20 0 0" SelectedIndex="{Binding ElementName=TipoUsuario, Path=SelectedIndex}" 
                                 IsBannerEnabled="False" IsNavigationEnabled="False" MouseHoverBorderEnabled="False">
-                    <ScrollViewer Name="CamposPersona" Focusable="False">
+                    <ScrollViewer Name="CamposPersona" Padding="20 10">
                         <StackPanel VerticalAlignment="Center">
                             <StackPanel.Resources>
                                 <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">

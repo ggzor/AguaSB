@@ -43,5 +43,7 @@ namespace AguaSB.Nucleo
         [NotMapped]
         protected Notificador N => notificador.Value;
         #endregion
+
+        public override string ToString() => Nombre;
     }
 }

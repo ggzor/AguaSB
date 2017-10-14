@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Media;
+
+using MahApps.Metro.IconPacks;
 
 using AguaSB.Estilos;
 using AguaSB.Extensiones;
-using MahApps.Metro.IconPacks;
-using System.Windows.Media;
 
 namespace AguaSB.Usuarios.Views
 {
@@ -23,13 +24,13 @@ namespace AguaSB.Usuarios.Views
             Foreground = Brushes.White
         };
 
-        public Estilos.Tema Tema { get; } = Temas.Azul;
+        public Tema Tema { get; } = Temas.Azul;
 
         public Agregar Agregar { get; set; }
 
         public IEnumerable<Operacion> Operaciones => new[]
         {
-            new Operacion(this, "Agregar usuario", Agregar)
+            new Operacion(this, "Agregar usuario", Agregar, Agregar.ViewModel)
         };
     }
 }

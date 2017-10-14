@@ -85,6 +85,7 @@
     </Compile>
     <Compile Include="Utilerias\AjustadorTamanoObjetos.cs" />
     <Compile Include="Utilerias\DictionaryConverter.cs" />
+    <Compile Include="Utilerias\IsNullConverter.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

@@ -109,6 +109,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Resources\Controles\EntradaAutocompletable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\Controles\EntradaTexto.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

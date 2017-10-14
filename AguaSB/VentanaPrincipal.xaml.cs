@@ -77,11 +77,12 @@ namespace AguaSB
 
         private AdministradorViews administrador;
 
-        private void EjecutarOperacion(object param)
+        private async void EjecutarOperacion(object param)
         {
             if (param is Operacion operacion)
             {
                 Atras.Visibility = Visibility.Visible;
+                await operacion.ViewModel.Nodo.Entrar(null);
                 administrador.TraerAlFrente(operacion.View);
             }
         }

@@ -4,7 +4,6 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="ScrollViewer" BasedOn="{StaticResource HamburgerScrollViewerStyle}">
-        <Setter Property="Padding" Value="10 10"/>
         <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
     </Style>
 </ResourceDictionary>
