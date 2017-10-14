@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -21,7 +22,7 @@ namespace AguaSB
     {
         public VentanaPrincipalViewModel ViewModel { get; }
 
-        public VentanaPrincipal(VentanaPrincipalViewModel viewModel,
+        public VentanaPrincipal(VentanaPrincipalViewModel viewModel, IEnumerable<IInicializador> inicializadores,
             ITransformadorNotificaciones transformador, IManejadorNotificaciones manejadorNotificaciones)
         {
             if (manejadorNotificaciones == null)
@@ -82,8 +83,8 @@ namespace AguaSB
             if (param is Operacion operacion)
             {
                 Atras.Visibility = Visibility.Visible;
-                await operacion.ViewModel.Nodo.Entrar(null);
                 administrador.TraerAlFrente(operacion.View);
+                await operacion.ViewModel.Nodo.Entrar(null);
             }
         }
 

@@ -116,7 +116,11 @@
       <DependentUpon>ExtensionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controles\ToStringConverter.cs" />
+    <Compile Include="Inicializadores\IInicializador.cs" />
+    <Compile Include="Inicializadores\LlenarSecciones.cs" />
+    <Compile Include="Inicializadores\LlenarTiposContrato.cs" />
     <Compile Include="Instaladores\Extensiones.cs" />
+    <Compile Include="Instaladores\Inicializadores.cs" />
     <Compile Include="Instaladores\Interfaz.cs" />
     <Compile Include="Instaladores\Repositorios.cs" />
     <Compile Include="Instaladores\ServiciosNoFuncionales.cs" />
