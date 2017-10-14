@@ -45,10 +45,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Contratos.Views", "A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Contratos.ViewModels", "AguaSB.Contratos.ViewModels\AguaSB.Contratos.ViewModels.csproj", "{BBA67364-2123-4842-90C7-084BCD41FE0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GGUtils.WPF.Controles", "GGUtils.WPF.Controles\GGUtils.WPF.Controles.csproj", "{D4D4FFF1-0038-4008-AADB-25A86E401E69}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GGUtils.WPF.Controles.Tests", "GGUtils.WPF.Controles.Tests\GGUtils.WPF.Controles.Tests.csproj", "{96D05BE9-902A-4B69-9ED3-4F7C842EDC74}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -131,14 +127,6 @@ Global
 		{BBA67364-2123-4842-90C7-084BCD41FE0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BBA67364-2123-4842-90C7-084BCD41FE0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BBA67364-2123-4842-90C7-084BCD41FE0D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D4D4FFF1-0038-4008-AADB-25A86E401E69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D4D4FFF1-0038-4008-AADB-25A86E401E69}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D4D4FFF1-0038-4008-AADB-25A86E401E69}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D4D4FFF1-0038-4008-AADB-25A86E401E69}.Release|Any CPU.Build.0 = Release|Any CPU
-		{96D05BE9-902A-4B69-9ED3-4F7C842EDC74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{96D05BE9-902A-4B69-9ED3-4F7C842EDC74}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{96D05BE9-902A-4B69-9ED3-4F7C842EDC74}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{96D05BE9-902A-4B69-9ED3-4F7C842EDC74}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
