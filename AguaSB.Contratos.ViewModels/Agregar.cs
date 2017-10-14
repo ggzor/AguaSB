@@ -108,7 +108,7 @@ namespace AguaSB.Contratos.ViewModels
                 await SeccionesRepo.Agregar(seccion);
 
             var callesD = Text.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToArray();
-            var calles = from num in callesD.Batch(20).Index()
+            var calles = from num in callesD.Batch(20).Index().Take(4)
                          let index = num.Key
                          let values = num.Value
                          from v in values

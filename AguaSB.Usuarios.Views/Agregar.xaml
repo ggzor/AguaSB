@@ -53,7 +53,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <ListBox Name="TipoUsuario" HorizontalAlignment="Center" SelectedIndex="1"
+                <ListBox Name="TipoUsuario" HorizontalAlignment="Center" SelectedIndex="0"
                          Style="{StaticResource ToggleList}">
                     <ListBox.Resources>
                         <Style TargetType="Button">
