@@ -74,6 +74,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Icono.cs" />
     <Compile Include="Tema.cs" />
     <Compile Include="Temas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
