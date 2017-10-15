@@ -8,6 +8,7 @@ using System.Waf.Applications;
 using System.Waf.Foundation;
 
 using GGUtils.MVVM.Async;
+using MoreLinq;
 
 using AguaSB.Nucleo;
 using AguaSB.Utilerias;
@@ -111,10 +112,10 @@ namespace AguaSB.Usuarios.ViewModels
             new VerificadorPropiedades(this,
                 () => new INotifyDataErrorInfo[] {
                     Persona, Negocio, Negocio.Representante,
-                    Persona.Contactos.FirstOrDefault(),
-                    Negocio.Contactos.FirstOrDefault(),
-                    Negocio.Representante.Contactos.FirstOrDefault()
-                },
+                }
+                .Concat(Persona.Contactos)
+                .Concat(Negocio.Contactos)
+                .Concat(Negocio.Representante.Contactos),
                 () => new[] { this },
                 () => new[] { AgregarPersonaComando, AgregarNegocioComando });
         }
@@ -156,13 +157,18 @@ namespace AguaSB.Usuarios.ViewModels
         }
 
         private bool PuedeAgregarPersona() =>
-            UtileriasErrores.NingunoTieneErrores(Persona, Persona.Contactos.First())
+            UtileriasErrores.NingunoTieneErrores(
+                (Persona as INotifyDataErrorInfo)
+                .Concat(Persona.Contactos)
+                .ToArray())
             && !Persona.TieneCamposRequeridosVacios;
 
         private bool PuedeAgregarNegocio() =>
             UtileriasErrores.NingunoTieneErrores(
-                Negocio, Negocio.Representante,
-                Negocio.Contactos.First(), Negocio.Representante.Contactos.First())
+                new INotifyDataErrorInfo[] { Negocio, Negocio.Representante }
+                .Concat(Negocio.Contactos)
+                .Concat(Negocio.Representante.Contactos)
+                .ToArray())
             && !Negocio.TieneCamposRequeridosVacios && !Negocio.Representante.TieneCamposRequeridosVacios;
 
         private async Task<int> AgregarPersona(IProgress<(double, string)> progreso)
@@ -179,6 +185,10 @@ namespace AguaSB.Usuarios.ViewModels
 
         private async Task<int> AgregarUsuarioManejando(Usuario usuario, Action<bool> puedeReestablecer, ICommand reestablecer, IProgress<(double, string)> progreso)
         {
+            foreach (var contacto in usuario.Contactos.ToArray())
+                if (string.IsNullOrWhiteSpace(contacto?.Informacion))
+                    usuario.Contactos.Remove(contacto);
+
             puedeReestablecer(false);
             Usuario = usuario;
 

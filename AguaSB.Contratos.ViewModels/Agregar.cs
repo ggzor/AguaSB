@@ -203,6 +203,9 @@ namespace AguaSB.Contratos.ViewModels
 
         private async Task<int> AgregarContrato(IProgress<(double, string)> progreso)
         {
+            Contrato.TipoContrato = TipoContrato;
+            Contrato.Domicilio.Calle = Calle;
+
             MostrarMensajeError = true;
             PuedeReestablecer = false;
 

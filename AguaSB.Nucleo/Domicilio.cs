@@ -54,6 +54,6 @@ namespace AguaSB.Nucleo
 
         public bool TieneCamposRequeridosVacios => string.IsNullOrWhiteSpace(Numero);
 
-        public override string ToString() => $"{Calle?.Seccion}, Calle {Calle}, Número {Numero}";
+        public override string ToString() => $"Sección {Calle?.Seccion}, Calle {Calle}, Número {Numero}";
     }
 }
