@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Waf.Applications;
 
 using MahApps.Metro.Controls;
 using MahApps.Metro.IconPacks;
 using MoreLinq;
 
-using AguaSB.Controles;
 using AguaSB.Extensiones;
 using AguaSB.Notificaciones;
 using AguaSB.Views.Utilerias;
@@ -23,78 +20,61 @@ namespace AguaSB
     {
         public VentanaPrincipalViewModel ViewModel { get; }
 
-        public VentanaPrincipal(VentanaPrincipalViewModel viewModel, IEnumerable<IInicializador> inicializadores,
-            ITransformadorNotificaciones transformador, IManejadorNotificaciones manejadorNotificaciones)
-        {
-            if (manejadorNotificaciones == null)
-                throw new ArgumentNullException(nameof(manejadorNotificaciones));
+        public ICommand EjecutarOperacionComando { get; }
+        private AdministradorViews administrador;
 
+        public VentanaPrincipal(VentanaPrincipalViewModel viewModel, ITransformadorExtensiones transformador, IObservable<NotificacionView> notificaciones)
+        {
             DataContext = ViewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
 
             Ajustador.AnchoObjetoMinimo = 400.0;
             Ajustador.Margen = 15.0;
 
-            EjecutarOperacionComando = new DelegateCommand(EjecutarOperacion);
+            EjecutarOperacionComando = new AsyncDelegateCommand(EjecutarOperacion);
 
             InitializeComponent();
 
-            MapearExtensiones();
-
-            manejadorNotificaciones.Notificaciones
-                .Select(transformador.Transformar)
-                .Subscribe(Notificaciones.AgregarNotificacion);
+            notificaciones.Subscribe(Notificaciones.AgregarNotificacion);
+            TransformarExtensiones(viewModel, transformador);
 
             administrador = new AdministradorViews(Vista);
         }
 
-        public void Mostrar() => ShowDialog();
+        void IVentanaPrincipal.Mostrar() => ShowDialog();
 
-        private void MapearExtensiones() => ViewModel.Extensiones.Select(ext =>
+        private void TransformarExtensiones(VentanaPrincipalViewModel viewModel, ITransformadorExtensiones transformador)
         {
-            var view = new ExtensionView()
+            viewModel.Extensiones.Select(transformador.Transformar).Select(extension =>
             {
-                Titulo = ext.Nombre,
-                Descripcion = ext.Descripcion,
-                Elementos = ext.Operaciones,
-                Icono = ext.Icono,
-                FondoIcono = ext.Tema.BrochaSolidaWPF,
-                Command = EjecutarOperacionComando
-            };
+                extension.Command = EjecutarOperacionComando;
 
-            var icono = ext.Icono;
+                if (extension.Icono is PackIconModern icono)
+                    icono.Style = (Style)FindResource("PackIconModernStroked");
 
-            if (icono is PackIconModern i)
-            {
-                i.Foreground = Brushes.White;
-                i.Style = (Style)FindResource("PackIconModernStroked");
-            }
+                return extension;
+            }).ForEach(_ => Extensiones.Children.Add(_));
+        }
 
-            icono.Width = 80;
-            icono.Height = 80;
-
-            return view;
-        }).ForEach(ext => Extensiones.Children.Add(ext));
-
-        public ICommand EjecutarOperacionComando { get; }
-
-        private AdministradorViews administrador;
-
-        private async void EjecutarOperacion(object param)
+        private async Task EjecutarOperacion(object param)
         {
             if (param is Operacion operacion)
             {
                 Atras.Visibility = Visibility.Visible;
-                administrador.TraerAlFrente(operacion.Visualization);
+
+                await administrador.TraerAlFrente(operacion.Visualization);
+
                 await operacion.ViewModel.Nodo.Entrar(null);
+
+                // Para permitir que la lógica de foco funcione correctamente
                 await Task.Delay(20);
                 operacion.View.Entrar();
             }
         }
 
-        private void VolverAPrincipal(object sender, RoutedEventArgs e)
+        private async void VolverAPrincipal(object sender, RoutedEventArgs e)
         {
             Atras.Visibility = Visibility.Collapsed;
-            administrador.VolverAPrincipal();
+            await administrador.VolverAPrincipal();
         }
 
         #region Ajuste de tamaños

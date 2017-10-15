@@ -2,8 +2,8 @@
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 
-using AguaSB.Datos.Decoradores;
 using AguaSB.Datos;
+using AguaSB.Datos.Decoradores;
 using AguaSB.Nucleo;
 
 namespace AguaSB.Instaladores
@@ -12,14 +12,15 @@ namespace AguaSB.Instaladores
     {
         public void Install(IWindsorContainer contenedor, IConfigurationStore store)
         {
-            contenedor.Register(Component.For<IRepositorio<Usuario>>()
-                .ImplementedBy<RepositorioNotificador<Usuario>>());
-
-            contenedor.Register(Component.For<IRepositorio<Contrato>>()
-                .ImplementedBy<RepositorioNotificador<Contrato>>());
+            RegistrarRepositorioNotificador<Usuario>(contenedor);
+            RegistrarRepositorioNotificador<Contrato>(contenedor);
 
             contenedor.Register(Component.For(typeof(IRepositorio<>))
                 .ImplementedBy(typeof(RepositorioEnMemoria<>)));
         }
+
+        private static void RegistrarRepositorioNotificador<T>(IWindsorContainer contenedor) where T : IEntidad =>
+            contenedor.Register(Component.For<IRepositorio<T>>()
+                .ImplementedBy<RepositorioNotificador<T>>());
     }
 }

@@ -4,38 +4,29 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:Icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             xmlns:Converters="clr-namespace:GGUtils.WPF.ValueConverters;assembly=GGUtils.WPF"
              mc:Ignorable="d"
              x:Name="This"
              Width="360" Height="120" Padding="7"
              MouseLeave="IniciarCerradura"
              MouseEnter="DetenerCerradura">
     <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Estilos.xaml" />
-            </ResourceDictionary.MergedDictionaries>
+        <CircleEase x:Key="Ease" EasingMode="EaseOut"/>
 
-            <CircleEase x:Key="Ease" EasingMode="EaseOut"/>
-
-            <Style x:Key="Opacar" TargetType="{x:Type Grid}">
-                <Setter Property="Opacity" Value="0.5"/>
-                <Style.Triggers>
-                    <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Opacity" Value="1"/>
-                    </Trigger>
-                    <EventTrigger RoutedEvent="MouseDown">
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0.6" Duration="0:0:0.2" FillBehavior="Stop"/>
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger>
-                </Style.Triggers>
-            </Style>
-
-            <Converters:BoolToVisibility x:Key="BoolToVisibility"/>
-        </ResourceDictionary>
+        <Style x:Key="Opacar" TargetType="{x:Type Grid}">
+            <Setter Property="Opacity" Value="0.5"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Opacity" Value="1"/>
+                </Trigger>
+                <EventTrigger RoutedEvent="MouseDown">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0.6" Duration="0:0:0.2" FillBehavior="Stop"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
 
     <UserControl.RenderTransform>

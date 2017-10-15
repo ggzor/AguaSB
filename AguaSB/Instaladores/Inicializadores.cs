@@ -1,11 +1,13 @@
 ﻿using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
-using Castle.Windsor;
 using Castle.MicroKernel.Resolvers.SpecializedResolvers;
+using Castle.Windsor;
+
+using AguaSB.Inicializadores;
 
 namespace AguaSB.Instaladores
 {
-    public class Inicializadores : IWindsorInstaller
+    public class Inicializadores : IWindsorInstaller, IInicializador
     {
         public void Install(IWindsorContainer contenedor, IConfigurationStore store)
         {

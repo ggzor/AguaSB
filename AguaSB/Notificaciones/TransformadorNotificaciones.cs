@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 
+using MahApps.Metro.IconPacks;
+
 using AguaSB.Datos.Decoradores;
 using AguaSB.Estilos;
 using AguaSB.Nucleo;
-using MahApps.Metro.IconPacks;
 
 namespace AguaSB.Notificaciones
 {

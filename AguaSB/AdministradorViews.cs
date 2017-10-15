@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -12,12 +13,12 @@ namespace AguaSB
         public AdministradorViews(Panel vista) =>
             Vista = vista ?? throw new ArgumentNullException(nameof(vista));
 
-        public async void TraerAlFrente(FrameworkElement element)
+        public async Task TraerAlFrente(FrameworkElement element)
         {
             await Animaciones.MostrarEnPanel(Vista, element);
         }
-        
-        public async void VolverAPrincipal()
+
+        public async Task VolverAPrincipal()
         {
             if (Vista.Children.Count > 1 && Vista.Children.OfType<FrameworkElement>().Last() is var elem)
             {

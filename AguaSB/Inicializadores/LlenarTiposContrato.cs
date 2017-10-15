@@ -12,7 +12,8 @@ namespace AguaSB.Inicializadores
         private async void Cargar(IRepositorio<TipoContrato> tiposContrato)
         {
             Console.WriteLine("Agregando tipos de contrato...");
-            var tipos = new(string, ClaseContrato, decimal)[]
+
+            var tipos = new(string Nombre, ClaseContrato Clase, decimal Multiplicador)[]
             {
                 ("Convencional", ClaseContrato.Doméstico, 1.0M),
                 ("Madre soltera", ClaseContrato.Doméstico, 0.75M),
@@ -23,7 +24,7 @@ namespace AguaSB.Inicializadores
                 ("Tienda", ClaseContrato.Comercial, 1.5M),
                 ("Hotel de hasta 10 habitaciones", ClaseContrato.Comercial, 2.0M),
                 ("Hotel de hasta 20 habitaciones", ClaseContrato.Comercial, 3.0M)
-            }.Select(t => new TipoContrato() { Nombre = t.Item1, ClaseContrato = t.Item2, Multiplicador = t.Item3 });
+            }.Select(t => new TipoContrato() { Nombre = t.Nombre, ClaseContrato = t.Clase, Multiplicador = t.Multiplicador });
 
             foreach (var tipo in tipos)
                 await tiposContrato.Agregar(tipo);

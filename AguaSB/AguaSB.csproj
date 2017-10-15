@@ -112,11 +112,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AdministradorViews.cs" />
-    <Compile Include="Controles\ExtensionView.xaml.cs">
+    <Compile Include="Extensiones\ExtensionView.xaml.cs">
       <DependentUpon>ExtensionView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controles\ToStringConverter.cs" />
+    <Compile Include="Conversores\ToStringConverter.cs" />
+    <Compile Include="Extensiones\ITransformadorExtensiones.cs" />
+    <Compile Include="Extensiones\TransformadorExtensiones.cs" />
     <Compile Include="Inicializadores\IInicializador.cs" />
+    <Compile Include="Inicializadores\Inicializador.cs" />
     <Compile Include="Inicializadores\LlenarSecciones.cs" />
     <Compile Include="Inicializadores\LlenarTiposContrato.cs" />
     <Compile Include="Instaladores\Extensiones.cs" />
@@ -136,7 +139,7 @@
       <DependentUpon>VentanaPrincipal.xaml</DependentUpon>
     </Compile>
     <Compile Include="VentanaPrincipalViewModel.cs" />
-    <Page Include="Controles\ExtensionView.xaml">
+    <Page Include="Extensiones\ExtensionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -146,6 +149,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Notificaciones\NotificacionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Conversores.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -229,6 +236,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Controles\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

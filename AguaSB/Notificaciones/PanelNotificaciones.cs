@@ -35,7 +35,9 @@ namespace AguaSB.Notificaciones
         {
             if (notificaciones.Any())
             {
-                var espaciosVacios = espaciosOcupados.Index().Where(kv => kv.Value == false).Select(kv => kv.Key);
+                var espaciosVacios = espaciosOcupados.Index()
+                    .Where(kv => kv.Value == false)
+                    .Select(kv => kv.Key);
 
                 if (espaciosVacios.Any())
                 {

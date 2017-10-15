@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AguaSB"
         xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:Controles="clr-namespace:AguaSB.Controles"
         xmlns:Notificaciones="clr-namespace:AguaSB.Notificaciones"
+        xmlns:Extensiones="clr-namespace:AguaSB.Extensiones"
         xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
         Title="VentanaPrincipal"
@@ -68,7 +68,7 @@
                         <TextBlock Margin="0 20 0 0" Text="Módulos:" HorizontalAlignment="Center" Style="{StaticResource h2}"/>
                         <WrapPanel Name="Extensiones" Margin="0 0 0 40" HorizontalAlignment="Center">
                             <WrapPanel.Resources>
-                                <Style TargetType="Controles:ExtensionView">
+                                <Style TargetType="Extensiones:ExtensionView">
                                     <Setter Property="Margin" Value="15 0"/>
                                     <Setter Property="Width" Value="{Binding ElementName=This, Path=Ajustador.AnchoObjeto}"/>
                                 </Style>
@@ -79,7 +79,6 @@
             </ScrollViewer>
         </Grid>
 
-        <Notificaciones:PanelNotificaciones x:Name="Notificaciones" 
-                                            Margin="0 20 0 0" VerticalAlignment="Top"/>
+        <Notificaciones:PanelNotificaciones x:Name="Notificaciones" Margin="0 20 0 0" VerticalAlignment="Top"/>
     </Grid>
 </metro:MetroWindow>
