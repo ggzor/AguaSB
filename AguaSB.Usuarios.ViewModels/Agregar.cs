@@ -108,36 +108,16 @@ namespace AguaSB.Usuarios.ViewModels
 
             ConfigurarComandos();
 
-            this.ToObservableProperties().Subscribe(RegistrarObservadoresDeCambios);
-
-            // Registrar observadores por primera vez
-            RaisePropertyChanged(nameof(Persona));
+            new VerificadorPropiedades(this,
+                () => new INotifyDataErrorInfo[] {
+                    Persona, Negocio, Negocio.Representante,
+                    Persona.Contactos.FirstOrDefault(),
+                    Negocio.Contactos.FirstOrDefault(),
+                    Negocio.Representante.Contactos.FirstOrDefault()
+                },
+                () => new[] { this },
+                () => new[] { AgregarPersonaComando, AgregarNegocioComando });
         }
-
-        private IDisposable ObservadorDePropiedades;
-
-        private void RegistrarObservadoresDeCambios((object Source, PropertyChangedEventArgs PropiedadCambiada) parametro)
-        {
-            ObservadorDePropiedades?.Dispose();
-
-            var propiedadesAObservar = new INotifyDataErrorInfo[] {
-                Persona, Negocio, Negocio.Representante,
-                Persona.Contactos.FirstOrDefault(),
-                Negocio.Contactos.FirstOrDefault(),
-                Negocio.Representante.Contactos.FirstOrDefault()
-            };
-
-            var observables = from obj in propiedadesAObservar
-                              let obs = Observable.FromEventPattern<DataErrorsChangedEventArgs>(
-                                  h => obj.ErrorsChanged += h,
-                                  h => obj.ErrorsChanged -= h)
-                              select obs;
-
-            ObservadorDePropiedades = Observable.Merge(observables).Subscribe(_ => VerificarPuedeEjecutar());
-        }
-
-        private void VerificarPuedeEjecutar() =>
-            UtileriasComandos.VerificarPuedeEjecutarEn(AgregarPersonaComando, AgregarNegocioComando);
 
         private void ConfigurarComandos()
         {
@@ -150,7 +130,6 @@ namespace AguaSB.Usuarios.ViewModels
 
                 Persona = persona;
 
-                VerificarPuedeEjecutar();
                 MostrarMensajeErrorPersona = false;
             }, () => PuedeReestablecerPersona);
 
@@ -166,7 +145,6 @@ namespace AguaSB.Usuarios.ViewModels
 
                 Negocio = negocio;
 
-                VerificarPuedeEjecutar();
                 MostrarMensajeErrorNegocio = false;
             }, () => PuedeReestablecerNegocio);
 

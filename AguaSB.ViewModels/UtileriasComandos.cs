@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Collections.Generic;
+using System.Windows.Input;
 using System.Waf.Applications;
 
 using MoreLinq;
@@ -9,7 +10,7 @@ namespace AguaSB.ViewModels
 {
     public static class UtileriasComandos
     {
-        public static void VerificarPuedeEjecutarEn(params ICommand[] comandos) => comandos.ForEach(comando =>
+        public static void VerificarPuedeEjecutarEn(IEnumerable<ICommand> comandos) => comandos.ForEach(comando =>
         {
             switch (comando)
             {
