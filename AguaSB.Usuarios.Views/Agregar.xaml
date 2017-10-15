@@ -129,6 +129,7 @@
                             <icons:PackIconMaterial Grid.Row="3" Tag="{Binding ElementName=TelefonoPersona}"
                                                     Kind="Phone" Style="{StaticResource IconoLateral}"/>
                             <TextBox Name="TelefonoPersona" Tag="Número telefónico" Grid.Row="3" Grid.Column="1"
+                                     Estilos:Foco.SiguienteFoco="{Binding ElementName=BotonesPersona, Path=Primario}"
                                      Text="{Binding Persona.Contactos[0].Informacion, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
 
                             <TextBlock Name="MensajeErrorPersona" Grid.Row="4" Grid.Column="1"
@@ -139,7 +140,7 @@
                                                   EsVisible="{Binding AgregarPersonaComando.Execution.IsNotCompleted}"
                                                   Texto="{Binding AgregarPersonaComando.ProgressMessage}"/>
 
-                            <Views:ParBotones Margin="0 20" Grid.Row="6" Grid.Column="1"
+                            <Views:ParBotones Name="BotonesPersona" Margin="0 20" Grid.Row="6" Grid.Column="1"
                                               TextoPrimario="Agregar" TextoSecundario="Reestablecer"
                                               ComandoPrimario="{Binding AgregarPersonaComando}"
                                               ComandoSecundario="{Binding ReestablecerPersonaComando}"/>
@@ -234,7 +235,8 @@
 
                             <icons:PackIconMaterial Grid.Row="8" Kind="Phone" Tag="{Binding ElementName=TelefonoRepresentante}" Style="{StaticResource IconoLateral}"/>
 
-                            <TextBox Name="TelefonoRepresentante" Tag="Número telefónico" Grid.Row="8" Grid.Column="1"
+                            <TextBox Name="TelefonoRepresentante" Tag="Número telefónico" Grid.Row="8" Grid.Column="1" 
+                                     Estilos:Foco.SiguienteFoco="{Binding ElementName=BotonesNegocio, Path=Primario}"
                                      Text="{Binding Negocio.Representante.Contactos[0].Informacion, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
 
                             <TextBlock Name="MensajeErrorNegocio" Grid.Row="9" Grid.Column="1"
@@ -245,7 +247,7 @@
                                                   EsVisible="{Binding AgregarNegocioComando.Execution.IsNotCompleted}"
                                                   Texto="{Binding AgregarNegocioComando.ProgressMessage}"/>
 
-                            <Views:ParBotones Margin="0 20" Grid.Row="11" Grid.Column="1"
+                            <Views:ParBotones Name="BotonesNegocio" Margin="0 20" Grid.Row="11" Grid.Column="1"
                                               TextoPrimario="Agregar" TextoSecundario="Reestablecer"
                                               ComandoPrimario="{Binding AgregarNegocioComando}"
                                               ComandoSecundario="{Binding ReestablecerNegocioComando}"/>

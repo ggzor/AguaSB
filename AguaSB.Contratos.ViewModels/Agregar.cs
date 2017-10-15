@@ -91,7 +91,9 @@ namespace AguaSB.Contratos.ViewModels
         #endregion
 
         #region Comandos
-        public DelegateCommand ReestablecerComando { get; set; }
+        public DelegateCommand ReestablecerComando { get; }
+
+        public AsyncDelegateCommand<int> AgregarContratoComando { get; }
         #endregion
 
         #region Dependencias
@@ -108,6 +110,7 @@ namespace AguaSB.Contratos.ViewModels
             SeccionesRepo = secciones ?? throw new ArgumentNullException(nameof(secciones));
             CallesRepo = calles ?? throw new ArgumentNullException(nameof(calles));
 
+            AgregarContratoComando = new AsyncDelegateCommand<int>(AgregarContrato);
             ReestablecerComando = new DelegateCommand(Reestablecer);
 
             Nodo = new NodoHoja() { PrimeraEntrada = Inicializar };
@@ -153,6 +156,12 @@ namespace AguaSB.Contratos.ViewModels
         {
             TipoContrato = TiposContrato.FirstOrDefault();
             Seccion = Secciones.FirstOrDefault();
+        }
+
+        private async Task<int> AgregarContrato()
+        {
+            Console.WriteLine("Agregando contrato");
+            return 0;
         }
     }
 }

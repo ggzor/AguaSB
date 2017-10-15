@@ -59,6 +59,10 @@
       <Project>{66436B98-0E59-4DF2-A29F-B14D157C1FA4}</Project>
       <Name>AguaSB.ViewModels</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AguaSB.Views\AguaSB.Views.csproj">
+      <Project>{2FB7CB7E-CAB1-47CC-A509-8DAA4408B580}</Project>
+      <Name>AguaSB.Views</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

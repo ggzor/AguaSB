@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 
 using AguaSB.Views;
@@ -14,6 +15,20 @@ namespace AguaSB.Usuarios.Views
             DataContext = ViewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
 
             InitializeComponent();
+
+            TipoUsuario.SelectionChanged += async (_, __) =>
+            {
+                await Task.Delay(20);
+                Entrar();
+            };
+        }
+
+        public void Entrar()
+        {
+            if (TipoUsuario.SelectedIndex == 0)
+                NombreUsuario.Focus();
+            else if (TipoUsuario.SelectedIndex == 1)
+                NombreNegocio.Focus();
         }
     }
 }

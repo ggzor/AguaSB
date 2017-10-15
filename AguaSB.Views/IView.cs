@@ -1,9 +1,10 @@
 ﻿namespace AguaSB.Views
 {
     /// <summary>
-    /// Clase marcador para que los views sean cargados
+    /// Clase para que los views sean cargados, proporciona un método para avisar cuando se ingresa al view
     /// </summary>
     public interface IView
     {
+        void Entrar();
     }
 }

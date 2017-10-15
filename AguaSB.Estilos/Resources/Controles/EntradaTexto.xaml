@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes">
+                    xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
+                    xmlns:Estilos="clr-namespace:AguaSB.Estilos">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/materialdesigntheme.TextBox.xaml" />
         <ResourceDictionary Source="Validacion.xaml"/>
@@ -34,6 +35,8 @@
         <Setter Property="material:HintAssist.FloatingScale" Value="1"/>
         <Setter Property="material:HintAssist.FloatingOffset" Value="0, -24"/>
         <Setter Property="Validation.ErrorTemplate" Value="{StaticResource PlantillaValidacion}"/>
+        <Setter Property="Estilos:Foco.EnterAvanzaFoco" Value="True"/>
+        <Setter Property="Estilos:Textos.SeleccionarTodoEnFoco" Value="True"/>
 
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FontSize" Value="18"/>

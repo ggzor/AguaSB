@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -14,7 +16,6 @@ using AguaSB.Controles;
 using AguaSB.Extensiones;
 using AguaSB.Notificaciones;
 using AguaSB.Views.Utilerias;
-using System.Reactive.Linq;
 
 namespace AguaSB
 {
@@ -83,8 +84,10 @@ namespace AguaSB
             if (param is Operacion operacion)
             {
                 Atras.Visibility = Visibility.Visible;
-                administrador.TraerAlFrente(operacion.View);
+                administrador.TraerAlFrente(operacion.Visualization);
                 await operacion.ViewModel.Nodo.Entrar(null);
+                await Task.Delay(20);
+                operacion.View.Entrar();
             }
         }
 

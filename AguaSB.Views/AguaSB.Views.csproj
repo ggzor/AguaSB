@@ -68,7 +68,6 @@
     <Compile Include="Controles\Progreso.xaml.cs">
       <DependentUpon>Progreso.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Foco.cs" />
     <Compile Include="IView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

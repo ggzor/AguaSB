@@ -15,5 +15,7 @@ namespace AguaSB.Contratos.Views
 
             InitializeComponent();
         }
+
+        public void Entrar() => TipoContrato.Focus();
     }
 }

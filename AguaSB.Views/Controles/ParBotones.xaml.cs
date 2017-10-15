@@ -9,6 +9,20 @@ namespace AguaSB.Views.Controles
         public ParBotones()
         {
             InitializeComponent();
+            Primario = primario;
+            Secundario = secundario;
+        }
+
+        public Button Secundario
+        {
+            get { return (Button)GetValue(SecundarioProperty); }
+            private set { SetValue(SecundarioPropertyKey, value); }
+        }
+
+        public Button Primario
+        {
+            get { return (Button)GetValue(PrimarioProperty); }
+            private set { SetValue(PrimarioPropertyKey, value); }
         }
 
         public string TextoPrimario
@@ -36,6 +50,16 @@ namespace AguaSB.Views.Controles
         }
 
         #region DP´s
+        private static readonly DependencyPropertyKey SecundarioPropertyKey =
+            DependencyProperty.RegisterReadOnly(nameof(Secundario), typeof(Button), typeof(ParBotones), new PropertyMetadata(null));
+
+        public static readonly DependencyProperty SecundarioProperty = SecundarioPropertyKey.DependencyProperty;
+
+        private static readonly DependencyPropertyKey PrimarioPropertyKey =
+            DependencyProperty.RegisterReadOnly(nameof(Primario), typeof(Button), typeof(ParBotones), new PropertyMetadata(null));
+
+        public static readonly DependencyProperty PrimarioProperty = PrimarioPropertyKey.DependencyProperty;
+
         public static readonly DependencyProperty TextoPrimarioProperty =
             DependencyProperty.Register(nameof(TextoPrimario), typeof(string), typeof(ParBotones), new PropertyMetadata("Aceptar"));
 

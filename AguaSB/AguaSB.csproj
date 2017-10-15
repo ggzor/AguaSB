@@ -145,7 +145,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ExtensionPrueba.cs" />
     <Page Include="Notificaciones\NotificacionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
