@@ -81,17 +81,19 @@
 
                         <icons:PackIconMaterial Grid.Row="2" Kind="ViewList" Estilos:Icono.Enfocado="{Binding ElementName=TipoContrato, Path=IsKeyboardFocusWithin}"
                                                 Tag="{Binding ElementName=TipoContrato}" Style="{StaticResource IconoLateral}"/>
-                        <ComboBox Name="TipoContrato" Grid.Row="2" Grid.Column="1" Tag="Tipo de contrato" SelectedItem="{Binding TipoContrato}"
+                        <ComboBox Name="TipoContrato" Grid.Row="2" Grid.Column="1" Tag="Tipo de contrato" 
+                                  SelectedItem="{Binding TipoContrato, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
                                   ItemsSource="{Binding TiposContrato}" ItemTemplate="{StaticResource PlantillaTipoContrato}"/>
 
                         <icons:PackIconEntypo Grid.Row="3" Kind="FlowBranch"
                                               Tag="{Binding ElementName=MedidaToma}" Style="{StaticResource IconoLateral}"/>
                         <TextBox Name="MedidaToma" Grid.Row="3" Grid.Column="1" 
-                                 Tag="Tamaño de la toma" Text="{Binding Contrato.MedidaToma}"/>
+                                 Tag="Tamaño de la toma" Text="{Binding Contrato.MedidaToma, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
 
                         <icons:PackIconModern Grid.Row="4" Kind="CurrencyDollar"
                                               Tag="{Binding ElementName=Adeudo}" Style="{StaticResource IconoLateral}"/>
-                        <TextBox Name="Adeudo" Grid.Row="4" Grid.Column="1" Tag="Adeudo inicial" Text="{Binding Contrato.AdeudoInicial}"/>
+                        <TextBox Name="Adeudo" Grid.Row="4" Grid.Column="1" Tag="Adeudo inicial" metro:TextBoxHelper.SelectAllOnFocus="True"
+                                 Text="{Binding Contrato.AdeudoInicial, StringFormat={}{0:C}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True, Delay=500}"/>
 
                         <TextBlock Grid.Row="5" Grid.Column="1" Margin="0 20" Text="Domicilio:" 
                                    Opacity="0.6" Style="{StaticResource h3}"/>
@@ -108,7 +110,8 @@
 
                         <icons:PackIconFontAwesome Grid.Row="8" Kind="Hashtag"
                                                    Tag="{Binding ElementName=Numero}" Style="{StaticResource IconoLateral}"/>
-                        <TextBox Name="Numero" Grid.Row="8" Grid.Column="1" Text="{Binding Contrato.Domicilio.Numero}" Tag="Número"/>
+                        <TextBox Name="Numero" Grid.Row="8" Grid.Column="1" Tag="Número"
+                                 Text="{Binding Contrato.Domicilio.Numero, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
 
                         <TextBlock Grid.Row="9" Grid.Column="1" Name="MensajeErrorNegocio" Text="{Binding AgregarContratoComando.Execution.ExceptionMessage}" Style="{StaticResource error}"
                                    Tag="{Binding MostrarMensajeError}"/>
@@ -118,7 +121,7 @@
 
                         <Views:ParBotones Grid.Row="11" Grid.Column="1" Margin="0 20" TextoPrimario="Agregar" TextoSecundario="Reestablecer"
                                           ComandoPrimario="{Binding AgregarPersonaComando}"
-                                          ComandoSecundario="{Binding ReestablecerPersonaComando}"/>
+                                          ComandoSecundario="{Binding ReestablecerComando}"/>
                     </Grid>
                 </ScrollViewer>
             </metro:FlipView>

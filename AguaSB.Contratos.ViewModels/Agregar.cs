@@ -25,9 +25,9 @@ namespace AguaSB.Contratos.ViewModels
         private Seccion seccion;
         private Calle calle;
 
-        private IEnumerable<TipoContrato> tiposContrato;
-        private IEnumerable<Seccion> secciones;
-        private IEnumerable<Calle> calles;
+        private IEnumerable<TipoContrato> tiposContrato = Enumerable.Empty<TipoContrato>();
+        private IEnumerable<Seccion> secciones = Enumerable.Empty<Seccion>();
+        private IEnumerable<Calle> calles = Enumerable.Empty<Calle>();
         #endregion
 
         #region Propiedades
@@ -111,6 +111,8 @@ namespace AguaSB.Contratos.ViewModels
             ReestablecerComando = new DelegateCommand(Reestablecer);
 
             Nodo = new NodoHoja() { PrimeraEntrada = Inicializar };
+
+            Reestablecer();
         }
 
         private Dictionary<Seccion, IEnumerable<Calle>> callesAgrupadas;
@@ -134,13 +136,23 @@ namespace AguaSB.Contratos.ViewModels
 
             Secciones = callesAgrupadas.Keys;
 
-            TipoContrato = TiposContrato.FirstOrDefault();
-            Seccion = secciones.FirstOrDefault();
+            ReestablecerTipoContratoYCalles();
         }
 
         private void Reestablecer()
         {
+            Contrato = new Contrato()
+            {
+                Domicilio = new Domicilio()
+            };
 
+            ReestablecerTipoContratoYCalles();
+        }
+
+        private void ReestablecerTipoContratoYCalles()
+        {
+            TipoContrato = TiposContrato.FirstOrDefault();
+            Seccion = Secciones.FirstOrDefault();
         }
     }
 }
