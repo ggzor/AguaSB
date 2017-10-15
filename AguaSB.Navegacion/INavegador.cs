@@ -1,7 +1,9 @@
-﻿namespace AguaSB.Navegacion
+﻿using System.Threading.Tasks;
+
+namespace AguaSB.Navegacion
 {
     public interface INavegador
     {
-        void Navegar(string direccion, object parametro);
+        Task Navegar(string direccion, object parametro);
     }
 }

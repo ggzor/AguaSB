@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AguaSB.Navegacion
 {
@@ -7,27 +8,24 @@ namespace AguaSB.Navegacion
     {
         public IReadOnlyDictionary<string, T> Directorio { get; }
 
-        public Action<T, object> ManejadorNavegacion { get; }
+        public IManejadorNavegacion<T> Manejador { get; }
 
-        public Action<string> ManejadorDireccionInvalida { get; }
-
-        public NavegadorDirectorio(IReadOnlyDictionary<string, T> directorio, Action<T, object> manejadorNavegacion, Action<string> manejadorDireccionInvalida)
+        public NavegadorDirectorio(IReadOnlyDictionary<string, T> directorio, IManejadorNavegacion<T> manejador)
         {
             Directorio = directorio ?? throw new ArgumentNullException(nameof(directorio));
-            ManejadorNavegacion = manejadorNavegacion ?? throw new ArgumentNullException(nameof(manejadorNavegacion));
-            ManejadorDireccionInvalida = manejadorDireccionInvalida ?? throw new ArgumentNullException(nameof(manejadorDireccionInvalida));
+            Manejador = manejador ?? throw new ArgumentNullException(nameof(manejador));
         }
 
-        public void Navegar(string direccion, object parametro)
+        public async Task Navegar(string direccion, object parametro)
         {
             try
             {
                 var objeto = Directorio[direccion];
-                ManejadorNavegacion(objeto, parametro);
+                await Manejador.Navegar(objeto, parametro);
             }
             catch (KeyNotFoundException)
             {
-                ManejadorDireccionInvalida(direccion);
+                await Manejador.EnDireccionNoEncontrada(direccion);
             }
         }
     }
