@@ -105,7 +105,7 @@ namespace AguaSB.Usuarios.ViewModels
         {
             Usuarios = usuarios ?? throw new ArgumentNullException(nameof(usuarios));
 
-            Nodo = new NodoHoja();
+            Nodo = new Nodo();
 
             ConfigurarComandos();
 

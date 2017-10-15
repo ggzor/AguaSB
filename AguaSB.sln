@@ -13,8 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Utilerias", "AguaSB.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Navegacion", "AguaSB.Navegacion\AguaSB.Navegacion.csproj", "{B51B553C-10D5-47EA-93BB-DECED914D5F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Navegacion.Tests", "AguaSB.Navegacion.Tests\AguaSB.Navegacion.Tests.csproj", "{5608EDD1-CDEE-4331-A4D2-3BC6F88656E4}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GGUtils.MVVM.Async", "GGUtils.MVVM.Async\GGUtils.MVVM.Async.csproj", "{0B78E13E-F73B-4A97-8AF4-133A111E4416}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GGUtils.MVVM.Async.Tests", "GGUtils.MVVM.Async.Tests\GGUtils.MVVM.Async.Tests.csproj", "{324D196B-579B-4A2C-8D44-A8DC6B9A1995}"
@@ -63,10 +61,6 @@ Global
 		{B51B553C-10D5-47EA-93BB-DECED914D5F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B51B553C-10D5-47EA-93BB-DECED914D5F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B51B553C-10D5-47EA-93BB-DECED914D5F6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5608EDD1-CDEE-4331-A4D2-3BC6F88656E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5608EDD1-CDEE-4331-A4D2-3BC6F88656E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5608EDD1-CDEE-4331-A4D2-3BC6F88656E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5608EDD1-CDEE-4331-A4D2-3BC6F88656E4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0B78E13E-F73B-4A97-8AF4-133A111E4416}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0B78E13E-F73B-4A97-8AF4-133A111E4416}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B78E13E-F73B-4A97-8AF4-133A111E4416}.Release|Any CPU.ActiveCfg = Release|Any CPU

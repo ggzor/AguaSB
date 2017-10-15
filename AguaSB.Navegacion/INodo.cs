@@ -8,13 +8,8 @@ namespace AguaSB.Navegacion
     public interface INodo
     {
         /// <summary>
-        /// El navegador que ha accedido a este nodo.
-        /// </summary>
-        Navegador Navegador { get; set; }
-
-        /// <summary>
         /// Entrar con la <see cref="ColaNavegacion"/> especificada.
         /// </summary>
-        Task Entrar(ColaNavegacion informacion);
+        Task Entrar(object informacion);
     }
 }

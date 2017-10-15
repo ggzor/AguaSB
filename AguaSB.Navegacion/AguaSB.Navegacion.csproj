@@ -49,12 +49,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Direccion.cs" />
-    <Compile Include="Navegador.cs" />
+    <Compile Include="INavegador.cs" />
     <Compile Include="INodo.cs" />
-    <Compile Include="ColaNavegacion.cs" />
-    <Compile Include="NodoHoja.cs" />
-    <Compile Include="NodoRama.cs" />
+    <Compile Include="NavegadorDirectorio.cs" />
+    <Compile Include="Nodo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

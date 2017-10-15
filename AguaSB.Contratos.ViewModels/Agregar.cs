@@ -139,7 +139,7 @@ namespace AguaSB.Contratos.ViewModels
             AgregarContratoComando = new AsyncDelegateCommand<int>(AgregarContrato, PuedeAgregarContrato);
             ReestablecerComando = new DelegateCommand(Reestablecer, () => PuedeReestablecer);
 
-            Nodo = new NodoHoja() { PrimeraEntrada = Inicializar };
+            Nodo = new Nodo() { PrimeraEntrada = Inicializar };
 
             Reestablecer();
 
