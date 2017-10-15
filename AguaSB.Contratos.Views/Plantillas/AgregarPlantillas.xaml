@@ -1,0 +1,50 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Nucleo="clr-namespace:AguaSB.Nucleo;assembly=AguaSB.Nucleo">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Estilos.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Colores.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="CambiarColor" TargetType="Border">
+        <Style.Triggers>
+            <Trigger Property="Tag">
+                <Trigger.Value>
+                    <Nucleo:ClaseContrato>Doméstico</Nucleo:ClaseContrato>
+                </Trigger.Value>
+                <Setter Property="Background" Value="{StaticResource MaterialGreen}"/>
+            </Trigger>
+            <Trigger Property="Tag">
+                <Trigger.Value>
+                    <Nucleo:ClaseContrato>Industrial</Nucleo:ClaseContrato>
+                </Trigger.Value>
+                <Setter Property="Background" Value="{StaticResource MaterialLightBlue}"/>
+            </Trigger>
+            <Trigger Property="Tag">
+                <Trigger.Value>
+                    <Nucleo:ClaseContrato>Comercial</Nucleo:ClaseContrato>
+                </Trigger.Value>
+                <Setter Property="Background" Value="{StaticResource MaterialIndigo}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <DataTemplate x:Key="PlantillaTipoContrato" DataType="{x:Type Nucleo:TipoContrato}">
+        <Grid HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="{Binding Nombre}" TextWrapping="WrapWithOverflow" 
+                       HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource h4}"/>
+
+            <Border Grid.Column="2" Padding="8 2" CornerRadius="8" HorizontalAlignment="Stretch"
+                    Tag="{Binding ClaseContrato}" Style="{StaticResource CambiarColor}">
+                <TextBlock Text="{Binding ClaseContrato}" Foreground="White"
+                           TextWrapping="Wrap" FontFamily="Segoe UI" FontWeight="DemiBold"
+                           HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource h5}"/>
+            </Border>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

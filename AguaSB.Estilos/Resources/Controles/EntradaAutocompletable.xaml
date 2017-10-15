@@ -40,6 +40,7 @@
                                  IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"
                                  HorizontalAlignment="Left"
                                  HorizontalContentAlignment="Stretch"
+                                 TextWrapping="WrapWithOverflow"
                                  Style="{StaticResource MaterialDesignComboBoxEditableTextBox}"
                                  CaretBrush="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderBrush}"                                 
                                  Visibility="Collapsed" />
@@ -229,6 +230,6 @@
         <Setter Property="Margin" Value="0,0,0,30"/>
         <Setter Property="IsEditable" Value="True"/>
         <Setter Property="IsReadOnly" Value="False"/>
-        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
     </Style>
 </ResourceDictionary>

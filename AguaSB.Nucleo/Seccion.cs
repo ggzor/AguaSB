@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,6 +16,7 @@ namespace AguaSB.Nucleo
         public int Id { get; set; }
 
         private string nombre;
+        private int orden;
 
         [Required(ErrorMessage = Validacion.CampoRequerido)]
         public string Nombre
@@ -23,12 +25,21 @@ namespace AguaSB.Nucleo
             set { N.Validate(ref nombre, value); }
         }
 
+        public int Orden
+        {
+            get { return orden; }
+            set { N.Validate(ref orden, value); }
+        }
+
+        public virtual ICollection<Calle> Calles { get; set; }
+
         public Seccion()
         {
             notificador = new Lazy<Notificador>(() =>
                 new Notificador(this,
                     (src, args) => PropertyChanged?.Invoke(src, args),
                     (src, args) => ErrorsChanged?.Invoke(src, args)));
+            Calles = new List<Calle>();
         }
 
         #region PropertyChanged y DataErrorInfo

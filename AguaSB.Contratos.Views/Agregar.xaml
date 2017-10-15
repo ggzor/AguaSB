@@ -20,6 +20,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Estilos.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/materialdesigntheme.ComboBox.xaml"/>
+                <ResourceDictionary Source="Plantillas/AgregarPlantillas.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <Utilerias:IsNullConverter x:Key="IsNull"/>
         </ResourceDictionary>
@@ -80,7 +81,8 @@
 
                         <icons:PackIconMaterial Grid.Row="2" Kind="ViewList" Estilos:Icono.Enfocado="{Binding ElementName=TipoContrato, Path=IsKeyboardFocusWithin}"
                                                 Tag="{Binding ElementName=TipoContrato}" Style="{StaticResource IconoLateral}"/>
-                        <ComboBox Name="TipoContrato" Grid.Row="2" Grid.Column="1" Tag="Tipo de contrato"/>
+                        <ComboBox Name="TipoContrato" Grid.Row="2" Grid.Column="1" Tag="Tipo de contrato" SelectedItem="{Binding TipoContrato}"
+                                  ItemsSource="{Binding TiposContrato}" ItemTemplate="{StaticResource PlantillaTipoContrato}"/>
 
                         <icons:PackIconEntypo Grid.Row="3" Kind="FlowBranch"
                                               Tag="{Binding ElementName=MedidaToma}" Style="{StaticResource IconoLateral}"/>

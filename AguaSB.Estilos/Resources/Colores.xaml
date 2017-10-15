@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Color x:Key="MaterialRedColor">#F44336</Color>
+    <SolidColorBrush x:Key="MaterialRed" Color="{StaticResource MaterialRedColor}"/>
+
+    <Color x:Key="MaterialGreenColor">#4CAF50</Color>
+    <SolidColorBrush x:Key="MaterialGreen" Color="{StaticResource MaterialGreenColor}"/>
+
+    <Color x:Key="MaterialLightBlueColor">#03A9F4</Color>
+    <SolidColorBrush x:Key="MaterialLightBlue" Color="{StaticResource MaterialLightBlueColor}"/>
+
+    <Color x:Key="MaterialIndigoColor">#3F51B5</Color>
+    <SolidColorBrush x:Key="MaterialIndigo" Color="{StaticResource MaterialIndigoColor}"/>
+</ResourceDictionary>

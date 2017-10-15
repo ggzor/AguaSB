@@ -9,7 +9,7 @@ using AguaSB.Utilerias;
 
 namespace AguaSB.Nucleo
 {
-    public enum ClaseContrato { Doméstico, Industrial, Comercial }
+    public enum ClaseContrato { Doméstico, Comercial, Industrial }
 
     [Table("TiposContrato")]
     public class TipoContrato : IEntidad, INotifyPropertyChanged, INotifyDataErrorInfo
@@ -60,5 +60,7 @@ namespace AguaSB.Nucleo
         [NotMapped]
         protected Notificador N => notificador.Value;
         #endregion
+
+        public override string ToString() => $"{Nombre} - {ClaseContrato}";
     }
 }

@@ -18,12 +18,14 @@ namespace AguaSB.Contratos.ViewModels
 {
     public class Agregar : ValidatableModel, IViewModel
     {
-        public const string ValorDeListaRequerido = "El valor proporcionado debe estar en la lista.";
-
         #region Campos
         private Contrato contrato;
+
+        private TipoContrato tipoContrato;
         private Seccion seccion;
         private Calle calle;
+
+        private IEnumerable<TipoContrato> tiposContrato;
         private IEnumerable<Seccion> secciones;
         private IEnumerable<Calle> calles;
         #endregion
@@ -35,7 +37,14 @@ namespace AguaSB.Contratos.ViewModels
             set { SetProperty(ref contrato, value); }
         }
 
-        [Required(ErrorMessage = ValorDeListaRequerido)]
+        [Required(ErrorMessage = "Debe seleccionar un tipo de contrato existente.")]
+        public TipoContrato TipoContrato
+        {
+            get { return tipoContrato; }
+            set { SetPropertyAndValidate(ref tipoContrato, value); }
+        }
+
+        [Required(ErrorMessage = "Debe seleccionar una sección existente.")]
         public Seccion Seccion
         {
             get { return seccion; }
@@ -55,11 +64,17 @@ namespace AguaSB.Contratos.ViewModels
             }
         }
 
-        [Required(ErrorMessage = ValorDeListaRequerido)]
+        [Required(ErrorMessage = "Debe seleccionar una calle registrada.")]
         public Calle Calle
         {
             get { return calle; }
             set { SetPropertyAndValidate(ref calle, value); }
+        }
+
+        public IEnumerable<TipoContrato> TiposContrato
+        {
+            get { return tiposContrato; }
+            set { SetProperty(ref tiposContrato, value); }
         }
 
         public IEnumerable<Seccion> Secciones
@@ -80,14 +95,16 @@ namespace AguaSB.Contratos.ViewModels
         #endregion
 
         #region Dependencias
+        private IRepositorio<TipoContrato> TiposContratoRepo { get; }
         private IRepositorio<Seccion> SeccionesRepo { get; }
         private IRepositorio<Calle> CallesRepo { get; }
         #endregion
 
         public INodo Nodo { get; }
 
-        public Agregar(IRepositorio<Seccion> secciones, IRepositorio<Calle> calles)
+        public Agregar(IRepositorio<TipoContrato> tiposContrato, IRepositorio<Seccion> secciones, IRepositorio<Calle> calles)
         {
+            TiposContratoRepo = tiposContrato ?? throw new ArgumentNullException(nameof(tiposContrato));
             SeccionesRepo = secciones ?? throw new ArgumentNullException(nameof(secciones));
             CallesRepo = calles ?? throw new ArgumentNullException(nameof(calles));
 
@@ -98,32 +115,27 @@ namespace AguaSB.Contratos.ViewModels
 
         private Dictionary<Seccion, IEnumerable<Calle>> callesAgrupadas;
 
-        private const string Text = "The ComboBox is an ItemsControl, so it can display content other than simple strings. For example, you can create a ComboBox that contains a list of images. When you have content other than strings in the ComboBox, a nonsensical string might appear in the ComboBox when the drop-down list is hidden. To display a string in the ComboBox when it contains non-string items, use the Text or TextPath attached property. ";
-
         private async Task Inicializar()
         {
-            var secciones = new[] { "Primera", "Segunda", "Tercera", "Cuarta" }.Select(seccion => new Seccion { Nombre = seccion }).ToArray();
-
-            foreach (var seccion in secciones)
-                await SeccionesRepo.Agregar(seccion);
-
-            var callesD = Text.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToArray();
-            var calles = from num in callesD.Batch(20).Index().Take(4)
-                         let index = num.Key
-                         let values = num.Value
-                         from v in values
-                         select new Calle { Nombre = v, Seccion = secciones[index] };
-
-            foreach (var calle in calles)
-                await CallesRepo.Agregar(calle);
-
             callesAgrupadas = await Task.Run(() =>
-                CallesRepo.Datos
-                .GroupBy(calle => calle.Seccion)
-                .ToDictionary(g => g.Key, g => (IEnumerable<Calle>)g));
+            {
+                return (from seccion in SeccionesRepo.Datos
+                        orderby seccion.Orden, seccion.Nombre
+                        select new { Seccion = seccion, Calles = seccion.Calles.OrderBy(calle => calle.Nombre) })
+                       .ToDictionary(g => g.Seccion, g => (IEnumerable<Calle>)g.Calles);
+            });
+
+            TiposContrato = await Task.Run(() =>
+            {
+                return (from tipo in TiposContratoRepo.Datos
+                        orderby tipo.Nombre
+                        select tipo).ToList();
+            });
 
             Secciones = callesAgrupadas.Keys;
-            Seccion = callesAgrupadas.Keys.FirstOrDefault();
+
+            TipoContrato = TiposContrato.FirstOrDefault();
+            Seccion = secciones.FirstOrDefault();
         }
 
         private void Reestablecer()
