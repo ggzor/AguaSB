@@ -67,6 +67,7 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
                         <TextBlock Grid.Row="0" Grid.Column="1" Margin="0 0 0 10" Text="Usuario:" 
@@ -86,8 +87,10 @@
 
                         <icons:PackIconEntypo Grid.Row="3" Kind="FlowBranch"
                                               Tag="{Binding ElementName=MedidaToma}" Style="{StaticResource IconoLateral}"/>
-                        <TextBox Name="MedidaToma" Grid.Row="3" Grid.Column="1" 
-                                 Tag="Tamaño de la toma" Text="{Binding Contrato.MedidaToma, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+                        <ComboBox Name="MedidaToma" Grid.Row="3" Grid.Column="1" Tag="Tamaño de la toma (pulgadas)"
+                                  Estilos:Foco.SiguienteFoco="{Binding ElementName=Adeudo}"
+                                  Text="{Binding Contrato.MedidaToma, StringFormat={}{0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
+                                  ItemsSource="{Binding SugerenciasMedidasToma}"/>
 
                         <icons:PackIconModern Grid.Row="4" Kind="CurrencyDollar"
                                               Tag="{Binding ElementName=Adeudo}" Style="{StaticResource IconoLateral}"/>

@@ -15,6 +15,9 @@ namespace AguaSB.Instaladores
             contenedor.Register(Component.For<IRepositorio<Usuario>>()
                 .ImplementedBy<RepositorioNotificador<Usuario>>());
 
+            contenedor.Register(Component.For<IRepositorio<Contrato>>()
+                .ImplementedBy<RepositorioNotificador<Contrato>>());
+
             contenedor.Register(Component.For(typeof(IRepositorio<>))
                 .ImplementedBy(typeof(RepositorioEnMemoria<>)));
         }

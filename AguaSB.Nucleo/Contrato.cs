@@ -74,5 +74,9 @@ namespace AguaSB.Nucleo
         [NotMapped]
         protected Notificador N => notificador.Value;
         #endregion
+
+        public bool TieneCamposRequeridosVacios => string.IsNullOrWhiteSpace(MedidaToma);
+
+        public override string ToString() => Domicilio?.ToString();
     }
 }

@@ -51,5 +51,9 @@ namespace AguaSB.Nucleo
         [NotMapped]
         protected Notificador N => notificador.Value;
         #endregion
+
+        public bool TieneCamposRequeridosVacios => string.IsNullOrWhiteSpace(Numero);
+
+        public override string ToString() => $"{Calle?.Seccion}, Calle {Calle}, Número {Numero}";
     }
 }
