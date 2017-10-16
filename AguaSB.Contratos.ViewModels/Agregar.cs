@@ -16,12 +16,16 @@ using AguaSB.Navegacion;
 using AguaSB.Nucleo;
 using AguaSB.Utilerias;
 using AguaSB.ViewModels;
+using AguaSB.Notificaciones;
 
 namespace AguaSB.Contratos.ViewModels
 {
     public class Agregar : ValidatableModel, IViewModel
     {
         #region Campos
+        private bool mostrarProgreso;
+        private string textoProgreso;
+
         private bool mostrarMensajeError = true;
         private bool puedeReestablecer = true;
 
@@ -37,6 +41,18 @@ namespace AguaSB.Contratos.ViewModels
         #endregion
 
         #region Propiedades
+        public bool MostrarProgreso
+        {
+            get { return mostrarProgreso; }
+            set { SetProperty(ref mostrarProgreso, value); }
+        }
+
+        public string TextoProgreso
+        {
+            get { return textoProgreso; }
+            set { SetProperty(ref textoProgreso, value); }
+        }
+
         public bool MostrarMensajeError
         {
             get { return mostrarMensajeError; }
@@ -121,22 +137,29 @@ namespace AguaSB.Contratos.ViewModels
         #endregion
 
         #region Dependencias
+        private IRepositorio<Usuario> Usuarios { get; }
         private IRepositorio<Contrato> Contratos { get; }
         private IRepositorio<TipoContrato> TiposContratoRepo { get; }
         private IRepositorio<Seccion> SeccionesRepo { get; }
         private IRepositorio<Calle> CallesRepo { get; }
+
+        private IManejadorNotificaciones Notificaciones { get; }
         #endregion
 
         public event EventHandler Enfocar;
 
         public INodo Nodo { get; }
 
-        public Agregar(IRepositorio<Contrato> contratos, IRepositorio<TipoContrato> tiposContrato, IRepositorio<Seccion> secciones, IRepositorio<Calle> calles)
+        public Agregar(
+            IRepositorio<Usuario> usuarios, IRepositorio<Contrato> contratos, IRepositorio<TipoContrato> tiposContrato,
+            IRepositorio<Seccion> secciones, IRepositorio<Calle> calles, IManejadorNotificaciones notificaciones)
         {
+            Usuarios = usuarios ?? throw new ArgumentNullException(nameof(usuarios));
             Contratos = contratos ?? throw new ArgumentNullException(nameof(contratos));
             TiposContratoRepo = tiposContrato ?? throw new ArgumentNullException(nameof(tiposContrato));
             SeccionesRepo = secciones ?? throw new ArgumentNullException(nameof(secciones));
             CallesRepo = calles ?? throw new ArgumentNullException(nameof(calles));
+            Notificaciones = notificaciones ?? throw new ArgumentNullException(nameof(notificaciones));
 
             AgregarContratoComando = new AsyncDelegateCommand<int>(AgregarContrato, PuedeAgregarContrato);
             ReestablecerComando = new DelegateCommand(Reestablecer, () => PuedeReestablecer);
@@ -161,7 +184,10 @@ namespace AguaSB.Contratos.ViewModels
 
         private async Task Inicializar()
         {
-            callesAgrupadas = await Task.Run(() =>
+            TextoProgreso = "Cargando información de secciones y calles...";
+            MostrarProgreso = true;
+
+            var callesAgrupadasTarea = Task.Run(() =>
             {
                 return (from seccion in SeccionesRepo.Datos
                         orderby seccion.Orden, seccion.Nombre
@@ -169,21 +195,48 @@ namespace AguaSB.Contratos.ViewModels
                        .ToDictionary(g => g.Seccion, g => (IEnumerable<Calle>)g.Calles);
             });
 
-            TiposContrato = await Task.Run(() =>
+            var tiposContratoTarea = Task.Run(() =>
             {
                 return (from tipo in TiposContratoRepo.Datos
                         orderby tipo.Nombre
                         select tipo).ToList();
             });
 
+            callesAgrupadas = await callesAgrupadasTarea;
+            TiposContrato = await tiposContratoTarea;
+
             Secciones = callesAgrupadas.Keys;
 
             ReestablecerTipoContratoYCalles();
+            MostrarProgreso = false;
         }
 
         private async Task Entrar(object arg)
         {
-            await Task.Delay(20);
+            if (arg is int id)
+            {
+                MostrarProgreso = true;
+                TextoProgreso = "Cargando datos de usuario...";
+
+                var buscarUsuario = Task.Run(() => Usuarios.Datos.SingleOrDefault(u => u.Id == id));
+
+                if (await buscarUsuario is Usuario usuario)
+                {
+                    Contrato.Usuario = usuario;
+                }
+                else
+                {
+                    Notificaciones.Lanzar(new NotificacionError()
+                    {
+                        Titulo = "Error",
+                        Clase = "Base de datos",
+                        Descripcion = $"No se encontró al usuario con Id = {id}."
+                    });
+                }
+
+                MostrarProgreso = false;
+            }
+
             Enfocar?.Invoke(this, EventArgs.Empty);
         }
 
@@ -207,7 +260,8 @@ namespace AguaSB.Contratos.ViewModels
         private bool PuedeAgregarContrato() =>
             UtileriasErrores.NingunoTieneErrores(this, Contrato, Contrato.Domicilio)
             && !Contrato.TieneCamposRequeridosVacios
-            && !Contrato.Domicilio.TieneCamposRequeridosVacios;
+            && !Contrato.Domicilio.TieneCamposRequeridosVacios
+            && Contrato.Usuario != null;
 
         private async Task<int> AgregarContrato(IProgress<(double, string)> progreso)
         {

@@ -8,6 +8,7 @@
              xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:Views="clr-namespace:AguaSB.Views.Controles;assembly=AguaSB.Views"
              xmlns:Estilos="clr-namespace:AguaSB.Estilos;assembly=AguaSB.Estilos"
+             xmlns:Utilerias="clr-namespace:AguaSB.Views.Utilerias;assembly=AguaSB.Views"
              xmlns:ViewModel="clr-namespace:AguaSB.Contratos.ViewModels;assembly=AguaSB.Contratos.ViewModels"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type={x:Type ViewModel:Agregar}, IsDesignTimeCreatable=False}"
@@ -21,6 +22,8 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/materialdesigntheme.ComboBox.xaml"/>
                 <ResourceDictionary Source="Plantillas/AgregarPlantillas.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
+            <Utilerias:IsNullConverter x:Key="IsNull"/>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -73,10 +76,11 @@
                         <TextBlock Grid.Row="0" Grid.Column="1" Margin="0 0 0 10" Text="Usuario:" 
                                    Opacity="0.6" Style="{StaticResource h3}"/>
 
-                        <icons:PackIconMaterial Grid.Row="1" Kind="Account"
+                        <icons:PackIconMaterial Grid.Row="1" Kind="Account" Estilos:Icono.Error="{Binding Contrato.Usuario, Converter={StaticResource IsNull}}"
+                                                Estilos:Icono.Enfocado="{Binding ElementName=Usuario, Path=IsMouseOver}"
                                                 Tag="{Binding ElementName=Usuario}" Style="{StaticResource IconoLateral}"/>
-                        <TextBlock Name="Usuario" Grid.Row="1" Grid.Column="1" Text="{Binding Contrato.Usuario.NombreCompleto}" 
-                                   Style="{StaticResource h4}" />
+                        <TextBlock Name="Usuario" Grid.Row="1" Grid.Column="1" Margin="0 20 0 30" Text="{Binding Contrato.Usuario.NombreCompleto, FallbackValue=No especificado}" 
+                                   Style="{StaticResource h4}"/>
 
                         <icons:PackIconMaterial Grid.Row="2" Kind="ViewList" Estilos:Icono.Enfocado="{Binding ElementName=TipoContrato, Path=IsKeyboardFocusWithin}"
                                                 Tag="{Binding ElementName=TipoContrato}" Style="{StaticResource IconoLateral}"/>
@@ -132,16 +136,7 @@
             </metro:FlipView>
         </material:Card>
 
-
-        <Views:Cover Grid.Row="1" Grid.ColumnSpan="3">
-            <Views:Cover.Contenido>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <metro:ProgressRing VerticalAlignment="Center"/>
-                    <TextBlock Margin="20" Text="Cargando..." Foreground="White"
-                               FontFamily="Segoe UI"
-                               VerticalAlignment="Center" Style="{StaticResource h2}"/>
-                </StackPanel>
-            </Views:Cover.Contenido>
-        </Views:Cover>
+        <Views:CoverProgreso Grid.Row="1" Grid.ColumnSpan="4" 
+                             Texto="{Binding TextoProgreso}" Visible="{Binding MostrarProgreso}"/>
     </Grid>
 </UserControl>
