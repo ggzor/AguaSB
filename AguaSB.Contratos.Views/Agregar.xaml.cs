@@ -14,8 +14,8 @@ namespace AguaSB.Contratos.Views
             DataContext = ViewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
 
             InitializeComponent();
-        }
 
-        public void Entrar() => TipoContrato.Focus();
+            ViewModel.Enfocar += (_, __) => TipoContrato.Focus();
+        }
     }
 }

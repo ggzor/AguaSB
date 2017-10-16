@@ -100,10 +100,6 @@ namespace AguaSB
             await administrador.TraerAlFrente(operacion.Visualization);
 
             await operacion.ViewModel.Nodo.Entrar(null);
-
-            // Para permitir que la lógica de foco funcione correctamente
-            await Task.Delay(20);
-            operacion.View.Entrar();
         }
 
         public Task EnDireccionNoEncontrada(string direccion)

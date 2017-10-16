@@ -127,6 +127,8 @@ namespace AguaSB.Contratos.ViewModels
         private IRepositorio<Calle> CallesRepo { get; }
         #endregion
 
+        public event EventHandler Enfocar;
+
         public INodo Nodo { get; }
 
         public Agregar(IRepositorio<Contrato> contratos, IRepositorio<TipoContrato> tiposContrato, IRepositorio<Seccion> secciones, IRepositorio<Calle> calles)
@@ -139,7 +141,7 @@ namespace AguaSB.Contratos.ViewModels
             AgregarContratoComando = new AsyncDelegateCommand<int>(AgregarContrato, PuedeAgregarContrato);
             ReestablecerComando = new DelegateCommand(Reestablecer, () => PuedeReestablecer);
 
-            Nodo = new Nodo() { PrimeraEntrada = Inicializar };
+            Nodo = new Nodo() { PrimeraEntrada = Inicializar, Entrada = Entrar };
 
             Reestablecer();
 
@@ -177,6 +179,12 @@ namespace AguaSB.Contratos.ViewModels
             Secciones = callesAgrupadas.Keys;
 
             ReestablecerTipoContratoYCalles();
+        }
+
+        private async Task Entrar(object arg)
+        {
+            await Task.Delay(20);
+            Enfocar?.Invoke(this, EventArgs.Empty);
         }
 
         private void Reestablecer()

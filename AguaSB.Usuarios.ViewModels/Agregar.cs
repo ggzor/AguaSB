@@ -100,6 +100,8 @@ namespace AguaSB.Usuarios.ViewModels
         public IRepositorio<Usuario> Usuarios { get; set; }
         #endregion
 
+        public event EventHandler Enfocar;
+
         public INodo Nodo { get; }
 
         public Agregar(INavegador navegador, IRepositorio<Usuario> usuarios)
@@ -107,7 +109,7 @@ namespace AguaSB.Usuarios.ViewModels
             Navegador = navegador ?? throw new ArgumentNullException(nameof(navegador));
             Usuarios = usuarios ?? throw new ArgumentNullException(nameof(usuarios));
 
-            Nodo = new Nodo();
+            Nodo = new Nodo { Entrada = Entrar };
 
             ConfigurarComandos();
 
@@ -156,6 +158,12 @@ namespace AguaSB.Usuarios.ViewModels
 
             AgregarPersonaComando = new AsyncDelegateCommand<int>(AgregarPersona, PuedeAgregarPersona);
             AgregarNegocioComando = new AsyncDelegateCommand<int>(AgregarNegocio, PuedeAgregarNegocio);
+        }
+
+        private async Task Entrar(object arg)
+        {
+            await Task.Delay(20);
+            Enfocar?.Invoke(this, EventArgs.Empty);
         }
 
         private bool PuedeAgregarPersona() =>

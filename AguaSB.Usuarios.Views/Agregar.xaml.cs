@@ -19,11 +19,13 @@ namespace AguaSB.Usuarios.Views
             TipoUsuario.SelectionChanged += async (_, __) =>
             {
                 await Task.Delay(20);
-                Entrar();
+                Enfocar();
             };
+
+            ViewModel.Enfocar += (_, __) => Enfocar();
         }
 
-        public void Entrar()
+        public void Enfocar()
         {
             if (TipoUsuario.SelectedIndex == 0)
                 NombreUsuario.Focus();

@@ -62,6 +62,9 @@
     <Compile Include="Controles\BarraSuperior.xaml.cs">
       <DependentUpon>BarraSuperior.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controles\Cover.xaml.cs">
+      <DependentUpon>Cover.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controles\ParBotones.xaml.cs">
       <DependentUpon>ParBotones.xaml</DependentUpon>
     </Compile>
@@ -100,6 +103,10 @@
     <Page Include="Controles\BarraSuperior.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controles\Cover.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controles\ParBotones.xaml">
       <SubType>Designer</SubType>

@@ -131,5 +131,17 @@
                 </ScrollViewer>
             </metro:FlipView>
         </material:Card>
+
+
+        <Views:Cover Grid.Row="1" Grid.ColumnSpan="3">
+            <Views:Cover.Contenido>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <metro:ProgressRing VerticalAlignment="Center"/>
+                    <TextBlock Margin="20" Text="Cargando..." Foreground="White"
+                               FontFamily="Segoe UI"
+                               VerticalAlignment="Center" Style="{StaticResource h2}"/>
+                </StackPanel>
+            </Views:Cover.Contenido>
+        </Views:Cover>
     </Grid>
 </UserControl>
