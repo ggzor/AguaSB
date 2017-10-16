@@ -99,7 +99,7 @@ namespace AguaSB
 
             await administrador.TraerAlFrente(operacion.Visualization);
 
-            await operacion.ViewModel.Nodo.Entrar(null);
+            await operacion.ViewModel.Nodo.Entrar(parametro);
         }
 
         public Task EnDireccionNoEncontrada(string direccion)

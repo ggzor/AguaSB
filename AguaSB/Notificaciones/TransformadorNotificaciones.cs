@@ -27,7 +27,8 @@ namespace AguaSB.Notificaciones
         private static readonly Dictionary<Type, (Func<FrameworkElement> Icono, Brush Fondo)> Diccionario = new Dictionary<Type, (Func<FrameworkElement> Icono, Brush Fondo)>()
         {
             [typeof(EntidadAgregada<Usuario>)] = ConfiguracionUsuarios,
-            [typeof(EntidadAgregada<Contrato>)] = (IconoDe(PackIconModernKind.AlignJustify), Temas.Naranja.BrochaSolidaWPF)
+            [typeof(EntidadAgregada<Contrato>)] = (IconoDe(PackIconModernKind.AlignJustify), Temas.Naranja.BrochaSolidaWPF),
+            [typeof(NotificacionError)] = (IconoDe(PackIconModernKind.Close), Temas.Rojo.BrochaSolidaWPF)
         };
 
 

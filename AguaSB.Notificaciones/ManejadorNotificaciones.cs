@@ -19,11 +19,27 @@ namespace AguaSB.Notificaciones
 
             Notificaciones = notificaciones;
             notificaciones.Connect();
+
+            AgregarNuestroObservador();
+        }
+
+        private void AgregarNuestroObservador()
+        {
+            var obs = Observable.FromEventPattern<Notificacion>(
+                h => AgregarNotificacion += h,
+                h => AgregarNotificacion -= h).Select(e => e.EventArgs);
+
+            AgregarFuente(obs);
         }
 
         private event EventHandler<IObservable<Notificacion>> NotificadorAgregado;
 
         public void AgregarFuente(IObservable<Notificacion> fuente) =>
             NotificadorAgregado?.Invoke(this, fuente);
+
+        private event EventHandler<Notificacion> AgregarNotificacion;
+
+        public void Lanzar(Notificacion notificacion) =>
+            AgregarNotificacion?.Invoke(this, notificacion);
     }
 }

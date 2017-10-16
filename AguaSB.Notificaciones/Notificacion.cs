@@ -4,12 +4,12 @@ namespace AguaSB.Notificaciones
 {
     public abstract class Notificacion
     {
-        public abstract string Titulo { get; }
+        public string Titulo { get; set; }
 
-        public abstract string Descripcion { get; }
+        public string Descripcion { get; set; }
 
-        public abstract string Clase { get; }
+        public string Clase { get; set; }
 
-        public DateTime Fecha { get; } = Utilerias.Fecha.Ahora.DateTime;
+        public DateTime Fecha { get; set; } = Utilerias.Fecha.Ahora.DateTime;
     }
 }

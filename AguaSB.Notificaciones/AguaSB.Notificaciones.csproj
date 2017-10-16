@@ -50,6 +50,7 @@
     <Compile Include="IManejadorNotificaciones.cs" />
     <Compile Include="ManejadorNotificaciones.cs" />
     <Compile Include="Notificacion.cs" />
+    <Compile Include="NotificacionError.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

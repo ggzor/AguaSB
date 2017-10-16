@@ -7,5 +7,7 @@ namespace AguaSB.Notificaciones
         IObservable<Notificacion> Notificaciones { get; }
 
         void AgregarFuente(IObservable<Notificacion> fuente);
+
+        void Lanzar(Notificacion notificacion);
     }
 }
