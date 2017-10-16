@@ -96,13 +96,15 @@ namespace AguaSB.Usuarios.ViewModels
         #endregion
 
         #region Dependencias
+        public INavegador Navegador { get; }
         public IRepositorio<Usuario> Usuarios { get; set; }
         #endregion
 
         public INodo Nodo { get; }
 
-        public Agregar(IRepositorio<Usuario> usuarios)
+        public Agregar(INavegador navegador, IRepositorio<Usuario> usuarios)
         {
+            Navegador = navegador ?? throw new ArgumentNullException(nameof(navegador));
             Usuarios = usuarios ?? throw new ArgumentNullException(nameof(usuarios));
 
             Nodo = new Nodo();
@@ -198,6 +200,8 @@ namespace AguaSB.Usuarios.ViewModels
 
                 puedeReestablecer(true);
                 reestablecer.Execute(null);
+
+                await Navegador.Navegar("Contratos/Agregar", resultado);
 
                 return resultado;
             }

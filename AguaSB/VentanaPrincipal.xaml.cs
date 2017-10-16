@@ -13,6 +13,7 @@ using MoreLinq;
 using AguaSB.Extensiones;
 using AguaSB.Notificaciones;
 using AguaSB.Views.Utilerias;
+using AguaSB.Navegacion;
 
 namespace AguaSB
 {
@@ -23,7 +24,9 @@ namespace AguaSB
         public ICommand EjecutarOperacionComando { get; }
         private AdministradorViews administrador;
 
-        public VentanaPrincipal(VentanaPrincipalViewModel viewModel, ITransformadorExtensiones transformador, IObservable<NotificacionView> notificaciones)
+        public VentanaPrincipal(VentanaPrincipalViewModel viewModel, ITransformadorExtensiones transformador,
+            IManejadorNotificaciones manejadorNotificaciones, ITransformadorNotificaciones transformadorNotificaciones,
+            ManejadorNavegacion<Operacion> manejadorNavegacion, NavegadorDirectorio<Operacion> navegador)
         {
             DataContext = ViewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
 
@@ -34,8 +37,12 @@ namespace AguaSB
 
             InitializeComponent();
 
-            notificaciones.Subscribe(Notificaciones.AgregarNotificacion);
+            manejadorNavegacion.Navegar = Navegar;
+            manejadorNavegacion.EnDireccionNoEncontrada = EnDireccionNoEncontrada;
+
+            TransformarNotificaciones(manejadorNotificaciones, transformadorNotificaciones);
             TransformarExtensiones(viewModel, transformador);
+            RegistrarNavegacionDePaginas(navegador);
 
             administrador = new AdministradorViews(Vista);
         }
@@ -55,26 +62,55 @@ namespace AguaSB
             }).ForEach(_ => Extensiones.Children.Add(_));
         }
 
+        private void TransformarNotificaciones(IManejadorNotificaciones manejadorNotificaciones, ITransformadorNotificaciones transformadorNotificaciones)
+        {
+            manejadorNotificaciones.Notificaciones
+                .Select(transformadorNotificaciones.Transformar)
+                .Subscribe(Notificaciones.AgregarNotificacion);
+        }
+
+        private void RegistrarNavegacionDePaginas(NavegadorDirectorio<Operacion> navegador)
+        {
+            foreach (var extension in ViewModel.Extensiones)
+                foreach (var operacion in extension.Operaciones)
+                    navegador.Directorio.Add($"{extension.Nombre}/{operacion.View.GetType().Name}", operacion);
+        }
+
         private async Task EjecutarOperacion(object param)
         {
             if (param is Operacion operacion)
-            {
-                Atras.Visibility = Visibility.Visible;
-
-                await administrador.TraerAlFrente(operacion.Visualization);
-
-                await operacion.ViewModel.Nodo.Entrar(null);
-
-                // Para permitir que la lógica de foco funcione correctamente
-                await Task.Delay(20);
-                operacion.View.Entrar();
-            }
+                await Navegar(operacion, null);
         }
 
-        private async void VolverAPrincipal(object sender, RoutedEventArgs e)
+        private async void VolverAPrincipal(object sender, RoutedEventArgs e) =>
+            await VolverAPrincipal();
+
+        private async Task VolverAPrincipal()
         {
             Atras.Visibility = Visibility.Collapsed;
             await administrador.VolverAPrincipal();
+        }
+
+        public async Task Navegar(Operacion operacion, object parametro)
+        {
+            await VolverAPrincipal();
+
+            Atras.Visibility = Visibility.Visible;
+
+            await administrador.TraerAlFrente(operacion.Visualization);
+
+            await operacion.ViewModel.Nodo.Entrar(null);
+
+            // Para permitir que la lógica de foco funcione correctamente
+            await Task.Delay(20);
+            operacion.View.Entrar();
+        }
+
+        public Task EnDireccionNoEncontrada(string direccion)
+        {
+            // TODO: Log
+            Console.WriteLine("No se encontró: " + direccion);
+            return Task.CompletedTask;
         }
 
         #region Ajuste de tamaños

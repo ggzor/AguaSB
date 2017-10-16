@@ -49,7 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IManejadorNavegacion.cs" />
+    <Compile Include="ManejadorNavegacion.cs" />
     <Compile Include="INavegador.cs" />
     <Compile Include="INodo.cs" />
     <Compile Include="NavegadorDirectorio.cs" />

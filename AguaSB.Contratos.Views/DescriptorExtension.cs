@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 
@@ -11,6 +12,14 @@ namespace AguaSB.Contratos.Views
 {
     public class DescriptorExtension : IExtension
     {
+
+        public Agregar Agregar { get; }
+
+        public DescriptorExtension(Agregar agregar)
+        {
+            Agregar = agregar ?? throw new ArgumentNullException(nameof(agregar));
+        }
+
         public string Nombre => nameof(Contratos);
 
         public string Version => "v0.1.0";
@@ -25,8 +34,6 @@ namespace AguaSB.Contratos.Views
         };
 
         public Tema Tema { get; } = Temas.Naranja;
-
-        public Agregar Agregar { get; set; }
 
         public IEnumerable<Operacion> Operaciones => new[]
         {

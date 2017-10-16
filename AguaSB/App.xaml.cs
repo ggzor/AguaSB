@@ -4,7 +4,6 @@ using Castle.Windsor;
 using Castle.Windsor.Installer;
 
 using AguaSB.Inicializadores;
-using AguaSB.Notificaciones;
 
 namespace AguaSB
 {
@@ -18,17 +17,11 @@ namespace AguaSB
 
             contenedor.Install(FromAssembly.This());
 
-            ResolverServiciosFueraDeArbolPrincipal();
+            // TODO: Remover en release
+            contenedor.Resolve<IInicializador>();
 
             var ventanaPrincipal = contenedor.Resolve<IVentanaPrincipal>();
             ventanaPrincipal.Mostrar();
-        }
-
-        private void ResolverServiciosFueraDeArbolPrincipal()
-        {
-            contenedor.Resolve<IInicializador>();
-
-            contenedor.Resolve<ITransformadorNotificaciones>();
         }
 
         protected override void OnExit(ExitEventArgs e)

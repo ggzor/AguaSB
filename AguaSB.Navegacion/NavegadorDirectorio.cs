@@ -6,13 +6,12 @@ namespace AguaSB.Navegacion
 {
     public class NavegadorDirectorio<T> : INavegador
     {
-        public IReadOnlyDictionary<string, T> Directorio { get; }
+        public Dictionary<string, T> Directorio { get; } = new Dictionary<string, T>();
 
-        public IManejadorNavegacion<T> Manejador { get; }
+        public ManejadorNavegacion<T> Manejador { get; }
 
-        public NavegadorDirectorio(IReadOnlyDictionary<string, T> directorio, IManejadorNavegacion<T> manejador)
+        public NavegadorDirectorio(ManejadorNavegacion<T> manejador)
         {
-            Directorio = directorio ?? throw new ArgumentNullException(nameof(directorio));
             Manejador = manejador ?? throw new ArgumentNullException(nameof(manejador));
         }
 
@@ -21,11 +20,13 @@ namespace AguaSB.Navegacion
             try
             {
                 var objeto = Directorio[direccion];
-                await Manejador.Navegar(objeto, parametro);
+                if (Manejador.Navegar != null)
+                    await Manejador.Navegar(objeto, parametro);
             }
             catch (KeyNotFoundException)
             {
-                await Manejador.EnDireccionNoEncontrada(direccion);
+                if (Manejador.EnDireccionNoEncontrada != null)
+                    await Manejador.EnDireccionNoEncontrada(direccion);
             }
         }
     }
