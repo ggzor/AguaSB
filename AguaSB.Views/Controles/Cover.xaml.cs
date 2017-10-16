@@ -37,7 +37,7 @@ namespace AguaSB.Views.Controles
                 await (d as Cover).ActualizarVista();
         }
 
-        private const double OpacidadDestino = 0.7;
+        private const double OpacidadDestino = 0.9;
         private static readonly TimeSpan DuracionAnimacion = TimeSpan.FromMilliseconds(500);
 
         private async Task ActualizarVista()

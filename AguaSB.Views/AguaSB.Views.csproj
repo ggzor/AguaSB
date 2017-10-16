@@ -65,6 +65,9 @@
     <Compile Include="Controles\Cover.xaml.cs">
       <DependentUpon>Cover.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controles\CoverProgreso.xaml.cs">
+      <DependentUpon>CoverProgreso.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controles\ParBotones.xaml.cs">
       <DependentUpon>ParBotones.xaml</DependentUpon>
     </Compile>
@@ -105,6 +108,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controles\Cover.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controles\CoverProgreso.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

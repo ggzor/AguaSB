@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="AguaSB.Views.Controles.CoverProgreso"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AguaSB.Views.Controles"
+             xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d" Name="This"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Estilos.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <local:Cover Grid.Row="1" Grid.ColumnSpan="3" Visible="{Binding ElementName=This, Path=Visible}">
+        <local:Cover.Contenido>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <metro:ProgressRing VerticalAlignment="Center"/>
+                <TextBlock Margin="20" Text="{Binding RelativeSource={RelativeSource AncestorType=local:CoverProgreso}, Path=Texto}" Foreground="White"
+                           FontFamily="Segoe UI" TextWrapping="WrapWithOverflow" TextAlignment="Center" VerticalAlignment="Center" Style="{StaticResource h2}"/>
+            </StackPanel>
+        </local:Cover.Contenido>
+    </local:Cover>
+</UserControl>
