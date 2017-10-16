@@ -18,4 +18,6 @@
     </Style>
 
     <Style x:Key="ToggleButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}"/>
+
+    <Style x:Key="ActionButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignFloatingActionButton}"/>
 </ResourceDictionary>

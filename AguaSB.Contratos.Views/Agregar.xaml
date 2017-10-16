@@ -138,5 +138,26 @@
 
         <Views:CoverProgreso Grid.Row="1" Grid.ColumnSpan="4" 
                              Texto="{Binding TextoProgreso}" Visible="{Binding MostrarProgreso}"/>
+
+        <material:PopupBox Margin="32" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+                           HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <StackPanel>
+                <StackPanel.Resources>
+                    <Style TargetType="Button" BasedOn="{StaticResource ActionButton}">
+                        <Setter Property="ToolTipService.Placement" Value="Left"/>
+                        <Setter Property="Margin" Value="0 0 0 5"/>
+                    </Style>
+                </StackPanel.Resources>
+
+                <Button Name="AgregarUsuario" ToolTip="Agregar usuario" Click="AgregarUsuario_Click"
+                        Background="{StaticResource MaterialLightBlue}">
+                    <icons:PackIconMaterial Width="25" Height="25" Kind="AccountPlus" Foreground="White"/>
+                </Button>
+                <Button Name="BuscarUsuario" ToolTip="Buscar usuario" Click="BuscarUsuario_Click"
+                        Background="{StaticResource MaterialLightBlue}">
+                    <icons:PackIconModern Width="25" Height="25" Kind="PeopleMagnify" Foreground="White"/>
+                </Button>
+            </StackPanel>
+        </material:PopupBox>
     </Grid>
 </UserControl>

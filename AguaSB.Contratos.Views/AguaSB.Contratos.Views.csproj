@@ -118,6 +118,10 @@
       <Project>{E912E081-7F7F-4B93-83AC-35F8FBF07DBE}</Project>
       <Name>AguaSB.Extensiones</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AguaSB.Navegacion\AguaSB.Navegacion.csproj">
+      <Project>{B51B553C-10D5-47EA-93BB-DECED914D5F6}</Project>
+      <Name>AguaSB.Navegacion</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AguaSB.Nucleo\AguaSB.Nucleo.csproj">
       <Project>{10e1e718-ea42-4519-baa2-7cd3c21b442a}</Project>
       <Name>AguaSB.Nucleo</Name>
