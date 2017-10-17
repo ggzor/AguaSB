@@ -17,6 +17,7 @@
         <ResourceDictionary Source="Animaciones.xaml"/>
         <ResourceDictionary Source="Textos.xaml"/>
         <ResourceDictionary Source="Iconos.xaml"/>
+        <ResourceDictionary Source="Colores.xaml"/>
 
         <ResourceDictionary Source="Controles/Botones.xaml"/>
         <ResourceDictionary Source="Controles/EntradaTexto.xaml"/>

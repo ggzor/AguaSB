@@ -42,6 +42,7 @@
         <Setter Property="FontSize" Value="18"/>
         <Setter Property="Margin" Value="0,0,0,30"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="TextAlignment" Value="Left"/>
 
         <!--Correccion de visualizacion-->
         <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>

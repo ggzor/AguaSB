@@ -73,7 +73,7 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Row="0" Grid.Column="1" Margin="0 0 0 10" Text="Usuario:" 
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="Usuario:" 
                                    Opacity="0.6" Style="{StaticResource h3}"/>
 
                         <icons:PackIconMaterial Grid.Row="1" Kind="Account" Estilos:Icono.Error="{Binding Contrato.Usuario, Converter={StaticResource IsNull}}"

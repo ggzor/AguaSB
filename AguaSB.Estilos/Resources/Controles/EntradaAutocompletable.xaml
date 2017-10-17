@@ -42,6 +42,7 @@
                                  HorizontalAlignment="Left"
                                  HorizontalContentAlignment="Stretch"
                                  TextWrapping="WrapWithOverflow"
+                                 TextAlignment="Left"
                                  Style="{StaticResource MaterialDesignComboBoxEditableTextBox}"
                                  CaretBrush="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderBrush}"                                 
                                  Visibility="Collapsed" />

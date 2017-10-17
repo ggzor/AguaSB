@@ -1,0 +1,178 @@
+﻿<UserControl x:Class="AguaSB.Usuarios.Views.Listado"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:Estilos="clr-namespace:AguaSB.Estilos;assembly=AguaSB.Estilos"
+             xmlns:Utilerias="clr-namespace:AguaSB.Views.Utilerias;assembly=AguaSB.Views"
+             xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:Views="clr-namespace:AguaSB.Views.Controles;assembly=AguaSB.Views"
+             xmlns:ViewModels="clr-namespace:AguaSB.Usuarios.ViewModels;assembly=AguaSB.Usuarios.ViewModels"
+             d:DataContext="{d:DesignInstance Type=ViewModels:Listado, IsDesignTimeCreatable=False}"
+             mc:Ignorable="d" Background="White"
+             d:DesignHeight="768" d:DesignWidth="1024">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Estilos.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <Utilerias:BoolOperation x:Key="BoolOp"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Style="{StaticResource CorrectTextRendering}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="375" Width="*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="64"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Views:BarraSuperior Grid.ColumnSpan="3" Titulo="Listado de usuarios" Foreground="White" 
+                             Icono="{icons:PackIconModern Kind=PeopleProfile, Width=20, Height=20}"/>
+
+        <Grid Grid.Row="1" Grid.ColumnSpan="3" Background="{StaticResource MaterialLightBlue}">
+            <Grid.Effect>
+                <DropShadowEffect Opacity="0.5"/>
+            </Grid.Effect>
+        </Grid>
+
+        <material:Card Margin="2 2 5 5" Padding="8 0" Grid.Row="1" Grid.RowSpan="2" 
+                       material:ShadowAssist.ShadowDepth="Depth4" VerticalAlignment="Stretch">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="62"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <DockPanel>
+                    <icons:PackIconMaterial Width="25" Height="25" Margin="8" Style="{StaticResource IconoLateral}"
+                                            Kind="Magnify" Tag="{Binding ElementName=Buscar}" VerticalAlignment="Bottom"/>
+                    <TextBox Name="Buscar" Tag="Buscar..." Margin="10 0 5 5" material:HintAssist.IsFloating="False"
+                             Estilos:Foco.EnterAvanzaFoco="False"/>
+                </DockPanel>
+
+                <ScrollViewer Grid.Row="1" Margin="0 10 0 0" Padding="8 10 20 10">
+                    <StackPanel Margin="0 5 0 0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <icons:PackIconMaterial Kind="Sort" Estilos:Icono.Enfocado="{Binding ElementName=Ordenar, Path=IsKeyboardFocusWithin}"
+                                                  Tag="{Binding ElementName=Ordenar}" Style="{StaticResource IconoLateral}"/>
+                            <ComboBox Name="Ordenar" Grid.Column="1" Tag="Ordenar por" Text="Nombre"/>
+
+                            <icons:PackIconMaterial Grid.Row="1" Kind="Buffer" Estilos:Icono.Enfocado="{Binding ElementName=Grupos, Path=IsMouseOver}"
+                                                    Margin="0" VerticalAlignment="Top"
+                                                    Tag="{Binding ElementName=Ordenar}" Style="{StaticResource IconoLateral}"/>
+                            <StackPanel Grid.Row="1" Grid.Column="1">
+                                <TextBlock Grid.Row="1" Grid.Column="1" Text="Agrupar por" Opacity="0.6" Style="{StaticResource h4}"/>
+                                <StackPanel Name="Grupos" Background="White">
+                                    <CheckBox Margin="0 10 0 0">
+                                        <TextBlock Margin="5 0" Text="Sección" Style="{StaticResource h4}"/>
+                                    </CheckBox>
+                                    <CheckBox Margin="0 10 0 0">
+                                        <TextBlock Margin="5 0" Text="Calle" Style="{StaticResource h4}"/>
+                                    </CheckBox>
+                                    <CheckBox Margin="0 10 0 0" ToolTip="¿Es deudor o no?">
+                                        <TextBlock Margin="5 0" Text="Deudores" Style="{StaticResource h4}"/>
+                                    </CheckBox>
+                                    <CheckBox Margin="0 10 0 0">
+                                        <TextBlock Margin="5 0" Text="Fecha de registro" Style="{StaticResource h4}"/>
+                                    </CheckBox>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <icons:PackIconMaterial Grid.Row="3" Kind="Filter" Estilos:Icono.Enfocado="{Binding ElementName=Filtros, Path=IsMouseOver}"
+                                                    Margin="0" VerticalAlignment="Top" Style="{StaticResource IconoLateral}"/>
+                            <TextBlock Grid.Row="3" Grid.Column="1" Text="Filtrar" Opacity="0.6" Style="{StaticResource h4}"/>
+                            <Separator Grid.Row="4" Grid.ColumnSpan="2" Margin="5"/>
+                        </Grid>
+
+                        <StackPanel Name="Filtros" Background="White">
+                            <Grid Margin="15 10 0 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <icons:PackIconMaterial Kind="ViewGrid" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=FiltroSeccion}"
+                                                        Estilos:Icono.Enfocado="{Binding ElementName=FiltroSeccion, Path=IsKeyboardFocusWithin}"/>
+                                <ComboBox Name="FiltroSeccion" Grid.Column="1" Tag="Sección"/>
+
+                                <icons:PackIconEntypo Grid.Row="1" Kind="Address" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=FiltroCalle}"
+                                                      Estilos:Icono.Enfocado="{Binding ElementName=FiltroCalle, Path=IsKeyboardFocusWithin}"/>
+                                <ComboBox Name="FiltroCalle" Grid.Row="1" Grid.Column="1" Tag="Calle"/>
+
+                                <icons:PackIconModern Grid.Row="2" Margin="0" Kind="CurrencyDollar" Style="{StaticResource IconoLateral}"
+                                                      Estilos:Icono.Enfocado="{Binding ElementName=Adeudo, Path=IsMouseOver}"/>
+                                <TextBlock Grid.Row="2" Grid.Column="1" Text="Adeudo" Opacity="0.6" Style="{StaticResource h4}"/>
+
+                                <Grid Name="Adeudo" Margin="0 5 0 30" Grid.Row="3" Grid.Column="1" Background="White">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBox Tag="Desde" Margin="0" TextAlignment="Center"
+                                             Text=""/>
+                                    <TextBlock Grid.Column="1" Text="-" Opacity="0.6" Style="{StaticResource h4}"
+                                               Margin="10 10 10 0" VerticalAlignment="Center"/>
+                                    <TextBox Grid.Column="2" Margin="0" Tag="Hasta" TextAlignment="Center"
+                                             Text=""/>
+                                </Grid>
+
+                                <icons:PackIconMaterial Grid.Row="4" Margin="0" Kind="Calendar" Style="{StaticResource IconoLateral}"
+                                                      Estilos:Icono.Enfocado="{Binding ElementName=Adeudo, Path=IsMouseOver}"/>
+                                <TextBlock Grid.Row="4" Grid.Column="1" Text="Fecha de registro" Opacity="0.6" Style="{StaticResource h4}"/>
+                                <DatePicker Grid.Row="5" Grid.Column="1"/>
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+        </material:Card>
+
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <icons:PackIconMaterial Margin="4" Kind="Apps" Width="25" Height="25" Foreground="White"/>
+            <TextBlock Margin="10 0 0 0" Text="Resultados" Style="{StaticResource h2}"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Foreground="White" FontFamily="Segoe UI" />
+        </StackPanel>
+
+        <Grid Margin="10 10 0 10" Grid.Row="2" Grid.Column="1">
+            <Grid Background="White">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <icons:PackIconModern Kind="MagnifyBack" Width="100" Height="100" 
+                                          Opacity="0.6" HorizontalAlignment="Center"/>
+                    <TextBlock Margin="20" Text="Comience una búsqueda para ver resultados"
+                               Opacity="0.6" Style="{StaticResource h3}"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>
