@@ -11,6 +11,7 @@
              xmlns:Views="clr-namespace:AguaSB.Views.Controles;assembly=AguaSB.Views"
              xmlns:Dtos="clr-namespace:AguaSB.Usuarios.ViewModels.Dtos;assembly=AguaSB.Usuarios.ViewModels"
              xmlns:ViewModels="clr-namespace:AguaSB.Usuarios.ViewModels;assembly=AguaSB.Usuarios.ViewModels"
+             xmlns:Converters="clr-namespace:GGUtils.WPF.ValueConverters;assembly=GGUtils.WPF"
              d:DataContext="{d:DesignInstance Type=ViewModels:Listado, IsDesignTimeCreatable=False}"
              mc:Ignorable="d" Background="White" Name="This"
              d:DesignHeight="768" d:DesignWidth="1024">
@@ -21,6 +22,7 @@
             </ResourceDictionary.MergedDictionaries>
 
             <Utilerias:BoolOperation x:Key="BoolOp"/>
+            <Converters:EqualsTo x:Key="Equals"/>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -50,6 +52,8 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="62"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <DockPanel Name="BarraBusqueda">
@@ -105,6 +109,19 @@
                                 <TextBlock Grid.Column="1" Text="Filtrar" Opacity="0.6" Style="{StaticResource h4}"/>
 
                                 <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Margin="30 0 0 0">
+                                    <Expander Name="FiltroFechaUltimoPago" Background="White" IsExpanded="{Binding FiltroFechaUltimoPago.Activo, Mode=TwoWay}">
+                                        <Expander.Header>
+                                            <StackPanel Margin="-25 0 0 0" Orientation="Horizontal">
+                                                <icons:PackIconModern Kind="CalendarDollar" Estilos:Icono.Enfocado="{Binding ElementName=FiltroFechaUltimoPago, Path=IsMouseOver}"
+                                                                      Margin="0 0 20 0" Style="{StaticResource IconoLateral}"/>
+
+                                                <TextBlock Text="Últimos pagos" Opacity="0.7" Style="{StaticResource h4}"/>
+                                            </StackPanel>
+                                        </Expander.Header>
+                                        <StackPanel Margin="20 0 20 0">
+                                            <DatePicker Margin="0 20 0 30" Tag="Desde" Text="{Binding FiltroFechaUltimoPago.Desde, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </StackPanel>
+                                    </Expander>
                                     <Expander Name="FiltroDomicilio" Background="White" IsExpanded="{Binding FiltroDomicilio.Activo, Mode=TwoWay}">
                                         <Expander.Header>
                                             <StackPanel Margin="-25 0 0 0" Orientation="Horizontal">
@@ -146,7 +163,7 @@
                                     <Expander Name="FiltroFechaRegistro" Background="White" IsExpanded="{Binding FiltroFechaRegistro.Activo, Mode=TwoWay}">
                                         <Expander.Header>
                                             <StackPanel Margin="-25 0 0 0" Orientation="Horizontal">
-                                                <icons:PackIconModern Kind="Calendar" Estilos:Icono.Enfocado="{Binding ElementName=FiltroFechaRegistro, Path=IsMouseOver}"
+                                                <icons:PackIconMaterial Kind="CalendarPlus" Estilos:Icono.Enfocado="{Binding ElementName=FiltroFechaRegistro, Path=IsMouseOver}"
                                                                       Margin="0 0 20 0" Style="{StaticResource IconoLateral}"/>
 
                                                 <TextBlock Text="Fecha de registro" Opacity="0.7" Style="{StaticResource h4}"/>
@@ -157,27 +174,38 @@
                                             <DatePicker Tag="Hasta" Text="{Binding FiltroFechaRegistro.Hasta, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                         </StackPanel>
                                     </Expander>
-                                    <Expander Name="FiltroFechaRegistro" Background="White" IsExpanded="{Binding FiltroFechaRegistro.Activo, Mode=TwoWay}">
+                                    <Expander Name="FiltroContrato" Background="White" IsExpanded="{Binding FiltroContrato.Activo, Mode=TwoWay}">
                                         <Expander.Header>
                                             <StackPanel Margin="-25 0 0 0" Orientation="Horizontal">
-                                                <icons:PackIconModern Kind="Calendar" Estilos:Icono.Enfocado="{Binding ElementName=FiltroFechaRegistro, Path=IsMouseOver}"
+                                                <icons:PackIconModern Kind="AlignJustify" Estilos:Icono.Enfocado="{Binding ElementName=FiltroContrato, Path=IsMouseOver}"
                                                                       Margin="0 0 20 0" Style="{StaticResource IconoLateral}"/>
 
-                                                <TextBlock Text="Fecha de registro" Opacity="0.7" Style="{StaticResource h4}"/>
+                                                <TextBlock Text="Tipo de contrato" Opacity="0.7" Style="{StaticResource h4}"/>
                                             </StackPanel>
                                         </Expander.Header>
-                                        <DockPanel Margin="0 0 20 0">
-                                            <icons:PackIconMaterial Kind="ViewList" Estilos:Icono.Enfocado="{Binding ElementName=FiltroTipoContrato, Path=IsKeyboardFocusWithin}"
-                                                                    Tag="{Binding ElementName=FiltroTipoContrato}" Style="{StaticResource IconoLateral}"/>
-                                            <ComboBox Grid.Column="1" Tag="Tipo de contrato"
-                                                      SelectedItem="{Binding FiltroTipoContrato.Valor}" ItemsSource="{Binding TiposDeContrato, Mode=OneWay}"/>
-                                        </DockPanel>
+                                        <StackPanel Margin="20 0 0 0">
+                                            <DockPanel Margin="0 0 20 0">
+                                                <icons:PackIconMaterial Kind="Bookmark" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=FiltroClaseContrato}"
+                                                                        Estilos:Icono.Enfocado="{Binding ElementName=FiltroClaseContrato, Path=IsKeyboardFocusWithin}"/>
+                                                <ComboBox Name="FiltroClaseContrato" Grid.Column="1" Tag="Clase de contrato" ItemsSource="{Binding ClasesContrato}" 
+                                                          SelectedItem="{Binding FiltroTipoContrato.ClaseContrato, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+                                            </DockPanel>
+                                            <DockPanel Margin="0 0 20 0">
+                                                <icons:PackIconMaterial Kind="ViewList" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=FiltroTipoContrato}"
+                                                                        Estilos:Icono.Enfocado="{Binding ElementName=FiltroTipoContrato, Path=IsKeyboardFocusWithin}"/>
+                                                <ComboBox Name="FiltroTipoContrato" Grid.Column="1" Tag="Tipo de contrato" ItemsSource="{Binding TiposContrato}" 
+                                                          SelectedItem="{Binding FiltroTipoContrato.TipoContrato, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+                                            </DockPanel>
+                                        </StackPanel>
                                     </Expander>
                                 </StackPanel>
                             </Grid>
                         </StackPanel>
                     </Grid>
                 </ScrollViewer>
+                <Separator Grid.Row="2" Margin="10 0 20 10" Opacity="0.5"/>
+                <Views:ParBotones Grid.Row="3" Margin="10 0 20 10" TextoPrimario="Buscar" TextoSecundario="Reestablecer"
+                                  ComandoPrimario="{Binding BuscarComando}" ComandoSecundario="{Binding ReestablecerComando}"/>
             </Grid>
         </material:Card>
 
@@ -196,6 +224,23 @@
                     <TextBlock Margin="20" Text="Comience una búsqueda para ver resultados"
                                Opacity="0.6" Style="{StaticResource h3}"/>
                 </StackPanel>
+            </Grid>
+            <Grid Background="White" Opacity="0" Tag="{Binding Buscando}" Style="{StaticResource FadeTag}">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <metro:ProgressRing Width="100" Height="100" HorizontalAlignment="Center"/>
+                    <TextBlock Margin="20" Text="Buscando..." Style="{StaticResource h3}"/>
+                </StackPanel>
+            </Grid>
+            <Grid Background="White" Opacity="0" Tag="{Binding NoHayResultados}" Style="{StaticResource FadeTag}">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <icons:PackIconModern Kind="MagnifyMinus" Width="100" Height="100" Opacity="0.6" HorizontalAlignment="Center"/>
+                    <TextBlock Margin="20" Text="No hay resultados" Opacity="0.6" Style="{StaticResource h3}"/>
+                </StackPanel>
+            </Grid>
+            <Grid Name="Hay" Background="White" Opacity="0" Tag="{Binding HayResultados}" Style="{StaticResource FadeTag}">
+                <Grid>
+                    
+                </Grid>
             </Grid>
         </Grid>
     </Grid>

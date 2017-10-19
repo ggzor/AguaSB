@@ -64,6 +64,7 @@
     <Compile Include="Dtos\FiltroDomicilio.cs" />
     <Compile Include="Dtos\FiltroRango.cs" />
     <Compile Include="Dtos\FiltroRangoFecha.cs" />
+    <Compile Include="Dtos\FiltroTipoContrato.cs" />
     <Compile Include="Listado.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
