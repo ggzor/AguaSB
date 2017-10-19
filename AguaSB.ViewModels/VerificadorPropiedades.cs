@@ -52,7 +52,9 @@ namespace AguaSB.ViewModels
                                        h => obj.ErrorsChanged -= h)
                                    select obs.Select(_ => Unit.Default);
 
-            ObservadorDePropiedades = Observable.Merge(observablesError.Concat(observables)).Subscribe(_ => VerificarPuedeEjecutar());
+            var unaVez = Observable.Return(Unit.Default);
+
+            ObservadorDePropiedades = Observable.Merge(observablesError.Concat(observables)).Merge(unaVez).Subscribe(_ => VerificarPuedeEjecutar());
         }
 
         public void VerificarPuedeEjecutar() => UtileriasComandos.VerificarPuedeEjecutarEn(Comandos());
