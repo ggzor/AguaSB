@@ -9,9 +9,10 @@
              xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:Views="clr-namespace:AguaSB.Views.Controles;assembly=AguaSB.Views"
+             xmlns:Dtos="clr-namespace:AguaSB.Usuarios.ViewModels.Dtos;assembly=AguaSB.Usuarios.ViewModels"
              xmlns:ViewModels="clr-namespace:AguaSB.Usuarios.ViewModels;assembly=AguaSB.Usuarios.ViewModels"
              d:DataContext="{d:DesignInstance Type=ViewModels:Listado, IsDesignTimeCreatable=False}"
-             mc:Ignorable="d" Background="White"
+             mc:Ignorable="d" Background="White" Name="This"
              d:DesignHeight="768" d:DesignWidth="1024">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -37,13 +38,13 @@
         <Views:BarraSuperior Grid.ColumnSpan="3" Titulo="Listado de usuarios" Foreground="White" 
                              Icono="{icons:PackIconModern Kind=PeopleProfile, Width=20, Height=20}"/>
 
-        <Grid Grid.Row="1" Grid.ColumnSpan="3" Background="{StaticResource MaterialLightBlue}">
+        <Grid Name="FondoAzul" Grid.Row="1" Grid.ColumnSpan="3" Background="{StaticResource MaterialLightBlue}">
             <Grid.Effect>
                 <DropShadowEffect Opacity="0.5"/>
             </Grid.Effect>
         </Grid>
 
-        <material:Card Margin="2 2 5 5" Padding="8 0" Grid.Row="1" Grid.RowSpan="2" 
+        <material:Card Grid.Row="1" Grid.RowSpan="2" Margin="2 2 5 5" Padding="8 0"
                        material:ShadowAssist.ShadowDepth="Depth4" VerticalAlignment="Stretch">
             <Grid>
                 <Grid.RowDefinitions>
@@ -51,108 +52,131 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <DockPanel>
+                <DockPanel Name="BarraBusqueda">
                     <icons:PackIconMaterial Width="25" Height="25" Margin="8" Style="{StaticResource IconoLateral}"
                                             Kind="Magnify" Tag="{Binding ElementName=Buscar}" VerticalAlignment="Bottom"/>
                     <TextBox Name="Buscar" Tag="Buscar..." Margin="10 0 5 5" material:HintAssist.IsFloating="False"
+                             Text="{Binding TextoBusqueda, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
                              Estilos:Foco.EnterAvanzaFoco="False"/>
                 </DockPanel>
 
-                <ScrollViewer Grid.Row="1" Margin="0 10 0 0" Padding="8 10 20 10">
-                    <StackPanel Margin="0 5 0 0">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="30"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
+                <ScrollViewer Grid.Row="1" Margin="0 10 0 5" Padding="8 10 0 10">
+                    <Grid>
+                        <StackPanel Name="CriteriosBusqueda">
+                            <DockPanel Name="Ordenamiento" Margin="0 0 20 0">
+                                <icons:PackIconMaterial Kind="Sort" Estilos:Icono.Enfocado="{Binding ElementName=Ordenar, Path=IsKeyboardFocusWithin}"
+                                                        Tag="{Binding ElementName=Ordenar}" Style="{StaticResource IconoLateral}"/>
+                                <ComboBox Name="Ordenar" Grid.Column="1" Tag="Ordenar por"
+                                          SelectedItem="{Binding CriterioOrdenamiento}" ItemsSource="{Binding CriteriosOrdenamiento, Mode=OneWay}"/>
+                            </DockPanel>
+                            <Expander Name="CriteriosAgrupacion">
+                                <Expander.Header>
+                                    <StackPanel Margin="-25 0 0 0" Orientation="Horizontal">
+                                        <icons:PackIconMaterial Kind="Buffer" Estilos:Icono.Enfocado="{Binding ElementName=CriteriosAgrupacion, Path=IsMouseOver}"
+                                                                Margin="0 0 20 0" Style="{StaticResource IconoLateral}"/>
 
-                            <icons:PackIconMaterial Kind="Sort" Estilos:Icono.Enfocado="{Binding ElementName=Ordenar, Path=IsKeyboardFocusWithin}"
-                                                  Tag="{Binding ElementName=Ordenar}" Style="{StaticResource IconoLateral}"/>
-                            <ComboBox Name="Ordenar" Grid.Column="1" Tag="Ordenar por" Text="Nombre"/>
-
-                            <icons:PackIconMaterial Grid.Row="1" Kind="Buffer" Estilos:Icono.Enfocado="{Binding ElementName=Grupos, Path=IsMouseOver}"
-                                                    Margin="0" VerticalAlignment="Top"
-                                                    Tag="{Binding ElementName=Ordenar}" Style="{StaticResource IconoLateral}"/>
-                            <StackPanel Grid.Row="1" Grid.Column="1">
-                                <TextBlock Grid.Row="1" Grid.Column="1" Text="Agrupar por" Opacity="0.6" Style="{StaticResource h4}"/>
-                                <StackPanel Name="Grupos" Background="White">
-                                    <CheckBox Margin="0 10 0 0">
-                                        <TextBlock Margin="5 0" Text="Sección" Style="{StaticResource h4}"/>
-                                    </CheckBox>
-                                    <CheckBox Margin="0 10 0 0">
-                                        <TextBlock Margin="5 0" Text="Calle" Style="{StaticResource h4}"/>
-                                    </CheckBox>
-                                    <CheckBox Margin="0 10 0 0" ToolTip="¿Es deudor o no?">
-                                        <TextBlock Margin="5 0" Text="Deudores" Style="{StaticResource h4}"/>
-                                    </CheckBox>
-                                    <CheckBox Margin="0 10 0 0">
-                                        <TextBlock Margin="5 0" Text="Fecha de registro" Style="{StaticResource h4}"/>
-                                    </CheckBox>
-                                </StackPanel>
-                            </StackPanel>
-
-                            <icons:PackIconMaterial Grid.Row="3" Kind="Filter" Estilos:Icono.Enfocado="{Binding ElementName=Filtros, Path=IsMouseOver}"
-                                                    Margin="0" VerticalAlignment="Top" Style="{StaticResource IconoLateral}"/>
-                            <TextBlock Grid.Row="3" Grid.Column="1" Text="Filtrar" Opacity="0.6" Style="{StaticResource h4}"/>
-                            <Separator Grid.Row="4" Grid.ColumnSpan="2" Margin="5"/>
-                        </Grid>
-
-                        <StackPanel Name="Filtros" Background="White">
-                            <Grid Margin="15 10 0 0">
+                                        <TextBlock Text="Agrupar por" Opacity="0.7" Style="{StaticResource h4}"/>
+                                    </StackPanel>
+                                </Expander.Header>
+                                <ListView Margin="45 0 20 0" ItemContainerStyle="{StaticResource PlainItem}"
+                                          ItemsSource="{Binding CriteriosAgrupacion}">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate DataType="{x:Type Dtos:Agrupador}">
+                                            <CheckBox IsChecked="{Binding Activo}" ToolTip="{Binding Descripcion}" 
+                                                      ToolTipService.IsEnabled="{Binding TieneDescripcion}">
+                                                <TextBlock Margin="5 0 0 0" Text="{Binding Nombre}" Style="{StaticResource h4}"/>
+                                            </CheckBox>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </Expander>
+                            <Grid Name="CriteriosFiltro" Margin="0 20 0 0" Background="White">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
 
-                                <icons:PackIconMaterial Kind="ViewGrid" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=FiltroSeccion}"
-                                                        Estilos:Icono.Enfocado="{Binding ElementName=FiltroSeccion, Path=IsKeyboardFocusWithin}"/>
-                                <ComboBox Name="FiltroSeccion" Grid.Column="1" Tag="Sección"/>
+                                <icons:PackIconMaterial Margin="0 0 20 0" Kind="Filter" Estilos:Icono.Enfocado="{Binding ElementName=CriteriosFiltro, Path=IsMouseOver}"
+                                                        Style="{StaticResource IconoLateral}"/>
+                                <TextBlock Grid.Column="1" Text="Filtrar" Opacity="0.6" Style="{StaticResource h4}"/>
 
-                                <icons:PackIconEntypo Grid.Row="1" Kind="Address" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=FiltroCalle}"
-                                                      Estilos:Icono.Enfocado="{Binding ElementName=FiltroCalle, Path=IsKeyboardFocusWithin}"/>
-                                <ComboBox Name="FiltroCalle" Grid.Row="1" Grid.Column="1" Tag="Calle"/>
+                                <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Margin="30 0 0 0">
+                                    <Expander Name="FiltroDomicilio" Background="White" IsExpanded="{Binding FiltroDomicilio.Activo, Mode=TwoWay}">
+                                        <Expander.Header>
+                                            <StackPanel Margin="-25 0 0 0" Orientation="Horizontal">
+                                                <icons:PackIconMaterial Kind="HomeVariant" Estilos:Icono.Enfocado="{Binding ElementName=FiltroDomicilio, Path=IsMouseOver}"
+                                                                        Margin="0 0 20 0" Style="{StaticResource IconoLateral}"/>
 
-                                <icons:PackIconModern Grid.Row="2" Margin="0" Kind="CurrencyDollar" Style="{StaticResource IconoLateral}"
-                                                      Estilos:Icono.Enfocado="{Binding ElementName=Adeudo, Path=IsMouseOver}"/>
-                                <TextBlock Grid.Row="2" Grid.Column="1" Text="Adeudo" Opacity="0.6" Style="{StaticResource h4}"/>
+                                                <TextBlock Text="Domicilio" Opacity="0.7" Style="{StaticResource h4}"/>
+                                            </StackPanel>
+                                        </Expander.Header>
+                                        <StackPanel Margin="20 0 0 0">
+                                            <DockPanel Margin="0 0 20 0">
+                                                <icons:PackIconMaterial Kind="ViewGrid" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=FiltroSeccion}"
+                                                                        Estilos:Icono.Enfocado="{Binding ElementName=FiltroSeccion, Path=IsKeyboardFocusWithin}"/>
+                                                <ComboBox Name="FiltroSeccion" Grid.Column="1" Tag="Sección" ItemsSource="{Binding Secciones}" 
+                                                          SelectedItem="{Binding FiltroDomicilio.Seccion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+                                            </DockPanel>
+                                            <DockPanel Margin="0 0 20 0">
+                                                <icons:PackIconEntypo Kind="Address" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=FiltroCalle}"
+                                                                      Estilos:Icono.Enfocado="{Binding ElementName=FiltroCalle, Path=IsKeyboardFocusWithin}"/>
+                                                <ComboBox Name="FiltroCalle" Grid.Column="1" Tag="Calle" ItemsSource="{Binding Calles}" 
+                                                          SelectedItem="{Binding FiltroDomicilio.Calle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+                                            </DockPanel>
+                                        </StackPanel>
+                                    </Expander>
+                                    <Expander Name="FiltroAdeudo" Background="White" IsExpanded="{Binding FiltroAdeudo.Activo, Mode=TwoWay}">
+                                        <Expander.Header>
+                                            <StackPanel Margin="-25 0 0 0" Orientation="Horizontal">
+                                                <icons:PackIconModern Kind="CurrencyDollar" Estilos:Icono.Enfocado="{Binding ElementName=FiltroAdeudo, Path=IsMouseOver}"
+                                                                      Margin="0 0 20 0" Style="{StaticResource IconoLateral}"/>
 
-                                <Grid Name="Adeudo" Margin="0 5 0 30" Grid.Row="3" Grid.Column="1" Background="White">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
+                                                <TextBlock Text="Adeudo" Opacity="0.7" Style="{StaticResource h4}"/>
+                                            </StackPanel>
+                                        </Expander.Header>
+                                        <StackPanel Margin="20 0 20 0">
+                                            <TextBox Tag="Desde" Text="{Binding FiltroAdeudo.Desde, StringFormat={}{0:C}, TargetNullValue=Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                            <TextBox Tag="Hasta" Text="{Binding FiltroAdeudo.Hasta, StringFormat={}{0:C}, TargetNullValue=Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </StackPanel>
+                                    </Expander>
+                                    <Expander Name="FiltroFechaRegistro" Background="White" IsExpanded="{Binding FiltroFechaRegistro.Activo, Mode=TwoWay}">
+                                        <Expander.Header>
+                                            <StackPanel Margin="-25 0 0 0" Orientation="Horizontal">
+                                                <icons:PackIconModern Kind="Calendar" Estilos:Icono.Enfocado="{Binding ElementName=FiltroFechaRegistro, Path=IsMouseOver}"
+                                                                      Margin="0 0 20 0" Style="{StaticResource IconoLateral}"/>
 
-                                    <TextBox Tag="Desde" Margin="0" TextAlignment="Center"
-                                             Text=""/>
-                                    <TextBlock Grid.Column="1" Text="-" Opacity="0.6" Style="{StaticResource h4}"
-                                               Margin="10 10 10 0" VerticalAlignment="Center"/>
-                                    <TextBox Grid.Column="2" Margin="0" Tag="Hasta" TextAlignment="Center"
-                                             Text=""/>
-                                </Grid>
+                                                <TextBlock Text="Fecha de registro" Opacity="0.7" Style="{StaticResource h4}"/>
+                                            </StackPanel>
+                                        </Expander.Header>
+                                        <StackPanel Margin="20 0 20 0">
+                                            <DatePicker Margin="0 20 0 30" Tag="Desde" Text="{Binding FiltroFechaRegistro.Desde, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                            <DatePicker Tag="Hasta" Text="{Binding FiltroFechaRegistro.Hasta, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </StackPanel>
+                                    </Expander>
+                                    <Expander Name="FiltroFechaRegistro" Background="White" IsExpanded="{Binding FiltroFechaRegistro.Activo, Mode=TwoWay}">
+                                        <Expander.Header>
+                                            <StackPanel Margin="-25 0 0 0" Orientation="Horizontal">
+                                                <icons:PackIconModern Kind="Calendar" Estilos:Icono.Enfocado="{Binding ElementName=FiltroFechaRegistro, Path=IsMouseOver}"
+                                                                      Margin="0 0 20 0" Style="{StaticResource IconoLateral}"/>
 
-                                <icons:PackIconMaterial Grid.Row="4" Margin="0" Kind="Calendar" Style="{StaticResource IconoLateral}"
-                                                      Estilos:Icono.Enfocado="{Binding ElementName=Adeudo, Path=IsMouseOver}"/>
-                                <TextBlock Grid.Row="4" Grid.Column="1" Text="Fecha de registro" Opacity="0.6" Style="{StaticResource h4}"/>
-                                <DatePicker Grid.Row="5" Grid.Column="1"/>
+                                                <TextBlock Text="Fecha de registro" Opacity="0.7" Style="{StaticResource h4}"/>
+                                            </StackPanel>
+                                        </Expander.Header>
+                                        <DockPanel Margin="0 0 20 0">
+                                            <icons:PackIconMaterial Kind="ViewList" Estilos:Icono.Enfocado="{Binding ElementName=FiltroTipoContrato, Path=IsKeyboardFocusWithin}"
+                                                                    Tag="{Binding ElementName=FiltroTipoContrato}" Style="{StaticResource IconoLateral}"/>
+                                            <ComboBox Grid.Column="1" Tag="Tipo de contrato"
+                                                      SelectedItem="{Binding FiltroTipoContrato.Valor}" ItemsSource="{Binding TiposDeContrato, Mode=OneWay}"/>
+                                        </DockPanel>
+                                    </Expander>
+                                </StackPanel>
                             </Grid>
                         </StackPanel>
-                    </StackPanel>
+                    </Grid>
                 </ScrollViewer>
             </Grid>
         </material:Card>

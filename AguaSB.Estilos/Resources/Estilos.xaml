@@ -13,6 +13,8 @@
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.LightBlue.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToolTip.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.DatePicker.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Expander.xaml" />
 
         <ResourceDictionary Source="Animaciones.xaml"/>
         <ResourceDictionary Source="Textos.xaml"/>
@@ -25,10 +27,14 @@
         <ResourceDictionary Source="Controles/PanelDeslizable.xaml"/>
         <ResourceDictionary Source="Controles/ListaSeleccionables.xaml"/>
         <ResourceDictionary Source="Controles/Listas.xaml"/>
+        <ResourceDictionary Source="Controles/Fechas.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="ToolTip" BasedOn="{StaticResource MaterialDesignToolTip}"/>
     <Style TargetType="material:PopupBox" BasedOn="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"/>
+    <Style TargetType="Expander" BasedOn="{StaticResource MaterialDesignExpander}">
+        <Setter Property="Background" Value="White"/>
+    </Style>
 
     <Style x:Key="CorrectTextRendering"  TargetType="FrameworkElement">
         <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>

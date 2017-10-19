@@ -7,7 +7,7 @@ namespace AguaSB.Usuarios.Views
 {
     public partial class Listado : UserControl, IView
     {
-        public ViewModels.Listado ViewModel { get; set; }
+        public ViewModels.Listado ViewModel { get; }
 
         public Listado(ViewModels.Listado viewModel)
         {

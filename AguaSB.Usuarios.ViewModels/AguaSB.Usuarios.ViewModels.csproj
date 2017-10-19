@@ -59,6 +59,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Agregar.cs" />
+    <Compile Include="Dtos\Agrupador.cs" />
+    <Compile Include="Dtos\Filtro.cs" />
+    <Compile Include="Dtos\FiltroDomicilio.cs" />
+    <Compile Include="Dtos\FiltroRango.cs" />
+    <Compile Include="Dtos\FiltroRangoFecha.cs" />
     <Compile Include="Listado.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
