@@ -48,6 +48,7 @@
     <Compile Include="Contacto.cs" />
     <Compile Include="Contrato.cs" />
     <Compile Include="Domicilio.cs" />
+    <Compile Include="IAuditable.cs" />
     <Compile Include="IEntidad.cs" />
     <Compile Include="Mensajes\Validacion.cs" />
     <Compile Include="Negocio.cs" />

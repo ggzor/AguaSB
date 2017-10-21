@@ -9,14 +9,17 @@ using AguaSB.Utilerias;
 namespace AguaSB.Nucleo
 {
     [Table("Usuarios")]
-    public abstract class Usuario : IEntidad, INotifyPropertyChanged, INotifyDataErrorInfo
+    public abstract class Usuario : IEntidad, IAuditable, INotifyPropertyChanged, INotifyDataErrorInfo
     {
         public int Id { get; set; }
+
+        public DateTime FechaRegistro { get; set; }
 
         [NotMapped]
         public abstract string NombreCompleto { get; }
 
         private ICollection<Contacto> contactos;
+        private ICollection<Contrato> contratos;
 
         public ICollection<Contacto> Contactos
         {
@@ -24,7 +27,13 @@ namespace AguaSB.Nucleo
             set { N.Set(ref contactos, value); }
         }
 
-        public Usuario()
+        public ICollection<Contrato> Contratos
+        {
+            get { return contratos; }
+            set { N.Set(ref contratos, value); }
+        }
+
+        protected Usuario()
         {
             notificador = new Lazy<Notificador>(() =>
                 new Notificador(this,
@@ -32,6 +41,7 @@ namespace AguaSB.Nucleo
                     (src, args) => ErrorsChanged?.Invoke(src, args)));
 
             Contactos = new List<Contacto>();
+            Contratos = new List<Contrato>();
         }
 
         #region PropertyChanged y DataErrorInfo
@@ -42,7 +52,7 @@ namespace AguaSB.Nucleo
         public bool HasErrors => N.TieneErrores;
         public IEnumerable GetErrors(string propertyName) => N.Errores(propertyName);
 
-        private Lazy<Notificador> notificador;
+        private readonly Lazy<Notificador> notificador;
         [NotMapped]
         protected Notificador N => notificador.Value;
         #endregion

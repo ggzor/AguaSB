@@ -50,7 +50,7 @@ namespace AguaSB.Nucleo
         public bool HasErrors => N.TieneErrores;
         public IEnumerable GetErrors(string propertyName) => N.Errores(propertyName);
 
-        private Lazy<Notificador> notificador;
+        private readonly Lazy<Notificador> notificador;
         [NotMapped]
         protected Notificador N => notificador.Value;
         #endregion
