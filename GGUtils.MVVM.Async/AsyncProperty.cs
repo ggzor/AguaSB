@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace GGUtils.MVVM.Async
@@ -9,9 +10,9 @@ namespace GGUtils.MVVM.Async
     /// <summary>
     /// Based on https://msdn.microsoft.com/en-us/magazine/dn605875
     /// </summary>
+    /// <typeparam name="T">Result type</typeparam>
     public class AsyncProperty<T> : INotifyPropertyChanged
     {
-
         public Task<T> Task { get; }
 
         public Task TaskCompletion { get; }
@@ -50,18 +51,27 @@ namespace GGUtils.MVVM.Async
                 var changingProperties = Enumerable.Empty<string>();
 
                 if (task.IsCanceled)
+                {
                     changingProperties = OnCanceledChangingProperties;
+                }
                 else if (task.IsFaulted)
+                {
+                    IsFaulted = true;
                     changingProperties = OnFaultedChangingProperties;
+                }
                 else
+                {
                     changingProperties = OnSuccessChangingProperties;
+                }
 
                 changingProperties = changingProperties.Concat(OnCompletionChangingProperties);
 
                 foreach (var propertyChangedName in changingProperties)
-                    PropertyChanged(this, new PropertyChangedEventArgs(propertyChangedName));
+                    Raise(propertyChangedName);
             }
         }
+
+        private void Raise([CallerMemberName]string propertyChangedName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyChangedName));
 
         public bool IsCompleted => Task.IsCompleted;
 
@@ -71,7 +81,7 @@ namespace GGUtils.MVVM.Async
 
         public bool IsCanceled => Task.IsCanceled;
 
-        public bool IsFaulted => Task.IsFaulted;
+        public bool? IsFaulted { get; private set; }
 
         public AggregateException Exception => Task.Exception;
 
@@ -79,6 +89,6 @@ namespace GGUtils.MVVM.Async
 
         public string ExceptionMessage => InnerException?.Message;
 
-        public T Result => IsSuccessfullyCompleted ? Task.Result : default(T);
+        public T Result => IsSuccessfullyCompleted ? Task.Result : default;
     }
 }
