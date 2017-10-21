@@ -49,6 +49,9 @@ namespace AguaSB.Usuarios.ViewModels
 
         private bool? hayResultados;
         private bool? buscando;
+        private bool? error;
+
+        private IEnumerable<ResultadoUsuario> resultados;
         #endregion
 
         #region Propiedades
@@ -155,13 +158,30 @@ namespace AguaSB.Usuarios.ViewModels
             get { return buscando; }
             set { SetProperty(ref buscando, value); }
         }
+
+        public bool? Error
+        {
+            get { return error; }
+            set { SetProperty(ref error, value); }
+        }
+
+        public long? CantidadResultados => Resultados?.LongCount();
+
+        public IEnumerable<ResultadoUsuario> Resultados
+        {
+            get { return resultados; }
+            set
+            {
+                SetProperty(ref resultados, value);
+                RaisePropertyChanged(nameof(CantidadResultados));
+            }
+        }
         #endregion
 
         #region Comandos
         public DelegateCommand ReestablecerComando { get; }
         public AsyncDelegateCommand<int> BuscarComando { get; }
         #endregion
-
 
         public INodo Nodo { get; }
 
@@ -171,6 +191,7 @@ namespace AguaSB.Usuarios.ViewModels
 
             ReestablecerComando = new DelegateCommand(Reestablecer);
             BuscarComando = new AsyncDelegateCommand<int>(Buscar);
+
             Fill();
         }
 
@@ -181,18 +202,127 @@ namespace AguaSB.Usuarios.ViewModels
 
         private async Task<int> Buscar()
         {
+            Resultados = null;
             HayResultados = null;
             Buscando = true;
-            await Task.Delay(3000);
+            await Task.Delay(10).ConfigureAwait(false);
+
+            var telefono = new TipoContacto()
+            {
+                Nombre = "Teléfono",
+                ExpresionRegular = "."
+            };
+
+            var seccion = new Seccion
+            {
+                Nombre = "Primera",
+                Orden = 0
+            };
+
+            var calle = new Calle
+            {
+                Seccion = seccion,
+                Nombre = "Tlaxcala"
+            };
+
+            var tipoContrato = new TipoContrato
+            {
+                Nombre = "Convencional",
+                ClaseContrato = ClaseContrato.Doméstico,
+                Multiplicador = 0.5m
+            };
+
+            var tipoContrato2 = new TipoContrato
+            {
+                Nombre = "Comercial",
+                ClaseContrato = ClaseContrato.Comercial,
+                Multiplicador = 0.5m
+            };
+
+            Resultados = new ResultadoUsuario[]
+            {
+                new ResultadoUsuario
+                {
+                    Usuario = new Persona
+                    {
+                        Id = 0,
+                        Nombre = "Axel",
+                        ApellidoPaterno = "Suárez",
+                        ApellidoMaterno = "Polo",
+                        Contactos = new List<Contacto>
+                        {
+                            new Contacto
+                            {
+                                TipoContacto = telefono,
+                                Informacion = "241 245 32 12"
+                            }
+                        }
+                    },
+                    Adeudo = 0m,
+                    Contratos = new List<ResultadoContrato>
+                    {
+                        new ResultadoContrato
+                        {
+                            Contrato = new Contrato
+                            {
+                                Domicilio = new Domicilio
+                                {
+                                    Numero = "19",
+                                    Calle = calle
+                                },
+                                AdeudoInicial = 400,
+                                MedidaToma = "1/2",
+                                TipoContrato = tipoContrato
+                            },
+                            Adeudo = 400m
+                        }
+                    }
+                },
+                new ResultadoUsuario
+                {
+                    Usuario = new Negocio
+                    {
+                        Id = 1,
+                        Nombre = "AguaSB",
+                        Contactos = new List<Contacto>
+                        {
+                            new Contacto
+                            {
+                                TipoContacto = telefono,
+                                Informacion = "241 245 32 12"
+                            }
+                        }
+                    },
+                    Adeudo = 1000m,
+                    Contratos = new List<ResultadoContrato>
+                    {
+                        new ResultadoContrato
+                        {
+                            Contrato = new Contrato
+                            {
+                                Domicilio = new Domicilio
+                                {
+                                    Numero = "20",
+                                    Calle = calle
+                                },
+                                AdeudoInicial = 400,
+                                MedidaToma = "1/2",
+                                TipoContrato = tipoContrato
+                            },
+                            Adeudo = 400m
+                        }
+                    }
+                },
+            };
 
             Buscando = false;
-            HayResultados = false;
+            HayResultados = true;
             return 0;
         }
 
         private async void Fill()
         {
-            await Task.Delay(2000);
+            await Task.Delay(2000).ConfigureAwait(false);
 
             CriteriosOrdenamiento = new[] { "Mayor adeudo", "Menor adeudo", "Pago reciente", "Registro reciente", "Calle" };
             CriteriosAgrupacion = new[]
