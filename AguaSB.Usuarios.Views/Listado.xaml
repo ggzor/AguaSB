@@ -19,8 +19,12 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Estilos.xaml"/>
+                <ResourceDictionary Source="Plantillas/AgregarPlantillas.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ListView.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
+            <Utilerias:DictionaryConverter x:Key="Iconos"/>
+            <Style TargetType="ListView" BasedOn="{StaticResource MaterialDesignListView}"/>
             <Utilerias:BoolOperation x:Key="BoolOp"/>
             <Converters:EqualsTo x:Key="Equals"/>
         </ResourceDictionary>
@@ -174,7 +178,7 @@
                                             <DatePicker Tag="Hasta" Text="{Binding FiltroFechaRegistro.Hasta, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                         </StackPanel>
                                     </Expander>
-                                    <Expander Name="FiltroContrato" Background="White" IsExpanded="{Binding FiltroContrato.Activo, Mode=TwoWay}">
+                                    <Expander Name="FiltroContrato" Background="White" IsExpanded="{Binding FiltroTipoContrato.Activo, Mode=TwoWay}">
                                         <Expander.Header>
                                             <StackPanel Margin="-25 0 0 0" Orientation="Horizontal">
                                                 <icons:PackIconModern Kind="AlignJustify" Estilos:Icono.Enfocado="{Binding ElementName=FiltroContrato, Path=IsMouseOver}"
@@ -211,7 +215,7 @@
 
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <icons:PackIconMaterial Margin="4" Kind="Apps" Width="25" Height="25" Foreground="White"/>
-            <TextBlock Margin="10 0 0 0" Text="Resultados" Style="{StaticResource h2}"
+            <TextBlock Margin="10 0 0 0" Text="{Binding CantidadResultados, StringFormat={}{0} Resultados, TargetNullValue=Resultados}" Style="{StaticResource h2}"
                        HorizontalAlignment="Center" VerticalAlignment="Center"
                        Foreground="White" FontFamily="Segoe UI" />
         </StackPanel>
@@ -237,9 +241,121 @@
                     <TextBlock Margin="20" Text="No hay resultados" Opacity="0.6" Style="{StaticResource h3}"/>
                 </StackPanel>
             </Grid>
-            <Grid Name="Hay" Background="White" Opacity="0" Tag="{Binding HayResultados}" Style="{StaticResource FadeTag}">
+            <Grid Background="White" Opacity="0" Tag="{Binding BuscarComando.Execution.IsFaulted}" Style="{StaticResource FadeTag}">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <icons:PackIconModern Kind="Close" Width="100" Height="100" Opacity="0.6" HorizontalAlignment="Center"/>
+                    <TextBlock Margin="20" Text="Ocurrio un error" Opacity="0.6" Style="{StaticResource h3}"
+                               HorizontalAlignment="Center"/>
+                    <TextBlock MaxWidth="400" Text="{Binding BuscarComando.Execution.ExceptionMessage}" 
+                               Opacity="0.5" Style="{StaticResource h4}" TextAlignment="Center" TextWrapping="WrapWithOverflow"/>
+                </StackPanel>
+            </Grid>
+            <Grid Background="White" Opacity="0" Tag="{Binding HayResultados}" Style="{StaticResource FadeTag}">
                 <Grid>
-                    
+                    <ListView ItemsSource="{Binding Resultados}" VirtualizingPanel.IsVirtualizing="True"
+                              VirtualizingPanel.IsVirtualizingWhenGrouping="True" VirtualizingPanel.VirtualizationMode="Recycling">
+                        <ListView.View>
+                            <GridView AllowsColumnReorder="False">
+                                <GridView.ColumnHeaderTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Margin="5 0" Orientation="Horizontal">
+                                            <ContentControl Content="{Binding Converter={StaticResource Iconos}}" VerticalAlignment="Center"/>
+                                            <TextBlock FontFamily="Segoe UI" FontWeight="Normal" Text="{Binding}" Style="{StaticResource h4}"
+                                                       Margin="10 0 0 0" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridView.ColumnHeaderTemplate>
+                                <GridViewColumn Header="Nombre">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Usuario.NombreCompleto}" Style="{StaticResource h5}"/>
+                                                <icons:PackIconFontAwesome Margin="10 0 0 0" Kind="Building" VerticalAlignment="Center"
+                                                                           Foreground="{StaticResource MaterialLightBlue}" ToolTip="Negocio"
+                                                                           Visibility="{Binding EsNegocio, Converter={StaticResource BoolToVisibility}}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Adeudo">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="5 0">
+                                                <TextBlock Text="{Binding Adeudo, StringFormat={}{0:C}}" FontFamily="Segoe UI" Style="{StaticResource h5}" 
+                                                           Foreground="{StaticResource MaterialRed}" FontWeight="DemiBold"
+                                                           Visibility="{Binding TieneAdeudo, Converter={StaticResource BoolToVisibility}}"/>
+                                                <TextBlock Text="Al corriente" FontFamily="Segoe UI" Style="{StaticResource h5}" 
+                                                           Foreground="{StaticResource MaterialLightBlue}" FontWeight="DemiBold"
+                                                           Visibility="{Binding NoTieneAdeudo, Converter={StaticResource BoolToVisibility}}"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Último pago">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="5 0">
+                                                <TextBlock Text="{Binding UltimoPago, StringFormat={}{0:D}, TargetNullValue=No hay pagos, ConverterCulture=es-MX}" 
+                                                           Style="{StaticResource h5}"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Contratos">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ListView Margin="5 0" ItemsSource="{Binding Contratos}" ItemContainerStyle="{StaticResource PlainItem}">
+                                                <ListView.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid HorizontalAlignment="Stretch" IsHitTestVisible="False">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="15"/>
+                                                                <ColumnDefinition Width="120"/>
+                                                                <ColumnDefinition Width="5"/>
+                                                                <ColumnDefinition Width="100"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="Auto"/>
+                                                                <RowDefinition Height="5"/>
+                                                                <RowDefinition Height="Auto"/>
+                                                                <RowDefinition Height="15"/>
+                                                            </Grid.RowDefinitions>
+
+                                                            <TextBlock Margin="5 -2 0 0" Grid.ColumnSpan="2" Text="{Binding Contrato.TipoContrato.Nombre}" TextWrapping="WrapWithOverflow" 
+                                                                       TextAlignment="Left" VerticalAlignment="Center" Style="{StaticResource h5}"/>
+
+                                                            <Border Grid.Column="3" Padding="8 2" CornerRadius="8" HorizontalAlignment="Stretch" MaxHeight="25"
+                                                                    Tag="{Binding Contrato.TipoContrato.ClaseContrato}" Style="{StaticResource CambiarColor}">
+                                                                <TextBlock Text="{Binding Contrato.TipoContrato.ClaseContrato}" Foreground="White"
+                                                                           TextWrapping="Wrap" FontFamily="Segoe UI" FontWeight="DemiBold"
+                                                                           HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource h6}"/>
+                                                            </Border>
+
+                                                            <Border Grid.Row="2" Margin="5" Width="5" VerticalAlignment="Stretch" 
+                                                                    Tag="{Binding Contrato.TipoContrato.ClaseContrato}" Style="{StaticResource CambiarColor}"/>
+                                                            <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="10 0 0 0">
+                                                                <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding Contrato.Domicilio}" Style="{StaticResource h5}"/>
+                                                            </StackPanel>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ListView.ItemTemplate>
+                                            </ListView>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Fecha de registro">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="5 0">
+                                                <TextBlock Text="{Binding Usuario.FechaRegistro, StringFormat={}{0:D}, ConverterCulture=es-MX}" 
+                                                           Style="{StaticResource h5}"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
                 </Grid>
             </Grid>
         </Grid>

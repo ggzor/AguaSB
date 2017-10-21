@@ -22,7 +22,7 @@ namespace AguaSB
         public VentanaPrincipalViewModel ViewModel { get; }
 
         public ICommand EjecutarOperacionComando { get; }
-        private AdministradorViews administrador;
+        private readonly AdministradorViews administrador;
 
         public VentanaPrincipal(VentanaPrincipalViewModel viewModel, ITransformadorExtensiones transformador,
             IManejadorNotificaciones manejadorNotificaciones, ITransformadorNotificaciones transformadorNotificaciones,
@@ -72,25 +72,30 @@ namespace AguaSB
         private void RegistrarNavegacionDePaginas(NavegadorDirectorio<Operacion> navegador)
         {
             foreach (var extension in ViewModel.Extensiones)
+            {
                 foreach (var operacion in extension.Operaciones)
+                {
                     navegador.Directorio.Add($"{extension.Nombre}/{operacion.View.GetType().Name}", operacion);
+                }
+            }
         }
 
         private async Task EjecutarOperacion(object param)
         {
             if (param is Operacion operacion)
-                await Navegar(operacion, null);
+                await Navegar(operacion, null).ConfigureAwait(false);
         }
 
         private async void VolverAPrincipal(object sender, RoutedEventArgs e) =>
-            await VolverAPrincipal();
+            await VolverAPrincipal().ConfigureAwait(false);
 
         private async Task VolverAPrincipal()
         {
             Atras.Visibility = Visibility.Collapsed;
-            await administrador.VolverAPrincipal();
+            await administrador.VolverAPrincipal().ConfigureAwait(false);
         }
 
+#pragma warning disable RCS1090 // Call 'ConfigureAwait(false)'.
         public async Task Navegar(Operacion operacion, object parametro)
         {
             await VolverAPrincipal();
@@ -101,6 +106,7 @@ namespace AguaSB
 
             await operacion.ViewModel.Nodo.Entrar(parametro);
         }
+#pragma warning restore RCS1090
 
         public Task EnDireccionNoEncontrada(string direccion)
         {

@@ -274,7 +274,7 @@ namespace AguaSB.Contratos.ViewModels
             try
             {
                 progreso.Report((0.0, "Agregando contrato..."));
-                var resultado = await Contratos.Agregar(Contrato);
+                var resultado = await Contratos.Agregar(Contrato).ConfigureAwait(false);
 
                 progreso.Report((100.0, "Completado."));
 

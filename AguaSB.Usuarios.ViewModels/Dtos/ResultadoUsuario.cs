@@ -1,5 +1,7 @@
-﻿using AguaSB.Nucleo;
+﻿using System;
 using System.Collections.Generic;
+
+using AguaSB.Nucleo;
 
 namespace AguaSB.Usuarios.ViewModels.Dtos
 {
@@ -16,6 +18,8 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
         public bool TieneAdeudo => Adeudo > 0m;
 
         public bool NoTieneAdeudo => !TieneAdeudo;
+
+        public DateTime? UltimoPago { get; set; }
 
         public IEnumerable<ResultadoContrato> Contratos { get; set; }
     }

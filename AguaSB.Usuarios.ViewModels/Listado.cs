@@ -11,6 +11,7 @@ using AguaSB.Usuarios.ViewModels.Dtos;
 using AguaSB.Nucleo;
 using System.Waf.Applications;
 using GGUtils.MVVM.Async;
+using MoreLinq;
 
 namespace AguaSB.Usuarios.ViewModels
 {
@@ -234,12 +235,12 @@ namespace AguaSB.Usuarios.ViewModels
 
             var tipoContrato2 = new TipoContrato
             {
-                Nombre = "Comercial",
+                Nombre = "Comercial con nombre muy largo",
                 ClaseContrato = ClaseContrato.Comercial,
                 Multiplicador = 0.5m
             };
 
-            Resultados = new ResultadoUsuario[]
+            Resultados = await Task.Run(() => new ResultadoUsuario[]
             {
                 new ResultadoUsuario
                 {
@@ -249,6 +250,7 @@ namespace AguaSB.Usuarios.ViewModels
                         Nombre = "Axel",
                         ApellidoPaterno = "Suárez",
                         ApellidoMaterno = "Polo",
+                        FechaRegistro = DateTime.Today.AddMonths(-3),
                         Contactos = new List<Contacto>
                         {
                             new Contacto
@@ -259,6 +261,7 @@ namespace AguaSB.Usuarios.ViewModels
                         }
                     },
                     Adeudo = 0m,
+                    UltimoPago = DateTime.Now,
                     Contratos = new List<ResultadoContrato>
                     {
                         new ResultadoContrato
@@ -284,6 +287,7 @@ namespace AguaSB.Usuarios.ViewModels
                     {
                         Id = 1,
                         Nombre = "AguaSB",
+                        FechaRegistro = DateTime.Today,
                         Contactos = new List<Contacto>
                         {
                             new Contacto
@@ -307,13 +311,28 @@ namespace AguaSB.Usuarios.ViewModels
                                 },
                                 AdeudoInicial = 400,
                                 MedidaToma = "1/2",
+                                TipoContrato = tipoContrato2
+                            },
+                            Adeudo = 400m
+                        },
+                        new ResultadoContrato
+                        {
+                            Contrato = new Contrato
+                            {
+                                Domicilio = new Domicilio
+                                {
+                                    Numero = "1",
+                                    Calle = calle
+                                },
+                                AdeudoInicial = 400,
+                                MedidaToma = "1/2",
                                 TipoContrato = tipoContrato
                             },
                             Adeudo = 400m
                         }
                     }
                 },
-            };
+            }.Repeat(1));
 
             Buscando = false;
             HayResultados = true;
