@@ -40,7 +40,7 @@ namespace AguaSB.Usuarios.Views
         public IEnumerable<Operacion> Operaciones => new[]
         {
             new Operacion(this, "Agregar usuario", Agregar, Agregar, Agregar.ViewModel),
-            new Operacion(this, "Listado de usuarios", new ListadoNuevo(), Listado, Listado.ViewModel)
+            new Operacion(this, "Listado de usuarios", Listado, Listado, Listado.ViewModel)
         };
     }
 }

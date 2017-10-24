@@ -4,270 +4,282 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             xmlns:Estilos="clr-namespace:AguaSB.Estilos;assembly=AguaSB.Estilos"
-             xmlns:Utilerias="clr-namespace:AguaSB.Views.Utilerias;assembly=AguaSB.Views"
              xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:Views="clr-namespace:AguaSB.Views.Controles;assembly=AguaSB.Views"
-             xmlns:Dtos="clr-namespace:AguaSB.Usuarios.ViewModels.Dtos;assembly=AguaSB.Usuarios.ViewModels"
-             xmlns:ViewModels="clr-namespace:AguaSB.Usuarios.ViewModels;assembly=AguaSB.Usuarios.ViewModels"
-             xmlns:Converters="clr-namespace:GGUtils.WPF.ValueConverters;assembly=GGUtils.WPF"
-             d:DataContext="{d:DesignInstance Type=ViewModels:Listado, IsDesignTimeCreatable=False}"
-             mc:Ignorable="d" Background="White" Name="This"
+             xmlns:Controles="clr-namespace:AguaSB.Views.Controles;assembly=AguaSB.Views"
+             xmlns:Estilos="clr-namespace:AguaSB.Estilos;assembly=AguaSB.Estilos"
+             xmlns:ViewModel="clr-namespace:AguaSB.Usuarios.ViewModels;assembly=AguaSB.Usuarios.ViewModels"
+             d:DataContext="{d:DesignInstance Type={x:Type ViewModel:Listado}, IsDesignTimeCreatable=False}"
+             mc:Ignorable="d" Background="White"
              d:DesignHeight="768" d:DesignWidth="1024">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Estilos.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/materialdesigntheme.ComboBox.xaml"/>
                 <ResourceDictionary Source="Plantillas/AgregarPlantillas.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ListView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Estilos.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
-            <Utilerias:DictionaryConverter x:Key="Iconos"/>
-            <Style TargetType="ListView" BasedOn="{StaticResource MaterialDesignListView}"/>
-            <Utilerias:BoolOperation x:Key="BoolOp"/>
-            <Converters:EqualsTo x:Key="Equals"/>
         </ResourceDictionary>
     </UserControl.Resources>
-
     <Grid Style="{StaticResource CorrectTextRendering}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition MinWidth="200" Width="*"/>
-            <ColumnDefinition Width="3*"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="64"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Views:BarraSuperior Grid.ColumnSpan="3" Titulo="Listado de usuarios" Foreground="White" 
-                             Icono="{icons:PackIconModern Kind=PeopleProfile, Width=20, Height=20}"/>
+        <Controles:BarraSuperior Grid.ColumnSpan="3" Titulo="Listado de usuarios" Foreground="White" 
+                                 Icono="{icons:PackIconModern Kind=PeopleProfile, Width=20, Height=20}"/>
 
-        <Grid Name="FondoAzul" Grid.Row="1" Grid.ColumnSpan="3" Background="{StaticResource MaterialLightBlue}">
-            <Grid.Effect>
-                <DropShadowEffect Opacity="0.5"/>
-            </Grid.Effect>
-        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        <material:Card Grid.Row="1" Grid.RowSpan="2" Margin="2 2 5 5" Padding="8 0"
-                       material:ShadowAssist.ShadowDepth="Depth4" VerticalAlignment="Stretch">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="62"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+            <DockPanel Margin="32 10 0 0" LastChildFill="True">
+                <icons:PackIconModern DockPanel.Dock="Left" Margin="0 15 20 0" Kind="Magnify" Style="{StaticResource IconoLateral}" VerticalAlignment="Center"
+                                      Estilos:Icono.Enfocado="{Binding ElementName=Buscar, Path=IsKeyboardFocusWithin}" Tag="{Binding ElementName=Buscar}"/>
+                <ComboBox Name="Buscar" Margin="0" Tag="Buscar..." material:ComboBoxAssist.ShowSelectedItem="True" VerticalAlignment="Center"/>
+            </DockPanel>
 
-                <DockPanel Name="BarraBusqueda">
-                    <icons:PackIconMaterial Width="25" Height="25" Margin="8" Style="{StaticResource IconoLateral}"
-                                            Kind="Magnify" Tag="{Binding ElementName=Buscar}" VerticalAlignment="Bottom"/>
-                    <TextBox Name="Buscar" Tag="Buscar..." Margin="10 0 5 5" material:HintAssist.IsFloating="False"
-                             Text="{Binding TextoBusqueda, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
-                             Estilos:Foco.EnterAvanzaFoco="False"/>
-                </DockPanel>
+            <StackPanel Margin="16 0" Grid.Column="100" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                <Button Name="FiltrosBoton" Click="MostrarFiltros" Width="150" Style="{StaticResource HighlightButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <icons:PackIconMaterial Kind="Filter" Width="20" Height="20" VerticalAlignment="Center"/>
+                        <TextBlock Margin="10 0 0 0" Text="Filtros" FontSize="{StaticResource TamanoH4}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
 
-                <ScrollViewer Grid.Row="1" Margin="0 10 0 5" Padding="8 10 0 10">
-                    <Grid>
-                        <StackPanel Name="CriteriosBusqueda">
-                            <DockPanel Name="Ordenamiento" Margin="0 0 20 0">
-                                <icons:PackIconMaterial Kind="Sort" Estilos:Icono.Enfocado="{Binding ElementName=Ordenar, Path=IsKeyboardFocusWithin}"
-                                                        Tag="{Binding ElementName=Ordenar}" Style="{StaticResource IconoLateral}"/>
-                                <ComboBox Name="Ordenar" Grid.Column="1" Tag="Ordenar por"
-                                          SelectedItem="{Binding CriterioOrdenamiento}" ItemsSource="{Binding CriteriosOrdenamiento, Mode=OneWay}"/>
-                            </DockPanel>
-                            <Expander Name="CriteriosAgrupacion">
-                                <Expander.Header>
-                                    <StackPanel Margin="-25 0 0 0" Orientation="Horizontal">
-                                        <icons:PackIconMaterial Kind="Buffer" Estilos:Icono.Enfocado="{Binding ElementName=CriteriosAgrupacion, Path=IsMouseOver}"
-                                                                Margin="0 0 20 0" Style="{StaticResource IconoLateral}"/>
+                <Popup Name="Filtros" Placement="Bottom" PlacementTarget="{Binding ElementName=FiltrosBoton}" AllowsTransparency="True" PopupAnimation="Fade"
+                       StaysOpen="False">
+                    <Border Margin="0 5" Width="400" Background="White" BorderBrush="#33000000" BorderThickness="1" CornerRadius="8">
+                        <ScrollViewer>
+                            <StackPanel Margin="30 10 0 10">
+                                <Expander Name="FiltroFechaUltimoPago" Background="White" IsExpanded="{Binding FiltroFechaUltimoPago.Activo, Mode=TwoWay}">
+                                    <Expander.Header>
+                                        <StackPanel Margin="-25 0 0 0" Orientation="Horizontal">
+                                            <icons:PackIconModern Kind="CalendarDollar" Estilos:Icono.Enfocado="{Binding ElementName=FiltroFechaUltimoPago, Path=IsMouseOver}"
+                                                                  Margin="0 0 20 0" Style="{StaticResource IconoLateral}"/>
 
-                                        <TextBlock Text="Agrupar por" Opacity="0.7" Style="{StaticResource h4}"/>
-                                    </StackPanel>
-                                </Expander.Header>
-                                <ListView Margin="45 0 20 0" ItemContainerStyle="{StaticResource PlainItem}"
-                                          ItemsSource="{Binding CriteriosAgrupacion}">
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate DataType="{x:Type Dtos:Agrupador}">
-                                            <CheckBox IsChecked="{Binding Activo}" ToolTip="{Binding Descripcion}" 
-                                                      ToolTipService.IsEnabled="{Binding TieneDescripcion}">
-                                                <TextBlock Margin="5 0 0 0" Text="{Binding Nombre}" Style="{StaticResource h4}"/>
-                                            </CheckBox>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
-                            </Expander>
-                            <Grid Name="CriteriosFiltro" Margin="0 20 0 0" Background="White">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-
-                                <icons:PackIconMaterial Margin="0 0 20 0" Kind="Filter" Estilos:Icono.Enfocado="{Binding ElementName=CriteriosFiltro, Path=IsMouseOver}"
-                                                        Style="{StaticResource IconoLateral}"/>
-                                <TextBlock Grid.Column="1" Text="Filtrar" Opacity="0.6" Style="{StaticResource h4}"/>
-
-
-                            </Grid>
-                        </StackPanel>
-                    </Grid>
-                </ScrollViewer>
-                <Separator Grid.Row="2" Margin="10 0 20 10" Opacity="0.5"/>
-                <Views:ParBotones Grid.Row="3" Margin="10 0 20 10" TextoPrimario="Buscar" TextoSecundario="Reestablecer"
-                                  ComandoPrimario="{Binding BuscarComando}" ComandoSecundario="{Binding ReestablecerComando}"/>
-            </Grid>
-        </material:Card>
-
-        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <icons:PackIconMaterial Margin="4" Kind="Apps" Width="25" Height="25" Foreground="White"/>
-            <TextBlock Margin="10 0 0 0" Text="{Binding CantidadResultados, StringFormat={}{0} Resultados, TargetNullValue=Resultados}" Style="{StaticResource h2}"
-                       HorizontalAlignment="Center" VerticalAlignment="Center"
-                       Foreground="White" FontFamily="Segoe UI" />
-        </StackPanel>
-
-        <Grid Margin="10 10 0 10" Grid.Row="2" Grid.Column="1">
-            <Grid Background="White">
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <icons:PackIconModern Kind="MagnifyBack" Width="100" Height="100" 
-                                          Opacity="0.6" HorizontalAlignment="Center"/>
-                    <TextBlock Margin="20" Text="Comience una búsqueda para ver resultados"
-                               Opacity="0.6" Style="{StaticResource h3}"/>
-                </StackPanel>
-            </Grid>
-            <Grid Background="White" Opacity="0" Tag="{Binding Buscando}" Style="{StaticResource FadeTag}">
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <metro:ProgressRing Width="100" Height="100" HorizontalAlignment="Center"/>
-                    <TextBlock Margin="20" Text="Buscando..." Style="{StaticResource h3}"/>
-                </StackPanel>
-            </Grid>
-            <Grid Background="White" Opacity="0" Tag="{Binding NoHayResultados}" Style="{StaticResource FadeTag}">
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <icons:PackIconModern Kind="MagnifyMinus" Width="100" Height="100" Opacity="0.6" HorizontalAlignment="Center"/>
-                    <TextBlock Margin="20" Text="No hay resultados" Opacity="0.6" Style="{StaticResource h3}"/>
-                </StackPanel>
-            </Grid>
-            <Grid Background="White" Opacity="0" Tag="{Binding BuscarComando.Execution.IsFaulted}" Style="{StaticResource FadeTag}">
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <icons:PackIconModern Kind="Close" Width="100" Height="100" Opacity="0.6" HorizontalAlignment="Center"/>
-                    <TextBlock Margin="20" Text="Ocurrio un error" Opacity="0.6" Style="{StaticResource h3}"
-                               HorizontalAlignment="Center"/>
-                    <TextBlock MaxWidth="400" Text="{Binding BuscarComando.Execution.ExceptionMessage}" 
-                               Opacity="0.5" Style="{StaticResource h4}" TextAlignment="Center" TextWrapping="WrapWithOverflow"/>
-                </StackPanel>
-            </Grid>
-            <Grid Background="White" Opacity="0" Tag="{Binding HayResultados}" Style="{StaticResource FadeTag}">
-                <Grid>
-                    <ListView ItemsSource="{Binding Resultados}" VirtualizingPanel.IsVirtualizing="True"
-                              VirtualizingPanel.IsVirtualizingWhenGrouping="True" VirtualizingPanel.VirtualizationMode="Recycling">
-                        <ListView.View>
-                            <GridView AllowsColumnReorder="False">
-                                <GridView.ColumnHeaderTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Margin="5 0" Orientation="Horizontal">
-                                            <ContentControl Content="{Binding Converter={StaticResource Iconos}}" VerticalAlignment="Center"/>
-                                            <TextBlock FontFamily="Segoe UI" FontWeight="Normal" Text="{Binding}" Style="{StaticResource h4}"
-                                                       Margin="10 0 0 0" VerticalAlignment="Center"/>
+                                            <TextBlock Text="Últimos pagos" Opacity="0.7" Style="{StaticResource h4}"/>
                                         </StackPanel>
-                                    </DataTemplate>
-                                </GridView.ColumnHeaderTemplate>
-                                <GridViewColumn Header="Nombre">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{Binding Usuario.NombreCompleto}" Style="{StaticResource h5}"/>
-                                                <icons:PackIconFontAwesome Margin="10 0 0 0" Kind="Building" VerticalAlignment="Center"
-                                                                           Foreground="{StaticResource MaterialLightBlue}" ToolTip="Negocio"
-                                                                           Visibility="{Binding EsNegocio, Converter={StaticResource BoolToVisibility}}"/>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn Header="Adeudo">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Grid Margin="5 0">
-                                                <TextBlock Text="{Binding Adeudo, StringFormat={}{0:C}}" FontFamily="Segoe UI" Style="{StaticResource h5}" 
-                                                           Foreground="{StaticResource MaterialRed}" FontWeight="DemiBold"
-                                                           Visibility="{Binding TieneAdeudo, Converter={StaticResource BoolToVisibility}}"/>
-                                                <TextBlock Text="Al corriente" FontFamily="Segoe UI" Style="{StaticResource h5}" 
-                                                           Foreground="{StaticResource MaterialLightBlue}" FontWeight="DemiBold"
-                                                           Visibility="{Binding NoTieneAdeudo, Converter={StaticResource BoolToVisibility}}"/>
-                                            </Grid>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn Header="Último pago">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Grid Margin="5 0">
-                                                <TextBlock Text="{Binding UltimoPago, StringFormat={}{0:D}, TargetNullValue=No hay pagos, ConverterCulture=es-MX}" 
-                                                           Style="{StaticResource h5}"/>
-                                            </Grid>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn Header="Contratos">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <ListView Margin="5 0" ItemsSource="{Binding Contratos}" ItemContainerStyle="{StaticResource PlainItem}">
-                                                <ListView.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <Grid HorizontalAlignment="Stretch" IsHitTestVisible="False">
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="15"/>
-                                                                <ColumnDefinition Width="120"/>
-                                                                <ColumnDefinition Width="5"/>
-                                                                <ColumnDefinition Width="100"/>
-                                                            </Grid.ColumnDefinitions>
-                                                            <Grid.RowDefinitions>
-                                                                <RowDefinition Height="Auto"/>
-                                                                <RowDefinition Height="5"/>
-                                                                <RowDefinition Height="Auto"/>
-                                                                <RowDefinition Height="15"/>
-                                                            </Grid.RowDefinitions>
+                                    </Expander.Header>
+                                    <StackPanel Margin="20 0 20 0">
+                                        <DatePicker Margin="0 20 0 30" Tag="Desde" Text="{Binding FiltroFechaUltimoPago.Desde, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </StackPanel>
+                                </Expander>
+                                <Expander Name="FiltroDomicilio" Background="White" IsExpanded="{Binding FiltroDomicilio.Activo, Mode=TwoWay}">
+                                    <Expander.Header>
+                                        <StackPanel Margin="-25 0 0 0" Orientation="Horizontal">
+                                            <icons:PackIconMaterial Kind="HomeVariant" Estilos:Icono.Enfocado="{Binding ElementName=FiltroDomicilio, Path=IsMouseOver}"
+                                                                    Margin="0 0 20 0" Style="{StaticResource IconoLateral}"/>
 
-                                                            <TextBlock Margin="5 -2 0 0" Grid.ColumnSpan="2" Text="{Binding Contrato.TipoContrato.Nombre}" TextWrapping="WrapWithOverflow" 
-                                                                       TextAlignment="Left" VerticalAlignment="Center" Style="{StaticResource h5}"/>
+                                            <TextBlock Text="Domicilio" Opacity="0.7" Style="{StaticResource h4}"/>
+                                        </StackPanel>
+                                    </Expander.Header>
+                                    <StackPanel Margin="20 0 0 0">
+                                        <DockPanel Margin="0 0 20 0">
+                                            <icons:PackIconMaterial Kind="ViewGrid" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=FiltroSeccion}"
+                                                                    Estilos:Icono.Enfocado="{Binding ElementName=FiltroSeccion, Path=IsKeyboardFocusWithin}"/>
+                                            <ComboBox Name="FiltroSeccion" Grid.Column="1" Tag="Sección" ItemsSource="{Binding Secciones}" 
+                                                          SelectedItem="{Binding FiltroDomicilio.Seccion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+                                        </DockPanel>
+                                        <DockPanel Margin="0 0 20 0">
+                                            <icons:PackIconEntypo Kind="Address" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=FiltroCalle}"
+                                                                  Estilos:Icono.Enfocado="{Binding ElementName=FiltroCalle, Path=IsKeyboardFocusWithin}"/>
+                                            <ComboBox Name="FiltroCalle" Grid.Column="1" Tag="Calle" ItemsSource="{Binding Calles}" 
+                                                      SelectedItem="{Binding FiltroDomicilio.Calle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+                                        </DockPanel>
+                                    </StackPanel>
+                                </Expander>
+                                <Expander Name="FiltroAdeudo" Background="White" IsExpanded="{Binding FiltroAdeudo.Activo, Mode=TwoWay}">
+                                    <Expander.Header>
+                                        <StackPanel Margin="-25 0 0 0" Orientation="Horizontal">
+                                            <icons:PackIconModern Kind="CurrencyDollar" Estilos:Icono.Enfocado="{Binding ElementName=FiltroAdeudo, Path=IsMouseOver}"
+                                                                  Margin="0 0 20 0" Style="{StaticResource IconoLateral}"/>
 
-                                                            <Border Grid.Column="3" Padding="8 2" CornerRadius="8" HorizontalAlignment="Stretch" MaxHeight="25"
-                                                                    Tag="{Binding Contrato.TipoContrato.ClaseContrato}" Style="{StaticResource CambiarColor}">
-                                                                <TextBlock Text="{Binding Contrato.TipoContrato.ClaseContrato}" Foreground="White"
-                                                                           TextWrapping="Wrap" FontFamily="Segoe UI" FontWeight="DemiBold"
-                                                                           HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource h6}"/>
-                                                            </Border>
+                                            <TextBlock Text="Adeudo" Opacity="0.7" Style="{StaticResource h4}"/>
+                                        </StackPanel>
+                                    </Expander.Header>
+                                    <StackPanel Margin="20 0 20 0">
+                                        <TextBox Tag="Desde" Text="{Binding FiltroAdeudo.Desde, StringFormat={}{0:C}, TargetNullValue=Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <TextBox Tag="Hasta" Text="{Binding FiltroAdeudo.Hasta, StringFormat={}{0:C}, TargetNullValue=Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </StackPanel>
+                                </Expander>
+                                <Expander Name="FiltroFechaRegistro" Background="White" IsExpanded="{Binding FiltroFechaRegistro.Activo, Mode=TwoWay}">
+                                    <Expander.Header>
+                                        <StackPanel Margin="-25 0 0 0" Orientation="Horizontal">
+                                            <icons:PackIconMaterial Kind="CalendarPlus" Estilos:Icono.Enfocado="{Binding ElementName=FiltroFechaRegistro, Path=IsMouseOver}"
+                                                                    Margin="0 0 20 0" Style="{StaticResource IconoLateral}"/>
 
-                                                            <Border Grid.Row="2" Margin="5" Width="5" VerticalAlignment="Stretch" 
-                                                                    Tag="{Binding Contrato.TipoContrato.ClaseContrato}" Style="{StaticResource CambiarColor}"/>
-                                                            <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="10 0 0 0">
-                                                                <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding Contrato.Domicilio}" Style="{StaticResource h5}"/>
-                                                            </StackPanel>
-                                                        </Grid>
-                                                    </DataTemplate>
-                                                </ListView.ItemTemplate>
-                                            </ListView>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn Header="Fecha de registro">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Grid Margin="5 0">
-                                                <TextBlock Text="{Binding Usuario.FechaRegistro, StringFormat={}{0:D}, ConverterCulture=es-MX}" 
-                                                           Style="{StaticResource h5}"/>
-                                            </Grid>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                </Grid>
-            </Grid>
+                                            <TextBlock Text="Fecha de registro" Opacity="0.7" Style="{StaticResource h4}"/>
+                                        </StackPanel>
+                                    </Expander.Header>
+                                    <StackPanel Margin="20 0 20 0">
+                                        <DatePicker Margin="0 20 0 30" Tag="Desde" Text="{Binding FiltroFechaRegistro.Desde, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <DatePicker Tag="Hasta" Text="{Binding FiltroFechaRegistro.Hasta, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </StackPanel>
+                                </Expander>
+                                <Expander Name="FiltroContrato" Background="White" IsExpanded="{Binding FiltroTipoContrato.Activo, Mode=TwoWay}">
+                                    <Expander.Header>
+                                        <StackPanel Margin="-25 0 0 0" Orientation="Horizontal">
+                                            <icons:PackIconModern Kind="AlignJustify" Estilos:Icono.Enfocado="{Binding ElementName=FiltroContrato, Path=IsMouseOver}"
+                                                                  Margin="0 0 20 0" Style="{StaticResource IconoLateral}"/>
+
+                                            <TextBlock Text="Tipo de contrato" Opacity="0.7" Style="{StaticResource h4}"/>
+                                        </StackPanel>
+                                    </Expander.Header>
+                                    <StackPanel Margin="20 0 0 0">
+                                        <DockPanel Margin="0 0 20 0">
+                                            <icons:PackIconMaterial Kind="Bookmark" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=FiltroClaseContrato}"
+                                                                    Estilos:Icono.Enfocado="{Binding ElementName=FiltroClaseContrato, Path=IsKeyboardFocusWithin}"/>
+                                            <ComboBox Name="FiltroClaseContrato" Grid.Column="1" Tag="Clase de contrato" ItemsSource="{Binding ClasesContrato}" 
+                                                      SelectedItem="{Binding FiltroTipoContrato.ClaseContrato, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+                                        </DockPanel>
+                                        <DockPanel Margin="0 0 20 0">
+                                            <icons:PackIconMaterial Kind="ViewList" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=FiltroTipoContrato}"
+                                                                    Estilos:Icono.Enfocado="{Binding ElementName=FiltroTipoContrato, Path=IsKeyboardFocusWithin}"/>
+                                            <ComboBox Name="FiltroTipoContrato" Grid.Column="1" Tag="Tipo de contrato" ItemsSource="{Binding TiposContrato}" 
+                                                      SelectedItem="{Binding FiltroTipoContrato.TipoContrato, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+                                        </DockPanel>
+                                    </StackPanel>
+                                </Expander>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Border>
+                </Popup>
+
+
+                <Button Name="SeleccionColumnasBoton" Margin="10 0 0 0" Click="MostrarFiltroColumnas" Width="150">
+                    <StackPanel Orientation="Horizontal">
+                        <icons:PackIconMaterial Kind="Settings" Width="20" Height="20" VerticalAlignment="Center"/>
+                        <TextBlock Margin="10 0 0 0" Text="Columnas" FontSize="{StaticResource TamanoH4}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <Popup Name="SeleccionColumnas" PlacementTarget="{Binding ElementName=SeleccionColumnasBoton}" AllowsTransparency="True" PopupAnimation="Fade">
+                    <StackPanel Width="200" Height="200" Background="White">
+
+                    </StackPanel>
+                </Popup>
+            </StackPanel>
+
+            <WrapPanel Margin="32 15" Grid.Row="1" Grid.ColumnSpan="3">
+                <WrapPanel.Resources>
+                    <DropShadowEffect x:Key="Shadow" Opacity="0.2"/>
+                    <QuarticEase x:Key="Balanceo" EasingMode="EaseOut"/>
+                    <Style TargetType="Border">
+                        <Setter Property="Margin" Value="0 10 5 0"/>
+                        <Setter Property="Padding" Value="8 0"/>
+                        <Setter Property="MinWidth" Value="100"/>
+                        <Setter Property="CornerRadius" Value="8"/>
+                        <Setter Property="Effect" Value="{StaticResource Shadow}"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0.9" Duration="0:0:0.25" EasingFunction="{StaticResource Balanceo}"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1.0" Duration="0:0:0.25" EasingFunction="{StaticResource Balanceo}"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="FontSize" Value="{StaticResource TamanoH4}"/>
+                        <Setter Property="Foreground" Value="White"/>
+                    </Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource UtilityButton}">
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Margin" Value="6 2 0 0"/>
+                        <Setter Property="VerticalAlignment" Value="Bottom"/>
+                        <Setter Property="ToolTip" Value="Quitar filtro"/>
+                    </Style>
+                    <Style TargetType="StackPanel">
+                        <Setter Property="Orientation" Value="Horizontal"/>
+                    </Style>
+                    <Style TargetType="icons:PackIconMaterial">
+                        <Setter Property="Width" Value="10"/>
+                    </Style>
+                </WrapPanel.Resources>
+                <Border Background="{StaticResource MaterialRed}">
+                    <StackPanel>
+                        <TextBlock>
+                            <Run>Clase:</Run> <Run Text="Doméstico" FontWeight="DemiBold"/>
+                        </TextBlock>
+                        <Button Content="{icons:PackIconMaterial Kind=Close}"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="{StaticResource MaterialRed}">
+                    <StackPanel>
+                        <TextBlock>
+                            <Run>Tipo:</Run> <Run Text="Convencional" FontWeight="DemiBold"/>
+                        </TextBlock>
+                        <Button Content="{icons:PackIconMaterial Kind=Close}"/>
+                    </StackPanel>
+                </Border>
+                <Border Background="{StaticResource MaterialGreen}">
+                    <StackPanel>
+                        <TextBlock>
+                            <Run>Sección:</Run> <Run Text="Primera" FontWeight="DemiBold"/>
+                        </TextBlock>
+                        <Button Content="{icons:PackIconMaterial Kind=Close}"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="{StaticResource MaterialGreen}">
+                    <StackPanel>
+                        <TextBlock>
+                            <Run>Calle:</Run> <Run Text="Guanajuato" FontWeight="DemiBold"/>
+                        </TextBlock>
+                        <Button Content="{icons:PackIconMaterial Kind=Close}"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="{StaticResource MaterialIndigo}">
+                    <StackPanel>
+                        <TextBlock>
+                            <Run>Adeudo:</Run> <Run Text="$100.00 a $200.00" FontWeight="DemiBold"/>
+                        </TextBlock>
+                        <Button Content="{icons:PackIconMaterial Kind=Close}"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="{StaticResource MaterialOrange}">
+                    <StackPanel>
+                        <TextBlock>
+                            <Run>Último pago:</Run> <Run Text="Desde 27/08/17" FontWeight="DemiBold"/>
+                        </TextBlock>
+                        <Button Content="{icons:PackIconMaterial Kind=Close}"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="{StaticResource MaterialBlueGrey}">
+                    <StackPanel>
+                        <TextBlock>
+                            <Run>Registro:</Run> <Run Text="27/08/17 a 13/08/2018" FontWeight="DemiBold"/>
+                        </TextBlock>
+                        <Button Content="{icons:PackIconMaterial Kind=Close}"/>
+                    </StackPanel>
+                </Border>
+            </WrapPanel>
         </Grid>
+
     </Grid>
 </UserControl>

@@ -80,11 +80,11 @@
       <DependentUpon>Agregar.xaml</DependentUpon>
     </Compile>
     <Compile Include="DescriptorExtension.cs" />
+    <Compile Include="ListadoAnterior.xaml.cs">
+      <DependentUpon>ListadoAnterior.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Listado.xaml.cs">
       <DependentUpon>Listado.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ListadoNuevo.xaml.cs">
-      <DependentUpon>ListadoNuevo.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -117,11 +117,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Listado.xaml">
+    <Page Include="ListadoAnterior.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ListadoNuevo.xaml">
+    <Page Include="Listado.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
