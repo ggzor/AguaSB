@@ -27,4 +27,6 @@
     <Style x:Key="ToggleButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}"/>
 
     <Style x:Key="ActionButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignFloatingActionButton}"/>
+
+    <Style x:Key="UtilityButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignToolButton}"/>
 </ResourceDictionary>

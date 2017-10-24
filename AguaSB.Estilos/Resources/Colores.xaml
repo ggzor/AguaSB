@@ -3,12 +3,57 @@
     <Color x:Key="MaterialRedColor">#F44336</Color>
     <SolidColorBrush x:Key="MaterialRed" Color="{StaticResource MaterialRedColor}"/>
 
-    <Color x:Key="MaterialGreenColor">#4CAF50</Color>
-    <SolidColorBrush x:Key="MaterialGreen" Color="{StaticResource MaterialGreenColor}"/>
+    <Color x:Key="MaterialPinkColor">#E91E63</Color>
+    <SolidColorBrush x:Key="MaterialPink" Color="{StaticResource MaterialPinkColor}"/>
+
+    <Color x:Key="MaterialPurpleColor">#9C27B0</Color>
+    <SolidColorBrush x:Key="MaterialPurple" Color="{StaticResource MaterialPurpleColor}"/>
+
+    <Color x:Key="MaterialDeepPurpleColor">#673AB7</Color>
+    <SolidColorBrush x:Key="MaterialDeepPurple" Color="{StaticResource MaterialDeepPurpleColor}"/>
+
+    <Color x:Key="MaterialIndigoColor">#3F51B5</Color>
+    <SolidColorBrush x:Key="MaterialIndigo" Color="{StaticResource MaterialIndigoColor}"/>
+
+    <Color x:Key="MaterialBlueColor">#2196F3</Color>
+    <SolidColorBrush x:Key="MaterialBlue" Color="{StaticResource MaterialBlueColor}"/>
 
     <Color x:Key="MaterialLightBlueColor">#03A9F4</Color>
     <SolidColorBrush x:Key="MaterialLightBlue" Color="{StaticResource MaterialLightBlueColor}"/>
 
-    <Color x:Key="MaterialIndigoColor">#3F51B5</Color>
-    <SolidColorBrush x:Key="MaterialIndigo" Color="{StaticResource MaterialIndigoColor}"/>
+    <Color x:Key="MaterialCyanColor">#00BCD4</Color>
+    <SolidColorBrush x:Key="MaterialCyan" Color="{StaticResource MaterialCyanColor}"/>
+
+    <Color x:Key="MaterialTealColor">#009688</Color>
+    <SolidColorBrush x:Key="MaterialTeal" Color="{StaticResource MaterialTealColor}"/>
+
+    <Color x:Key="MaterialGreenColor">#4CAF50</Color>
+    <SolidColorBrush x:Key="MaterialGreen" Color="{StaticResource MaterialGreenColor}"/>
+
+    <Color x:Key="MaterialLightGreenColor">#8BC34A</Color>
+    <SolidColorBrush x:Key="MaterialLightGreen" Color="{StaticResource MaterialLightGreenColor}"/>
+
+    <Color x:Key="MaterialLimeColor">#CDDC39</Color>
+    <SolidColorBrush x:Key="MaterialLime" Color="{StaticResource MaterialLimeColor}"/>
+
+    <Color x:Key="MaterialYellowColor">#FFEB3B</Color>
+    <SolidColorBrush x:Key="MaterialYellow" Color="{StaticResource MaterialYellowColor}"/>
+
+    <Color x:Key="MaterialAmberColor">#FFC107</Color>
+    <SolidColorBrush x:Key="MaterialAmber" Color="{StaticResource MaterialAmberColor}"/>
+
+    <Color x:Key="MaterialOrangeColor">#FF9800</Color>
+    <SolidColorBrush x:Key="MaterialOrange" Color="{StaticResource MaterialOrangeColor}"/>
+
+    <Color x:Key="MaterialDeepOrangeColor">#FF5722</Color>
+    <SolidColorBrush x:Key="MaterialDeepOrange" Color="{StaticResource MaterialDeepOrangeColor}"/>
+
+    <Color x:Key="MaterialBrownColor">#795548</Color>
+    <SolidColorBrush x:Key="MaterialBrown" Color="{StaticResource MaterialBrownColor}"/>
+
+    <Color x:Key="MaterialGreyColor">#9E9E9E</Color>
+    <SolidColorBrush x:Key="MaterialGrey" Color="{StaticResource MaterialGreyColor}"/>
+
+    <Color x:Key="MaterialBlueGreyColor">#607D8B</Color>
+    <SolidColorBrush x:Key="MaterialBlueGrey" Color="{StaticResource MaterialBlueGreyColor}"/>
 </ResourceDictionary>

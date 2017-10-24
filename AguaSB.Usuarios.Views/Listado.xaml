@@ -32,7 +32,7 @@
 
     <Grid Style="{StaticResource CorrectTextRendering}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition MinWidth="375" Width="*"/>
+            <ColumnDefinition MinWidth="200" Width="*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -112,97 +112,7 @@
                                                         Style="{StaticResource IconoLateral}"/>
                                 <TextBlock Grid.Column="1" Text="Filtrar" Opacity="0.6" Style="{StaticResource h4}"/>
 
-                                <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Margin="30 0 0 0">
-                                    <Expander Name="FiltroFechaUltimoPago" Background="White" IsExpanded="{Binding FiltroFechaUltimoPago.Activo, Mode=TwoWay}">
-                                        <Expander.Header>
-                                            <StackPanel Margin="-25 0 0 0" Orientation="Horizontal">
-                                                <icons:PackIconModern Kind="CalendarDollar" Estilos:Icono.Enfocado="{Binding ElementName=FiltroFechaUltimoPago, Path=IsMouseOver}"
-                                                                      Margin="0 0 20 0" Style="{StaticResource IconoLateral}"/>
 
-                                                <TextBlock Text="Últimos pagos" Opacity="0.7" Style="{StaticResource h4}"/>
-                                            </StackPanel>
-                                        </Expander.Header>
-                                        <StackPanel Margin="20 0 20 0">
-                                            <DatePicker Margin="0 20 0 30" Tag="Desde" Text="{Binding FiltroFechaUltimoPago.Desde, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                        </StackPanel>
-                                    </Expander>
-                                    <Expander Name="FiltroDomicilio" Background="White" IsExpanded="{Binding FiltroDomicilio.Activo, Mode=TwoWay}">
-                                        <Expander.Header>
-                                            <StackPanel Margin="-25 0 0 0" Orientation="Horizontal">
-                                                <icons:PackIconMaterial Kind="HomeVariant" Estilos:Icono.Enfocado="{Binding ElementName=FiltroDomicilio, Path=IsMouseOver}"
-                                                                        Margin="0 0 20 0" Style="{StaticResource IconoLateral}"/>
-
-                                                <TextBlock Text="Domicilio" Opacity="0.7" Style="{StaticResource h4}"/>
-                                            </StackPanel>
-                                        </Expander.Header>
-                                        <StackPanel Margin="20 0 0 0">
-                                            <DockPanel Margin="0 0 20 0">
-                                                <icons:PackIconMaterial Kind="ViewGrid" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=FiltroSeccion}"
-                                                                        Estilos:Icono.Enfocado="{Binding ElementName=FiltroSeccion, Path=IsKeyboardFocusWithin}"/>
-                                                <ComboBox Name="FiltroSeccion" Grid.Column="1" Tag="Sección" ItemsSource="{Binding Secciones}" 
-                                                          SelectedItem="{Binding FiltroDomicilio.Seccion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
-                                            </DockPanel>
-                                            <DockPanel Margin="0 0 20 0">
-                                                <icons:PackIconEntypo Kind="Address" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=FiltroCalle}"
-                                                                      Estilos:Icono.Enfocado="{Binding ElementName=FiltroCalle, Path=IsKeyboardFocusWithin}"/>
-                                                <ComboBox Name="FiltroCalle" Grid.Column="1" Tag="Calle" ItemsSource="{Binding Calles}" 
-                                                          SelectedItem="{Binding FiltroDomicilio.Calle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
-                                            </DockPanel>
-                                        </StackPanel>
-                                    </Expander>
-                                    <Expander Name="FiltroAdeudo" Background="White" IsExpanded="{Binding FiltroAdeudo.Activo, Mode=TwoWay}">
-                                        <Expander.Header>
-                                            <StackPanel Margin="-25 0 0 0" Orientation="Horizontal">
-                                                <icons:PackIconModern Kind="CurrencyDollar" Estilos:Icono.Enfocado="{Binding ElementName=FiltroAdeudo, Path=IsMouseOver}"
-                                                                      Margin="0 0 20 0" Style="{StaticResource IconoLateral}"/>
-
-                                                <TextBlock Text="Adeudo" Opacity="0.7" Style="{StaticResource h4}"/>
-                                            </StackPanel>
-                                        </Expander.Header>
-                                        <StackPanel Margin="20 0 20 0">
-                                            <TextBox Tag="Desde" Text="{Binding FiltroAdeudo.Desde, StringFormat={}{0:C}, TargetNullValue=Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                            <TextBox Tag="Hasta" Text="{Binding FiltroAdeudo.Hasta, StringFormat={}{0:C}, TargetNullValue=Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                        </StackPanel>
-                                    </Expander>
-                                    <Expander Name="FiltroFechaRegistro" Background="White" IsExpanded="{Binding FiltroFechaRegistro.Activo, Mode=TwoWay}">
-                                        <Expander.Header>
-                                            <StackPanel Margin="-25 0 0 0" Orientation="Horizontal">
-                                                <icons:PackIconMaterial Kind="CalendarPlus" Estilos:Icono.Enfocado="{Binding ElementName=FiltroFechaRegistro, Path=IsMouseOver}"
-                                                                      Margin="0 0 20 0" Style="{StaticResource IconoLateral}"/>
-
-                                                <TextBlock Text="Fecha de registro" Opacity="0.7" Style="{StaticResource h4}"/>
-                                            </StackPanel>
-                                        </Expander.Header>
-                                        <StackPanel Margin="20 0 20 0">
-                                            <DatePicker Margin="0 20 0 30" Tag="Desde" Text="{Binding FiltroFechaRegistro.Desde, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                            <DatePicker Tag="Hasta" Text="{Binding FiltroFechaRegistro.Hasta, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                        </StackPanel>
-                                    </Expander>
-                                    <Expander Name="FiltroContrato" Background="White" IsExpanded="{Binding FiltroTipoContrato.Activo, Mode=TwoWay}">
-                                        <Expander.Header>
-                                            <StackPanel Margin="-25 0 0 0" Orientation="Horizontal">
-                                                <icons:PackIconModern Kind="AlignJustify" Estilos:Icono.Enfocado="{Binding ElementName=FiltroContrato, Path=IsMouseOver}"
-                                                                      Margin="0 0 20 0" Style="{StaticResource IconoLateral}"/>
-
-                                                <TextBlock Text="Tipo de contrato" Opacity="0.7" Style="{StaticResource h4}"/>
-                                            </StackPanel>
-                                        </Expander.Header>
-                                        <StackPanel Margin="20 0 0 0">
-                                            <DockPanel Margin="0 0 20 0">
-                                                <icons:PackIconMaterial Kind="Bookmark" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=FiltroClaseContrato}"
-                                                                        Estilos:Icono.Enfocado="{Binding ElementName=FiltroClaseContrato, Path=IsKeyboardFocusWithin}"/>
-                                                <ComboBox Name="FiltroClaseContrato" Grid.Column="1" Tag="Clase de contrato" ItemsSource="{Binding ClasesContrato}" 
-                                                          SelectedItem="{Binding FiltroTipoContrato.ClaseContrato, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
-                                            </DockPanel>
-                                            <DockPanel Margin="0 0 20 0">
-                                                <icons:PackIconMaterial Kind="ViewList" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=FiltroTipoContrato}"
-                                                                        Estilos:Icono.Enfocado="{Binding ElementName=FiltroTipoContrato, Path=IsKeyboardFocusWithin}"/>
-                                                <ComboBox Name="FiltroTipoContrato" Grid.Column="1" Tag="Tipo de contrato" ItemsSource="{Binding TiposContrato}" 
-                                                          SelectedItem="{Binding FiltroTipoContrato.TipoContrato, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
-                                            </DockPanel>
-                                        </StackPanel>
-                                    </Expander>
-                                </StackPanel>
                             </Grid>
                         </StackPanel>
                     </Grid>
