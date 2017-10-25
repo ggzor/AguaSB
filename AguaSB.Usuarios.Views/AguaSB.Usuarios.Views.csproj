@@ -80,9 +80,6 @@
       <DependentUpon>Agregar.xaml</DependentUpon>
     </Compile>
     <Compile Include="DescriptorExtension.cs" />
-    <Compile Include="ListadoAnterior.xaml.cs">
-      <DependentUpon>ListadoAnterior.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Listado.xaml.cs">
       <DependentUpon>Listado.xaml</DependentUpon>
     </Compile>
@@ -115,10 +112,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Agregar.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ListadoAnterior.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
