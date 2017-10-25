@@ -24,7 +24,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ListView.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <Dict:DictionaryConverter x:Key="Iconos"/>
+            <Dict:DictionaryConverter x:Key="Iconos" ThrowIfNotKeyFound="False"/>
             <Style TargetType="ListView" BasedOn="{StaticResource MaterialDesignListView}"/>
             <Converters:BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
         </ResourceDictionary>

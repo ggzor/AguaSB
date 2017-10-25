@@ -16,7 +16,7 @@ namespace AguaSB.Views.Utilerias
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (Dictionary == null)
-                throw new ArgumentNullException(nameof(Dictionary));
+                return DependencyProperty.UnsetValue;
 
             if (Dictionary.Contains(value))
                 return Dictionary[value];
