@@ -55,6 +55,7 @@
     <Compile Include="IO\Configuracion.cs" />
     <Compile Include="IO\UtileriasDirectorios.cs" />
     <Compile Include="Notificador.cs" />
+    <Compile Include="Notificante.cs" />
     <Compile Include="NotifyPropertyChangedEx.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UtileriasErrores.cs" />

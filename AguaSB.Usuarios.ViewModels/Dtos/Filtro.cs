@@ -1,38 +1,27 @@
-﻿using System;
-using System.Collections;
-using System.ComponentModel;
-
-using AguaSB.Utilerias;
-
-namespace AguaSB.Usuarios.ViewModels.Dtos
+﻿namespace AguaSB.Usuarios.ViewModels.Dtos
 {
-    public abstract class Filtro : INotifyPropertyChanged, INotifyDataErrorInfo
+    public abstract class Filtro<T>
     {
-        private bool activo;
+    }
 
-        public bool Activo
+    public sealed class PorValor<T> : Filtro<T>
+    {
+        public T Valor { get; }
+
+        public PorValor(T valor)
         {
-            get { return activo; }
-            set { N.Set(ref activo, value); }
+            Valor = valor;
         }
 
-        public Filtro()
-        {
-            notificador = new Lazy<Notificador>(() =>
-                new Notificador(this,
-                    (src, args) => PropertyChanged?.Invoke(src, args),
-                    (src, args) => ErrorsChanged?.Invoke(src, args)));
-        }
+        public override string ToString() => Valor?.ToString();
+    }
 
-        #region PropertyChanged y DataErrorInfo
-        public event PropertyChangedEventHandler PropertyChanged;
-        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+    public sealed class Cualquiera<T> : Filtro<T>
+    {
+        public static Cualquiera<T> Instancia { get; } = new Cualquiera<T>();
 
-        public bool HasErrors => N.TieneErrores;
-        public IEnumerable GetErrors(string propertyName) => N.Errores(propertyName);
+        private Cualquiera() { }
 
-        private Lazy<Notificador> notificador;
-        protected Notificador N => notificador.Value;
-        #endregion
+        public override string ToString() => "Cualquiera";
     }
 }
