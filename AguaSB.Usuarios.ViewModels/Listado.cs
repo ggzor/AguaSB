@@ -1,83 +1,57 @@
 ﻿using AguaSB.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using AguaSB.Navegacion;
 using System.Waf.Foundation;
-using System.Collections;
 using AguaSB.Usuarios.ViewModels.Dtos;
 using AguaSB.Nucleo;
 using System.Waf.Applications;
 using GGUtils.MVVM.Async;
 using MoreLinq;
+using AguaSB.Utilerias;
+using System.Reactive.Linq;
 
 namespace AguaSB.Usuarios.ViewModels
 {
     public class Listado : ValidatableModel, IViewModel
     {
         #region Campos
-        private string textoBusqueda;
+        private IEnumerable<Filtro<Seccion>> secciones;
+        private IEnumerable<Filtro<Calle>> calles;
+        private IEnumerable<Filtro<ClaseContrato>> clasesContrato;
+        private IEnumerable<Filtro<TipoContrato>> tiposContrato;
 
-        private IEnumerable<string> criteriosOrdenamiento;
-        private string criterioOrdenamiento;
-
-        private bool agrupar;
         private IEnumerable<Agrupador> criteriosAgrupacion;
-
-        private IEnumerable<Seccion> secciones;
-        private IEnumerable<Calle> calles;
-
-        private FiltroDomicilio filtroDomicilio = new FiltroDomicilio();
-        private FiltroRango<decimal?> filtroAdeudo = new FiltroRango<decimal?>();
-        private FiltroRango<DateTime> filtroFechaRegistro = new FiltroRango<DateTime>
-        {
-            Desde = new DateTime(2018, 01, 01),
-            Hasta = DateTime.Today.AddDays(1).AddMinutes(-1)
-        };
-
-        private IEnumerable<ClaseContrato> clasesContrato;
-        private IEnumerable<TipoContrato> tiposContrato;
-        private IEnumerable<TipoContrato> tiposContratoSeleccionables;
-
-        private FiltroTipoContrato filtroTipoContrato = new FiltroTipoContrato();
-        private FiltroRango<DateTime> filtroFechaUltimoPago = new FiltroRango<DateTime>
-        {
-            Desde = DateTime.Today,
-            Hasta = DateTime.Today.AddDays(1).AddMinutes(-1)
-        };
-
-        private bool? hayResultados;
+        private Solicitud solicitud;
         private bool? buscando;
-        private bool? error;
-
+        private bool? hayResultados;
         private IEnumerable<ResultadoUsuario> resultados;
         #endregion
 
         #region Propiedades
-        public string TextoBusqueda
+        public IEnumerable<Filtro<Seccion>> Secciones
         {
-            get { return textoBusqueda; }
-            set { SetProperty(ref textoBusqueda, value); }
+            get { return secciones; }
+            set { SetProperty(ref secciones, value); }
         }
 
-        public IEnumerable<string> CriteriosOrdenamiento
+        public IEnumerable<Filtro<Calle>> Calles
         {
-            get { return criteriosOrdenamiento; }
-            set { SetProperty(ref criteriosOrdenamiento, value); }
+            get { return calles; }
+            set { SetProperty(ref calles, value); }
         }
 
-        public string CriterioOrdenamiento
+        public IEnumerable<Filtro<ClaseContrato>> ClasesContrato
         {
-            get { return criterioOrdenamiento; }
-            set { SetPropertyAndValidate(ref criterioOrdenamiento, value); }
+            get { return clasesContrato; }
+            set { SetProperty(ref clasesContrato, value); }
         }
 
-        public bool Agrupar
+        public IEnumerable<Filtro<TipoContrato>> TiposContrato
         {
-            get { return agrupar; }
-            set { SetProperty(ref agrupar, value); }
+            get { return tiposContrato; }
+            set { SetProperty(ref tiposContrato, value); }
         }
 
         public IEnumerable<Agrupador> CriteriosAgrupacion
@@ -86,73 +60,11 @@ namespace AguaSB.Usuarios.ViewModels
             set { SetProperty(ref criteriosAgrupacion, value); }
         }
 
-        public IEnumerable<Seccion> Secciones
+        public Solicitud Solicitud
         {
-            get { return secciones; }
-            set { SetProperty(ref secciones, value); }
+            get { return solicitud; }
+            set { SetProperty(ref solicitud, value); }
         }
-
-        public IEnumerable<Calle> Calles
-        {
-            get { return calles; }
-            set { SetProperty(ref calles, value); }
-        }
-
-        public FiltroDomicilio FiltroDomicilio
-        {
-            get { return filtroDomicilio; }
-            set { SetProperty(ref filtroDomicilio, value); }
-        }
-
-        public FiltroRango<decimal?> FiltroAdeudo
-        {
-            get { return filtroAdeudo; }
-            set { SetProperty(ref filtroAdeudo, value); }
-        }
-
-        public FiltroRango<DateTime> FiltroFechaRegistro
-        {
-            get { return filtroFechaRegistro; }
-            set { SetProperty(ref filtroFechaRegistro, value); }
-        }
-
-        public IEnumerable<ClaseContrato> ClasesContrato
-        {
-            get { return clasesContrato; }
-            set { SetProperty(ref clasesContrato, value); }
-        }
-
-        public IEnumerable<TipoContrato> TiposContrato
-        {
-            get { return tiposContrato; }
-            set { SetProperty(ref tiposContrato, value); }
-        }
-
-        public IEnumerable<TipoContrato> TiposContratoSeleccionables
-        {
-            get { return tiposContratoSeleccionables; }
-            set { SetProperty(ref tiposContratoSeleccionables, value); }
-        }
-
-        public FiltroTipoContrato FiltroTipoContrato
-        {
-            get { return filtroTipoContrato; }
-            set { SetProperty(ref filtroTipoContrato, value); }
-        }
-
-        public FiltroRango<DateTime> FiltroFechaUltimoPago
-        {
-            get { return filtroFechaUltimoPago; }
-            set { SetProperty(ref filtroFechaUltimoPago, value); }
-        }
-
-        public bool? HayResultados
-        {
-            get { return hayResultados; }
-            set { SetProperty(ref hayResultados, value); RaisePropertyChanged(nameof(NoHayResultados)); }
-        }
-
-        public bool? NoHayResultados => HayResultados == false;
 
         public bool? Buscando
         {
@@ -160,26 +72,21 @@ namespace AguaSB.Usuarios.ViewModels
             set { SetProperty(ref buscando, value); }
         }
 
-        public bool? Error
+        public bool? HayResultados
         {
-            get { return error; }
-            set { SetProperty(ref error, value); }
+            get { return hayResultados; }
+            set { SetProperty(ref hayResultados, value); }
         }
-
-        public long? CantidadResultados => Resultados?.LongCount();
 
         public IEnumerable<ResultadoUsuario> Resultados
         {
             get { return resultados; }
-            set
-            {
-                SetProperty(ref resultados, value);
-                RaisePropertyChanged(nameof(CantidadResultados));
-            }
+            set { SetProperty(ref resultados, value); }
         }
         #endregion
 
         #region Comandos
+        public DelegateCommand DesactivarFiltrosComando { get; }
         public DelegateCommand ReestablecerComando { get; }
         public AsyncDelegateCommand<int> BuscarComando { get; }
         #endregion
@@ -190,11 +97,26 @@ namespace AguaSB.Usuarios.ViewModels
         {
             Nodo = new Nodo();
 
+            DesactivarFiltrosComando = new DelegateCommand(DesactivarFiltros);
             ReestablecerComando = new DelegateCommand(Reestablecer);
-            BuscarComando = new AsyncDelegateCommand<int>(Buscar);
+            BuscarComando = new AsyncDelegateCommand<int>(Buscar, multipleExecutionSupported: true);
+
+            Solicitud = new Solicitud
+            {
+                Filtros = new Filtros()
+            };
 
             Fill();
+
+            var props = Solicitud.ToObservableProperties();
+            (from prop in props
+             where prop.Args.PropertyName == nameof(Solicitud.Texto)
+             select Solicitud.Texto)
+             .Throttle(TimeSpan.FromSeconds(1))
+             .Subscribe(_ => BuscarComando.Execute(null));
         }
+
+        private void DesactivarFiltros() => Solicitud.Filtros.Todos.ForEach(f => f.Activo = false);
 
         private void Reestablecer()
         {
@@ -206,7 +128,7 @@ namespace AguaSB.Usuarios.ViewModels
             Resultados = null;
             HayResultados = null;
             Buscando = true;
-            await Task.Delay(10).ConfigureAwait(false);
+            await Task.Delay(2000).ConfigureAwait(false);
 
             var telefono = new TipoContacto()
             {
@@ -332,7 +254,7 @@ namespace AguaSB.Usuarios.ViewModels
                         }
                     }
                 },
-            }.Repeat(1));
+            }.Repeat(1)).ConfigureAwait(false);
 
             Buscando = false;
             HayResultados = true;
@@ -343,7 +265,6 @@ namespace AguaSB.Usuarios.ViewModels
         {
             await Task.Delay(2000).ConfigureAwait(false);
 
-            CriteriosOrdenamiento = new[] { "Mayor adeudo", "Menor adeudo", "Pago reciente", "Registro reciente", "Calle" };
             CriteriosAgrupacion = new[]
             {
                 new Agrupador { Nombre = "Sección" },
