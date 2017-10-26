@@ -11,7 +11,7 @@
              xmlns:Converters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf"
              xmlns:ViewModel="clr-namespace:AguaSB.Usuarios.ViewModels;assembly=AguaSB.Usuarios.ViewModels"
              xmlns:Utilerias="clr-namespace:AguaSB.Usuarios.Views"
-             xmlns:Dict="clr-namespace:AguaSB.Views.Utilerias;assembly=AguaSB.Views"
+             xmlns:Util="clr-namespace:AguaSB.Views.Utilerias;assembly=AguaSB.Views"
              d:DataContext="{d:DesignInstance Type={x:Type ViewModel:Listado}, IsDesignTimeCreatable=False}"
              mc:Ignorable="d" Background="White"
              d:DesignHeight="768" d:DesignWidth="1024">
@@ -24,7 +24,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ListView.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <Dict:DictionaryConverter x:Key="Iconos" ThrowIfNotKeyFound="False"/>
+            <Util:DictionaryConverter x:Key="Iconos" ThrowIfNotKeyFound="False"/>
             <Style TargetType="ListView" BasedOn="{StaticResource MaterialDesignListView}"/>
             <Converters:BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
         </ResourceDictionary>
@@ -63,8 +63,7 @@
                               Text="{Binding Solicitud.Texto}"/>
                 </DockPanel>
             </material:Card>
-            <Popup Name="Filtros" Placement="Bottom" PlacementTarget="{Binding ElementName=FiltrosBoton}" AllowsTransparency="True" PopupAnimation="Fade"
-                   StaysOpen="False">
+            <Popup Name="Filtros" PlacementTarget="{Binding ElementName=FiltrosBoton}" AllowsTransparency="True" PopupAnimation="Fade" StaysOpen="False">
                 <Border Margin="0 5" Width="400" Background="White" BorderBrush="#33000000" BorderThickness="1" CornerRadius="8">
                     <ScrollViewer>
                         <StackPanel Margin="30 10 0 10">
@@ -175,6 +174,47 @@
                                               SelectedItem="{Binding Solicitud.Filtros.TipoContrato.Valor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
                                 </StackPanel>
                             </Expander>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Border>
+            </Popup>
+            <Button Name="FiltrosColumnasBoton" Grid.Column="2" ToolTip="Configuración" Click="MostrarFiltrosColumnas" Foreground="White" Style="{StaticResource UtilityButton}" 
+                    Content="{icons:PackIconMaterial Kind=Settings, Width=20, Height=20}" Margin="0 0 16 0"
+                    HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            <Popup Name="FiltrosColumnas" PlacementTarget="{Binding ElementName=FiltrosColumnasBoton}" AllowsTransparency="True" PopupAnimation="Fade" StaysOpen="False">
+                <Border Margin="0 5" Width="250" Background="White" BorderBrush="#33000000" BorderThickness="1" CornerRadius="8">
+                    <ScrollViewer>
+                        <StackPanel Margin="30 10 0 10">
+                            <StackPanel.Resources>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource h4}">
+                                    <Setter Property="Opacity" Value="0.6"/>
+                                    <Setter Property="Margin" Value="10 0 0 0"/>
+                                </Style>
+                                <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+                                    <Setter Property="Margin" Value="0 5"/>
+                                </Style>
+                            </StackPanel.Resources>
+                            <StackPanel>
+                                <Button Style="{StaticResource UtilityButton}" material:RippleAssist.RippleSizeMultiplier="0.1" material:RippleAssist.ClipToBounds="True"
+                                        Command="{Binding MostrarColumnasTodasComando}">
+                                    <StackPanel Orientation="Horizontal" Opacity="0.6">
+                                        <icons:PackIconMaterial Kind="Check" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Mostrar todas" Opacity="1" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                                <CheckBox IsChecked="{Binding Solicitud.Columnas.Adeudo, Mode=TwoWay}">
+                                    <TextBlock Text="Adeudo"/>
+                                </CheckBox>
+                                <CheckBox IsChecked="{Binding Solicitud.Columnas.UltimoPago, Mode=TwoWay}">
+                                    <TextBlock Text="Último pago"/>
+                                </CheckBox>
+                                <CheckBox IsChecked="{Binding Solicitud.Columnas.Contratos, Mode=TwoWay}">
+                                    <TextBlock Text="Contratos"/>
+                                </CheckBox>
+                                <CheckBox IsChecked="{Binding Solicitud.Columnas.FechaRegistro, Mode=TwoWay}">
+                                    <TextBlock Text="Fecha de registro"/>
+                                </CheckBox>
+                            </StackPanel>
                         </StackPanel>
                     </ScrollViewer>
                 </Border>
@@ -374,23 +414,23 @@
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn Header="Adeudo">
+                                    <GridViewColumn Header="Adeudo" Util:Columnas.EsVisible="{Binding Solicitud.Columnas.Adeudo, Mode=TwoWay}">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Grid Width="100" Margin="5 0">
                                                     <StackPanel HorizontalAlignment="Right">
                                                         <TextBlock Text="{Binding Adeudo, StringFormat={}{0:C}}" FontFamily="Segoe UI" Style="{StaticResource h5}" 
-                                                               Foreground="{StaticResource MaterialRed}" FontWeight="DemiBold"
-                                                               Visibility="{Binding TieneAdeudo, Converter={StaticResource BoolToVisibility}}"/>
+                                                                   Foreground="{StaticResource MaterialRed}" FontWeight="DemiBold"
+                                                                   Visibility="{Binding TieneAdeudo, Converter={StaticResource BoolToVisibility}}"/>
                                                         <TextBlock Text="Al corriente" FontFamily="Segoe UI" Style="{StaticResource h5}" 
-                                                               Foreground="{StaticResource MaterialLightBlue}" FontWeight="DemiBold"
-                                                               Visibility="{Binding NoTieneAdeudo, Converter={StaticResource BoolToVisibility}}"/>
+                                                                   Foreground="{StaticResource MaterialLightBlue}" FontWeight="DemiBold"
+                                                                   Visibility="{Binding NoTieneAdeudo, Converter={StaticResource BoolToVisibility}}"/>
                                                     </StackPanel>
                                                 </Grid>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn Header="Último pago">
+                                    <GridViewColumn Header="Último pago" Util:Columnas.EsVisible="{Binding Solicitud.Columnas.UltimoPago, Mode=TwoWay}">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Grid Margin="5 0">
@@ -400,7 +440,7 @@
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn Header="Contratos">
+                                    <GridViewColumn Header="Contratos" Util:Columnas.EsVisible="{Binding Solicitud.Columnas.Contratos, Mode=TwoWay}">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <ListView Margin="5 0" ItemsSource="{Binding Contratos}" ItemContainerStyle="{StaticResource PlainItem}">
@@ -442,7 +482,7 @@
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn Header="Fecha de registro">
+                                    <GridViewColumn Header="Fecha de registro" Util:Columnas.EsVisible="{Binding Solicitud.Columnas.FechaRegistro, Mode=TwoWay}">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Grid>

@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="Agregar.cs" />
     <Compile Include="Dtos\Agrupador.cs" />
+    <Compile Include="Dtos\Columnas.cs" />
     <Compile Include="Dtos\EstadoBusqueda.cs" />
     <Compile Include="Dtos\Filtros.cs" />
     <Compile Include="Dtos\ResultadoUsuario.cs" />

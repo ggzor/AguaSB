@@ -73,6 +73,7 @@ namespace AguaSB.Usuarios.ViewModels
 
         #region Comandos
         public DelegateCommand DesactivarFiltrosComando { get; }
+        public DelegateCommand MostrarColumnasTodasComando { get; }
         public AsyncDelegateCommand<IEnumerable<ResultadoUsuario>> BuscarComando { get; }
         #endregion
 
@@ -83,11 +84,13 @@ namespace AguaSB.Usuarios.ViewModels
             Nodo = new Nodo();
 
             DesactivarFiltrosComando = new DelegateCommand(DesactivarFiltros);
+            MostrarColumnasTodasComando = new DelegateCommand(MostrarColumnasTodas);
             BuscarComando = new AsyncDelegateCommand<IEnumerable<ResultadoUsuario>>(Buscar, multipleExecutionSupported: true);
 
             Solicitud = new Solicitud
             {
-                Filtros = new Filtros()
+                Filtros = new Filtros(),
+                Columnas = Columnas.Todas
             };
 
             Estado = new EstadoBusqueda();
@@ -98,9 +101,11 @@ namespace AguaSB.Usuarios.ViewModels
             (from prop in props
              where prop.Args.PropertyName == nameof(Solicitud.Texto)
              select Solicitud.Texto)
-             .Throttle(TimeSpan.FromSeconds(1))
-             .Subscribe(_ => BuscarComando.Execute(null));
+                 .Throttle(TimeSpan.FromSeconds(1))
+                 .Subscribe(_ => BuscarComando.Execute(null));
         }
+
+        private void MostrarColumnasTodas() => Solicitud.Columnas = Columnas.Todas;
 
         private void DesactivarFiltros() => Solicitud.Filtros.Todos.ForEach(f => f.Activo = false);
 

@@ -38,6 +38,6 @@ namespace AguaSB.Usuarios.Views
 
         private void MostrarFiltros(object sender, RoutedEventArgs e) => Filtros.IsOpen = true;
 
-        //private void MostrarFiltroColumnas(object sender, RoutedEventArgs e) => SeleccionColumnas.IsOpen = true;
+        private void MostrarFiltrosColumnas(object sender, RoutedEventArgs e) => FiltrosColumnas.IsOpen = true;
     }
 }

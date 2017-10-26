@@ -17,8 +17,26 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
             set { texto = value; Raise(); }
         }
 
-        public Agrupador Agrupador { get; set; }
+        private Agrupador agrupador;
+        private Filtros filtros;
+        private Columnas columnas;
 
-        public Filtros Filtros { get; set; }
+        public Agrupador Agrupador
+        {
+            get { return agrupador; }
+            set { agrupador = value; Raise(); }
+        }
+
+        public Filtros Filtros
+        {
+            get { return filtros; }
+            set { filtros = value; Raise(); }
+        }
+
+        public Columnas Columnas
+        {
+            get { return columnas; }
+            set { columnas = value; Raise(); }
+        }
     }
 }
