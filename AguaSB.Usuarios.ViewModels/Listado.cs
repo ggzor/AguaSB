@@ -24,9 +24,7 @@ namespace AguaSB.Usuarios.ViewModels
 
         private IEnumerable<Agrupador> criteriosAgrupacion;
         private Solicitud solicitud;
-        private bool? buscando;
-        private bool? hayResultados;
-        private IEnumerable<ResultadoUsuario> resultados;
+        private EstadoBusqueda estado;
         #endregion
 
         #region Propiedades
@@ -66,29 +64,16 @@ namespace AguaSB.Usuarios.ViewModels
             set { SetProperty(ref solicitud, value); }
         }
 
-        public bool? Buscando
+        public EstadoBusqueda Estado
         {
-            get { return buscando; }
-            set { SetProperty(ref buscando, value); }
-        }
-
-        public bool? HayResultados
-        {
-            get { return hayResultados; }
-            set { SetProperty(ref hayResultados, value); }
-        }
-
-        public IEnumerable<ResultadoUsuario> Resultados
-        {
-            get { return resultados; }
-            set { SetProperty(ref resultados, value); }
+            get { return estado; }
+            set { SetProperty(ref estado, value); }
         }
         #endregion
 
         #region Comandos
         public DelegateCommand DesactivarFiltrosComando { get; }
-        public DelegateCommand ReestablecerComando { get; }
-        public AsyncDelegateCommand<int> BuscarComando { get; }
+        public AsyncDelegateCommand<IEnumerable<ResultadoUsuario>> BuscarComando { get; }
         #endregion
 
         public INodo Nodo { get; }
@@ -98,13 +83,14 @@ namespace AguaSB.Usuarios.ViewModels
             Nodo = new Nodo();
 
             DesactivarFiltrosComando = new DelegateCommand(DesactivarFiltros);
-            ReestablecerComando = new DelegateCommand(Reestablecer);
-            BuscarComando = new AsyncDelegateCommand<int>(Buscar, multipleExecutionSupported: true);
+            BuscarComando = new AsyncDelegateCommand<IEnumerable<ResultadoUsuario>>(Buscar, multipleExecutionSupported: true);
 
             Solicitud = new Solicitud
             {
                 Filtros = new Filtros()
             };
+
+            Estado = new EstadoBusqueda();
 
             Fill();
 
@@ -118,16 +104,13 @@ namespace AguaSB.Usuarios.ViewModels
 
         private void DesactivarFiltros() => Solicitud.Filtros.Todos.ForEach(f => f.Activo = false);
 
-        private void Reestablecer()
+        private async Task<IEnumerable<ResultadoUsuario>> Buscar()
         {
-            Console.WriteLine("Reest");
-        }
+            var estado = Estado = new EstadoBusqueda
+            {
+                Buscando = true
+            };
 
-        private async Task<int> Buscar()
-        {
-            Resultados = null;
-            HayResultados = null;
-            Buscando = true;
             await Task.Delay(2000).ConfigureAwait(false);
 
             var telefono = new TipoContacto()
@@ -162,7 +145,7 @@ namespace AguaSB.Usuarios.ViewModels
                 Multiplicador = 0.5m
             };
 
-            Resultados = await Task.Run(() => new ResultadoUsuario[]
+            var resultados = await Task.Run(() => new ResultadoUsuario[]
             {
                 new ResultadoUsuario
                 {
@@ -256,9 +239,10 @@ namespace AguaSB.Usuarios.ViewModels
                 },
             }.Repeat(1)).ConfigureAwait(false);
 
-            Buscando = false;
-            HayResultados = true;
-            return 0;
+            estado.Buscando = false;
+            estado.HayResultados = true;
+
+            return resultados;
         }
 
         private async void Fill()
