@@ -11,6 +11,9 @@ using GGUtils.MVVM.Async;
 using MoreLinq;
 using AguaSB.Utilerias;
 using System.Reactive.Linq;
+using System.ComponentModel;
+using System.Linq;
+using System.Reactive;
 
 namespace AguaSB.Usuarios.ViewModels
 {
@@ -87,6 +90,8 @@ namespace AguaSB.Usuarios.ViewModels
             MostrarColumnasTodasComando = new DelegateCommand(MostrarColumnasTodas);
             BuscarComando = new AsyncDelegateCommand<IEnumerable<ResultadoUsuario>>(Buscar, multipleExecutionSupported: true);
 
+            this.ToObservableProperties().Subscribe(_ => RegistrarUniones(_.Args));
+
             Solicitud = new Solicitud
             {
                 Filtros = new Filtros(),
@@ -96,13 +101,27 @@ namespace AguaSB.Usuarios.ViewModels
             Estado = new EstadoBusqueda();
 
             Fill();
+        }
 
-            var props = Solicitud.ToObservableProperties();
-            (from prop in props
-             where prop.Args.PropertyName == nameof(Solicitud.Texto)
-             select Solicitud.Texto)
-                 .Throttle(TimeSpan.FromSeconds(1))
-                 .Subscribe(_ => BuscarComando.Execute(null));
+        private IDisposable Propiedades;
+
+        private void RegistrarUniones(PropertyChangedEventArgs args)
+        {
+            if (args.PropertyName == nameof(Solicitud))
+            {
+                Propiedades?.Dispose();
+
+                var props = new INotifyPropertyChanged[]
+                {
+                    Solicitud, Solicitud.Filtros
+                }
+                .Concat(Solicitud.Filtros.Todos)
+                .Select(_ => _.ToObservableProperties());
+
+                Propiedades = props.Merge().Select(_ => Unit.Default).Concat(Observable.Return(Unit.Default))
+                    .Throttle(TimeSpan.FromSeconds(1))
+                    .Subscribe(_ => BuscarComando.Execute(null));
+            }
         }
 
         private void MostrarColumnasTodas() => Solicitud.Columnas = Columnas.Todas;
