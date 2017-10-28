@@ -423,7 +423,7 @@
                                                                    Foreground="{StaticResource MaterialRed}" FontWeight="DemiBold"
                                                                    Visibility="{Binding TieneAdeudo, Converter={StaticResource BoolToVisibility}}"/>
                                                         <TextBlock Text="Al corriente" FontFamily="Segoe UI" Style="{StaticResource h5}" 
-                                                                   Foreground="{StaticResource MaterialLightBlue}" FontWeight="DemiBold"
+                                                                   Foreground="{StaticResource MaterialBlue}" FontWeight="DemiBold"
                                                                    Visibility="{Binding NoTieneAdeudo, Converter={StaticResource BoolToVisibility}}"/>
                                                     </StackPanel>
                                                 </Grid>
@@ -443,51 +443,45 @@
                                     <GridViewColumn Header="Contratos" Util:Columnas.EsVisible="{Binding Solicitud.Columnas.Contratos, Mode=TwoWay}">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <ListView Margin="5 0" ItemsSource="{Binding Contratos}" ItemContainerStyle="{StaticResource PlainItem}">
-                                                    <ListView.ItemTemplate>
+                                                <ItemsControl ItemsSource="{Binding Contratos}">
+                                                    <ItemsControl.Template>
+                                                        <ControlTemplate>
+                                                            <ItemsPresenter/>
+                                                        </ControlTemplate>
+                                                    </ItemsControl.Template>
+                                                    <ItemsControl.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <StackPanel Orientation="Horizontal"/>
+                                                        </ItemsPanelTemplate>
+                                                    </ItemsControl.ItemsPanel>
+                                                    <ItemsControl.ItemTemplate>
                                                         <DataTemplate>
-                                                            <Grid HorizontalAlignment="Stretch" IsHitTestVisible="False">
-                                                                <Grid.ColumnDefinitions>
-                                                                    <ColumnDefinition Width="15"/>
-                                                                    <ColumnDefinition Width="120"/>
-                                                                    <ColumnDefinition Width="5"/>
-                                                                    <ColumnDefinition Width="100"/>
-                                                                </Grid.ColumnDefinitions>
-                                                                <Grid.RowDefinitions>
-                                                                    <RowDefinition Height="Auto"/>
-                                                                    <RowDefinition Height="5"/>
-                                                                    <RowDefinition Height="Auto"/>
-                                                                    <RowDefinition Height="15"/>
-                                                                </Grid.RowDefinitions>
-
-                                                                <TextBlock Margin="5 -2 0 0" Grid.ColumnSpan="2" Text="{Binding Contrato.TipoContrato.Nombre}" TextWrapping="WrapWithOverflow" 
-                                                                           TextAlignment="Left" VerticalAlignment="Center" Style="{StaticResource h5}"/>
-
-                                                                <Border Grid.Column="3" Padding="8 2" CornerRadius="8" HorizontalAlignment="Stretch" MaxHeight="25"
-                                                                    Tag="{Binding Contrato.TipoContrato.ClaseContrato}" Style="{StaticResource CambiarColor}">
-                                                                    <TextBlock Text="{Binding Contrato.TipoContrato.ClaseContrato}" Foreground="White"
-                                                                               TextWrapping="Wrap" FontFamily="Segoe UI" FontWeight="DemiBold"
-                                                                               HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource h6}"/>
-                                                                </Border>
-
-                                                                <Border Grid.Row="2" Margin="5" Width="5" VerticalAlignment="Stretch" 
-                                                                        Tag="{Binding Contrato.TipoContrato.ClaseContrato}" Style="{StaticResource CambiarColor}"/>
-                                                                <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="10 0 0 0">
-                                                                    <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding Contrato.Domicilio}" Style="{StaticResource h5}"/>
-                                                                </StackPanel>
-                                                            </Grid>
+                                                            <Border Margin="5 0 0 0" Padding="5 2" Tag="{Binding Contrato.TipoContrato.ClaseContrato}" Style="{StaticResource CambiarColor}">
+                                                                <TextBlock Text="{Binding Contrato.TipoContrato.Nombre}" Foreground="White" TextWrapping="Wrap" FontFamily="Segoe UI" 
+                                                                           FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource h6}"/>
+                                                                <Border.ToolTip>
+                                                                    <Border>
+                                                                        <StackPanel Orientation="Horizontal">
+                                                                            <TextBlock Text="{Binding Contrato.TipoContrato.Nombre}" FontSize="{StaticResource TamanoH4}" VerticalAlignment="Center"/>
+                                                                            <Border Margin="10 0 0 0" CornerRadius="8" Padding="5 2" Tag="{Binding Contrato.TipoContrato.ClaseContrato}" Style="{StaticResource CambiarColor}">
+                                                                                <TextBlock Text="{Binding Contrato.TipoContrato.ClaseContrato}" Foreground="White" TextWrapping="Wrap" FontFamily="Segoe UI" 
+                                                                                           FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource h6}"/>
+                                                                            </Border>
+                                                                        </StackPanel>
+                                                                    </Border>
+                                                                </Border.ToolTip>
+                                                            </Border>
                                                         </DataTemplate>
-                                                    </ListView.ItemTemplate>
-                                                </ListView>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
                                     <GridViewColumn Header="Fecha de registro" Util:Columnas.EsVisible="{Binding Solicitud.Columnas.FechaRegistro, Mode=TwoWay}">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <Grid>
-                                                    <TextBlock Text="{Binding Usuario.FechaRegistro, StringFormat={}{0:D}, ConverterCulture=es-MX}" 
-                                                               Style="{StaticResource h5}"/>
+                                                <Grid Margin="5 0">
+                                                    <TextBlock Text="{Binding Usuario.FechaRegistro, StringFormat={}{0:d}, ConverterCulture=es-MX}" Style="{StaticResource h5}"/>
                                                 </Grid>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
