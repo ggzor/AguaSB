@@ -4,17 +4,24 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
 {
     public class Columnas : Notificante
     {
+        private bool id;
         private bool contratos;
         private bool fechaRegistro;
         private bool ultimoPago;
         private bool adeudo;
+        private bool seccion;
+        private bool calle;
+        private bool numero;
 
         public static Columnas Todas => new Columnas()
         {
             Contratos = true,
             FechaRegistro = true,
             UltimoPago = true,
-            Adeudo = true
+            Adeudo = true,
+            Seccion = true,
+            Calle = true,
+            Numero = true
         };
 
         #region Propiedades
@@ -40,6 +47,24 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
         {
             get { return adeudo; }
             set { N.Set(ref adeudo, value); }
+        }
+
+        public bool Seccion
+        {
+            get { return seccion; }
+            set { N.Set(ref seccion, value); }
+        }
+
+        public bool Calle
+        {
+            get { return calle; }
+            set { N.Set(ref calle, value); }
+        }
+
+        public bool Numero
+        {
+            get { return numero; }
+            set { N.Set(ref numero, value); }
         }
         #endregion
     }

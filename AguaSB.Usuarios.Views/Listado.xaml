@@ -208,6 +208,15 @@
                                 <CheckBox IsChecked="{Binding Solicitud.Columnas.UltimoPago, Mode=TwoWay}">
                                     <TextBlock Text="Último pago"/>
                                 </CheckBox>
+                                <CheckBox IsChecked="{Binding Solicitud.Columnas.Seccion, Mode=TwoWay}">
+                                    <TextBlock Text="Sección"/>
+                                </CheckBox>
+                                <CheckBox IsChecked="{Binding Solicitud.Columnas.Calle, Mode=TwoWay}">
+                                    <TextBlock Text="Calle"/>
+                                </CheckBox>
+                                <CheckBox IsChecked="{Binding Solicitud.Columnas.Numero, Mode=TwoWay}">
+                                    <TextBlock Text="Número"/>
+                                </CheckBox>
                                 <CheckBox IsChecked="{Binding Solicitud.Columnas.Contratos, Mode=TwoWay}">
                                     <TextBlock Text="Contratos"/>
                                 </CheckBox>
@@ -402,6 +411,15 @@
                                             </StackPanel>
                                         </DataTemplate>
                                     </GridView.ColumnHeaderTemplate>
+                                    <GridViewColumn Header="Id">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="5 0" Width="50">
+                                                    <TextBlock HorizontalAlignment="Right" Text="{Binding Usuario.Id}" Style="{StaticResource h5}"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
                                     <GridViewColumn Header="Nombre">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
@@ -436,6 +454,29 @@
                                                 <Grid Margin="5 0">
                                                     <TextBlock Text="{Binding UltimoPago, StringFormat={}{0:D}, TargetNullValue=No hay pagos, ConverterCulture=es-MX}" 
                                                                Style="{StaticResource h5}"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Header="Sección" Util:Columnas.EsVisible="{Binding Solicitud.Columnas.Seccion, Mode=TwoWay}">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Margin="5 0" Text="{Binding Domicilio.Calle.Seccion.Nombre}" Style="{StaticResource h5}"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Header="Calle" Util:Columnas.EsVisible="{Binding Solicitud.Columnas.Calle, Mode=TwoWay}">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Margin="5 0" Text="{Binding Domicilio.Calle.Nombre}" Style="{StaticResource h5}"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Header="Número" Util:Columnas.EsVisible="{Binding Solicitud.Columnas.Numero, Mode=TwoWay}">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="5 0" Width="90">
+                                                    <TextBlock HorizontalAlignment="Right" Text="{Binding Domicilio.Numero}" Style="{StaticResource h5}"/>
                                                 </Grid>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>

@@ -21,6 +21,8 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
 
         public DateTime? UltimoPago { get; set; }
 
+        public Domicilio Domicilio { get; set; }
+
         public IEnumerable<ResultadoContrato> Contratos { get; set; }
     }
 

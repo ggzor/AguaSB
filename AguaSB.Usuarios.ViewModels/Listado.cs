@@ -100,6 +100,7 @@ namespace AguaSB.Usuarios.ViewModels
                 Filtros = new Filtros(),
                 Columnas = Columnas.Todas
             };
+            Solicitud.Columnas.FechaRegistro = false;
 
             Estado = new EstadoBusqueda();
 
@@ -173,7 +174,7 @@ namespace AguaSB.Usuarios.ViewModels
                 {
                     Usuario = new Persona
                     {
-                        Id = 0,
+                        Id = 10000,
                         Nombre = "Axel",
                         ApellidoPaterno = "Suárez",
                         ApellidoMaterno = "Polo",
@@ -189,6 +190,11 @@ namespace AguaSB.Usuarios.ViewModels
                     },
                     Adeudo = 0m,
                     UltimoPago = DateTime.Now,
+                    Domicilio = new Domicilio
+                    {
+                        Numero = "19",
+                        Calle = calle
+                    },
                     Contratos = new List<ResultadoContrato>
                     {
                         new ResultadoContrato
@@ -225,6 +231,11 @@ namespace AguaSB.Usuarios.ViewModels
                         }
                     },
                     Adeudo = 1000m,
+                    Domicilio = new Domicilio
+                    {
+                        Numero = "19",
+                        Calle = calle
+                    },
                     Contratos = new List<ResultadoContrato>
                     {
                         new ResultadoContrato

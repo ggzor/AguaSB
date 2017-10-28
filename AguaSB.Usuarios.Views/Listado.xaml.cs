@@ -29,11 +29,15 @@ namespace AguaSB.Usuarios.Views
 
         public IDictionary Iconos { get; } = new Dictionary<string, UIElement>
         {
+            ["Id"] = new PackIconEntypo { Kind = PackIconEntypoKind.Fingerprint },
             ["Nombre"] = new PackIconMaterial { Kind = PackIconMaterialKind.Account },
             ["Adeudo"] = new PackIconModern { Kind = PackIconModernKind.CurrencyDollar },
             ["Fecha de registro"] = new PackIconMaterial { Kind = PackIconMaterialKind.CalendarPlus },
             ["Contratos"] = new PackIconModern { Kind = PackIconModernKind.AlignJustify },
-            ["Último pago"] = new PackIconModern { Kind = PackIconModernKind.CalendarDollar }
+            ["Último pago"] = new PackIconModern { Kind = PackIconModernKind.CalendarDollar },
+            ["Sección"] = new PackIconMaterial { Kind = PackIconMaterialKind.ViewGrid },
+            ["Calle"] = new PackIconEntypo { Kind = PackIconEntypoKind.Address },
+            ["Número"] = new PackIconFontAwesome { Kind = PackIconFontAwesomeKind.Hashtag }
         };
 
         private void MostrarFiltros(object sender, RoutedEventArgs e) => Filtros.IsOpen = true;
