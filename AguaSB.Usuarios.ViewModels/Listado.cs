@@ -13,12 +13,15 @@ using AguaSB.Utilerias;
 using System.Reactive.Linq;
 using System.ComponentModel;
 using System.Linq;
-using System.Reactive;
 
 namespace AguaSB.Usuarios.ViewModels
 {
     public class Listado : ValidatableModel, IViewModel
     {
+        #region Configuracion
+        private const double TiempoEsperaBusqueda = 1.5;
+        #endregion
+
         #region Campos
         private IEnumerable<Filtro<Seccion>> secciones;
         private IEnumerable<Filtro<Calle>> calles;
@@ -111,16 +114,13 @@ namespace AguaSB.Usuarios.ViewModels
             {
                 Propiedades?.Dispose();
 
-                var props = new INotifyPropertyChanged[]
-                {
-                    Solicitud, Solicitud.Filtros
-                }
-                .Concat(Solicitud.Filtros.Todos)
-                .Select(_ => _.ToObservableProperties());
+                var props = new[] {
+                    Solicitud.ToObservableProperties().Where(p => p.Args.PropertyName != nameof(Columnas) && p.Args.PropertyName != nameof(Solicitud.Texto)),
+                    Solicitud.ToObservableProperties().Where(_ => _.Args.PropertyName == nameof(Solicitud.Texto)).Throttle(TimeSpan.FromSeconds(TiempoEsperaBusqueda)),
+                    Solicitud.Filtros.ToObservableProperties()
+                }.Concat(Solicitud.Filtros.Todos.Select(_ => _.ToObservableProperties()));
 
-                Propiedades = props.Merge().Select(_ => Unit.Default).Concat(Observable.Return(Unit.Default))
-                    .Throttle(TimeSpan.FromSeconds(1))
-                    .Subscribe(_ => BuscarComando.Execute(null));
+                Propiedades = props.Merge().Subscribe(_ => BuscarComando.Execute(null));
             }
         }
 
@@ -134,8 +134,6 @@ namespace AguaSB.Usuarios.ViewModels
             {
                 Buscando = true
             };
-
-            await Task.Delay(2000).ConfigureAwait(false);
 
             var telefono = new TipoContacto()
             {
