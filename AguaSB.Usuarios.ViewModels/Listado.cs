@@ -83,6 +83,10 @@ namespace AguaSB.Usuarios.ViewModels
         public AsyncDelegateCommand<ResultadoSolicitud> BuscarComando { get; }
         #endregion
 
+        #region Eventos
+        public event EventHandler<Agrupador> AgrupadorCambiado;
+        #endregion
+
         public INodo Nodo { get; }
 
         public Listado()
@@ -116,7 +120,7 @@ namespace AguaSB.Usuarios.ViewModels
                 Propiedades?.Dispose();
 
                 var props = new[] {
-                    Solicitud.ToObservableProperties().Where(p => p.Args.PropertyName != nameof(Columnas) && p.Args.PropertyName != nameof(Solicitud.Texto)),
+                    Solicitud.ToObservableProperties().Where(p => p.Args.PropertyName != nameof(Columnas) && p.Args.PropertyName != nameof(Solicitud.Texto) && p.Args.PropertyName != nameof(Solicitud.Agrupador)),
                     Solicitud.ToObservableProperties().Where(_ => _.Args.PropertyName == nameof(Solicitud.Texto)).Throttle(TimeSpan.FromSeconds(TiempoEsperaBusqueda)),
                     Solicitud.Filtros.ToObservableProperties()
                 }.Concat(Solicitud.Filtros.Todos.Select(_ => _.ToObservableProperties()));
@@ -153,6 +157,8 @@ namespace AguaSB.Usuarios.ViewModels
                 Nombre = "Segunda",
                 Orden = 1
             };
+
+            Secciones = new[] { seccion, seccion2 }.Select(_ => new PorValor<Seccion>(_));
 
             var calle = new Calle
             {
@@ -298,12 +304,37 @@ namespace AguaSB.Usuarios.ViewModels
 
             CriteriosAgrupacion = new[]
             {
-                new Agrupador { Nombre = "Sección" },
-                new Agrupador { Nombre = "Calle" },
-                new Agrupador { Nombre = "Deudor", Descripcion = "¿Es deudor o no?" },
-                new Agrupador { Nombre = "Adeudo", Descripcion = "En pesos" },
-                new Agrupador { Nombre = "Fecha de registro" }
+                Agrupador.Ninguno,
+                new Agrupador { Nombre = "Sección", Propiedad = "Domicilio.Calle.Seccion.Nombre" },
+                new Agrupador { Nombre = "Calle", Propiedad = "Domicilio.Calle.Nombre" },
+                new Agrupador { Nombre = "Adeudo", Descripcion = "En pesos", Propiedad = "Adeudo",
+                    Conversor = x =>
+                    {
+                        if(x is decimal d)
+                            return Clasificar(d);
+                        else
+                            return "Desconocido";
+                    }
+                },
+                new Agrupador { Nombre = "Fecha de registro", Propiedad = "Usuario.FechaRegistro",
+                    Conversor = x => x is DateTime d ? Capitalizar(d.ToString("MMMM yyyy")) : "Desconocido" }
             };
+
+            CriteriosAgrupacion.Select(_ => _.ToObservableProperties())
+                .Merge()
+                .Where(_ => _.Args.PropertyName == nameof(Agrupador.Activo))
+                .Select(_ => _.Source as Agrupador)
+                .Where(_ => _.Activo)
+                .Do(_ => Solicitud.Agrupador = _)
+                .Subscribe(_ => AgrupadorCambiado?.Invoke(this, _));
+        }
+
+        private string Capitalizar(string s) => char.ToUpper(s[0]) + s.Substring(1);
+
+        private string Clasificar(decimal d)
+        {
+            var residuo = d / 500;
+            return $"{residuo * 500:C} - {(residuo + 1) * 500:C}";
         }
     }
 }

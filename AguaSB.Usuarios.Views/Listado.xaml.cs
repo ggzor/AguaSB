@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Media;
 
 using MahApps.Metro.IconPacks;
 
 using AguaSB.Views;
 using AguaSB.Views.Utilerias;
-using System.ComponentModel;
-using System.Windows.Media;
-using System.Windows.Documents;
+using AguaSB.Usuarios.ViewModels.Dtos;
+using System.Windows.Data;
 
 namespace AguaSB.Usuarios.Views
 {
@@ -28,6 +29,25 @@ namespace AguaSB.Usuarios.Views
             if (FindResource("Iconos") is DictionaryConverter conversor)
             {
                 conversor.Dictionary = Iconos;
+            }
+
+            ViewModel.AgrupadorCambiado += AgrupadorCambiado;
+        }
+
+        private void AgrupadorCambiado(object sender, Agrupador e)
+        {
+            ListaResultados.Items.GroupDescriptions.Clear();
+            if (e != null && e != Agrupador.Ninguno)
+            {
+                var descriptor = new PropertyGroupDescription(e.Propiedad);
+
+                if (e.Ordenador != null)
+                    descriptor.CustomSort = new FuncComparer(e.Ordenador);
+
+                if (e.Conversor != null)
+                    descriptor.Converter = new FuncValueConverter(e.Conversor);
+
+                ListaResultados.Items.GroupDescriptions.Add(descriptor);
             }
         }
 
@@ -70,6 +90,8 @@ namespace AguaSB.Usuarios.Views
         private void MostrarFiltros(object sender, RoutedEventArgs e) => Filtros.IsOpen = true;
 
         private void MostrarFiltrosColumnas(object sender, RoutedEventArgs e) => FiltrosColumnas.IsOpen = true;
+
+        private void MostrarAgrupadores(object sender, RoutedEventArgs e) => Agrupar.IsOpen = true;
     }
 
     public class SortAdorner : Adorner
