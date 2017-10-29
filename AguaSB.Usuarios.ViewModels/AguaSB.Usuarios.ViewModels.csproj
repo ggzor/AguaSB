@@ -64,6 +64,7 @@
     <Compile Include="Dtos\Columnas.cs" />
     <Compile Include="Dtos\EstadoBusqueda.cs" />
     <Compile Include="Dtos\Filtros.cs" />
+    <Compile Include="Dtos\ResultadoSolicitud.cs" />
     <Compile Include="Dtos\ResultadoUsuario.cs" />
     <Compile Include="Dtos\Filtro.cs" />
     <Compile Include="Dtos\Solicitud.cs" />

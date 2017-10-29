@@ -4,7 +4,6 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
 {
     public class Columnas : Notificante
     {
-        private bool id;
         private bool contratos;
         private bool fechaRegistro;
         private bool ultimoPago;

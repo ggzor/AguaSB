@@ -358,7 +358,8 @@
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Margin="22 0" Opacity="0.6" Orientation="Horizontal" Visibility="{Binding Estado.HayResultados, Converter={StaticResource BoolToVisibility}}">
                 <icons:PackIconMaterial Kind="Apps" Width="20" Height="20" VerticalAlignment="Center"/>
-                <TextBlock Margin="10 0 0 0" Text="Resultados" FontSize="{StaticResource TamanoH3}" FontWeight="DemiBold" Style="{StaticResource FadeTag}"/>
+                <TextBlock Margin="10 0 0 0" Text="{Binding BuscarComando.Execution.Result.Conteo, StringFormat={}Resultados ({0})}" 
+                           FontSize="{StaticResource TamanoH3}" FontWeight="DemiBold" Style="{StaticResource FadeTag}"/>
             </StackPanel>
             <Separator Grid.Row="1" Opacity="0.5" Margin="5" Visibility="{Binding Estado.HayResultados, Converter={StaticResource BoolToVisibility}}"/>
 
@@ -398,7 +399,7 @@
 
                 <Grid Name="Resultados" Background="White" Opacity="0" Tag="{Binding Estado.HayResultados}" Style="{StaticResource FadeTag}">
                     <Grid>
-                        <ListView ItemsSource="{Binding BuscarComando.Execution.Result}" VirtualizingPanel.IsVirtualizing="True"
+                        <ListView ItemsSource="{Binding BuscarComando.Execution.Result.Resultados}" VirtualizingPanel.IsVirtualizing="True"
                                   VirtualizingPanel.IsVirtualizingWhenGrouping="True" VirtualizingPanel.VirtualizationMode="Recycling"
                                   Name="ListaResultados">
                             <ListView.View>

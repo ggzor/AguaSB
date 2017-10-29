@@ -80,7 +80,7 @@ namespace AguaSB.Usuarios.ViewModels
         #region Comandos
         public DelegateCommand DesactivarFiltrosComando { get; }
         public DelegateCommand MostrarColumnasTodasComando { get; }
-        public AsyncDelegateCommand<IEnumerable<ResultadoUsuario>> BuscarComando { get; }
+        public AsyncDelegateCommand<ResultadoSolicitud> BuscarComando { get; }
         #endregion
 
         public INodo Nodo { get; }
@@ -91,7 +91,7 @@ namespace AguaSB.Usuarios.ViewModels
 
             DesactivarFiltrosComando = new DelegateCommand(DesactivarFiltros);
             MostrarColumnasTodasComando = new DelegateCommand(MostrarColumnasTodas);
-            BuscarComando = new AsyncDelegateCommand<IEnumerable<ResultadoUsuario>>(Buscar, multipleExecutionSupported: true);
+            BuscarComando = new AsyncDelegateCommand<ResultadoSolicitud>(Buscar, multipleExecutionSupported: true);
 
             this.ToObservableProperties().Subscribe(_ => RegistrarUniones(_.Args));
 
@@ -129,7 +129,7 @@ namespace AguaSB.Usuarios.ViewModels
 
         private void DesactivarFiltros() => Solicitud.Filtros.Todos.ForEach(f => f.Activo = false);
 
-        private async Task<IEnumerable<ResultadoUsuario>> Buscar()
+        private async Task<ResultadoSolicitud> Buscar()
         {
             var estado = Estado = new EstadoBusqueda
             {
@@ -284,10 +284,12 @@ namespace AguaSB.Usuarios.ViewModels
                 },
             }.Repeat(1)).ConfigureAwait(false);
 
-            estado.Buscando = false;
-            estado.HayResultados = true;
+            var conteo = resultados.LongCount();
 
-            return resultados;
+            estado.Buscando = false;
+            estado.HayResultados = conteo > 0;
+
+            return estado.HayResultados == true ? new ResultadoSolicitud { Resultados = resultados, Conteo = resultados.LongCount() } : null;
         }
 
         private async void Fill()
