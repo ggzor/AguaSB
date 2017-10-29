@@ -179,6 +179,11 @@
                 </Border>
             </Popup>
 
+            <StackPanel Grid.Column="2" Margin="0 0 16 0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <Button Name="FiltrosColumnasBoton" ToolTip="Configuración" Click="MostrarFiltrosColumnas" Foreground="White" Style="{StaticResource UtilityButton}" 
+                        Content="{icons:PackIconMaterial Kind=Settings, Width=20, Height=20}"/>
+            </StackPanel>
+
             <Popup Name="FiltrosColumnas" PlacementTarget="{Binding ElementName=FiltrosColumnasBoton}" AllowsTransparency="True" PopupAnimation="Fade" StaysOpen="False">
                 <Border Margin="0 5" Width="250" Background="White" BorderBrush="#33000000" BorderThickness="1" CornerRadius="8">
                     <ScrollViewer>
@@ -364,7 +369,7 @@
                 <icons:PackIconModern Kind="BoxLayered" Margin="0 0 0 5" Width="20" Height="20" VerticalAlignment="Bottom" Style="{StaticResource IconoLateral}"
                                       Estilos:Icono.Enfocado="{Binding ElementName=AgruparPor, Path=IsKeyboardFocusWithin}"/>
                 <ComboBox Name="AgruparPor" Margin="20 0 0 0" Tag="Agrupar por...      " ItemsSource="{Binding CriteriosAgrupacion}"
-                          SelectedItem="{Binding Solicitud.Agrupador}"/>
+                          SelectedItem="{Binding Solicitud.Agrupador}" Estilos:Foco.SiguienteFoco="{Binding ElementName=Busqueda}"/>
             </StackPanel>
             <Separator Grid.Row="1" Opacity="0.5" Margin="5" Visibility="{Binding Estado.HayResultados, Converter={StaticResource BoolToVisibility}}"/>
 

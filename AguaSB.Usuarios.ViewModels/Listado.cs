@@ -119,13 +119,20 @@ namespace AguaSB.Usuarios.ViewModels
             {
                 Propiedades?.Dispose();
 
-                var props = new[] {
-                    Solicitud.ToObservableProperties().Where(p => p.Args.PropertyName != nameof(Columnas) && p.Args.PropertyName != nameof(Solicitud.Texto) && p.Args.PropertyName != nameof(Solicitud.Agrupador)),
-                    Solicitud.ToObservableProperties().Where(_ => _.Args.PropertyName == nameof(Solicitud.Texto)).Throttle(TimeSpan.FromSeconds(TiempoEsperaBusqueda)),
-                    Solicitud.Filtros.ToObservableProperties()
-                }.Concat(Solicitud.Filtros.Todos.Select(_ => _.ToObservableProperties()));
+                var excepto = new HashSet<string>
+                {
+                    nameof(Solicitud.Agrupador), nameof(Solicitud.Columnas)
+                };
 
-                Propiedades = props.Merge().Subscribe(_ => BuscarComando.Execute(null));
+                var props = new INotifyPropertyChanged[] { Solicitud, Solicitud.Filtros }
+                .Concat(Solicitud.Filtros.Todos)
+                .Select(_ => _.ToObservableProperties());
+
+                Propiedades = props.Merge()
+                    .Where(_ => !excepto.Contains(_.Args.PropertyName))
+                    .Throttle(TimeSpan.FromSeconds(TiempoEsperaBusqueda))
+                    .Skip(1)
+                    .Subscribe(_ => BuscarComando.Execute(null));
             }
         }
 
