@@ -148,10 +148,22 @@ namespace AguaSB.Usuarios.ViewModels
                 Orden = 0
             };
 
+            var seccion2 = new Seccion
+            {
+                Nombre = "Segunda",
+                Orden = 1
+            };
+
             var calle = new Calle
             {
                 Seccion = seccion,
                 Nombre = "Tlaxcala"
+            };
+
+            var calle2 = new Calle
+            {
+                Seccion = seccion2,
+                Nombre = "Guanajuato"
             };
 
             var tipoContrato = new TipoContrato
@@ -192,8 +204,8 @@ namespace AguaSB.Usuarios.ViewModels
                     UltimoPago = DateTime.Now,
                     Domicilio = new Domicilio
                     {
-                        Numero = "19",
-                        Calle = calle
+                        Numero = "21",
+                        Calle = calle2
                     },
                     Contratos = new List<ResultadoContrato>
                     {

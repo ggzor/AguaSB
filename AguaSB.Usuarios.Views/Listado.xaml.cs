@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -8,6 +9,9 @@ using MahApps.Metro.IconPacks;
 
 using AguaSB.Views;
 using AguaSB.Views.Utilerias;
+using System.ComponentModel;
+using System.Windows.Media;
+using System.Windows.Documents;
 
 namespace AguaSB.Usuarios.Views
 {
@@ -27,6 +31,29 @@ namespace AguaSB.Usuarios.Views
             }
         }
 
+        private GridViewColumnHeader columna;
+        private SortAdorner adornador;
+
+        private void Columna_Seleccionada(object sender, RoutedEventArgs e)
+        {
+            GridViewColumnHeader nuevaColumna = (sender as GridViewColumnHeader);
+            string sortBy = nuevaColumna.Tag.ToString();
+            if (columna != null)
+            {
+                AdornerLayer.GetAdornerLayer(columna).Remove(adornador);
+                ListaResultados.Items.SortDescriptions.Clear();
+            }
+
+            var newDir = ListSortDirection.Ascending;
+            if (columna == nuevaColumna && adornador.Direction == newDir)
+                newDir = ListSortDirection.Descending;
+
+            columna = nuevaColumna;
+            adornador = new SortAdorner(columna, newDir);
+            AdornerLayer.GetAdornerLayer(columna).Add(adornador);
+            ListaResultados.Items.SortDescriptions.Add(new SortDescription(sortBy, newDir));
+        }
+
         public IDictionary Iconos { get; } = new Dictionary<string, UIElement>
         {
             ["Id"] = new PackIconEntypo { Kind = PackIconEntypoKind.Fingerprint },
@@ -43,5 +70,42 @@ namespace AguaSB.Usuarios.Views
         private void MostrarFiltros(object sender, RoutedEventArgs e) => Filtros.IsOpen = true;
 
         private void MostrarFiltrosColumnas(object sender, RoutedEventArgs e) => FiltrosColumnas.IsOpen = true;
+    }
+
+    public class SortAdorner : Adorner
+    {
+        private static readonly Geometry ascGeometry =
+            Geometry.Parse("M 0 4 L 3.5 0 L 7 4 Z");
+
+        private static readonly Geometry descGeometry =
+            Geometry.Parse("M 0 0 L 3.5 4 L 7 0 Z");
+
+        public ListSortDirection Direction { get; }
+
+        public SortAdorner(UIElement element, ListSortDirection dir) : base(element)
+        {
+            Direction = dir;
+        }
+
+        protected override void OnRender(DrawingContext drawingContext)
+        {
+            base.OnRender(drawingContext);
+
+            if (AdornedElement.RenderSize.Width < 20)
+                return;
+
+            var transform = new TranslateTransform(
+                    AdornedElement.RenderSize.Width - 15,
+                    (AdornedElement.RenderSize.Height - 5) / 2
+            );
+            drawingContext.PushTransform(transform);
+
+            Geometry geometry = ascGeometry;
+            if (Direction == ListSortDirection.Descending)
+                geometry = descGeometry;
+            drawingContext.DrawGeometry(Brushes.Black, null, geometry);
+
+            drawingContext.Pop();
+        }
     }
 }

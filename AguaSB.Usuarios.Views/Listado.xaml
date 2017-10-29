@@ -399,9 +399,10 @@
                 <Grid Name="Resultados" Background="White" Opacity="0" Tag="{Binding Estado.HayResultados}" Style="{StaticResource FadeTag}">
                     <Grid>
                         <ListView ItemsSource="{Binding BuscarComando.Execution.Result}" VirtualizingPanel.IsVirtualizing="True"
-                                  VirtualizingPanel.IsVirtualizingWhenGrouping="True" VirtualizingPanel.VirtualizationMode="Recycling">
+                                  VirtualizingPanel.IsVirtualizingWhenGrouping="True" VirtualizingPanel.VirtualizationMode="Recycling"
+                                  Name="ListaResultados">
                             <ListView.View>
-                                <GridView AllowsColumnReorder="False">
+                                <GridView AllowsColumnReorder="False" >
                                     <GridView.ColumnHeaderTemplate>
                                         <DataTemplate>
                                             <StackPanel Margin="5 0" Orientation="Horizontal">
@@ -411,7 +412,7 @@
                                             </StackPanel>
                                         </DataTemplate>
                                     </GridView.ColumnHeaderTemplate>
-                                    <GridViewColumn Header="Id">
+                                    <GridViewColumn>
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Grid Margin="5 0" Width="50">
@@ -419,8 +420,9 @@
                                                 </Grid>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
+                                        <GridViewColumnHeader Tag="Usuario.Id" Click="Columna_Seleccionada">Id</GridViewColumnHeader>
                                     </GridViewColumn>
-                                    <GridViewColumn Header="Nombre">
+                                    <GridViewColumn>
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <StackPanel Margin="5 0" Orientation="Horizontal">
@@ -431,8 +433,9 @@
                                                 </StackPanel>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
+                                        <GridViewColumnHeader Tag="Usuario.NombreCompleto" Click="Columna_Seleccionada">Nombre</GridViewColumnHeader>
                                     </GridViewColumn>
-                                    <GridViewColumn Header="Adeudo" Util:Columnas.EsVisible="{Binding Solicitud.Columnas.Adeudo, Mode=TwoWay}">
+                                    <GridViewColumn Util:Columnas.EsVisible="{Binding Solicitud.Columnas.Adeudo, Mode=TwoWay}">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Grid Width="100" Margin="5 0">
@@ -447,8 +450,9 @@
                                                 </Grid>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
+                                        <GridViewColumnHeader Tag="Adeudo" Click="Columna_Seleccionada">Adeudo</GridViewColumnHeader>
                                     </GridViewColumn>
-                                    <GridViewColumn Header="Último pago" Util:Columnas.EsVisible="{Binding Solicitud.Columnas.UltimoPago, Mode=TwoWay}">
+                                    <GridViewColumn Util:Columnas.EsVisible="{Binding Solicitud.Columnas.UltimoPago, Mode=TwoWay}">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Grid Margin="5 0">
@@ -457,22 +461,25 @@
                                                 </Grid>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
+                                        <GridViewColumnHeader Tag="UltimoPago" Click="Columna_Seleccionada">Último pago</GridViewColumnHeader>
                                     </GridViewColumn>
-                                    <GridViewColumn Header="Sección" Util:Columnas.EsVisible="{Binding Solicitud.Columnas.Seccion, Mode=TwoWay}">
+                                    <GridViewColumn Util:Columnas.EsVisible="{Binding Solicitud.Columnas.Seccion, Mode=TwoWay}">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock Margin="5 0" Text="{Binding Domicilio.Calle.Seccion.Nombre}" Style="{StaticResource h5}"/>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
+                                        <GridViewColumnHeader Tag="Domicilio.Calle.Seccion.Orden" Click="Columna_Seleccionada">Sección</GridViewColumnHeader>
                                     </GridViewColumn>
-                                    <GridViewColumn Header="Calle" Util:Columnas.EsVisible="{Binding Solicitud.Columnas.Calle, Mode=TwoWay}">
+                                    <GridViewColumn Util:Columnas.EsVisible="{Binding Solicitud.Columnas.Calle, Mode=TwoWay}">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock Margin="5 0" Text="{Binding Domicilio.Calle.Nombre}" Style="{StaticResource h5}"/>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
+                                        <GridViewColumnHeader Tag="Domicilio.Calle.Nombre" Click="Columna_Seleccionada">Calle</GridViewColumnHeader>
                                     </GridViewColumn>
-                                    <GridViewColumn Header="Número" Util:Columnas.EsVisible="{Binding Solicitud.Columnas.Numero, Mode=TwoWay}">
+                                    <GridViewColumn Util:Columnas.EsVisible="{Binding Solicitud.Columnas.Numero, Mode=TwoWay}">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Grid Margin="5 0" Width="90">
@@ -480,6 +487,7 @@
                                                 </Grid>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
+                                        <GridViewColumnHeader Tag="Domicilio.Numero" Click="Columna_Seleccionada">Número</GridViewColumnHeader>
                                     </GridViewColumn>
                                     <GridViewColumn Header="Contratos" Util:Columnas.EsVisible="{Binding Solicitud.Columnas.Contratos, Mode=TwoWay}">
                                         <GridViewColumn.CellTemplate>
@@ -518,7 +526,7 @@
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn Header="Fecha de registro" Util:Columnas.EsVisible="{Binding Solicitud.Columnas.FechaRegistro, Mode=TwoWay}">
+                                    <GridViewColumn Util:Columnas.EsVisible="{Binding Solicitud.Columnas.FechaRegistro, Mode=TwoWay}">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Grid Margin="5 0">
@@ -526,6 +534,7 @@
                                                 </Grid>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
+                                        <GridViewColumnHeader Tag="Usuario.FechaRegistro" Click="Columna_Seleccionada">Fecha de registro</GridViewColumnHeader>
                                     </GridViewColumn>
                                 </GridView>
                             </ListView.View>
