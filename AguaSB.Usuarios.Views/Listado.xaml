@@ -179,27 +179,6 @@
                 </Border>
             </Popup>
 
-            <StackPanel Grid.Column="2" Margin="0 0 16 0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                <Button Name="AgruparBoton" Margin="0 0 15 0" ToolTip="Agrupación" Click="MostrarAgrupadores" Foreground="White" Style="{StaticResource UtilityButton}" 
-                        Content="{icons:PackIconModern Kind=BoxLayered, Width=20, Height=20}"/>
-                <Button Name="FiltrosColumnasBoton" ToolTip="Configuración" Click="MostrarFiltrosColumnas" Foreground="White" Style="{StaticResource UtilityButton}" 
-                        Content="{icons:PackIconMaterial Kind=Settings, Width=20, Height=20}"/>
-            </StackPanel>
-
-            <Popup Name="Agrupar" PlacementTarget="{Binding ElementName=AgruparBoton}" AllowsTransparency="True" PopupAnimation="Fade" StaysOpen="False">
-                <Border Margin="0 5" Width="250" Background="White" BorderBrush="#33000000" BorderThickness="1" CornerRadius="8">
-                    <ListView Margin="30 10 0 10" ItemsSource="{Binding CriteriosAgrupacion}" ItemContainerStyle="{StaticResource PlainItem}">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <RadioButton Margin="0 5" GroupName="Agrupacion" IsChecked="{Binding Activo}" ToolTip="{Binding Descripcion}">
-                                    <TextBlock Text="{Binding Nombre}" Opacity="0.6" Margin="10 0 0 0" Style="{StaticResource h4}"/>
-                                </RadioButton>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </Border>
-            </Popup>
-            
             <Popup Name="FiltrosColumnas" PlacementTarget="{Binding ElementName=FiltrosColumnasBoton}" AllowsTransparency="True" PopupAnimation="Fade" StaysOpen="False">
                 <Border Margin="0 5" Width="250" Background="White" BorderBrush="#33000000" BorderThickness="1" CornerRadius="8">
                     <ScrollViewer>
@@ -369,7 +348,7 @@
             </Border>
         </WrapPanel>
 
-        <Grid Name="SeccionResultados" Margin="10 5" Grid.Row="3">
+        <Grid Name="SeccionResultados" Margin="10 10 10 5" Grid.Row="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -378,7 +357,14 @@
             <StackPanel Grid.Row="0" Margin="22 0" Opacity="0.6" Orientation="Horizontal" Visibility="{Binding Estado.HayResultados, Converter={StaticResource BoolToVisibility}}">
                 <icons:PackIconMaterial Kind="Apps" Width="20" Height="20" VerticalAlignment="Center"/>
                 <TextBlock Margin="10 0 0 0" Text="{Binding BuscarComando.Execution.Result.Conteo, StringFormat={}Resultados ({0})}" 
-                           FontSize="{StaticResource TamanoH3}" FontWeight="DemiBold" Style="{StaticResource FadeTag}"/>
+                           FontSize="{StaticResource TamanoH3}" FontWeight="DemiBold" Style="{StaticResource FadeTag}"
+                           VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Grid.Row="0" Margin="22 0" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding Estado.HayResultados, Converter={StaticResource BoolToVisibility}}">
+                <icons:PackIconModern Kind="BoxLayered" Margin="0 0 0 5" Width="20" Height="20" VerticalAlignment="Bottom" Style="{StaticResource IconoLateral}"
+                                      Estilos:Icono.Enfocado="{Binding ElementName=AgruparPor, Path=IsKeyboardFocusWithin}"/>
+                <ComboBox Name="AgruparPor" Margin="20 0 0 0" Tag="Agrupar por...      " ItemsSource="{Binding CriteriosAgrupacion}"
+                          SelectedItem="{Binding Solicitud.Agrupador}"/>
             </StackPanel>
             <Separator Grid.Row="1" Opacity="0.5" Margin="5" Visibility="{Binding Estado.HayResultados, Converter={StaticResource BoolToVisibility}}"/>
 

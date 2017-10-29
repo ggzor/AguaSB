@@ -90,8 +90,6 @@ namespace AguaSB.Usuarios.Views
         private void MostrarFiltros(object sender, RoutedEventArgs e) => Filtros.IsOpen = true;
 
         private void MostrarFiltrosColumnas(object sender, RoutedEventArgs e) => FiltrosColumnas.IsOpen = true;
-
-        private void MostrarAgrupadores(object sender, RoutedEventArgs e) => Agrupar.IsOpen = true;
     }
 
     public class SortAdorner : Adorner

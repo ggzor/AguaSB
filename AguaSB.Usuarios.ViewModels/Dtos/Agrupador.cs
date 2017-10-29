@@ -29,5 +29,7 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
 
         public Func<object, object, int> Ordenador { get; set; }
         public Func<object, string> Conversor { get; set; }
+
+        public override string ToString() => Nombre;
     }
 }

@@ -320,13 +320,9 @@ namespace AguaSB.Usuarios.ViewModels
                     Conversor = x => x is DateTime d ? Capitalizar(d.ToString("MMMM yyyy")) : "Desconocido" }
             };
 
-            CriteriosAgrupacion.Select(_ => _.ToObservableProperties())
-                .Merge()
-                .Where(_ => _.Args.PropertyName == nameof(Agrupador.Activo))
-                .Select(_ => _.Source as Agrupador)
-                .Where(_ => _.Activo)
-                .Do(_ => Solicitud.Agrupador = _)
-                .Subscribe(_ => AgrupadorCambiado?.Invoke(this, _));
+            Solicitud.ToObservableProperties()
+                .Where(_ => _.Args.PropertyName == nameof(Solicitud.Agrupador))
+                .Subscribe(_ => AgrupadorCambiado?.Invoke(this, Solicitud.Agrupador));
         }
 
         private string Capitalizar(string s) => char.ToUpper(s[0]) + s.Substring(1);
