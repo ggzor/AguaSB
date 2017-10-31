@@ -66,7 +66,6 @@
     <Compile Include="Dtos\Filtros.cs" />
     <Compile Include="Dtos\ResultadoSolicitud.cs" />
     <Compile Include="Dtos\ResultadoUsuario.cs" />
-    <Compile Include="Dtos\Filtro.cs" />
     <Compile Include="Dtos\Solicitud.cs" />
     <Compile Include="Listado.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -79,6 +78,10 @@
     <ProjectReference Include="..\AguaSB.Navegacion\AguaSB.Navegacion.csproj">
       <Project>{b51b553c-10d5-47ea-93bb-deced914d5f6}</Project>
       <Name>AguaSB.Navegacion</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AguaSB.Nucleo.Datos\AguaSB.Nucleo.Datos.csproj">
+      <Project>{EBEB09B5-EB4D-495B-AA6A-4504F21554AD}</Project>
+      <Name>AguaSB.Nucleo.Datos</Name>
     </ProjectReference>
     <ProjectReference Include="..\AguaSB.Nucleo\AguaSB.Nucleo.csproj">
       <Project>{10e1e718-ea42-4519-baa2-7cd3c21b442a}</Project>

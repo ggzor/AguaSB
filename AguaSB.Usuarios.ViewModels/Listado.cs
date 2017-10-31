@@ -13,6 +13,8 @@ using AguaSB.Utilerias;
 using System.Reactive.Linq;
 using System.ComponentModel;
 using System.Linq;
+using AguaSB.Datos;
+using AguaSB.Nucleo.Datos;
 
 namespace AguaSB.Usuarios.ViewModels
 {
@@ -23,10 +25,10 @@ namespace AguaSB.Usuarios.ViewModels
         #endregion
 
         #region Campos
-        private IEnumerable<Filtro<Seccion>> secciones;
-        private IEnumerable<Filtro<Calle>> calles;
-        private IEnumerable<Filtro<ClaseContrato>> clasesContrato;
-        private IEnumerable<Filtro<TipoContrato>> tiposContrato;
+        private IEnumerable<Seccion> secciones;
+        private IEnumerable<Calle> calles;
+        private IEnumerable<ClaseContrato> clasesContrato;
+        private IEnumerable<TipoContrato> tiposContrato;
 
         private IEnumerable<Agrupador> criteriosAgrupacion;
         private Solicitud solicitud;
@@ -34,25 +36,25 @@ namespace AguaSB.Usuarios.ViewModels
         #endregion
 
         #region Propiedades
-        public IEnumerable<Filtro<Seccion>> Secciones
+        public IEnumerable<Seccion> Secciones
         {
             get { return secciones; }
             set { SetProperty(ref secciones, value); }
         }
 
-        public IEnumerable<Filtro<Calle>> Calles
+        public IEnumerable<Calle> Calles
         {
             get { return calles; }
             set { SetProperty(ref calles, value); }
         }
 
-        public IEnumerable<Filtro<ClaseContrato>> ClasesContrato
+        public IEnumerable<ClaseContrato> ClasesContrato
         {
             get { return clasesContrato; }
             set { SetProperty(ref clasesContrato, value); }
         }
 
-        public IEnumerable<Filtro<TipoContrato>> TiposContrato
+        public IEnumerable<TipoContrato> TiposContrato
         {
             get { return tiposContrato; }
             set { SetProperty(ref tiposContrato, value); }
@@ -87,11 +89,21 @@ namespace AguaSB.Usuarios.ViewModels
         public event EventHandler<Agrupador> AgrupadorCambiado;
         #endregion
 
+        #region Servicios
+        public IRepositorio<Usuario> UsuariosRepo { get; }
+        public IRepositorio<Seccion> SeccionesRepo { get; }
+        public IRepositorio<TipoContrato> TiposContratoRepo { get; }
+        #endregion
+
         public INodo Nodo { get; }
 
-        public Listado()
+        public Listado(IRepositorio<Usuario> usuariosRepo, IRepositorio<Seccion> seccionesRepo, IRepositorio<TipoContrato> tiposContratoRepo)
         {
-            Nodo = new Nodo();
+            UsuariosRepo = usuariosRepo ?? throw new ArgumentNullException(nameof(usuariosRepo));
+            SeccionesRepo = seccionesRepo ?? throw new ArgumentNullException(nameof(seccionesRepo));
+            TiposContratoRepo = tiposContratoRepo ?? throw new ArgumentNullException(nameof(tiposContratoRepo));
+
+            Nodo = new Nodo { PrimeraEntrada = Inicializar };
 
             DesactivarFiltrosComando = new DelegateCommand(DesactivarFiltros);
             MostrarColumnasTodasComando = new DelegateCommand(MostrarColumnasTodas);
@@ -109,6 +121,19 @@ namespace AguaSB.Usuarios.ViewModels
             Estado = new EstadoBusqueda();
 
             Fill();
+        }
+
+        private async Task Inicializar()
+        {
+            var callesAgrupadasTarea = Task.Run(() => Domicilios.CallesAgrupadas(SeccionesRepo));
+            var tiposContratoAgrupadosTarea = Task.Run(() => Contratos.TiposContratoAgrupados(TiposContratoRepo));
+
+            var callesAgrupadas = await callesAgrupadasTarea.ConfigureAwait(continueOnCapturedContext: false);
+            var tiposContratoAgrupados = await tiposContratoAgrupadosTarea.ConfigureAwait(continueOnCapturedContext: false);
+
+            Secciones = callesAgrupadas.Keys.OrderBy(_ => _.Orden).ToList();
+            ClasesContrato = tiposContratoAgrupados.Keys.ToList();
+            TiposContrato = tiposContratoAgrupados.Values.SelectMany(_ => _).ToList();
         }
 
         private IDisposable Propiedades;
@@ -147,155 +172,27 @@ namespace AguaSB.Usuarios.ViewModels
                 Buscando = true
             };
 
-            var telefono = new TipoContacto()
-            {
-                Nombre = "Teléfono",
-                ExpresionRegular = "."
-            };
+            var r = new Random();
 
-            var seccion = new Seccion
-            {
-                Nombre = "Primera",
-                Orden = 0
-            };
-
-            var seccion2 = new Seccion
-            {
-                Nombre = "Segunda",
-                Orden = 1
-            };
-
-            Secciones = new[] { seccion, seccion2 }.Select(_ => new PorValor<Seccion>(_));
-
-            var calle = new Calle
-            {
-                Seccion = seccion,
-                Nombre = "Tlaxcala"
-            };
-
-            var calle2 = new Calle
-            {
-                Seccion = seccion2,
-                Nombre = "Guanajuato"
-            };
-
-            var tipoContrato = new TipoContrato
-            {
-                Nombre = "Convencional",
-                ClaseContrato = ClaseContrato.Doméstico,
-                Multiplicador = 0.5m
-            };
-
-            var tipoContrato2 = new TipoContrato
-            {
-                Nombre = "Comercial con nombre muy largo",
-                ClaseContrato = ClaseContrato.Comercial,
-                Multiplicador = 0.5m
-            };
-
-            var resultados = await Task.Run(() => new ResultadoUsuario[]
-            {
-                new ResultadoUsuario
+            var resultados = await Task.Run(() =>
+                from u in UsuariosRepo.Datos
+                let primerContrato = u.Contratos.FirstOrDefault()
+                let domicilio = primerContrato?.Domicilio
+                let contratos = from c in u.Contratos
+                                select new ResultadoContrato
+                                {
+                                    Adeudo = 0.0m,
+                                    Contrato = c
+                                }
+                select new ResultadoUsuario
                 {
-                    Usuario = new Persona
-                    {
-                        Id = 10000,
-                        Nombre = "Axel",
-                        ApellidoPaterno = "Suárez",
-                        ApellidoMaterno = "Polo",
-                        FechaRegistro = DateTime.Today.AddMonths(-3),
-                        Contactos = new List<Contacto>
-                        {
-                            new Contacto
-                            {
-                                TipoContacto = telefono,
-                                Informacion = "241 245 32 12"
-                            }
-                        }
-                    },
-                    Adeudo = 0m,
-                    UltimoPago = DateTime.Now,
-                    Domicilio = new Domicilio
-                    {
-                        Numero = "21",
-                        Calle = calle2
-                    },
-                    Contratos = new List<ResultadoContrato>
-                    {
-                        new ResultadoContrato
-                        {
-                            Contrato = new Contrato
-                            {
-                                Domicilio = new Domicilio
-                                {
-                                    Numero = "19",
-                                    Calle = calle
-                                },
-                                AdeudoInicial = 400,
-                                MedidaToma = "1/2",
-                                TipoContrato = tipoContrato
-                            },
-                            Adeudo = 400m
-                        }
-                    }
-                },
-                new ResultadoUsuario
-                {
-                    Usuario = new Negocio
-                    {
-                        Id = 1,
-                        Nombre = "AguaSB",
-                        FechaRegistro = DateTime.Today,
-                        Contactos = new List<Contacto>
-                        {
-                            new Contacto
-                            {
-                                TipoContacto = telefono,
-                                Informacion = "241 245 32 12"
-                            }
-                        }
-                    },
-                    Adeudo = 1000m,
-                    Domicilio = new Domicilio
-                    {
-                        Numero = "19",
-                        Calle = calle
-                    },
-                    Contratos = new List<ResultadoContrato>
-                    {
-                        new ResultadoContrato
-                        {
-                            Contrato = new Contrato
-                            {
-                                Domicilio = new Domicilio
-                                {
-                                    Numero = "20",
-                                    Calle = calle
-                                },
-                                AdeudoInicial = 400,
-                                MedidaToma = "1/2",
-                                TipoContrato = tipoContrato2
-                            },
-                            Adeudo = 400m
-                        },
-                        new ResultadoContrato
-                        {
-                            Contrato = new Contrato
-                            {
-                                Domicilio = new Domicilio
-                                {
-                                    Numero = "1",
-                                    Calle = calle
-                                },
-                                AdeudoInicial = 400,
-                                MedidaToma = "1/2",
-                                TipoContrato = tipoContrato
-                            },
-                            Adeudo = 400m
-                        }
-                    }
-                },
-            }.Repeat(1)).ConfigureAwait(false);
+                    Usuario = u,
+                    Domicilio = domicilio,
+                    Adeudo = r.Next() % 5 == 0 ? 0.0m : (r.Next(120, 1200) / 60) * 60,
+                    Contratos = contratos,
+                    UltimoPago = null
+                }
+            );
 
             var conteo = resultados.LongCount();
 

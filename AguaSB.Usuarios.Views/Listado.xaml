@@ -409,11 +409,15 @@
 
                 <Grid Name="Resultados" Background="White" Opacity="0" Tag="{Binding Estado.HayResultados}" Style="{StaticResource FadeTag}">
                     <Grid>
-                        <ListView ItemsSource="{Binding BuscarComando.Execution.Result.Resultados}" VirtualizingPanel.IsVirtualizing="True"
-                                  VirtualizingPanel.IsVirtualizingWhenGrouping="True" VirtualizingPanel.VirtualizationMode="Recycling"
-                                  Name="ListaResultados">
+                        <ListView ItemsSource="{Binding BuscarComando.Execution.Result.Resultados}" Name="ListaResultados"
+                                  VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.IsVirtualizingWhenGrouping="True">
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel/>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
                             <ListView.View>
-                                <GridView AllowsColumnReorder="False" >
+                                <GridView AllowsColumnReorder="False">
                                     <GridView.ColumnHeaderTemplate>
                                         <DataTemplate>
                                             <StackPanel Margin="5 0" Orientation="Horizontal">
@@ -549,29 +553,6 @@
                                     </GridViewColumn>
                                 </GridView>
                             </ListView.View>
-                            <ListView.GroupStyle>
-                                <GroupStyle HidesIfEmpty="True">
-                                    <GroupStyle.ContainerStyle>
-                                        <Style TargetType="GroupItem">
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate>
-                                                        <Expander IsExpanded="True">
-                                                            <Expander.Header>
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <TextBlock Text="{Binding Name}" Style="{StaticResource h3}"/>
-                                                                    <TextBlock Margin="5 0 0 0" Text="{Binding ItemCount, StringFormat={}({0})}" Style="{StaticResource h3}"/>
-                                                                </StackPanel>
-                                                            </Expander.Header>
-                                                            <ItemsPresenter/>
-                                                        </Expander>
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Style>
-                                    </GroupStyle.ContainerStyle>
-                                </GroupStyle>
-                            </ListView.GroupStyle>
                         </ListView>
                     </Grid>
                 </Grid>

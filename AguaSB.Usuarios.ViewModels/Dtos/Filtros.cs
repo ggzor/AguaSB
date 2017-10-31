@@ -49,13 +49,13 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
 
         public ObjetoActivable<DateTime> UltimoPago { get; } = new ObjetoActivable<DateTime> { Valor = DateTime.Today.AddMinutes(-1), Formato = v => $"{v:d}" };
 
-        public ValorRequerido<Filtro<ClaseContrato>> ClaseContrato { get; } = new ValorRequerido<Filtro<ClaseContrato>>();
+        public ValorRequerido<ClaseContrato?> ClaseContrato { get; } = new ValorRequerido<ClaseContrato?>();
 
-        public ValorRequerido<Filtro<TipoContrato>> TipoContrato { get; } = new ValorRequerido<Filtro<TipoContrato>>();
+        public ValorRequerido<TipoContrato> TipoContrato { get; } = new ValorRequerido<TipoContrato>();
 
-        public ValorRequerido<Filtro<Seccion>> Seccion { get; } = new ValorRequerido<Filtro<Seccion>>();
+        public ValorRequerido<Seccion> Seccion { get; } = new ValorRequerido<Seccion>();
 
-        public ValorRequerido<Filtro<Calle>> Calle { get; } = new ValorRequerido<Filtro<Calle>>();
+        public ValorRequerido<Calle> Calle { get; } = new ValorRequerido<Calle>();
 
         public Rango<decimal?> Adeudo { get; } = new Rango<decimal?>
         {
@@ -99,7 +99,7 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
             set { N.Validate(ref valor, value); }
         }
 
-        public override string ToString() => Valor?.ToString();
+        public override string ToString() => Valor?.ToString() ?? "Cualquiera";
     }
 
     public class Rango<T> : Activable
