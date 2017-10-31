@@ -17,6 +17,7 @@ using AguaSB.Nucleo;
 using AguaSB.Utilerias;
 using AguaSB.ViewModels;
 using AguaSB.Notificaciones;
+using AguaSB.Nucleo.Datos;
 
 namespace AguaSB.Contratos.ViewModels
 {
@@ -141,7 +142,6 @@ namespace AguaSB.Contratos.ViewModels
         private IRepositorio<Contrato> Contratos { get; }
         private IRepositorio<TipoContrato> TiposContratoRepo { get; }
         private IRepositorio<Seccion> SeccionesRepo { get; }
-        private IRepositorio<Calle> CallesRepo { get; }
 
         private IManejadorNotificaciones Notificaciones { get; }
         #endregion
@@ -152,13 +152,12 @@ namespace AguaSB.Contratos.ViewModels
 
         public Agregar(
             IRepositorio<Usuario> usuarios, IRepositorio<Contrato> contratos, IRepositorio<TipoContrato> tiposContrato,
-            IRepositorio<Seccion> secciones, IRepositorio<Calle> calles, IManejadorNotificaciones notificaciones)
+            IRepositorio<Seccion> secciones, IManejadorNotificaciones notificaciones)
         {
             Usuarios = usuarios ?? throw new ArgumentNullException(nameof(usuarios));
             Contratos = contratos ?? throw new ArgumentNullException(nameof(contratos));
             TiposContratoRepo = tiposContrato ?? throw new ArgumentNullException(nameof(tiposContrato));
             SeccionesRepo = secciones ?? throw new ArgumentNullException(nameof(secciones));
-            CallesRepo = calles ?? throw new ArgumentNullException(nameof(calles));
             Notificaciones = notificaciones ?? throw new ArgumentNullException(nameof(notificaciones));
 
             AgregarContratoComando = new AsyncDelegateCommand<int>(AgregarContrato, PuedeAgregarContrato);
@@ -180,20 +179,14 @@ namespace AguaSB.Contratos.ViewModels
                 });
         }
 
-        private Dictionary<Seccion, IEnumerable<Calle>> callesAgrupadas;
+        private IDictionary<Seccion, IList<Calle>> callesAgrupadas;
 
         private async Task Inicializar()
         {
             TextoProgreso = "Cargando información de secciones y calles...";
             MostrarProgreso = true;
 
-            var callesAgrupadasTarea = Task.Run(() =>
-            {
-                return (from seccion in SeccionesRepo.Datos
-                        orderby seccion.Orden, seccion.Nombre
-                        select new { Seccion = seccion, Calles = seccion.Calles.OrderBy(calle => calle.Nombre) })
-                       .ToDictionary(g => g.Seccion, g => (IEnumerable<Calle>)g.Calles);
-            });
+            var callesAgrupadasTarea = Task.Run(() => Domicilios.CallesAgrupadas(SeccionesRepo));
 
             var tiposContratoTarea = Task.Run(() =>
             {
