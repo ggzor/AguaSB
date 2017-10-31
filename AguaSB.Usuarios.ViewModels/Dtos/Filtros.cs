@@ -82,8 +82,43 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
 
         public IEnumerable<Activable> Todos => new Activable[] { UltimoPago, ClaseContrato, TipoContrato, Seccion, Calle, Adeudo, Registro };
 
-        public IEnumerable<Usuario> Aplicar(IEnumerable<Usuario> valores)
+        public IQueryable<Usuario> Aplicar(IQueryable<Usuario> valores)
         {
+            if (Seccion.Activo && Seccion.TieneValor)
+            {
+                var seccion = Seccion.Valor;
+                valores = from u in valores
+                          where u.Contratos.Count > 0
+                          let c = u.Contratos.OrderByDescending(c => c.AdeudoInicial).First()
+                          where c.Domicilio.Calle.Seccion == seccion
+                          select u;
+            }
+
+            if (Registro.Activo)
+            {
+                var desde = Registro.Desde;
+                var hasta = Registro.Hasta;
+                valores = from u in valores
+                          where desde <= u.FechaRegistro && u.FechaRegistro <= hasta
+                          select u;
+            }
+
+            if (ClaseContrato.Activo && ClaseContrato.TieneValor)
+            {
+                var claseContrato = ClaseContrato.Valor;
+                valores = from u in valores
+                          where u.Contratos.Any(c => c.TipoContrato.ClaseContrato == claseContrato)
+                          select u;
+            }
+
+            if (TipoContrato.Activo && TipoContrato.TieneValor)
+            {
+                var tipoContrato = TipoContrato.Valor;
+                valores = from u in valores
+                          where u.Contratos.Any(c => c.TipoContrato == tipoContrato)
+                          select u;
+            }
+
             return valores;
         }
     }
@@ -98,6 +133,8 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
             get { return valor; }
             set { N.Validate(ref valor, value); }
         }
+
+        public bool TieneValor => Valor != null;
 
         public override string ToString() => Valor?.ToString() ?? "Cualquiera";
     }

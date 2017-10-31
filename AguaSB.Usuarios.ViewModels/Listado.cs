@@ -172,10 +172,15 @@ namespace AguaSB.Usuarios.ViewModels
                 Buscando = true
             };
 
+            var filtrados = await Task.Run(() =>
+                Solicitud.Filtros
+                .Aplicar(UsuariosRepo.Datos.AsQueryable())
+                .ToList()).ConfigureAwait(false);
+
             var r = new Random();
 
             var resultados = await Task.Run(() =>
-                from u in UsuariosRepo.Datos
+                from u in filtrados
                 let primerContrato = u.Contratos.FirstOrDefault()
                 let domicilio = primerContrato?.Domicilio
                 let contratos = from c in u.Contratos
@@ -192,7 +197,7 @@ namespace AguaSB.Usuarios.ViewModels
                     Contratos = contratos,
                     UltimoPago = null
                 }
-            );
+            ).ConfigureAwait(false);
 
             var conteo = resultados.LongCount();
 
