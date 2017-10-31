@@ -9,7 +9,7 @@ using AguaSB.Nucleo;
 
 namespace AguaSB.Inicializadores
 {
-    public class LlenarSecciones : IInicializador
+    public class LlenarSecciones
     {
         public LlenarSecciones(IRepositorio<Seccion> secciones, IRepositorio<Calle> calles) => Cargar(secciones, calles);
 

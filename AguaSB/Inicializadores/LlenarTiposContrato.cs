@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace AguaSB.Inicializadores
 {
-    public class LlenarTiposContrato : IInicializador
+    public class LlenarTiposContrato
     {
         public LlenarTiposContrato(IRepositorio<TipoContrato> tiposContrato) => Cargar(tiposContrato);
 

@@ -52,6 +52,9 @@
     <Reference Include="ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net462\ControlzEx.dll</HintPath>
     </Reference>
+    <Reference Include="CsvHelper, Version=4.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsvHelper.4.0.3\lib\net45\CsvHelper.dll</HintPath>
+    </Reference>
     <Reference Include="GGUtils.MVVM.Async">
       <HintPath>..\GGUtils.MVVM.Async\bin\Debug\GGUtils.MVVM.Async.dll</HintPath>
     </Reference>
@@ -118,6 +121,7 @@
     <Compile Include="Conversores\ToStringConverter.cs" />
     <Compile Include="Extensiones\ITransformadorExtensiones.cs" />
     <Compile Include="Extensiones\TransformadorExtensiones.cs" />
+    <Compile Include="Inicializadores\AgregarUsuarios.cs" />
     <Compile Include="Inicializadores\IInicializador.cs" />
     <Compile Include="Inicializadores\Inicializador.cs" />
     <Compile Include="Inicializadores\LlenarSecciones.cs" />
@@ -179,6 +183,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Nombres.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
