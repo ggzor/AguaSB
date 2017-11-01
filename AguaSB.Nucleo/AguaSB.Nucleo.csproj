@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calle.cs" />
+    <Compile Include="Tarifa.cs" />
     <Compile Include="Contacto.cs" />
     <Compile Include="Contrato.cs" />
     <Compile Include="Domicilio.cs" />
@@ -52,6 +53,7 @@
     <Compile Include="IEntidad.cs" />
     <Compile Include="Mensajes\Validacion.cs" />
     <Compile Include="Negocio.cs" />
+    <Compile Include="Pago.cs" />
     <Compile Include="Persona.cs" />
     <Compile Include="Seccion.cs" />
     <Compile Include="TipoContacto.cs" />

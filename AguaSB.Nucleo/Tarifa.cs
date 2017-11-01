@@ -1,36 +1,35 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 using AguaSB.Utilerias;
 
 namespace AguaSB.Nucleo
 {
-    [Table("Usuarios")]
-    public abstract class Usuario : IEntidad, IAuditable, INotifyPropertyChanged, INotifyDataErrorInfo
+    [Table("Tarifas")]
+    public class Tarifa : IEntidad, IAuditable, INotifyPropertyChanged, INotifyDataErrorInfo
     {
         public int Id { get; set; }
 
         public DateTime FechaRegistro { get; set; }
 
-        [NotMapped]
-        public abstract string NombreCompleto { get; }
+        private decimal monto;
 
-        public virtual ICollection<Contacto> Contactos { get; set; }
+        [Range(typeof(decimal), "0", "1000000")]
+        public decimal Monto
+        {
+            get { return monto; }
+            set { N.Set(ref monto, value); }
+        }
 
-        public virtual ICollection<Contrato> Contratos { get; set; }
-
-        protected Usuario()
+        public Tarifa()
         {
             notificador = new Lazy<Notificador>(() =>
                 new Notificador(this,
                     (src, args) => PropertyChanged?.Invoke(src, args),
                     (src, args) => ErrorsChanged?.Invoke(src, args)));
-
-            Contactos = new List<Contacto>();
-            Contratos = new List<Contrato>();
         }
 
         #region PropertyChanged y DataErrorInfo
@@ -45,7 +44,5 @@ namespace AguaSB.Nucleo
         [NotMapped]
         protected Notificador N => notificador.Value;
         #endregion
-
-        public override string ToString() => NombreCompleto;
     }
 }

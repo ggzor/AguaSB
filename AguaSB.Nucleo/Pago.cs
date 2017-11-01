@@ -1,36 +1,56 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 using AguaSB.Utilerias;
 
 namespace AguaSB.Nucleo
 {
-    [Table("Usuarios")]
-    public abstract class Usuario : IEntidad, IAuditable, INotifyPropertyChanged, INotifyDataErrorInfo
+    [Table("Pagos")]
+    public class Pago : IEntidad, IAuditable, INotifyPropertyChanged, INotifyDataErrorInfo
     {
         public int Id { get; set; }
 
         public DateTime FechaRegistro { get; set; }
 
-        [NotMapped]
-        public abstract string NombreCompleto { get; }
+        private DateTime desde;
+        private DateTime hasta;
+        private Contrato contrato;
+        private decimal monto;
 
-        public virtual ICollection<Contacto> Contactos { get; set; }
+        public DateTime Desde
+        {
+            get { return desde; }
+            set { N.Set(ref desde, value); }
+        }
 
-        public virtual ICollection<Contrato> Contratos { get; set; }
+        public DateTime Hasta
+        {
+            get { return hasta; }
+            set { N.Set(ref hasta, value); }
+        }
 
-        protected Usuario()
+        public Contrato Contrato
+        {
+            get { return contrato; }
+            set { N.Set(ref contrato, value); }
+        }
+
+        [Range(typeof(decimal), "0", "1000000")]
+        public decimal Monto
+        {
+            get { return monto; }
+            set { N.Validate(ref monto, value); }
+        }
+
+        public Pago()
         {
             notificador = new Lazy<Notificador>(() =>
                 new Notificador(this,
                     (src, args) => PropertyChanged?.Invoke(src, args),
                     (src, args) => ErrorsChanged?.Invoke(src, args)));
-
-            Contactos = new List<Contacto>();
-            Contratos = new List<Contrato>();
         }
 
         #region PropertyChanged y DataErrorInfo
@@ -45,7 +65,5 @@ namespace AguaSB.Nucleo
         [NotMapped]
         protected Notificador N => notificador.Value;
         #endregion
-
-        public override string ToString() => NombreCompleto;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -10,7 +11,7 @@ using AguaSB.Utilerias;
 namespace AguaSB.Nucleo
 {
     [Table("Contratos")]
-    public class Contrato : IEntidad, INotifyPropertyChanged, INotifyDataErrorInfo
+    public class Contrato : IEntidad, IAuditable, INotifyPropertyChanged, INotifyDataErrorInfo
     {
         private Usuario usuario;
         private TipoContrato tipoContrato;
@@ -19,6 +20,8 @@ namespace AguaSB.Nucleo
         private Domicilio domicilio;
 
         public int Id { get; set; }
+
+        public DateTime FechaRegistro { get; set; }
 
         [Required(ErrorMessage = Validacion.CampoRequerido)]
         public Usuario Usuario
@@ -54,12 +57,16 @@ namespace AguaSB.Nucleo
             set { N.Validate(ref domicilio, value); }
         }
 
+        public virtual ICollection<Pago> Pagos { get; set; }
+
         public Contrato()
         {
             notificador = new Lazy<Notificador>(() =>
                 new Notificador(this,
                     (src, args) => PropertyChanged?.Invoke(src, args),
                     (src, args) => ErrorsChanged?.Invoke(src, args)));
+
+            Pagos = new List<Pago>();
         }
 
         #region PropertyChanged y DataErrorInfo
