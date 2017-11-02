@@ -93,15 +93,18 @@ namespace AguaSB.Usuarios.ViewModels
         public IRepositorio<Usuario> UsuariosRepo { get; }
         public IRepositorio<Seccion> SeccionesRepo { get; }
         public IRepositorio<TipoContrato> TiposContratoRepo { get; }
+        public IRepositorio<Tarifa> TarifasRepo { get; }
         #endregion
 
         public INodo Nodo { get; }
 
-        public Listado(IRepositorio<Usuario> usuariosRepo, IRepositorio<Seccion> seccionesRepo, IRepositorio<TipoContrato> tiposContratoRepo)
+        public Listado(IRepositorio<Usuario> usuariosRepo, IRepositorio<Seccion> seccionesRepo, IRepositorio<TipoContrato> tiposContratoRepo,
+            IRepositorio<Tarifa> tarifasRepo)
         {
             UsuariosRepo = usuariosRepo ?? throw new ArgumentNullException(nameof(usuariosRepo));
             SeccionesRepo = seccionesRepo ?? throw new ArgumentNullException(nameof(seccionesRepo));
             TiposContratoRepo = tiposContratoRepo ?? throw new ArgumentNullException(nameof(tiposContratoRepo));
+            TarifasRepo = tarifasRepo ?? throw new ArgumentNullException(nameof(tarifasRepo));
 
             Nodo = new Nodo { PrimeraEntrada = Inicializar };
 
@@ -123,17 +126,51 @@ namespace AguaSB.Usuarios.ViewModels
             Fill();
         }
 
+        private IDictionary<Seccion, IList<Calle>> CallesAgrupadas;
+        private IDictionary<ClaseContrato, IList<TipoContrato>> TiposContratoAgrupados;
+
         private async Task Inicializar()
         {
             var callesAgrupadasTarea = Task.Run(() => Domicilios.CallesAgrupadas(SeccionesRepo));
             var tiposContratoAgrupadosTarea = Task.Run(() => Contratos.TiposContratoAgrupados(TiposContratoRepo));
 
-            var callesAgrupadas = await callesAgrupadasTarea.ConfigureAwait(continueOnCapturedContext: false);
-            var tiposContratoAgrupados = await tiposContratoAgrupadosTarea.ConfigureAwait(continueOnCapturedContext: false);
+            CallesAgrupadas = await callesAgrupadasTarea.ConfigureAwait(continueOnCapturedContext: false);
+            TiposContratoAgrupados = await tiposContratoAgrupadosTarea.ConfigureAwait(continueOnCapturedContext: false);
 
-            Secciones = callesAgrupadas.Keys.OrderBy(_ => _.Orden).ToList();
-            ClasesContrato = tiposContratoAgrupados.Keys.ToList();
-            TiposContrato = tiposContratoAgrupados.Values.SelectMany(_ => _).ToList();
+            Secciones = CallesAgrupadas.Keys.OrderBy(_ => _.Orden).ToList();
+            ClasesContrato = TiposContratoAgrupados.Keys.ToList();
+
+            if (Secciones.FirstOrDefault() is var seccion)
+            {
+                Solicitud.Filtros.Seccion.Valor = seccion;
+
+                ActualizarListadoDeCalles();
+            }
+
+            if (ClasesContrato.FirstOrDefault() is var claseContrato)
+            {
+                Solicitud.Filtros.ClaseContrato.Valor = claseContrato;
+
+                ActualizarListadoDeTiposContrato();
+            }
+        }
+
+        private void ActualizarListadoDeCalles()
+        {
+            if (Solicitud.Filtros.Seccion.Valor is var seccion)
+            {
+                Calles = CallesAgrupadas[seccion];
+                Solicitud.Filtros.Calle.Valor = Calles.FirstOrDefault();
+            }
+        }
+
+        private void ActualizarListadoDeTiposContrato()
+        {
+            if (Solicitud.Filtros.ClaseContrato.Valor is ClaseContrato claseContrato)
+            {
+                TiposContrato = TiposContratoAgrupados[claseContrato];
+                Solicitud.Filtros.TipoContrato.Valor = TiposContrato.FirstOrDefault();
+            }
         }
 
         private IDisposable Propiedades;
@@ -158,6 +195,10 @@ namespace AguaSB.Usuarios.ViewModels
                     .Throttle(TimeSpan.FromSeconds(TiempoEsperaBusqueda))
                     .Skip(1)
                     .Subscribe(_ => BuscarComando.Execute(null));
+
+                Solicitud.Filtros.Seccion.ToObservableProperties()
+                    .Where(_ => _.Args.PropertyName == nameof(Solicitud.Filtros.Calle.Valor))
+                    .Subscribe(_ => ActualizarListadoDeCalles());
             }
         }
 
@@ -172,32 +213,8 @@ namespace AguaSB.Usuarios.ViewModels
                 Buscando = true
             };
 
-            var filtrados = await Task.Run(() =>
-                Solicitud.Filtros
-                .Aplicar(UsuariosRepo.Datos.AsQueryable())
-                .ToList()).ConfigureAwait(false);
-
-            var r = new Random();
-
             var resultados = await Task.Run(() =>
-                from u in filtrados
-                let primerContrato = u.Contratos.FirstOrDefault()
-                let domicilio = primerContrato?.Domicilio
-                let contratos = from c in u.Contratos
-                                select new ResultadoContrato
-                                {
-                                    Adeudo = 0.0m,
-                                    Contrato = c
-                                }
-                select new ResultadoUsuario
-                {
-                    Usuario = u,
-                    Domicilio = domicilio,
-                    Adeudo = r.Next() % 5 == 0 ? 0.0m : (r.Next(120, 1200) / 60) * 60,
-                    Contratos = contratos,
-                    UltimoPago = null
-                }
-            ).ConfigureAwait(false);
+                Solicitud.Filtros.Aplicar(UsuariosRepo.Datos.AsQueryable(), contrato => Contratos.CalcularAdeudo(contrato, TarifasRepo.Datos.OrderBy(_ => _.FechaRegistro).ToArray())));
 
             var conteo = resultados.LongCount();
 

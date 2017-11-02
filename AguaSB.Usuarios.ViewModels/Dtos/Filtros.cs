@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -10,6 +11,7 @@ using MoreLinq;
 using AguaSB.Nucleo;
 using AguaSB.Utilerias;
 using AguaSB.ViewModels;
+using System.Threading.Tasks;
 
 namespace AguaSB.Usuarios.ViewModels.Dtos
 {
@@ -82,44 +84,74 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
 
         public IEnumerable<Activable> Todos => new Activable[] { UltimoPago, ClaseContrato, TipoContrato, Seccion, Calle, Adeudo, Registro };
 
-        public IQueryable<Usuario> Aplicar(IQueryable<Usuario> valores)
+        public IEnumerable<ResultadoUsuario> Aplicar(IQueryable<Usuario> valores, Func<Contrato, decimal> calculadorAdeudos)
         {
             if (Seccion.Activo && Seccion.TieneValor)
             {
                 var seccion = Seccion.Valor;
-                valores = from u in valores
-                          where u.Contratos.Count > 0
-                          let c = u.Contratos.OrderByDescending(c => c.AdeudoInicial).First()
+                valores = from usuario in valores
+                          where usuario.Contratos.Count > 0
+                          let c = usuario.Contratos.OrderByDescending(c => c.AdeudoInicial).First()
                           where c.Domicilio.Calle.Seccion == seccion
-                          select u;
+                          select usuario;
+            }
+
+            if (Calle.Activo && Calle.TieneValor)
+            {
+                var calle = Calle.Valor;
+                valores = from usuario in valores
+                          where usuario.Contratos.Count > 0
+                          let c = usuario.Contratos.OrderByDescending(c => c.AdeudoInicial).First()
+                          where c.Domicilio.Calle == calle
+                          select usuario;
             }
 
             if (Registro.Activo)
             {
                 var desde = Registro.Desde;
                 var hasta = Registro.Hasta;
-                valores = from u in valores
-                          where desde <= u.FechaRegistro && u.FechaRegistro <= hasta
-                          select u;
+                valores = from usuario in valores
+                          where desde <= usuario.FechaRegistro && usuario.FechaRegistro <= hasta
+                          select usuario;
             }
 
             if (ClaseContrato.Activo && ClaseContrato.TieneValor)
             {
                 var claseContrato = ClaseContrato.Valor;
-                valores = from u in valores
-                          where u.Contratos.Any(c => c.TipoContrato.ClaseContrato == claseContrato)
-                          select u;
+                valores = from usuario in valores
+                          where usuario.Contratos.Any(c => c.TipoContrato.ClaseContrato == claseContrato)
+                          select usuario;
             }
 
             if (TipoContrato.Activo && TipoContrato.TieneValor)
             {
                 var tipoContrato = TipoContrato.Valor;
-                valores = from u in valores
-                          where u.Contratos.Any(c => c.TipoContrato == tipoContrato)
-                          select u;
+                valores = from usuario in valores
+                          where usuario.Contratos.Any(c => c.TipoContrato == tipoContrato)
+                          select usuario;
             }
 
-            return valores;
+            return valores.AsParallel().Select(u =>
+            {
+                var resultado = new ResultadoUsuario
+                {
+                    Usuario = u,
+                    Contratos = u.Contratos.Select(c =>
+                    {
+                        return new ResultadoContrato
+                        {
+                            Contrato = c,
+                            Adeudo = calculadorAdeudos(c)
+                        };
+                    }),
+                    Domicilio = u.Contratos.FirstOrDefault()?.Domicilio,
+                    UltimoPago = u.Contratos.FirstOrDefault()?.Pagos.OrderByDescending(_ => _.FechaRegistro).FirstOrDefault()?.FechaRegistro
+                };
+
+                resultado.Adeudo = resultado.Contratos.Select(_ => _.Adeudo).Sum();
+
+                return resultado;
+            });
         }
     }
 
