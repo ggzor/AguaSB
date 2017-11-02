@@ -10,6 +10,6 @@ namespace AguaSB.Notificaciones
 
         public string Clase { get; set; }
 
-        public DateTime Fecha { get; set; } = Utilerias.Fecha.Ahora.DateTime;
+        public DateTime Fecha { get; set; } = Utilerias.Fecha.Ahora;
     }
 }

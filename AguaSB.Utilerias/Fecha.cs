@@ -2,23 +2,16 @@
 
 namespace AguaSB.Utilerias
 {
-    public sealed class Fecha
+    public static class Fecha
     {
-        public DateTime DateTime { get; }
+        private static DateTime? ahora;
 
-        public Fecha(DateTime date)
+        public static DateTime Ahora
         {
-            DateTime = date;
-        }
-
-        private static Fecha ahora;
-
-        public static Fecha Ahora
-        {
-            get { return ahora ?? new Fecha(DateTime.Now); }
+            get { return ahora ?? DateTime.Now; }
             set { ahora = value; }
         }
 
-        public static void EstablecerAhora(DateTime ahora) => Fecha.ahora = new Fecha(ahora);
+        public static void EstablecerAhora(DateTime ahora) => Ahora = ahora;
     }
 }
