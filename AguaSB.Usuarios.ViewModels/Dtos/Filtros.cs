@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -11,7 +10,6 @@ using MoreLinq;
 using AguaSB.Nucleo;
 using AguaSB.Utilerias;
 using AguaSB.ViewModels;
-using System.Threading.Tasks;
 
 namespace AguaSB.Usuarios.ViewModels.Dtos
 {
@@ -131,27 +129,65 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
                           select usuario;
             }
 
-            return valores.AsParallel().Select(u =>
+            if (UltimoPago.Activo)
             {
-                var resultado = new ResultadoUsuario
+                var ultimoPago = UltimoPago.Valor;
+                valores = from usuario in valores
+                          where usuario.Contratos.Any(c => c.Pagos.Any(p => p.FechaRegistro >= ultimoPago))
+                          select usuario;
+            }
+
+            var resultados = valores.ToList().Select(u =>
+           {
+               var resultado = new ResultadoUsuario
+               {
+                   Usuario = u,
+                   Contratos = u.Contratos.Select(c =>
+                   {
+                       return new ResultadoContrato
+                       {
+                           Contrato = c,
+                           Adeudo = calculadorAdeudos(c)
+                       };
+                   }),
+                   Domicilio = u.Contratos.FirstOrDefault()?.Domicilio,
+                   UltimoPago = u.Contratos.FirstOrDefault()?.Pagos.OrderByDescending(_ => _.FechaRegistro).FirstOrDefault()?.FechaRegistro
+               };
+
+               resultado.Adeudo = resultado.Contratos.Select(_ => _.Adeudo).Sum();
+
+               return resultado;
+           });
+
+            if (Adeudo.Activo)
+            {
+                if (Adeudo.Desde is decimal minimo)
                 {
-                    Usuario = u,
-                    Contratos = u.Contratos.Select(c =>
+                    if (Adeudo.Hasta is decimal maximo)
                     {
-                        return new ResultadoContrato
-                        {
-                            Contrato = c,
-                            Adeudo = calculadorAdeudos(c)
-                        };
-                    }),
-                    Domicilio = u.Contratos.FirstOrDefault()?.Domicilio,
-                    UltimoPago = u.Contratos.FirstOrDefault()?.Pagos.OrderByDescending(_ => _.FechaRegistro).FirstOrDefault()?.FechaRegistro
-                };
+                        resultados = from usuario in resultados
+                                     where minimo <= usuario.Adeudo && usuario.Adeudo <= maximo
+                                     select usuario;
+                    }
+                    else
+                    {
+                        resultados = from usuario in resultados
+                                     where minimo <= usuario.Adeudo
+                                     select usuario;
+                    }
+                }
+                else
+                {
+                    if (Adeudo.Hasta is decimal maximo)
+                    {
+                        resultados = from usuario in resultados
+                                     where usuario.Adeudo <= maximo
+                                     select usuario;
+                    }
+                }
+            }
 
-                resultado.Adeudo = resultado.Contratos.Select(_ => _.Adeudo).Sum();
-
-                return resultado;
-            });
+            return resultados;
         }
     }
 
