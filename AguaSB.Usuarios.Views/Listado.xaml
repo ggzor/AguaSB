@@ -349,6 +349,15 @@
                 </StackPanel>
             </Border>
 
+            <Border Background="{StaticResource MaterialTeal}" Tag="{Binding Solicitud.Filtros.PagadoHasta}">
+                <StackPanel>
+                    <TextBlock>
+                            <Run>Pagado hasta:</Run> <Run Text="{Binding Solicitud.Filtros.PagadoHasta, Mode=OneWay}" FontWeight="DemiBold"/>
+                    </TextBlock>
+                    <Button Content="{icons:PackIconMaterial Kind=Close}"/>
+                </StackPanel>
+            </Border>
+
             <Border Background="{StaticResource MaterialOrange}" Tag="{Binding Solicitud.Filtros.UltimoPago}">
                 <StackPanel>
                     <TextBlock>

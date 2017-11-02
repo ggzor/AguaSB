@@ -54,7 +54,7 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
 
         public ValorRequerido<ClaseContrato?> ClaseContrato { get; } = new ValorRequerido<ClaseContrato?>();
 
-        public ValorRequerido<TipoContrato> TipoContrato { get; } = new ValorRequerido<TipoContrato>();
+        public ValorRequerido<TipoContrato> TipoContrato { get; } = new ValorRequerido<TipoContrato> { Formato = t => t?.Nombre ?? "Cualquiera" };
 
         public ValorRequerido<Seccion> Seccion { get; } = new ValorRequerido<Seccion>();
 
@@ -83,7 +83,7 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
              select new { sub1, sub2 }).ForEach(_ => { });
         }
 
-        public IEnumerable<Activable> Todos => new Activable[] { UltimoPago, ClaseContrato, TipoContrato, Seccion, Calle, Adeudo, Registro };
+        public IEnumerable<Activable> Todos => new Activable[] { UltimoPago, PagadoHasta, ClaseContrato, TipoContrato, Seccion, Calle, Adeudo, Registro };
 
         public IEnumerable<ResultadoUsuario> Aplicar(IQueryable<Usuario> valores, Func<DateTime, TipoContrato, decimal> calculadorAdeudos)
         {
@@ -221,7 +221,9 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
 
         public bool TieneValor => Valor != null;
 
-        public override string ToString() => Valor?.ToString() ?? "Cualquiera";
+        public Func<T, string> Formato { get; set; } = v => v?.ToString() ?? "Cualquiera";
+
+        public override string ToString() => Formato(Valor);
     }
 
     public class Rango<T> : Activable
