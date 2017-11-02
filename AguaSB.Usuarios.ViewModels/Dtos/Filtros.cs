@@ -47,7 +47,10 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
         private static readonly Func<DateTime, DateTime, string> FormatoFechas = (v1, v2) => $"Desde {v1:d} hasta {v2:d}";
         #endregion
 
-        public ObjetoActivable<DateTime> UltimoPago { get; } = new ObjetoActivable<DateTime> { Valor = DateTime.Today.AddMinutes(-1), Formato = v => $"{v:d}" };
+        public ObjetoActivable<DateTime> UltimoPago { get; } = new ObjetoActivable<DateTime> { Valor = DateTime.Today, Formato = v => $"{v:d}" };
+
+        public ObjetoActivable<DateTime> PagadoHasta { get; } =
+            new ObjetoActivable<DateTime> { Valor = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 01), Formato = v => $"{v:MMMM yyyy}" };
 
         public ValorRequerido<ClaseContrato?> ClaseContrato { get; } = new ValorRequerido<ClaseContrato?>();
 
@@ -68,7 +71,7 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
         {
             var campos = new(string Nombre, INotifyPropertyChanged Propiedades)[]
             {
-                (nameof(UltimoPago), UltimoPago), (nameof(ClaseContrato), ClaseContrato),
+                (nameof(UltimoPago), UltimoPago), (nameof(PagadoHasta), PagadoHasta), (nameof(ClaseContrato), ClaseContrato),
                 (nameof(TipoContrato), TipoContrato), (nameof(Seccion), Seccion), (nameof(Calle), Calle),
                 (nameof(Adeudo), Adeudo), (nameof(Registro), Registro)
             };
@@ -82,7 +85,7 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
 
         public IEnumerable<Activable> Todos => new Activable[] { UltimoPago, ClaseContrato, TipoContrato, Seccion, Calle, Adeudo, Registro };
 
-        public IEnumerable<ResultadoUsuario> Aplicar(IQueryable<Usuario> valores, Func<Contrato, decimal> calculadorAdeudos)
+        public IEnumerable<ResultadoUsuario> Aplicar(IQueryable<Usuario> valores, Func<DateTime, TipoContrato, decimal> calculadorAdeudos)
         {
             if (Seccion.Activo && Seccion.TieneValor)
             {
@@ -138,26 +141,40 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
             }
 
             var resultados = valores.ToList().Select(u =>
-           {
-               var resultado = new ResultadoUsuario
-               {
-                   Usuario = u,
-                   Contratos = u.Contratos.Select(c =>
-                   {
-                       return new ResultadoContrato
-                       {
-                           Contrato = c,
-                           Adeudo = calculadorAdeudos(c)
-                       };
-                   }),
-                   Domicilio = u.Contratos.FirstOrDefault()?.Domicilio,
-                   UltimoPago = u.Contratos.FirstOrDefault()?.Pagos.OrderByDescending(_ => _.FechaRegistro).FirstOrDefault()?.FechaRegistro
-               };
+            {
+                var resultado = new ResultadoUsuario
+                {
+                    Usuario = u,
+                    Contratos = u.Contratos.Select(c =>
+                    {
+                        var resultadoContrato = new ResultadoContrato
+                        {
+                            Contrato = c,
+                            PagadoHasta = c.Pagos.OrderByDescending(_ => _.FechaRegistro).FirstOrDefault()?.Hasta
+                        };
 
-               resultado.Adeudo = resultado.Contratos.Select(_ => _.Adeudo).Sum();
+                        if (resultadoContrato.PagadoHasta is DateTime d)
+                            resultadoContrato.Adeudo = calculadorAdeudos(d, c.TipoContrato);
 
-               return resultado;
-           });
+                        return resultadoContrato;
+                    }),
+                    Domicilio = u.Contratos.FirstOrDefault()?.Domicilio,
+                    UltimoPago = u.Contratos.FirstOrDefault()?.Pagos.OrderByDescending(_ => _.FechaRegistro).FirstOrDefault()?.FechaRegistro
+                };
+
+                resultado.Adeudo = resultado.Contratos.Select(_ => _.Adeudo).Sum();
+                resultado.PagadoHasta = resultado.Contratos.Select(_ => _.PagadoHasta).Where(_ => _ != null).Min();
+
+                return resultado;
+            });
+
+            if (PagadoHasta.Activo)
+            {
+                var pagadoHasta = Fecha.MesDe(PagadoHasta.Valor);
+                resultados = from usuario in resultados
+                             where pagadoHasta <= usuario.PagadoHasta
+                             select usuario;
+            }
 
             if (Adeudo.Activo)
             {

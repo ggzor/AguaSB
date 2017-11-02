@@ -21,6 +21,8 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
 
         public DateTime? UltimoPago { get; set; }
 
+        public DateTime? PagadoHasta { get; set; }
+
         public Domicilio Domicilio { get; set; }
 
         public IEnumerable<ResultadoContrato> Contratos { get; set; }
@@ -29,6 +31,8 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
     public class ResultadoContrato
     {
         public Contrato Contrato { get; set; }
+
+        public DateTime? PagadoHasta { get; set; }
 
         public decimal Adeudo { get; set; }
 

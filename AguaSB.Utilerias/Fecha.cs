@@ -13,5 +13,7 @@ namespace AguaSB.Utilerias
         }
 
         public static void EstablecerAhora(DateTime ahora) => Ahora = ahora;
+
+        public static DateTime MesDe(DateTime fecha) => new DateTime(fecha.Year, fecha.Month, 01);
     }
 }

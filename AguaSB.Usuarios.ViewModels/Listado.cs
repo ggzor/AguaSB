@@ -214,7 +214,8 @@ namespace AguaSB.Usuarios.ViewModels
             };
 
             var resultados = await Task.Run(() =>
-                Solicitud.Filtros.Aplicar(UsuariosRepo.Datos.AsQueryable(), contrato => Contratos.CalcularAdeudo(contrato, TarifasRepo.Datos.OrderBy(_ => _.FechaRegistro).ToArray())));
+                Solicitud.Filtros.Aplicar(UsuariosRepo.Datos.AsQueryable(),
+                (pagadoHasta, tipoContrato) => Adeudos.Calcular(pagadoHasta, tipoContrato, TarifasRepo.Datos.OrderBy(_ => _.FechaRegistro).ToArray())));
 
             var conteo = resultados.LongCount();
 
@@ -227,6 +228,11 @@ namespace AguaSB.Usuarios.ViewModels
         private async void Fill()
         {
             await Task.Delay(2000).ConfigureAwait(false);
+
+            string ExtraerMes(object objeto) =>
+                objeto is DateTime d
+                ? Capitalizar(d.ToString("MMMM yyyy"))
+                : "Desconocido";
 
             CriteriosAgrupacion = new[]
             {
@@ -242,8 +248,18 @@ namespace AguaSB.Usuarios.ViewModels
                             return "Desconocido";
                     }
                 },
-                new Agrupador { Nombre = "Fecha de registro", Propiedad = "Usuario.FechaRegistro",
-                    Conversor = x => x is DateTime d ? Capitalizar(d.ToString("MMMM yyyy")) : "Desconocido" }
+                new Agrupador
+                {
+                    Nombre = "Pagado hasta",
+                    Propiedad = "PagadoHasta",
+                    Conversor = ExtraerMes
+                },
+                new Agrupador
+                {
+                    Nombre = "Fecha de registro",
+                    Propiedad = "Usuario.FechaRegistro",
+                    Conversor = ExtraerMes
+                }
             };
 
             Solicitud.ToObservableProperties()
