@@ -8,7 +8,6 @@
              xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:Views="clr-namespace:AguaSB.Views.Controles;assembly=AguaSB.Views"
              xmlns:Estilos="clr-namespace:AguaSB.Estilos;assembly=AguaSB.Estilos"
-             xmlns:Utilerias="clr-namespace:AguaSB.Views.Utilerias;assembly=AguaSB.Views"
              xmlns:ViewModel="clr-namespace:AguaSB.Contratos.ViewModels;assembly=AguaSB.Contratos.ViewModels"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type={x:Type ViewModel:Agregar}, IsDesignTimeCreatable=False}"
@@ -21,9 +20,8 @@
                 <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Estilos.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/materialdesigntheme.ComboBox.xaml"/>
                 <ResourceDictionary Source="Plantillas/AgregarPlantillas.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/AguaSB.Views;component/Utilerias/Conversores.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
-            <Utilerias:IsNullConverter x:Key="IsNull"/>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -77,7 +75,7 @@
                                    Opacity="0.6" Style="{StaticResource h3}"/>
 
                         <icons:PackIconMaterial Grid.Row="1" Kind="Account" Estilos:Icono.Error="{Binding Contrato.Usuario, Converter={StaticResource IsNull}}"
-                                                Estilos:Icono.Enfocado="{Binding ElementName=Usuario, Path=IsMouseOver}"
+                                                Estilos:Icono.Enfocado="{Binding Contrato.Usuario, Converter={StaticResource IsNotNull}}"
                                                 Tag="{Binding ElementName=Usuario}" Style="{StaticResource IconoLateral}"/>
                         <TextBlock Name="Usuario" Grid.Row="1" Grid.Column="1" Margin="0 20 0 30" Text="{Binding Contrato.Usuario.NombreCompleto, FallbackValue=No especificado}" 
                                    Style="{StaticResource h4}"/>
@@ -149,11 +147,13 @@
                     </Style>
                 </StackPanel.Resources>
 
-                <Button Name="AgregarUsuario" ToolTip="Agregar usuario" Click="AgregarUsuario_Click"
+                <Button Name="AgregarUsuario" ToolTip="Agregar usuario"
+                        Command="{Binding NavegarA}" CommandParameter="Usuarios/Agregar"
                         Background="{StaticResource MaterialLightBlue}">
                     <icons:PackIconMaterial Width="25" Height="25" Kind="AccountPlus" Foreground="White"/>
                 </Button>
-                <Button Name="BuscarUsuario" ToolTip="Buscar usuario" Click="BuscarUsuario_Click"
+                <Button Name="BuscarUsuario" ToolTip="Buscar usuario"
+                        Command="{Binding NavegarA}" CommandParameter="Usuarios/Listado"
                         Background="{StaticResource MaterialLightBlue}">
                     <icons:PackIconModern Width="25" Height="25" Kind="PeopleMagnify" Foreground="White"/>
                 </Button>

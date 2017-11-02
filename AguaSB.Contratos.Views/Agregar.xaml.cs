@@ -21,9 +21,5 @@ namespace AguaSB.Contratos.Views
 
             ViewModel.Enfocar += (_, __) => TipoContrato.Focus();
         }
-
-        private void AgregarUsuario_Click(object sender, System.Windows.RoutedEventArgs e) => Navegador.Navegar("Usuarios/Agregar", null);
-
-        private void BuscarUsuario_Click(object sender, System.Windows.RoutedEventArgs e) => Navegador.Navegar("Usuarios/Listado", null);
     }
 }

@@ -3,4 +3,5 @@
                     xmlns:local="clr-namespace:AguaSB.Views.Utilerias">
     <local:BoolOperation x:Key="BoolOp"/>
     <local:IsNullConverter x:Key="IsNull"/>
+    <local:IsNotNullConverter x:Key="IsNotNull"/>
 </ResourceDictionary>

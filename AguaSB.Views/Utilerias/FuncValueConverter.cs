@@ -6,9 +6,9 @@ namespace AguaSB.Views.Utilerias
 {
     public class FuncValueConverter : IValueConverter
     {
-        public Func<object, string> Conversor { get; }
+        public Func<object, object> Conversor { get; }
 
-        public FuncValueConverter(Func<object, string> conversor) =>
+        public FuncValueConverter(Func<object, object> conversor) =>
             Conversor = conversor ?? throw new ArgumentNullException(nameof(conversor));
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) =>

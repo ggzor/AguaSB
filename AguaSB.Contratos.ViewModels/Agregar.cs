@@ -135,6 +135,8 @@ namespace AguaSB.Contratos.ViewModels
         public DelegateCommand ReestablecerComando { get; }
 
         public AsyncDelegateCommand<int> AgregarContratoComando { get; }
+
+        public DelegateCommand NavegarA { get; }
         #endregion
 
         #region Dependencias
@@ -144,6 +146,7 @@ namespace AguaSB.Contratos.ViewModels
         private IRepositorio<Seccion> SeccionesRepo { get; }
 
         private IAdministradorNotificaciones Notificaciones { get; }
+        private INavegador Navegador { get; }
         #endregion
 
         public event EventHandler Enfocar;
@@ -152,16 +155,18 @@ namespace AguaSB.Contratos.ViewModels
 
         public Agregar(
             IRepositorio<Usuario> usuarios, IRepositorio<Contrato> contratos, IRepositorio<TipoContrato> tiposContrato,
-            IRepositorio<Seccion> secciones, IAdministradorNotificaciones notificaciones)
+            IRepositorio<Seccion> secciones, IAdministradorNotificaciones notificaciones, INavegador navegador)
         {
             Usuarios = usuarios ?? throw new ArgumentNullException(nameof(usuarios));
             Contratos = contratos ?? throw new ArgumentNullException(nameof(contratos));
             TiposContratoRepo = tiposContrato ?? throw new ArgumentNullException(nameof(tiposContrato));
             SeccionesRepo = secciones ?? throw new ArgumentNullException(nameof(secciones));
             Notificaciones = notificaciones ?? throw new ArgumentNullException(nameof(notificaciones));
+            Navegador = navegador ?? throw new ArgumentNullException(nameof(navegador));
 
             AgregarContratoComando = new AsyncDelegateCommand<int>(AgregarContrato, PuedeAgregarContrato);
             ReestablecerComando = new DelegateCommand(Reestablecer, () => PuedeReestablecer);
+            NavegarA = new DelegateCommand(o => Navegador.Navegar((string)o, null));
 
             Nodo = new Nodo() { PrimeraEntrada = Inicializar, Entrada = Entrar };
 
@@ -273,6 +278,8 @@ namespace AguaSB.Contratos.ViewModels
 
                 PuedeReestablecer = true;
                 Reestablecer();
+
+                await Navegador.Navegar("Usuarios/Listado", Contrato.Usuario.NombreCompleto);
 
                 return resultado.Id;
             }

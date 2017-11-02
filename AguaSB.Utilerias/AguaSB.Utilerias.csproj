@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cadenas.cs" />
     <Compile Include="Fecha.cs" />
     <Compile Include="IO\CargadorModulos.cs" />
     <Compile Include="IO\Configuracion.cs" />

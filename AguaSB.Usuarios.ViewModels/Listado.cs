@@ -1,20 +1,22 @@
-﻿using AguaSB.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using AguaSB.Navegacion;
-using System.Waf.Foundation;
-using AguaSB.Usuarios.ViewModels.Dtos;
-using AguaSB.Nucleo;
-using System.Waf.Applications;
-using GGUtils.MVVM.Async;
-using MoreLinq;
-using AguaSB.Utilerias;
-using System.Reactive.Linq;
 using System.ComponentModel;
 using System.Linq;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
+using System.Waf.Applications;
+using System.Waf.Foundation;
+
+using GGUtils.MVVM.Async;
+using MoreLinq;
+
 using AguaSB.Datos;
+using AguaSB.Navegacion;
+using AguaSB.Nucleo;
 using AguaSB.Nucleo.Datos;
+using AguaSB.ViewModels;
+using AguaSB.Usuarios.ViewModels.Dtos;
+using AguaSB.Utilerias;
 
 namespace AguaSB.Usuarios.ViewModels
 {
@@ -112,6 +114,8 @@ namespace AguaSB.Usuarios.ViewModels
             MostrarColumnasTodasComando = new DelegateCommand(MostrarColumnasTodas);
             BuscarComando = new AsyncDelegateCommand<ResultadoSolicitud>(Buscar, multipleExecutionSupported: true);
 
+            RegistrarAgrupadores();
+
             this.ToObservableProperties().Subscribe(_ => RegistrarUniones(_.Args));
 
             Solicitud = new Solicitud
@@ -122,8 +126,35 @@ namespace AguaSB.Usuarios.ViewModels
             Solicitud.Columnas.FechaRegistro = false;
 
             Estado = new EstadoBusqueda();
+        }
 
-            Fill();
+        private void RegistrarAgrupadores()
+        {
+            string ExtraerMes(object objeto) =>
+                            objeto is DateTime d
+                            ? Cadenas.Capitalizar(d.ToString("MMMM yyyy"))
+                            : "Desconocido";
+
+            CriteriosAgrupacion = new[]
+            {
+                Agrupador.Ninguno,
+                new Agrupador { Nombre = "Sección", Propiedad = "Domicilio.Calle.Seccion.Nombre" },
+                new Agrupador { Nombre = "Calle", Propiedad = "Domicilio.Calle.Nombre" },
+                new Agrupador {
+                    Nombre = "Adeudo",
+                    Descripcion = "En pesos",
+                    Propiedad = "Adeudo",
+                    Conversor = x =>
+                    {
+                        if(x is decimal d)
+                            return Clasificar(d);
+                        else
+                            return "Desconocido";
+                    }
+                },
+                new Agrupador { Nombre = "Pagado hasta", Propiedad = "PagadoHasta", Conversor = ExtraerMes},
+                new Agrupador { Nombre = "Fecha de registro", Propiedad = "Usuario.FechaRegistro", Conversor = ExtraerMes }
+            };
         }
 
         private IDictionary<Seccion, IList<Calle>> CallesAgrupadas;
@@ -199,6 +230,10 @@ namespace AguaSB.Usuarios.ViewModels
                 Solicitud.Filtros.Seccion.ToObservableProperties()
                     .Where(_ => _.Args.PropertyName == nameof(Solicitud.Filtros.Calle.Valor))
                     .Subscribe(_ => ActualizarListadoDeCalles());
+
+                Solicitud.ToObservableProperties()
+                .Where(_ => _.Args.PropertyName == nameof(Solicitud.Agrupador))
+                .Subscribe(_ => AgrupadorCambiado?.Invoke(this, Solicitud.Agrupador));
             }
         }
 
@@ -224,50 +259,6 @@ namespace AguaSB.Usuarios.ViewModels
 
             return estado.HayResultados == true ? new ResultadoSolicitud { Resultados = resultados, Conteo = resultados.LongCount() } : null;
         }
-
-        private async void Fill()
-        {
-            await Task.Delay(2000).ConfigureAwait(false);
-
-            string ExtraerMes(object objeto) =>
-                objeto is DateTime d
-                ? Capitalizar(d.ToString("MMMM yyyy"))
-                : "Desconocido";
-
-            CriteriosAgrupacion = new[]
-            {
-                Agrupador.Ninguno,
-                new Agrupador { Nombre = "Sección", Propiedad = "Domicilio.Calle.Seccion.Nombre" },
-                new Agrupador { Nombre = "Calle", Propiedad = "Domicilio.Calle.Nombre" },
-                new Agrupador { Nombre = "Adeudo", Descripcion = "En pesos", Propiedad = "Adeudo",
-                    Conversor = x =>
-                    {
-                        if(x is decimal d)
-                            return Clasificar(d);
-                        else
-                            return "Desconocido";
-                    }
-                },
-                new Agrupador
-                {
-                    Nombre = "Pagado hasta",
-                    Propiedad = "PagadoHasta",
-                    Conversor = ExtraerMes
-                },
-                new Agrupador
-                {
-                    Nombre = "Fecha de registro",
-                    Propiedad = "Usuario.FechaRegistro",
-                    Conversor = ExtraerMes
-                }
-            };
-
-            Solicitud.ToObservableProperties()
-                .Where(_ => _.Args.PropertyName == nameof(Solicitud.Agrupador))
-                .Subscribe(_ => AgrupadorCambiado?.Invoke(this, Solicitud.Agrupador));
-        }
-
-        private string Capitalizar(string s) => char.ToUpper(s[0]) + s.Substring(1);
 
         private string Clasificar(decimal d)
         {

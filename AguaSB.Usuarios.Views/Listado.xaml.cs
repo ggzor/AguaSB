@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Media;
 
@@ -12,7 +13,6 @@ using MahApps.Metro.IconPacks;
 using AguaSB.Views;
 using AguaSB.Views.Utilerias;
 using AguaSB.Usuarios.ViewModels.Dtos;
-using System.Windows.Data;
 
 namespace AguaSB.Usuarios.Views
 {

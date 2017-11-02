@@ -104,10 +104,10 @@ namespace AguaSB.Usuarios.ViewModels
 
         public INodo Nodo { get; }
 
-        public Agregar(INavegador navegador, IRepositorio<Usuario> usuarios)
+        public Agregar(IRepositorio<Usuario> usuarios, INavegador navegador)
         {
-            Navegador = navegador ?? throw new ArgumentNullException(nameof(navegador));
             Usuarios = usuarios ?? throw new ArgumentNullException(nameof(usuarios));
+            Navegador = navegador ?? throw new ArgumentNullException(nameof(navegador));
 
             Nodo = new Nodo { Entrada = Entrar };
 
