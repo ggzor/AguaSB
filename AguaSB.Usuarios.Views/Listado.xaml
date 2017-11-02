@@ -90,6 +90,19 @@
                                     <DatePicker Margin="0 20 0 30" Tag="Desde" Text="{Binding Solicitud.Filtros.UltimoPago.Valor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
                                 </StackPanel>
                             </Expander>
+                            <Expander Name="FiltroPagadoHasta" Background="White" IsExpanded="{Binding Solicitud.Filtros.PagadoHasta.Activo, Mode=TwoWay}">
+                                <Expander.Header>
+                                    <StackPanel Margin="-25 0 0 0" Orientation="Horizontal">
+                                        <icons:PackIconMaterial Kind="CalendarClock" Estilos:Icono.Enfocado="{Binding Solicitud.Filtros.PagadoHasta.Activo}"
+                                                                Margin="0 0 20 0" Style="{StaticResource IconoLateral}"/>
+
+                                        <TextBlock Text="Pagado hasta" Opacity="0.7" Style="{StaticResource h4}"/>
+                                    </StackPanel>
+                                </Expander.Header>
+                                <StackPanel Margin="45 0 20 0">
+                                    <DatePicker Margin="0 20 0 30" Tag="Hasta" Text="{Binding Solicitud.Filtros.PagadoHasta.Valor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+                                </StackPanel>
+                            </Expander>
                             <Expander Name="FiltroSeccion" Background="White" IsExpanded="{Binding Solicitud.Filtros.Seccion.Activo, Mode=TwoWay}">
                                 <Expander.Header>
                                     <StackPanel Margin="-25 0 0 0" Orientation="Horizontal">
@@ -210,6 +223,9 @@
                                 </CheckBox>
                                 <CheckBox IsChecked="{Binding Solicitud.Columnas.UltimoPago, Mode=TwoWay}">
                                     <TextBlock Text="Último pago"/>
+                                </CheckBox>
+                                <CheckBox IsChecked="{Binding Solicitud.Columnas.PagadoHasta, Mode=TwoWay}">
+                                    <TextBlock Text="Pagado hasta"/>
                                 </CheckBox>
                                 <CheckBox IsChecked="{Binding Solicitud.Columnas.Seccion, Mode=TwoWay}">
                                     <TextBlock Text="Sección"/>
@@ -477,6 +493,17 @@
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                         <GridViewColumnHeader Tag="UltimoPago" Click="Columna_Seleccionada">Último pago</GridViewColumnHeader>
+                                    </GridViewColumn>
+                                    <GridViewColumn Util:Columnas.EsVisible="{Binding Solicitud.Columnas.PagadoHasta, Mode=TwoWay}">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="5 0">
+                                                    <TextBlock Text="{Binding PagadoHasta, StringFormat={}{0:MMMM yyyy}, TargetNullValue=No hay pagos, ConverterCulture=es-MX}" 
+                                                               Style="{StaticResource h5}"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                        <GridViewColumnHeader Tag="PagadoHasta" Click="Columna_Seleccionada">Pagado hasta</GridViewColumnHeader>
                                     </GridViewColumn>
                                     <GridViewColumn Util:Columnas.EsVisible="{Binding Solicitud.Columnas.Seccion, Mode=TwoWay}">
                                         <GridViewColumn.CellTemplate>

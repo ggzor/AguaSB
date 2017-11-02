@@ -7,6 +7,7 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
         private bool contratos;
         private bool fechaRegistro;
         private bool ultimoPago;
+        private bool pagadoHasta;
         private bool adeudo;
         private bool seccion;
         private bool calle;
@@ -17,6 +18,7 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
             Contratos = true,
             FechaRegistro = true,
             UltimoPago = true,
+            PagadoHasta = true,
             Adeudo = true,
             Seccion = true,
             Calle = true,
@@ -40,6 +42,12 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
         {
             get { return ultimoPago; }
             set { N.Set(ref ultimoPago, value); }
+        }
+
+        public bool PagadoHasta
+        {
+            get { return pagadoHasta; }
+            set { N.Set(ref pagadoHasta, value); }
         }
 
         public bool Adeudo

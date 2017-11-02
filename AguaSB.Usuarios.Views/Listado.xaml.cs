@@ -82,6 +82,7 @@ namespace AguaSB.Usuarios.Views
             ["Fecha de registro"] = new PackIconMaterial { Kind = PackIconMaterialKind.CalendarPlus },
             ["Contratos"] = new PackIconModern { Kind = PackIconModernKind.AlignJustify },
             ["Último pago"] = new PackIconModern { Kind = PackIconModernKind.CalendarDollar },
+            ["Pagado hasta"] = new PackIconMaterial { Kind = PackIconMaterialKind.CalendarClock },
             ["Sección"] = new PackIconMaterial { Kind = PackIconMaterialKind.ViewGrid },
             ["Calle"] = new PackIconEntypo { Kind = PackIconEntypoKind.Address },
             ["Número"] = new PackIconFontAwesome { Kind = PackIconFontAwesomeKind.Hashtag }
