@@ -14,6 +14,7 @@ namespace AguaSB.Instaladores
             contenedor.Kernel.Resolver
                 .AddSubResolver(new CollectionResolver(contenedor.Kernel, allowEmptyCollections: true));
 
+            contenedor.Register(Component.For<IInicializador>().ImplementedBy<Inicializador>());
             contenedor.Register(Classes.FromThisAssembly().BasedOn<IInicializador>().WithService.FirstInterface());
         }
     }

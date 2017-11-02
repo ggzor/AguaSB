@@ -126,6 +126,7 @@
     <Compile Include="Inicializadores\Inicializador.cs" />
     <Compile Include="Inicializadores\LlenarSecciones.cs" />
     <Compile Include="Inicializadores\LlenarTiposContrato.cs" />
+    <Compile Include="Inicializadores\Tarifas.cs" />
     <Compile Include="Instaladores\Extensiones.cs" />
     <Compile Include="Instaladores\Inicializadores.cs" />
     <Compile Include="Instaladores\Interfaz.cs" />
