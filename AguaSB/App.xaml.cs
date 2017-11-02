@@ -17,6 +17,8 @@ namespace AguaSB
 
             contenedor.Install(FromAssembly.This());
 
+            // Instalar notificaciones con la startable facility
+
             // TODO: Remover en release
             contenedor.Resolve<IInicializador>();
 

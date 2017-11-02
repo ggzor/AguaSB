@@ -143,7 +143,7 @@ namespace AguaSB.Contratos.ViewModels
         private IRepositorio<TipoContrato> TiposContratoRepo { get; }
         private IRepositorio<Seccion> SeccionesRepo { get; }
 
-        private IManejadorNotificaciones Notificaciones { get; }
+        private IAdministradorNotificaciones Notificaciones { get; }
         #endregion
 
         public event EventHandler Enfocar;
@@ -152,7 +152,7 @@ namespace AguaSB.Contratos.ViewModels
 
         public Agregar(
             IRepositorio<Usuario> usuarios, IRepositorio<Contrato> contratos, IRepositorio<TipoContrato> tiposContrato,
-            IRepositorio<Seccion> secciones, IManejadorNotificaciones notificaciones)
+            IRepositorio<Seccion> secciones, IAdministradorNotificaciones notificaciones)
         {
             Usuarios = usuarios ?? throw new ArgumentNullException(nameof(usuarios));
             Contratos = contratos ?? throw new ArgumentNullException(nameof(contratos));

@@ -10,7 +10,7 @@ namespace AguaSB.Instaladores
     {
         public void Install(IWindsorContainer contenedor, IConfigurationStore store)
         {
-            contenedor.Register(Component.For<IManejadorNotificaciones>()
+            contenedor.Register(Component.For<IAdministradorNotificaciones, IProveedorNotificaciones>()
                 .ImplementedBy<ManejadorNotificaciones>());
         }
     }

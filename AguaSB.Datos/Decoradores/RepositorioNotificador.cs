@@ -15,7 +15,7 @@ namespace AguaSB.Datos.Decoradores
 
         public event EventHandler<NotificacionEntidad<T>> RepositorioCambiado;
 
-        public RepositorioNotificador(IRepositorio<T> repositorio, IManejadorNotificaciones notificaciones)
+        public RepositorioNotificador(IRepositorio<T> repositorio, IAdministradorNotificaciones notificaciones)
         {
             if (notificaciones == null)
                 throw new ArgumentNullException(nameof(notificaciones));

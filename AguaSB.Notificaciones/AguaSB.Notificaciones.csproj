@@ -47,7 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IManejadorNotificaciones.cs" />
+    <Compile Include="IAdministradorNotificaciones.cs" />
+    <Compile Include="IProveedorNotificaciones.cs" />
     <Compile Include="ManejadorNotificaciones.cs" />
     <Compile Include="Notificacion.cs" />
     <Compile Include="NotificacionError.cs" />

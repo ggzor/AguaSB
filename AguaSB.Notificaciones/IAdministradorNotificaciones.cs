@@ -2,10 +2,8 @@
 
 namespace AguaSB.Notificaciones
 {
-    public interface IManejadorNotificaciones
+    public interface IAdministradorNotificaciones
     {
-        IObservable<Notificacion> Notificaciones { get; }
-
         void AgregarFuente(IObservable<Notificacion> fuente);
 
         void Lanzar(Notificacion notificacion);

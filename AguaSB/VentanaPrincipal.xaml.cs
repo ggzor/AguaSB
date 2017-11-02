@@ -25,13 +25,15 @@ namespace AguaSB
         private readonly AdministradorViews administrador;
 
         public VentanaPrincipal(VentanaPrincipalViewModel viewModel, ITransformadorExtensiones transformador,
-            IManejadorNotificaciones manejadorNotificaciones, ITransformadorNotificaciones transformadorNotificaciones,
             ManejadorNavegacion<Operacion> manejadorNavegacion, NavegadorDirectorio<Operacion> navegador)
         {
             DataContext = ViewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
 
-            Ajustador.AnchoObjetoMinimo = 400.0;
-            Ajustador.Margen = 15.0;
+            Ajustador = new AjustadorTamanoObjetos
+            {
+                AnchoObjetoMinimo = 400.0,
+                Margen = 15.0
+            };
 
             EjecutarOperacionComando = new AsyncDelegateCommand(EjecutarOperacion);
 
@@ -40,13 +42,12 @@ namespace AguaSB
             manejadorNavegacion.Navegar = Navegar;
             manejadorNavegacion.EnDireccionNoEncontrada = EnDireccionNoEncontrada;
 
-            TransformarNotificaciones(manejadorNotificaciones, transformadorNotificaciones);
             TransformarExtensiones(viewModel, transformador);
             RegistrarNavegacionDePaginas(navegador);
 
             administrador = new AdministradorViews(Vista);
         }
-
+        
         void IVentanaPrincipal.Mostrar() => ShowDialog();
 
         private void TransformarExtensiones(VentanaPrincipalViewModel viewModel, ITransformadorExtensiones transformador)
@@ -61,14 +62,7 @@ namespace AguaSB
                 return extension;
             }).ForEach(_ => Extensiones.Children.Add(_));
         }
-
-        private void TransformarNotificaciones(IManejadorNotificaciones manejadorNotificaciones, ITransformadorNotificaciones transformadorNotificaciones)
-        {
-            manejadorNotificaciones.Notificaciones
-                .Select(transformadorNotificaciones.Transformar)
-                .Subscribe(Notificaciones.AgregarNotificacion);
-        }
-
+        
         private void RegistrarNavegacionDePaginas(NavegadorDirectorio<Operacion> navegador)
         {
             foreach (var extension in ViewModel.Extensiones)
@@ -115,7 +109,7 @@ namespace AguaSB
             return Task.CompletedTask;
         }
 
-        #region Ajuste de tamaños
+        #region Ajuste de tamaños de vistas de extensiones
         public AjustadorTamanoObjetos Ajustador
         {
             get { return (AjustadorTamanoObjetos)GetValue(AjustadorProperty); }

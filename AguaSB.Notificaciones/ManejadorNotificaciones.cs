@@ -4,7 +4,7 @@ using System.Reactive.Linq;
 
 namespace AguaSB.Notificaciones
 {
-    public class ManejadorNotificaciones : IManejadorNotificaciones
+    public class ManejadorNotificaciones : IAdministradorNotificaciones, IProveedorNotificaciones
     {
         public IObservable<Notificacion> Notificaciones { get; }
 
@@ -20,10 +20,10 @@ namespace AguaSB.Notificaciones
             Notificaciones = notificaciones;
             notificaciones.Connect();
 
-            AgregarNuestroObservador();
+            AgregarObservadorDeInstancia();
         }
 
-        private void AgregarNuestroObservador()
+        private void AgregarObservadorDeInstancia()
         {
             var obs = Observable.FromEventPattern<Notificacion>(
                 h => AgregarNotificacion += h,
