@@ -46,6 +46,7 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
 
         private static readonly Func<DateTime, DateTime, string> FormatoFechas = (v1, v2) => $"Desde {v1:d} hasta {v2:d}";
         #endregion
+        public ObjetoActivable<string> Texto { get; } = new ObjetoActivable<string>();
 
         public ObjetoActivable<DateTime> UltimoPago { get; } = new ObjetoActivable<DateTime> { Valor = DateTime.Today, Formato = v => $"{v:d}" };
 
@@ -83,10 +84,19 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
              select new { sub1, sub2 }).ForEach(_ => { });
         }
 
-        public IEnumerable<Activable> Todos => new Activable[] { UltimoPago, PagadoHasta, ClaseContrato, TipoContrato, Seccion, Calle, Adeudo, Registro };
+        public IEnumerable<Activable> Todos => new Activable[] { Texto, UltimoPago, PagadoHasta, ClaseContrato, TipoContrato, Seccion, Calle, Adeudo, Registro };
 
         public IEnumerable<ResultadoUsuario> Aplicar(IQueryable<Usuario> valores, Func<DateTime, TipoContrato, decimal> calculadorAdeudos)
         {
+            if (!string.IsNullOrWhiteSpace(Texto.Valor))
+            {
+                var texto = Usuario.ConvertirATextoSolicitud(Texto.Valor);
+                valores = from usuario in valores
+                          where usuario.NombreSolicitud.Contains(texto)
+                          select usuario;
+
+            }
+
             if (Seccion.Activo && Seccion.TieneValor)
             {
                 var seccion = Seccion.Valor;

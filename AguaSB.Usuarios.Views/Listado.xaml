@@ -59,7 +59,7 @@
                     <icons:PackIconMaterial Margin="20 8 20 0" Kind="Magnify" Estilos:Icono.Enfocado="{Binding ElementName=Busqueda, Path=IsKeyboardFocusWithin}" VerticalAlignment="Center" 
                                             Style="{StaticResource IconoLateral}"/>
                     <ComboBox Name="Busqueda" Margin="0" Tag="Buscar..." Background="White" material:HintAssist.IsFloating="False"
-                              Text="{Binding Solicitud.Texto}"/>
+                              Text="{Binding Solicitud.Filtros.Texto.Valor}"/>
                 </DockPanel>
             </material:Card>
             <Popup Name="Filtros" PlacementTarget="{Binding ElementName=FiltrosBoton}" AllowsTransparency="True" PopupAnimation="Fade" StaysOpen="False">

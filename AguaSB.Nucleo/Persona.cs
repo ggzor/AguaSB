@@ -18,7 +18,7 @@ namespace AguaSB.Nucleo
         public string Nombre
         {
             get { return nombre; }
-            set { N.Validate(ref nombre, value); N.Change(nameof(NombreCompleto)); }
+            set { N.Validate(ref nombre, value); NombreCompletoModificado(); }
         }
 
         [Required(ErrorMessage = Validacion.CampoRequerido)]
@@ -26,7 +26,7 @@ namespace AguaSB.Nucleo
         public string ApellidoPaterno
         {
             get { return apellidoPaterno; }
-            set { N.Validate(ref apellidoPaterno, value); N.Change(nameof(NombreCompleto)); }
+            set { N.Validate(ref apellidoPaterno, value); NombreCompletoModificado(); }
         }
 
         [Required(ErrorMessage = Validacion.CampoRequerido)]
@@ -34,7 +34,7 @@ namespace AguaSB.Nucleo
         public string ApellidoMaterno
         {
             get { return apellidoMaterno; }
-            set { N.Validate(ref apellidoMaterno, value); N.Change(nameof(NombreCompleto)); }
+            set { N.Validate(ref apellidoMaterno, value); NombreCompletoModificado(); }
         }
 
         [NotMapped]
@@ -42,5 +42,11 @@ namespace AguaSB.Nucleo
 
         [NotMapped]
         public override string NombreCompleto => $"{Nombre} {ApellidoPaterno} {ApellidoMaterno}";
+
+        private void NombreCompletoModificado()
+        {
+            N.Change(nameof(NombreCompleto));
+            EstablecerNombreSolicitud(NombreCompleto);
+        }
     }
 }

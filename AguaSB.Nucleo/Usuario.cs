@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
 
 using AguaSB.Utilerias;
 
@@ -17,6 +19,8 @@ namespace AguaSB.Nucleo
 
         [NotMapped]
         public abstract string NombreCompleto { get; }
+
+        public string NombreSolicitud { get; set; }
 
         public virtual ICollection<Contacto> Contactos { get; set; }
 
@@ -47,5 +51,24 @@ namespace AguaSB.Nucleo
         #endregion
 
         public override string ToString() => NombreCompleto;
+
+        protected void EstablecerNombreSolicitud(string nombre) => NombreSolicitud = ConvertirATextoSolicitud(nombre);
+
+        public static string ConvertirATextoSolicitud(string texto)
+        {
+            var sb = new StringBuilder();
+
+            char[] caracteres = texto.AsEnumerable()
+                .Where(_ => !char.IsWhiteSpace(_))
+                .Select(char.ToLower)
+                .ToArray();
+
+            sb.Append(caracteres);
+
+            foreach (var k in "áéíóú".Zip("aeiou", (c1, c2) => new KeyValuePair<char, char>(c1, c2)))
+                sb.Replace(k.Key, k.Value);
+
+            return sb.ToString();
+        }
     }
 }

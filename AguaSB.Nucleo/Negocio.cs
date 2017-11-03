@@ -16,7 +16,12 @@ namespace AguaSB.Nucleo
         public string Nombre
         {
             get { return nombre; }
-            set { N.Validate(ref nombre, value); N.Change(nameof(NombreCompleto)); }
+            set
+            {
+                N.Validate(ref nombre, value);
+                N.Change(nameof(NombreCompleto));
+                EstablecerNombreSolicitud(NombreCompleto);
+            }
         }
 
         public string Rfc

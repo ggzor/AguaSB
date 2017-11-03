@@ -8,15 +8,7 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
         public event PropertyChangedEventHandler PropertyChanged;
         public void Raise([CallerMemberName] string property = null) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-
-        private string texto;
-
-        public string Texto
-        {
-            get { return texto; }
-            set { texto = value; Raise(); }
-        }
-
+        
         private Agrupador agrupador;
         private Filtros filtros;
         private Columnas columnas;
