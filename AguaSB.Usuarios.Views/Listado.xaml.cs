@@ -34,6 +34,20 @@ namespace AguaSB.Usuarios.Views
             ViewModel.AgrupadorCambiado += AgrupadorCambiado;
         }
 
+        public IDictionary Iconos { get; } = new Dictionary<string, UIElement>
+        {
+            ["Id"] = new PackIconEntypo { Kind = PackIconEntypoKind.Fingerprint },
+            ["Nombre"] = new PackIconMaterial { Kind = PackIconMaterialKind.Account },
+            ["Adeudo"] = new PackIconModern { Kind = PackIconModernKind.CurrencyDollar },
+            ["Fecha de registro"] = new PackIconMaterial { Kind = PackIconMaterialKind.CalendarPlus },
+            ["Contratos"] = new PackIconModern { Kind = PackIconModernKind.AlignJustify },
+            ["Último pago"] = new PackIconModern { Kind = PackIconModernKind.CalendarDollar },
+            ["Pagado hasta"] = new PackIconMaterial { Kind = PackIconMaterialKind.CalendarClock },
+            ["Sección"] = new PackIconMaterial { Kind = PackIconMaterialKind.ViewGrid },
+            ["Calle"] = new PackIconEntypo { Kind = PackIconEntypoKind.Address },
+            ["Número"] = new PackIconFontAwesome { Kind = PackIconFontAwesomeKind.Hashtag }
+        };
+
         private void AgrupadorCambiado(object sender, Agrupador e)
         {
             ListaResultados.Items.GroupDescriptions.Clear();
@@ -51,42 +65,53 @@ namespace AguaSB.Usuarios.Views
             }
         }
 
-        private GridViewColumnHeader columna;
-        private SortAdorner adornador;
+        private GridViewColumnHeader columnaActual;
+        private SortAdorner adornadorActual;
 
         private void Columna_Seleccionada(object sender, RoutedEventArgs e)
         {
-            GridViewColumnHeader nuevaColumna = (sender as GridViewColumnHeader);
-            string sortBy = nuevaColumna.Tag.ToString();
-            if (columna != null)
+            if (sender is GridViewColumnHeader nuevaColumna)
             {
-                AdornerLayer.GetAdornerLayer(columna).Remove(adornador);
-                ListaResultados.Items.SortDescriptions.Clear();
+                RemoverOrdenamientoActual();
+
+                if (columnaActual == nuevaColumna)
+                {
+                    if (adornadorActual.Direction == ListSortDirection.Ascending)
+                    {
+                        EstablecerOrdenamiento(columnaActual, ListSortDirection.Descending);
+                    }
+                    else
+                    {
+                        columnaActual = null;
+                        adornadorActual = null;
+                    }
+                }
+                else
+                {
+                    EstablecerOrdenamiento(nuevaColumna, ListSortDirection.Ascending);
+                }
             }
-
-            var newDir = ListSortDirection.Ascending;
-            if (columna == nuevaColumna && adornador.Direction == newDir)
-                newDir = ListSortDirection.Descending;
-
-            columna = nuevaColumna;
-            adornador = new SortAdorner(columna, newDir);
-            AdornerLayer.GetAdornerLayer(columna).Add(adornador);
-            ListaResultados.Items.SortDescriptions.Add(new SortDescription(sortBy, newDir));
         }
 
-        public IDictionary Iconos { get; } = new Dictionary<string, UIElement>
+        private void EstablecerOrdenamiento(GridViewColumnHeader columna, ListSortDirection direccion)
         {
-            ["Id"] = new PackIconEntypo { Kind = PackIconEntypoKind.Fingerprint },
-            ["Nombre"] = new PackIconMaterial { Kind = PackIconMaterialKind.Account },
-            ["Adeudo"] = new PackIconModern { Kind = PackIconModernKind.CurrencyDollar },
-            ["Fecha de registro"] = new PackIconMaterial { Kind = PackIconMaterialKind.CalendarPlus },
-            ["Contratos"] = new PackIconModern { Kind = PackIconModernKind.AlignJustify },
-            ["Último pago"] = new PackIconModern { Kind = PackIconModernKind.CalendarDollar },
-            ["Pagado hasta"] = new PackIconMaterial { Kind = PackIconMaterialKind.CalendarClock },
-            ["Sección"] = new PackIconMaterial { Kind = PackIconMaterialKind.ViewGrid },
-            ["Calle"] = new PackIconEntypo { Kind = PackIconEntypoKind.Address },
-            ["Número"] = new PackIconFontAwesome { Kind = PackIconFontAwesomeKind.Hashtag }
-        };
+            var criterioOrdenamiento = columna.Tag.ToString();
+            columnaActual = columna;
+            adornadorActual = new SortAdorner(columna, direccion);
+            var ordenamiento = new SortDescription(criterioOrdenamiento, direccion);
+
+            AdornerLayer.GetAdornerLayer(columnaActual).Add(adornadorActual);
+            ListaResultados.Items.SortDescriptions.Add(ordenamiento);
+        }
+
+        private void RemoverOrdenamientoActual()
+        {
+            if (columnaActual != null && adornadorActual != null)
+            {
+                AdornerLayer.GetAdornerLayer(columnaActual).Remove(adornadorActual);
+                ListaResultados.Items.SortDescriptions.Clear();
+            }
+        }
 
         private void MostrarFiltros(object sender, RoutedEventArgs e) => Filtros.IsOpen = true;
 
