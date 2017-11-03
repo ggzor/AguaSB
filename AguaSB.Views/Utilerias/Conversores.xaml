@@ -4,4 +4,5 @@
     <local:BoolOperation x:Key="BoolOp"/>
     <local:IsNullConverter x:Key="IsNull"/>
     <local:IsNotNullConverter x:Key="IsNotNull"/>
+    <local:EqualsToConverter x:Key="EqualsTo"/>
 </ResourceDictionary>

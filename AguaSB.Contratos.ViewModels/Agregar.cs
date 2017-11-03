@@ -273,6 +273,8 @@ namespace AguaSB.Contratos.ViewModels
             {
                 progreso.Report((0.0, "Agregando contrato..."));
                 var resultado = await Contratos.Agregar(Contrato).ConfigureAwait(false);
+                // TODO: Probablemente remover con EF
+                Contrato.Usuario.Contratos.Add(Contrato);
 
                 progreso.Report((100.0, "Completado."));
 

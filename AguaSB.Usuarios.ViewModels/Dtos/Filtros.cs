@@ -152,6 +152,8 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
 
             var resultados = valores.ToList().Select(u =>
             {
+                if(u.Contratos.Count > 1)
+                    Console.WriteLine("Here");
                 var resultado = new ResultadoUsuario
                 {
                     Usuario = u,

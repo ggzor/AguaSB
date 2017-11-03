@@ -85,6 +85,8 @@ namespace AguaSB.Usuarios.ViewModels
         public DelegateCommand DesactivarFiltrosComando { get; }
         public DelegateCommand MostrarColumnasTodasComando { get; }
         public AsyncDelegateCommand<ResultadoSolicitud> BuscarComando { get; }
+
+        public DelegateCommand AgregarContratoComando { get; }
         #endregion
 
         #region Eventos
@@ -97,23 +99,27 @@ namespace AguaSB.Usuarios.ViewModels
         public IRepositorio<Seccion> SeccionesRepo { get; }
         public IRepositorio<TipoContrato> TiposContratoRepo { get; }
         public IRepositorio<Tarifa> TarifasRepo { get; }
+
+        private INavegador Navegador { get; }
         #endregion
 
         public INodo Nodo { get; }
 
         public Listado(IRepositorio<Usuario> usuariosRepo, IRepositorio<Seccion> seccionesRepo, IRepositorio<TipoContrato> tiposContratoRepo,
-            IRepositorio<Tarifa> tarifasRepo)
+            IRepositorio<Tarifa> tarifasRepo, INavegador navegador)
         {
             UsuariosRepo = usuariosRepo ?? throw new ArgumentNullException(nameof(usuariosRepo));
             SeccionesRepo = seccionesRepo ?? throw new ArgumentNullException(nameof(seccionesRepo));
             TiposContratoRepo = tiposContratoRepo ?? throw new ArgumentNullException(nameof(tiposContratoRepo));
             TarifasRepo = tarifasRepo ?? throw new ArgumentNullException(nameof(tarifasRepo));
+            Navegador = navegador ?? throw new ArgumentNullException(nameof(navegador));
 
             Nodo = new Nodo { PrimeraEntrada = Inicializar, Entrada = Entrar };
 
             DesactivarFiltrosComando = new DelegateCommand(DesactivarFiltros);
             MostrarColumnasTodasComando = new DelegateCommand(MostrarColumnasTodas);
             BuscarComando = new AsyncDelegateCommand<ResultadoSolicitud>(Buscar, multipleExecutionSupported: true);
+            AgregarContratoComando = new DelegateCommand(AgregarContrato);
 
             RegistrarAgrupadores();
 
@@ -214,6 +220,18 @@ namespace AguaSB.Usuarios.ViewModels
 
         private void DesactivarFiltros() => Solicitud.Filtros.Todos.ForEach(f => f.Activo = false);
 
+        private void AgregarContrato(object o)
+        {
+            if (o is ResultadoUsuario u)
+            {
+                Navegador.Navegar("Contratos/Agregar", u.Usuario.Id);
+            }
+            else
+            {
+                // TODO: Log
+            }
+        }
+
         #region Inicializacion
         private IDictionary<Seccion, IList<Calle>> CallesAgrupadas;
         private IDictionary<ClaseContrato, IList<TipoContrato>> TiposContratoAgrupados;
@@ -266,6 +284,7 @@ namespace AguaSB.Usuarios.ViewModels
         private Task Entrar(object arg)
         {
             Enfocar?.Invoke(this, EventArgs.Empty);
+            BuscarComando.Execute(null);
             return Task.CompletedTask;
         }
 
