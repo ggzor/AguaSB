@@ -123,6 +123,7 @@ namespace AguaSB.Usuarios.ViewModels
                 Filtros = new Filtros(),
                 Columnas = Columnas.Todas
             };
+            Solicitud.Columnas.UltimoPago = false;
             Solicitud.Columnas.FechaRegistro = false;
 
             Estado = new EstadoBusqueda();
