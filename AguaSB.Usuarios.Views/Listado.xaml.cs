@@ -32,6 +32,7 @@ namespace AguaSB.Usuarios.Views
             }
 
             ViewModel.AgrupadorCambiado += AgrupadorCambiado;
+            ViewModel.Enfocar += (_, __) => Busqueda.Focus();
         }
 
         public IDictionary Iconos { get; } = new Dictionary<string, UIElement>

@@ -89,6 +89,7 @@ namespace AguaSB.Usuarios.ViewModels
 
         #region Eventos
         public event EventHandler<Agrupador> AgrupadorCambiado;
+        public event EventHandler Enfocar;
         #endregion
 
         #region Servicios
@@ -108,7 +109,7 @@ namespace AguaSB.Usuarios.ViewModels
             TiposContratoRepo = tiposContratoRepo ?? throw new ArgumentNullException(nameof(tiposContratoRepo));
             TarifasRepo = tarifasRepo ?? throw new ArgumentNullException(nameof(tarifasRepo));
 
-            Nodo = new Nodo { PrimeraEntrada = Inicializar };
+            Nodo = new Nodo { PrimeraEntrada = Inicializar, Entrada = Entrar };
 
             DesactivarFiltrosComando = new DelegateCommand(DesactivarFiltros);
             MostrarColumnasTodasComando = new DelegateCommand(MostrarColumnasTodas);
@@ -261,6 +262,12 @@ namespace AguaSB.Usuarios.ViewModels
             }
         }
         #endregion
+
+        private Task Entrar(object arg)
+        {
+            Enfocar?.Invoke(this, EventArgs.Empty);
+            return Task.CompletedTask;
+        }
 
         private async Task<ResultadoSolicitud> Buscar()
         {
