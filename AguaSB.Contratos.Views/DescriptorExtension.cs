@@ -25,7 +25,7 @@ namespace AguaSB.Contratos.Views
         public string Version => "v0.1.0";
 
         public string Descripcion =>
-            "Administrar y ver contratos de los usuarios.";
+            "Administrar los contratos de los usuarios y las tarifas en el sistema.";
 
         public FrameworkElement Icono { get; } = new PackIconModern()
         {
