@@ -247,14 +247,14 @@ namespace AguaSB.Usuarios.ViewModels
             Secciones = CallesAgrupadas.Keys.OrderBy(_ => _.Orden).ToList();
             ClasesContrato = TiposContratoAgrupados.Keys.ToList();
 
-            if (Secciones.FirstOrDefault() is var seccion)
+            if (Secciones.FirstOrDefault() is Seccion seccion)
             {
                 Solicitud.Filtros.Seccion.Valor = seccion;
 
                 ActualizarListadoDeCalles();
             }
 
-            if (ClasesContrato.FirstOrDefault() is var claseContrato)
+            if (ClasesContrato.FirstOrDefault() is ClaseContrato claseContrato)
             {
                 Solicitud.Filtros.ClaseContrato.Valor = claseContrato;
 
@@ -264,7 +264,7 @@ namespace AguaSB.Usuarios.ViewModels
 
         private void ActualizarListadoDeCalles()
         {
-            if (Solicitud.Filtros.Seccion.Valor is var seccion)
+            if (Solicitud.Filtros.Seccion.Valor is Seccion seccion)
             {
                 Calles = CallesAgrupadas[seccion];
                 Solicitud.Filtros.Calle.Valor = Calles.FirstOrDefault();

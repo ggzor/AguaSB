@@ -20,7 +20,7 @@ namespace AguaSB
 
         public async Task VolverAPrincipal()
         {
-            if (Vista.Children.Count > 1 && Vista.Children.OfType<FrameworkElement>().Last() is var elem)
+            if (Vista.Children.Count > 1 && Vista.Children.OfType<FrameworkElement>().Last() is FrameworkElement elem)
             {
                 await Animaciones.RemoverDeVista(Vista, elem);
             }
