@@ -23,7 +23,7 @@ namespace AguaSB.Usuarios.ViewModels
     public class Listado : ValidatableModel, IViewModel
     {
         #region Configuracion
-        private const double TiempoEsperaBusqueda = 1.5;
+        private static readonly TimeSpan TiempoEsperaBusqueda = TimeSpan.FromSeconds(1.5);
         #endregion
 
         #region Campos
@@ -128,12 +128,20 @@ namespace AguaSB.Usuarios.ViewModels
             Estado = new EstadoBusqueda();
         }
 
-        private void RegistrarAgrupadores()
+        private async void RegistrarAgrupadores()
         {
+            await Task.Delay(30);
+
             string ExtraerMes(object objeto) =>
                             objeto is DateTime d
                             ? Cadenas.Capitalizar(d.ToString("MMMM yyyy"))
                             : "Desconocido";
+
+            string Clasificar(decimal d)
+            {
+                var residuo = d / 500;
+                return $"{residuo * 500:C} - {(residuo + 1) * 500:C}";
+            }
 
             CriteriosAgrupacion = new[]
             {
@@ -157,6 +165,54 @@ namespace AguaSB.Usuarios.ViewModels
             };
         }
 
+        private IDisposable Propiedades;
+
+        private void RegistrarUniones(PropertyChangedEventArgs args)
+        {
+            if (args.PropertyName == nameof(Solicitud))
+            {
+                Propiedades?.Dispose();
+
+                var excepto = new HashSet<string>
+                {
+                    nameof(Solicitud.Agrupador), nameof(Solicitud.Columnas)
+                };
+
+                var filtros = Solicitud.Filtros.Todos
+                    .Select(NotifyPropertyChangedEx.ToObservableProperties)
+                    .Merge()
+                    .Throttle(TimeSpan.FromMilliseconds(300)) // Tiempo de espera para la primera actualizacion realizada por la interfaz de usuario.
+                    .Skip(1);
+
+                var props = new INotifyPropertyChanged[] { Solicitud, Solicitud.Filtros }
+                    .Select(NotifyPropertyChangedEx.ToObservableProperties)
+                    .Concat(new[] { filtros });
+
+                Propiedades = props.Merge()
+                    .Where(_ => !excepto.Contains(_.Args.PropertyName))
+                    .Throttle(TiempoEsperaBusqueda)
+                    .Skip(1)
+                    .Subscribe(_ => BuscarComando.Execute(null));
+
+                Solicitud.Filtros.Seccion.ToObservableProperties()
+                    .Where(_ => _.Args.PropertyName == nameof(Solicitud.Filtros.Calle.Valor))
+                    .Subscribe(_ => ActualizarListadoDeCalles());
+
+                Solicitud.Filtros.ClaseContrato.ToObservableProperties()
+                    .Where(_ => _.Args.PropertyName == nameof(Solicitud.Filtros.ClaseContrato.Valor))
+                    .Subscribe(_ => ActualizarListadoDeTiposContrato());
+
+                Solicitud.ToObservableProperties()
+                .Where(_ => _.Args.PropertyName == nameof(Solicitud.Agrupador))
+                .Subscribe(_ => AgrupadorCambiado?.Invoke(this, Solicitud.Agrupador));
+            }
+        }
+
+        private void MostrarColumnasTodas() => Solicitud.Columnas = Columnas.Todas;
+
+        private void DesactivarFiltros() => Solicitud.Filtros.Todos.ForEach(f => f.Activo = false);
+
+        #region Inicializacion
         private IDictionary<Seccion, IList<Calle>> CallesAgrupadas;
         private IDictionary<ClaseContrato, IList<TipoContrato>> TiposContratoAgrupados;
 
@@ -203,43 +259,7 @@ namespace AguaSB.Usuarios.ViewModels
                 Solicitud.Filtros.TipoContrato.Valor = TiposContrato.FirstOrDefault();
             }
         }
-
-        private IDisposable Propiedades;
-
-        private void RegistrarUniones(PropertyChangedEventArgs args)
-        {
-            if (args.PropertyName == nameof(Solicitud))
-            {
-                Propiedades?.Dispose();
-
-                var excepto = new HashSet<string>
-                {
-                    nameof(Solicitud.Agrupador), nameof(Solicitud.Columnas)
-                };
-
-                var props = new INotifyPropertyChanged[] { Solicitud, Solicitud.Filtros }
-                .Concat(Solicitud.Filtros.Todos)
-                .Select(_ => _.ToObservableProperties());
-
-                Propiedades = props.Merge()
-                    .Where(_ => !excepto.Contains(_.Args.PropertyName))
-                    .Throttle(TimeSpan.FromSeconds(TiempoEsperaBusqueda))
-                    .Skip(1)
-                    .Subscribe(_ => BuscarComando.Execute(null));
-
-                Solicitud.Filtros.Seccion.ToObservableProperties()
-                    .Where(_ => _.Args.PropertyName == nameof(Solicitud.Filtros.Calle.Valor))
-                    .Subscribe(_ => ActualizarListadoDeCalles());
-
-                Solicitud.ToObservableProperties()
-                .Where(_ => _.Args.PropertyName == nameof(Solicitud.Agrupador))
-                .Subscribe(_ => AgrupadorCambiado?.Invoke(this, Solicitud.Agrupador));
-            }
-        }
-
-        private void MostrarColumnasTodas() => Solicitud.Columnas = Columnas.Todas;
-
-        private void DesactivarFiltros() => Solicitud.Filtros.Todos.ForEach(f => f.Activo = false);
+        #endregion
 
         private async Task<ResultadoSolicitud> Buscar()
         {
@@ -258,12 +278,6 @@ namespace AguaSB.Usuarios.ViewModels
             estado.HayResultados = conteo > 0;
 
             return estado.HayResultados == true ? new ResultadoSolicitud { Resultados = resultados, Conteo = resultados.LongCount() } : null;
-        }
-
-        private string Clasificar(decimal d)
-        {
-            var residuo = d / 500;
-            return $"{residuo * 500:C} - {(residuo + 1) * 500:C}";
         }
     }
 }
