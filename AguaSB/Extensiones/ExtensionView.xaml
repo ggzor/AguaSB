@@ -18,8 +18,8 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Border Grid.Row="1" Grid.RowSpan="2" Background="White" Padding="10 70 10 10"
-                BorderBrush="#88000000" BorderThickness="1" SnapsToDevicePixels="True"
+        <Border Grid.Row="1" Grid.RowSpan="2" Background="White" Padding="20 70 20 10"
+                BorderBrush="#33000000" BorderThickness="1" SnapsToDevicePixels="True"
                 Style="{StaticResource DarkenBackground}">
             <StackPanel>
                 <TextBlock Text="{Binding Titulo}" TextAlignment="Center" 
@@ -47,7 +47,11 @@
         <Grid Grid.Row="0" Grid.RowSpan="2" Width="120" Height="120" 
               HorizontalAlignment="Center" VerticalAlignment="Center" 
               RenderTransform="{StaticResource Translate}">
-            <Ellipse Width="120" Height="120" Fill="{Binding FondoIcono}"/>
+            <Ellipse Width="120" Height="120" Fill="{Binding FondoIcono}">
+                <Ellipse.Effect>
+                    <DropShadowEffect Opacity="0.3" Direction="270"/>
+                </Ellipse.Effect>
+            </Ellipse>
             <ContentControl Content="{Binding Icono}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Grid>
     </Grid>
