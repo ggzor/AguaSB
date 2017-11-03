@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Media;
 
 using MahApps.Metro.IconPacks;
@@ -117,6 +118,20 @@ namespace AguaSB.Usuarios.Views
         private void MostrarFiltros(object sender, RoutedEventArgs e) => Filtros.IsOpen = true;
 
         private void MostrarFiltrosColumnas(object sender, RoutedEventArgs e) => FiltrosColumnas.IsOpen = true;
+
+        private void ManejarTeclas(object sender, KeyEventArgs e)
+        {
+            if (e.KeyboardDevice.Modifiers.HasFlag(ModifierKeys.Control))
+            {
+                switch (e.Key)
+                {
+                    case Key.C:
+                        if (AgregarContrato.IsEnabled)
+                            AgregarContrato.Command?.Execute(ListaResultados.SelectedItem);
+                        break;
+                }
+            }
+        }
     }
 
     public class SortAdorner : Adorner

@@ -30,7 +30,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid Style="{StaticResource CorrectTextRendering}">
+    <Grid Style="{StaticResource CorrectTextRendering}" PreviewKeyDown="ManejarTeclas">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -193,7 +193,7 @@
             </Popup>
 
             <StackPanel Grid.Column="2" Margin="0 0 16 0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                <Button Name="AgregarContrato" Margin="0 0 10 0" ToolTip="Agregar contrato" Foreground="White" Style="{StaticResource UtilityButton}"
+                <Button Name="AgregarContrato" Margin="0 0 10 0" ToolTip="Agregar contrato (Ctrl + C)" Foreground="White" Style="{StaticResource UtilityButton}"
                         Content="{icons:PackIconModern Kind=Add, Width=20, Height=20}" Command="{Binding AgregarContratoComando}" CommandParameter="{Binding ElementName=ListaResultados, Path=SelectedItem}"
                         IsEnabled="{Binding ElementName=ListaResultados, Path=SelectedItems.Count, Converter={StaticResource EqualsTo}, ConverterParameter=1}"/>
                 <Button Name="FiltrosColumnasBoton" ToolTip="Configuración" Click="MostrarFiltrosColumnas" Foreground="White" Style="{StaticResource UtilityButton}" 
