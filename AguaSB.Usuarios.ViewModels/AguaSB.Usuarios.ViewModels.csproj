@@ -80,7 +80,7 @@
       <Name>AguaSB.Navegacion</Name>
     </ProjectReference>
     <ProjectReference Include="..\AguaSB.Nucleo.Datos\AguaSB.Nucleo.Datos.csproj">
-      <Project>{EBEB09B5-EB4D-495B-AA6A-4504F21554AD}</Project>
+      <Project>{ebeb09b5-eb4d-495b-aa6a-4504f21554ad}</Project>
       <Name>AguaSB.Nucleo.Datos</Name>
     </ProjectReference>
     <ProjectReference Include="..\AguaSB.Nucleo\AguaSB.Nucleo.csproj">

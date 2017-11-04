@@ -60,7 +60,7 @@
       <Name>AguaSB.ViewModels</Name>
     </ProjectReference>
     <ProjectReference Include="..\AguaSB.Views\AguaSB.Views.csproj">
-      <Project>{2FB7CB7E-CAB1-47CC-A509-8DAA4408B580}</Project>
+      <Project>{2fb7cb7e-cab1-47cc-a509-8daa4408b580}</Project>
       <Name>AguaSB.Views</Name>
     </ProjectReference>
   </ItemGroup>
