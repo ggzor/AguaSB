@@ -14,6 +14,8 @@ namespace AguaSB.Usuarios.Views.Controles
             InitializeComponent();
         }
 
+        public void Enfocar() => Nombre.Focus();
+
         #region Props
         public Persona Persona
         {
