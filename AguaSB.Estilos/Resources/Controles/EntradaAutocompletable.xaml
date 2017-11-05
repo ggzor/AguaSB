@@ -173,7 +173,7 @@
     </ControlTemplate>
 
     <Style x:Key="MaterialDesignComboBox2" TargetType="{x:Type ComboBox}">
-        <Setter Property="wpf:ComboBoxAssist.ShowSelectedItem" Value="{StaticResource TrueValue}"/>
+        <Setter Property="wpf:ComboBoxAssist.ShowSelectedItem" Value="True"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesignTextBoxBorder}"/>
@@ -203,10 +203,10 @@
             <Trigger Property="IsEditable" Value="true">
                 <Setter Property="IsTabStop" Value="false" />
                 <!-- designer prefers hard bool -->
-                <Setter Property="wpf:ComboBoxAssist.ShowSelectedItem" Value="{StaticResource TrueValue}" />
+                <Setter Property="wpf:ComboBoxAssist.ShowSelectedItem" Value="True" />
             </Trigger>
             <!-- designer prefers hard bool -->
-            <Trigger Property="wpf:ComboBoxAssist.ShowSelectedItem" Value="{StaticResource TrueValue}" >
+            <Trigger Property="wpf:ComboBoxAssist.ShowSelectedItem" Value="True" >
                 <Setter Property="ItemContainerStyle" Value="{StaticResource MaterialDesignComboBoxItemStyle}" />
             </Trigger>
         </Style.Triggers>
@@ -226,7 +226,7 @@
         <Setter Property="wpf:HintAssist.FloatingScale" Value="1"/>
         <Setter Property="wpf:HintAssist.FloatingOffset" Value="0, -24"/>
         <Setter Property="Estilos:Foco.EnterAvanzaFoco" Value="True"/>
-        <Setter Property="wpf:ComboBoxAssist.ShowSelectedItem" Value="{StaticResource TrueValue}"/>
+        <Setter Property="wpf:ComboBoxAssist.ShowSelectedItem" Value="True"/>
 
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FontSize" Value="18"/>

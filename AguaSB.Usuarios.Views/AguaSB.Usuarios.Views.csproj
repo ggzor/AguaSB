@@ -79,6 +79,12 @@
     <Compile Include="Agregar.xaml.cs">
       <DependentUpon>Agregar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controles\ContactosView.xaml.cs">
+      <DependentUpon>ContactosView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controles\PersonaView.xaml.cs">
+      <DependentUpon>PersonaView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DescriptorExtension.cs" />
     <Compile Include="Listado.xaml.cs">
       <DependentUpon>Listado.xaml</DependentUpon>
@@ -112,6 +118,14 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Agregar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controles\ContactosView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controles\PersonaView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
