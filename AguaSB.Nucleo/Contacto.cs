@@ -57,11 +57,15 @@ namespace AguaSB.Nucleo
                     string expresionRegular = contacto.TipoContacto.ExpresionRegular;
 
                     if (string.IsNullOrEmpty(expresionRegular))
+                    {
                         return ValidationResult.Success;
+                    }
                     else
+                    {
                         return Regex.IsMatch(informacion, expresionRegular)
-                            ? ValidationResult.Success
-                            : new ValidationResult($"El {contacto.TipoContacto.Nombre.ToLower()} no es válido.");
+                           ? ValidationResult.Success
+                           : new ValidationResult($"El {contacto.TipoContacto.Nombre.ToLower()} no es válido.");
+                    }
                 }
                 else
                 {
