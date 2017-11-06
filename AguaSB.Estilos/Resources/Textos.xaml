@@ -40,7 +40,8 @@
     </Style>
 
     <Style x:Key="error" TargetType="TextBlock" BasedOn="{StaticResource FadeTag}">
-        <Setter Property="FontSize" Value="{StaticResource TamanoH6}"/>
+        <Setter Property="FontSize" Value="{StaticResource TamanoH5}"/>
+        <Setter Property="FontWeight" Value="DemiBold"/>
         <Setter Property="Foreground" Value="{DynamicResource ValidationErrorBrush}"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
     </Style>
