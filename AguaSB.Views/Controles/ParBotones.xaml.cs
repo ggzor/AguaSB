@@ -2,9 +2,11 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 
+using AguaSB.Estilos;
+
 namespace AguaSB.Views.Controles
 {
-    public partial class ParBotones : UserControl
+    public partial class ParBotones : UserControl, IEnfocable
     {
         public ParBotones()
         {
@@ -12,6 +14,8 @@ namespace AguaSB.Views.Controles
             Primario = primario;
             Secundario = secundario;
         }
+
+        public void Enfocar() => Primario.Focus();
 
         public Button Secundario
         {

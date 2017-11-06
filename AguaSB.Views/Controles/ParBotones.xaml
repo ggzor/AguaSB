@@ -17,7 +17,8 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Button Name="secundario" Command="{Binding ElementName=This, Path=ComandoSecundario}" Content="{Binding ElementName=This, Path=TextoSecundario}" Style="{StaticResource DialogButton}"/>
+        <Button Name="secundario" Command="{Binding ElementName=This, Path=ComandoSecundario}" Content="{Binding ElementName=This, Path=TextoSecundario}" Style="{StaticResource DialogButton}"
+                Focusable="False"/>
         <Button Name="primario" Grid.Column="2" Command="{Binding ElementName=This, Path=ComandoPrimario}" Content="{Binding ElementName=This, Path=TextoPrimario}" 
                 Style="{StaticResource HighlightButton}"/>
     </Grid>

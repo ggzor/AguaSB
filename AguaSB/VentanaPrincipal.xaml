@@ -29,7 +29,7 @@
     <metro:MetroWindow.LeftWindowCommands>
         <metro:WindowCommands>
             <metro:WindowCommandsItem>
-                <Button Name="Atras" Click="VolverAPrincipal" Visibility="Collapsed">
+                <Button Name="Atras" Click="VolverAPrincipal" Focusable="False" Visibility="Collapsed">
                     <icons:PackIconModern Kind="ArrowLeft" Width="20" Height="20"/>
                 </Button>
             </metro:WindowCommandsItem>
