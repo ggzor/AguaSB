@@ -15,7 +15,7 @@ namespace AguaSB.Estilos
         {
             var valor = (bool)e.NewValue;
 
-            if (valor == true && d is UIElement elem)
+            if (valor && d is UIElement elem)
             {
                 elem.PreviewKeyDown += (src, args) =>
                 {
@@ -24,7 +24,10 @@ namespace AguaSB.Estilos
                     {
                         if (siguiente != null)
                         {
-                            siguiente.Focus();
+                            if (siguiente is IEnfocable enfocable)
+                                enfocable.Enfocar();
+                            else
+                                siguiente.Focus();
                         }
                         else
                         {
@@ -41,5 +44,10 @@ namespace AguaSB.Estilos
 
         public static void SetSiguienteFoco(UIElement elem, bool valor) => elem.SetValue(SiguienteFocoProperty, valor);
         public static bool GetSiguienteFoco(UIElement elem) => (bool)elem.GetValue(SiguienteFocoProperty);
+    }
+
+    public interface IEnfocable
+    {
+        void Enfocar();
     }
 }

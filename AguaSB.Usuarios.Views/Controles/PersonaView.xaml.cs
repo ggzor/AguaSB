@@ -3,11 +3,12 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
+using AguaSB.Estilos;
 using AguaSB.Nucleo;
 
 namespace AguaSB.Usuarios.Views.Controles
 {
-    public partial class PersonaView : UserControl
+    public partial class PersonaView : UserControl, IEnfocable
     {
         public PersonaView()
         {

@@ -1,11 +1,12 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
+using AguaSB.Estilos;
 using AguaSB.Nucleo;
 
 namespace AguaSB.Usuarios.Views.Controles
 {
-    public partial class NegocioView : UserControl
+    public partial class NegocioView : UserControl, IEnfocable
     {
         public NegocioView()
         {
