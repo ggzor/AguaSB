@@ -82,6 +82,9 @@
     <Compile Include="Controles\ContactosView.xaml.cs">
       <DependentUpon>ContactosView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controles\NegocioView.xaml.cs">
+      <DependentUpon>NegocioView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controles\PersonaView.xaml.cs">
       <DependentUpon>PersonaView.xaml</DependentUpon>
     </Compile>
@@ -122,6 +125,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controles\ContactosView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controles\NegocioView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

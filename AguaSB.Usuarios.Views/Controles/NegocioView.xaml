@@ -22,14 +22,14 @@
             <icons:PackIconMaterial Kind="City" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=Nombre}"
                                     Estilos:Icono.Enfocado="{Binding ElementName=Nombre, Path=IsKeyboardFocusWithin}"/>
             <TextBox Name="Nombre" Tag="Nombre" Estilos:Foco.SiguienteFoco="{Binding ElementName=Rfc}"
-                     Text="{Binding ElementName=This, Path=Negocio.Nombre, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"/>
+                     Text="{Binding ElementName=This, Path=Negocio.Nombre, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
         </DockPanel>
 
         <DockPanel>
             <icons:PackIconFontAwesome Kind="Registered" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=Rfc}"
                                        Estilos:Icono.Enfocado="{Binding ElementName=Rfc, Path=IsKeyboardFocusWithin}"/>
             <TextBox Name="Rfc" Tag="Rfc" Estilos:Foco.SiguienteFoco="{Binding ElementName=This, Path=(Estilos:Foco.SiguienteFoco)}"
-                     Text="{Binding ElementName=This, Path=Negocio.Rfc, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"/>
+                     Text="{Binding ElementName=This, Path=Negocio.Rfc, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
         </DockPanel>
     </StackPanel>
 </UserControl>
