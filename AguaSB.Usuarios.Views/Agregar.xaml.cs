@@ -28,9 +28,9 @@ namespace AguaSB.Usuarios.Views
         public void Enfocar()
         {
             if (TipoUsuario.SelectedIndex == 0)
-                NombreUsuario.Focus();
+                Persona.Enfocar();
             else if (TipoUsuario.SelectedIndex == 1)
-                NombreNegocio.Focus();
+                Negocio.Enfocar();
         }
     }
 }
