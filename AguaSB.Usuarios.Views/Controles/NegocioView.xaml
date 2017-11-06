@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="AguaSB.Usuarios.Views.Controles.NegocioView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:Estilos="clr-namespace:AguaSB.Estilos;assembly=AguaSB.Estilos"
+             mc:Ignorable="d" 
+             Background="White"
+             d:DesignHeight="500" d:DesignWidth="500"
+             Name="This">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Estilos.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <StackPanel>
+        <DockPanel>
+            <icons:PackIconMaterial Kind="City" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=Nombre}"
+                                    Estilos:Icono.Enfocado="{Binding ElementName=Nombre, Path=IsKeyboardFocusWithin}"/>
+            <TextBox Name="Nombre" Tag="Nombre" Estilos:Foco.SiguienteFoco="{Binding ElementName=Rfc}"
+                     Text="{Binding ElementName=This, Path=Negocio.Nombre, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"/>
+        </DockPanel>
+
+        <DockPanel>
+            <icons:PackIconFontAwesome Kind="Registered" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=Rfc}"
+                                       Estilos:Icono.Enfocado="{Binding ElementName=Rfc, Path=IsKeyboardFocusWithin}"/>
+            <TextBox Name="Rfc" Tag="Rfc" Estilos:Foco.SiguienteFoco="{Binding ElementName=This, Path=(Estilos:Foco.SiguienteFoco)}"
+                     Text="{Binding ElementName=This, Path=Negocio.Rfc, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"/>
+        </DockPanel>
+    </StackPanel>
+</UserControl>
