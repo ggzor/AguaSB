@@ -30,5 +30,7 @@
 
     <Style x:Key="ActionButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignFloatingActionButton}"/>
 
-    <Style x:Key="UtilityButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignToolButton}"/>
+    <Style x:Key="UtilityButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignToolButton}">
+        <Setter Property="material:RippleAssist.RippleSizeMultiplier" Value="0.3"/>
+    </Style>
 </ResourceDictionary>
