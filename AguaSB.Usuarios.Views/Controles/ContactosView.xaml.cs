@@ -34,6 +34,8 @@ namespace AguaSB.Usuarios.Views.Controles
             BuscarYUnirRecursos();
 
             ((INotifyCollectionChanged)Lista.Items).CollectionChanged += ContactosCambiados;
+
+            Contactos = new ObservableCollection<Contacto>();
         }
 
         private void BuscarYUnirRecursos()
@@ -153,7 +155,7 @@ namespace AguaSB.Usuarios.Views.Controles
             DependencyProperty.Register(nameof(TiposContacto), typeof(IEnumerable<TipoContacto>), typeof(ContactosView), new PropertyMetadata(Enumerable.Empty<TipoContacto>()));
 
         public static readonly DependencyProperty ContactosProperty =
-            DependencyProperty.Register(nameof(Contactos), typeof(ObservableCollection<Contacto>), typeof(ContactosView), new PropertyMetadata(new ObservableCollection<Contacto>()));
+            DependencyProperty.Register(nameof(Contactos), typeof(ObservableCollection<Contacto>), typeof(ContactosView), new PropertyMetadata(null));
 
         public static readonly DependencyProperty EditableProperty =
             DependencyProperty.Register(nameof(Editable), typeof(bool), typeof(ContactosView), new PropertyMetadata(true));
