@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Input;
 using System.Linq;
@@ -22,7 +23,6 @@ namespace AguaSB.Usuarios.ViewModels
     public class Agregar : ValidatableModel, IViewModel
     {
         #region Campos
-
         // Serán inicializadas junto con los comandos.
         private Persona persona;
         private Negocio negocio;
@@ -33,10 +33,10 @@ namespace AguaSB.Usuarios.ViewModels
         private bool puedeReestablecerNegocio = true;
         private bool mostrarMensajeErrorNegocio = true;
 
+        private IEnumerable<TipoContacto> tiposContacto;
         #endregion
 
         #region Propiedades
-
         private Usuario Usuario { get; set; }
 
         public Persona Persona
@@ -68,7 +68,7 @@ namespace AguaSB.Usuarios.ViewModels
             get { return puedeReestablecerPersona; }
             set
             {
-                puedeReestablecerPersona = value;
+                SetProperty(ref puedeReestablecerPersona, value);
                 ReestablecerPersonaComando.RaiseCanExecuteChanged();
             }
         }
@@ -78,11 +78,16 @@ namespace AguaSB.Usuarios.ViewModels
             get { return puedeReestablecerNegocio; }
             set
             {
-                puedeReestablecerNegocio = value;
+                SetProperty(ref puedeReestablecerNegocio, value);
                 ReestablecerNegocioComando.RaiseCanExecuteChanged();
             }
         }
 
+        public IEnumerable<TipoContacto> TiposContacto
+        {
+            get { return tiposContacto; }
+            set { SetProperty(ref tiposContacto, value); }
+        }
         #endregion
 
         #region Comandos
@@ -124,7 +129,7 @@ namespace AguaSB.Usuarios.ViewModels
                 () => new[] { AgregarPersonaComando, AgregarNegocioComando });
         }
 
-        private void ConfigurarComandos()
+        private async void ConfigurarComandos()
         {
             var telefono = new TipoContacto() { Nombre = "Teléfono", ExpresionRegular = @"\A[0-9 ]*\z" };
 
@@ -158,6 +163,9 @@ namespace AguaSB.Usuarios.ViewModels
 
             AgregarPersonaComando = new AsyncDelegateCommand<int>(AgregarPersona, PuedeAgregarPersona);
             AgregarNegocioComando = new AsyncDelegateCommand<int>(AgregarNegocio, PuedeAgregarNegocio);
+
+            await Task.Delay(100);
+            TiposContacto = new[] { telefono };
         }
 
         private async Task Entrar(object arg)
@@ -181,16 +189,16 @@ namespace AguaSB.Usuarios.ViewModels
                 .ToArray())
             && !Negocio.TieneCamposRequeridosVacios && !Negocio.Representante.TieneCamposRequeridosVacios;
 
-        private async Task<int> AgregarPersona(IProgress<(double, string)> progreso)
+        private Task<int> AgregarPersona(IProgress<(double, string)> progreso)
         {
             MostrarMensajeErrorPersona = true;
-            return await AgregarUsuarioManejando(Persona, b => PuedeReestablecerPersona = b, ReestablecerPersonaComando, progreso);
+            return AgregarUsuarioManejando(Persona, b => PuedeReestablecerPersona = b, ReestablecerPersonaComando, progreso);
         }
 
-        private async Task<int> AgregarNegocio(IProgress<(double, string)> progreso)
+        private Task<int> AgregarNegocio(IProgress<(double, string)> progreso)
         {
             MostrarMensajeErrorNegocio = true;
-            return await AgregarUsuarioManejando(Negocio, b => PuedeReestablecerNegocio = b, ReestablecerNegocioComando, progreso);
+            return AgregarUsuarioManejando(Negocio, b => PuedeReestablecerNegocio = b, ReestablecerNegocioComando, progreso);
         }
 
         private async Task<int> AgregarUsuarioManejando(Usuario usuario, Action<bool> puedeReestablecer, ICommand reestablecer, IProgress<(double, string)> progreso)
@@ -222,6 +230,8 @@ namespace AguaSB.Usuarios.ViewModels
         private async Task<int> AgregarUsuario(IProgress<(double, string)> progreso = null)
         {
             progreso.Report((0.0, "Buscando duplicados..."));
+
+            await Task.Delay(-1);
 
             if (await OperacionesUsuarios.BuscarDuplicadosAsync(Usuario, Usuarios) is Usuario u)
                 throw new Exception($"El usuario \"{u.NombreCompleto}\" ya está registrado en el sistema.");
