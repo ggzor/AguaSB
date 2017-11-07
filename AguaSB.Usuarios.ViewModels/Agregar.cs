@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 using System.Linq;
@@ -34,6 +35,9 @@ namespace AguaSB.Usuarios.ViewModels
         private bool mostrarMensajeErrorNegocio = true;
 
         private IEnumerable<TipoContacto> tiposContacto;
+        private ObservableCollection<Contacto> contactosPersona = new ObservableCollection<Contacto>();
+        private ObservableCollection<Contacto> contactosNegocio = new ObservableCollection<Contacto>();
+        private ObservableCollection<Contacto> contactosRepresentante = new ObservableCollection<Contacto>();
         #endregion
 
         #region Propiedades
@@ -88,74 +92,109 @@ namespace AguaSB.Usuarios.ViewModels
             get { return tiposContacto; }
             set { SetProperty(ref tiposContacto, value); }
         }
+
+        public ObservableCollection<Contacto> ContactosPersona
+        {
+            get { return contactosPersona; }
+            set { SetProperty(ref contactosPersona, value); }
+        }
+
+        public ObservableCollection<Contacto> ContactosNegocio
+        {
+            get { return contactosNegocio; }
+            set { SetProperty(ref contactosNegocio, value); }
+        }
+
+        public ObservableCollection<Contacto> ContactosRepresentante
+        {
+            get { return contactosRepresentante; }
+            set { SetProperty(ref contactosRepresentante, value); }
+        }
         #endregion
 
         #region Comandos
+        private DelegateCommand reestablecerPersonaComando;
+        private DelegateCommand reestablecerNegocioComando;
 
-        public DelegateCommand ReestablecerPersonaComando { get; private set; }
-        public DelegateCommand ReestablecerNegocioComando { get; private set; }
+        private AsyncDelegateCommand<int> agregarPersonaComando;
+        private AsyncDelegateCommand<int> agregarNegocioComando;
 
-        public AsyncDelegateCommand<int> AgregarPersonaComando { get; private set; }
-        public AsyncDelegateCommand<int> AgregarNegocioComando { get; private set; }
+        public DelegateCommand ReestablecerPersonaComando
+        {
+            get { return reestablecerPersonaComando; }
+            private set { SetProperty(ref reestablecerPersonaComando, value); }
+        }
 
+        public DelegateCommand ReestablecerNegocioComando
+        {
+            get { return reestablecerNegocioComando; }
+            private set { SetProperty(ref reestablecerNegocioComando, value); }
+        }
+
+        public AsyncDelegateCommand<int> AgregarPersonaComando
+        {
+            get { return agregarPersonaComando; }
+            private set { SetProperty(ref agregarPersonaComando, value); }
+        }
+
+        public AsyncDelegateCommand<int> AgregarNegocioComando
+        {
+            get { return agregarNegocioComando; }
+            set { SetProperty(ref agregarNegocioComando, value); }
+        }
         #endregion
 
         #region Dependencias
+        private IRepositorio<Usuario> UsuariosRepo { get; }
+        private IRepositorio<TipoContacto> TiposContactoRepo { get; }
+
         public INavegador Navegador { get; }
-        public IRepositorio<Usuario> Usuarios { get; set; }
         #endregion
 
         public event EventHandler Enfocar;
 
         public INodo Nodo { get; }
 
-        public Agregar(IRepositorio<Usuario> usuarios, INavegador navegador)
+        public Agregar(IRepositorio<Usuario> usuariosRepo, IRepositorio<TipoContacto> tiposContactoRepo, INavegador navegador)
         {
-            Usuarios = usuarios ?? throw new ArgumentNullException(nameof(usuarios));
+            UsuariosRepo = usuariosRepo ?? throw new ArgumentNullException(nameof(usuariosRepo));
+            TiposContactoRepo = tiposContactoRepo ?? throw new ArgumentNullException(nameof(tiposContactoRepo));
+
             Navegador = navegador ?? throw new ArgumentNullException(nameof(navegador));
 
             Nodo = new Nodo { Entrada = Entrar };
-
-            ConfigurarComandos();
-
-            new VerificadorPropiedades(this,
-                () => new INotifyDataErrorInfo[] {
-                    Persona, Negocio, Negocio.Representante,
-                }
-                .Concat(Persona.Contactos)
-                .Concat(Negocio.Contactos)
-                .Concat(Negocio.Representante.Contactos),
-                () => new[] { this },
-                () => new[] { AgregarPersonaComando, AgregarNegocioComando });
         }
 
-        private async void ConfigurarComandos()
+        private void ConfigurarComandos()
         {
-            var telefono = new TipoContacto() { Nombre = "Teléfono", ExpresionRegular = @"\A[0-9 ]*\z" };
-
             ReestablecerPersonaComando = new DelegateCommand(() =>
             {
-                var persona = new Persona();
-                persona.Contactos.Add(new Contacto() { TipoContacto = telefono });
+                Persona = new Persona();
 
-                Persona = persona;
+                ContactosPersona.Clear();
+                IntentarAgregarTelefono(ContactosPersona);
 
                 MostrarMensajeErrorPersona = false;
+
+                InvocarEnfocar();
             }, () => PuedeReestablecerPersona);
 
             ReestablecerNegocioComando = new DelegateCommand(() =>
             {
-                var negocio = new Negocio()
+                Negocio = new Negocio()
                 {
                     Representante = new Persona()
                 };
 
-                negocio.Contactos.Add(new Contacto() { TipoContacto = telefono });
-                negocio.Representante.Contactos.Add(new Contacto() { TipoContacto = telefono });
+                ContactosNegocio.Clear();
+                ContactosRepresentante.Clear();
 
-                Negocio = negocio;
+                IntentarAgregarTelefono(ContactosNegocio);
+                IntentarAgregarTelefono(ContactosRepresentante);
 
                 MostrarMensajeErrorNegocio = false;
+
+                InvocarEnfocar();
             }, () => PuedeReestablecerNegocio);
 
             ReestablecerPersonaComando.Execute(null);
@@ -163,61 +202,95 @@ namespace AguaSB.Usuarios.ViewModels
 
             AgregarPersonaComando = new AsyncDelegateCommand<int>(AgregarPersona, PuedeAgregarPersona);
             AgregarNegocioComando = new AsyncDelegateCommand<int>(AgregarNegocio, PuedeAgregarNegocio);
-
-            await Task.Delay(100);
-            TiposContacto = new[] { telefono };
         }
 
-        private async Task Entrar(object arg)
+        private async void InvocarEnfocar()
         {
-            await Task.Delay(20);
+            await Task.Delay(100).ConfigureAwait(true);
+
             Enfocar?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void ConfigurarUniones() =>
+            new VerificadorPropiedades(this,
+                () => new INotifyDataErrorInfo[] {
+                Persona, Negocio, Negocio.Representante,
+                }
+                .Concat(new[] { ContactosPersona, ContactosNegocio, ContactosRepresentante }.SelectMany(_ => _)),
+                () => new INotifyPropertyChanged[] { this, ContactosPersona, ContactosNegocio, ContactosRepresentante },
+                () => new[] { AgregarPersonaComando, AgregarNegocioComando });
+
+        private void IntentarAgregarTelefono(ObservableCollection<Contacto> lista)
+        {
+            if (TiposContacto.SingleOrDefault(_ => _.Nombre == "Teléfono") is TipoContacto tipoContacto)
+                lista.Add(new Contacto { TipoContacto = tipoContacto });
+        }
+
+        private Task Entrar(object arg)
+        {
+            TiposContacto = TiposContactoRepo.Datos.ToList();
+
+            ConfigurarComandos();
+            ConfigurarUniones();
+
+            InvocarEnfocar();
+
+            return Task.CompletedTask;
         }
 
         private bool PuedeAgregarPersona() =>
             UtileriasErrores.NingunoTieneErrores(
-                (Persona as INotifyDataErrorInfo)
-                .Concat(Persona.Contactos)
+                ((INotifyDataErrorInfo)Persona)
+                .Concat(ContactosPersona)
                 .ToArray())
             && !Persona.TieneCamposRequeridosVacios;
 
         private bool PuedeAgregarNegocio() =>
             UtileriasErrores.NingunoTieneErrores(
                 new INotifyDataErrorInfo[] { Negocio, Negocio.Representante }
-                .Concat(Negocio.Contactos)
-                .Concat(Negocio.Representante.Contactos)
+                .Concat(ContactosNegocio)
+                .Concat(ContactosRepresentante)
                 .ToArray())
             && !Negocio.TieneCamposRequeridosVacios && !Negocio.Representante.TieneCamposRequeridosVacios;
 
         private Task<int> AgregarPersona(IProgress<(double, string)> progreso)
         {
             MostrarMensajeErrorPersona = true;
+
+            Persona.Contactos = ContactosPersona.ToList();
+
             return AgregarUsuarioManejando(Persona, b => PuedeReestablecerPersona = b, ReestablecerPersonaComando, progreso);
         }
 
         private Task<int> AgregarNegocio(IProgress<(double, string)> progreso)
         {
             MostrarMensajeErrorNegocio = true;
+
+            Negocio.Contactos = ContactosNegocio.ToList();
+            Negocio.Representante.Contactos = ContactosRepresentante.ToList();
+
             return AgregarUsuarioManejando(Negocio, b => PuedeReestablecerNegocio = b, ReestablecerNegocioComando, progreso);
         }
 
         private async Task<int> AgregarUsuarioManejando(Usuario usuario, Action<bool> puedeReestablecer, ICommand reestablecer, IProgress<(double, string)> progreso)
         {
             foreach (var contacto in usuario.Contactos.ToArray())
+            {
                 if (string.IsNullOrWhiteSpace(contacto?.Informacion))
                     usuario.Contactos.Remove(contacto);
+            }
 
             puedeReestablecer(false);
             Usuario = usuario;
 
             try
             {
-                var resultado = await AgregarUsuario(progreso);
+                var resultado = await AgregarUsuario(progreso).ConfigureAwait(true);
 
                 puedeReestablecer(true);
                 reestablecer.Execute(null);
 
-                await Navegador.Navegar("Contratos/Agregar", resultado);
+                await Navegador.Navegar("Contratos/Agregar", resultado).ConfigureAwait(true);
 
                 return resultado;
             }
@@ -231,14 +304,12 @@ namespace AguaSB.Usuarios.ViewModels
         {
             progreso.Report((0.0, "Buscando duplicados..."));
 
-            await Task.Delay(-1);
-
-            if (await OperacionesUsuarios.BuscarDuplicadosAsync(Usuario, Usuarios) is Usuario u)
+            if (await OperacionesUsuarios.BuscarDuplicadosAsync(Usuario, UsuariosRepo).ConfigureAwait(false) is Usuario u)
                 throw new Exception($"El usuario \"{u.NombreCompleto}\" ya está registrado en el sistema.");
 
             progreso.Report((50.0, "Agregando usuario..."));
 
-            var usuario = await Usuarios.Agregar(Usuario);
+            var usuario = await UsuariosRepo.Agregar(Usuario).ConfigureAwait(false);
 
             progreso.Report((100.0, "Completado."));
 

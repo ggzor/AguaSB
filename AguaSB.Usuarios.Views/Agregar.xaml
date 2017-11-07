@@ -61,6 +61,7 @@
                                                    Editable="{Binding PuedeReestablecerPersona}"/>
 
                             <Controles:ContactosView x:Name="ContactosPersona" Estilos:Foco.SiguienteFoco="{Binding ElementName=BotonesPersona}"
+                                                     Contactos="{Binding ContactosPersona}"
                                                      TiposContacto="{Binding TiposContacto}" Editable="{Binding PuedeReestablecerPersona}"/>
 
                             <TextBlock Margin="45 0 0 0" Name="MensajeErrorPersona" Tag="{Binding MostrarMensajeErrorPersona}" Style="{StaticResource error}"
@@ -88,6 +89,7 @@
                                                    Editable="{Binding PuedeReestablecerNegocio}"/>
 
                             <Controles:ContactosView x:Name="ContactosNegocio" Estilos:Foco.SiguienteFoco="{Binding ElementName=Representante}"
+                                                     Contactos="{Binding ContactosNegocio}"
                                                      TiposContacto="{Binding TiposContacto}" Editable="{Binding PuedeReestablecerNegocio}"/>
 
                             <TextBlock Margin="0 20" Text="Representante:" Opacity="0.6" Style="{StaticResource h3}"/>
@@ -95,7 +97,8 @@
                             <Controles:PersonaView x:Name="Representante" Persona="{Binding Negocio.Representante}" Estilos:Foco.SiguienteFoco="{Binding ElementName=ContactosRepresentante}"
                                                    Editable="{Binding PuedeReestablecerNegocio}"/>
 
-                            <Controles:ContactosView x:Name="ContactosRepresentante"
+                            <Controles:ContactosView x:Name="ContactosRepresentante" Estilos:Foco.SiguienteFoco="{Binding ElementName=BotonesNegocio}"
+                                                     Contactos="{Binding ContactosRepresentante}"
                                                      TiposContacto="{Binding TiposContacto}" Editable="{Binding PuedeReestablecerNegocio}"/>
 
                             <TextBlock Margin="45 0 0 0" Name="MensajeErrorNegocio" Tag="{Binding MostrarMensajeErrorNegocio}" Style="{StaticResource error}"

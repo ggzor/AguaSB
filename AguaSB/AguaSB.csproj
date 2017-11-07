@@ -121,6 +121,7 @@
     <Compile Include="Conversores\ToStringConverter.cs" />
     <Compile Include="Extensiones\ITransformadorExtensiones.cs" />
     <Compile Include="Extensiones\TransformadorExtensiones.cs" />
+    <Compile Include="Inicializadores\AgregarTiposContacto.cs" />
     <Compile Include="Inicializadores\AgregarUsuarios.cs" />
     <Compile Include="Inicializadores\IInicializador.cs" />
     <Compile Include="Inicializadores\Inicializador.cs" />
