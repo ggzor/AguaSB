@@ -24,7 +24,7 @@
     </UserControl.Resources>
 
     <StackPanel>
-        <Button Name="Agregar" Click="Agregar_Click" HorizontalAlignment="Right" Style="{StaticResource UtilityButton}">
+        <Button Name="Agregar" Click="BotonAgregar_Click" HorizontalAlignment="Right" Style="{StaticResource UtilityButton}">
             <StackPanel Orientation="Horizontal">
                 <icons:PackIconModern Kind="Add" VerticalAlignment="Center"/>
                 <TextBlock Margin="10 0 0 0" Text="Agregar contacto" FontSize="{StaticResource TamanoH4}"/>

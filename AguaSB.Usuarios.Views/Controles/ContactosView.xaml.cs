@@ -31,44 +31,35 @@ namespace AguaSB.Usuarios.Views.Controles
 
             InitializeComponent();
 
-            EstiloIcono = (Style)FindResource("IconoLateral");
+            BuscarYUnirRecursos();
 
+            ((INotifyCollectionChanged)Lista.Items).CollectionChanged += ContactosCambiados;
+        }
+
+        private void BuscarYUnirRecursos()
+        {
             if (FindResource("Iconos") is CallbackConverter conversor)
             {
                 conversor.Callback = (arg, param) =>
-               {
-                   FrameworkElement icono;
-                   if (arg is string clave && Iconos.ContainsKey(clave))
-                   {
-                       icono = Iconos[clave]();
-                   }
-                   else
-                   {
-                       icono = Iconos["Default"]();
-                   }
+                {
+                    FrameworkElement icono;
+                    if (arg is string clave && Iconos.ContainsKey(clave))
+                    {
+                        icono = Iconos[clave]();
+                    }
+                    else
+                    {
+                        icono = Iconos["Default"]();
+                    }
 
-                   if (param is "N")
-                       icono.Margin = new Thickness(16, 0, 0, 0);
+                    if (param is "N")
+                        icono.Margin = new Thickness(16, 0, 0, 0);
 
-                   return icono;
-               };
+                    return icono;
+                };
             }
 
-            var telefono = new TipoContacto
-            {
-                Nombre = "Teléfono",
-                ExpresionRegular = @"^( *\d){10} *$"
-            };
-
-            TiposContacto = new[] { telefono };
-
-            Contactos.Add(new Contacto
-            {
-                TipoContacto = telefono,
-                Informacion = "241 420 51 91"
-            });
-
-            ((INotifyCollectionChanged)Lista.Items).CollectionChanged += ContactosCambiados;
+            EstiloIcono = (Style)FindResource("IconoLateral");
         }
 
         private async void ContactosCambiados(object sender, NotifyCollectionChangedEventArgs e)
@@ -93,7 +84,7 @@ namespace AguaSB.Usuarios.Views.Controles
                 ObtenerCajasDeContactos().LastOrDefault()?.Focus();
         }
 
-        private void Agregar_Click(object sender, RoutedEventArgs e) => OpcionesTiposContacto.IsOpen = true;
+        private void BotonAgregar_Click(object sender, RoutedEventArgs e) => OpcionesTiposContacto.IsOpen = true;
 
         private void AgregarContacto(object param)
         {
