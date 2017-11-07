@@ -5,10 +5,15 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="ToggleList" TargetType="ListBox" BasedOn="{StaticResource MaterialDesignToolToggleListBox}">
-        <Style.Triggers>
-            <Trigger Property="SelectedItem" Value="{x:Null}">
-                <Setter Property="SelectedIndex" Value="0"/>
-            </Trigger>
-        </Style.Triggers>
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate DataType="{x:Type Button}">
+                    <StackPanel Orientation="Horizontal">
+                        <ContentControl Content="{Binding Content}" VerticalAlignment="Center"/>
+                        <TextBlock Margin="10 0" FontFamily="Segoe UI" Text="{Binding Tag}" Style="{StaticResource h5}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 </ResourceDictionary>

@@ -45,19 +45,6 @@
                 </Grid.RowDefinitions>
 
                 <ListBox Name="TipoUsuario" HorizontalAlignment="Center" SelectedIndex="0" Style="{StaticResource ToggleList}">
-                    <ListBox.Resources>
-                        <Style TargetType="Button">
-                            <Setter Property="Background" Value="Black"/>
-                        </Style>
-                    </ListBox.Resources>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate DataType="{x:Type Button}">
-                            <StackPanel Orientation="Horizontal">
-                                <ContentControl Content="{Binding Content}" VerticalAlignment="Center"/>
-                                <TextBlock Margin="10 0" FontFamily="Segoe UI" Text="{Binding Tag}" Style="{StaticResource h5}"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
                     <Button Tag="Persona">
                         <icons:PackIconModern Kind="User"/>
                     </Button>
