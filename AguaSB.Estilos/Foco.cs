@@ -14,8 +14,8 @@ namespace AguaSB.Estilos
         public static readonly DependencyProperty SiguienteFocoProperty =
             DependencyProperty.RegisterAttached("SiguienteFoco", typeof(UIElement), typeof(Foco), new PropertyMetadata(null));
 
-        public static void SetSiguienteFoco(UIElement elem, bool valor) => elem.SetValue(SiguienteFocoProperty, valor);
-        public static bool GetSiguienteFoco(UIElement elem) => (bool)elem.GetValue(SiguienteFocoProperty);
+        public static void SetSiguienteFoco(UIElement elem, UIElement valor) => elem.SetValue(SiguienteFocoProperty, valor);
+        public static UIElement GetSiguienteFoco(UIElement elem) => (UIElement)elem.GetValue(SiguienteFocoProperty);
 
         private static void ManejarEnterAvanzaFoco(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -25,23 +25,29 @@ namespace AguaSB.Estilos
             {
                 elem.PreviewKeyDown += (src, args) =>
                 {
-                    var siguiente = elem.GetValue(SiguienteFocoProperty) as UIElement;
                     if (args.Key == Key.Enter)
                     {
-                        if (siguiente != null)
-                        {
-                            if (siguiente is IEnfocable enfocable)
-                                enfocable.Enfocar();
-                            else
-                                siguiente.Focus();
-                        }
-                        else
-                        {
-                            var request = new TraversalRequest(FocusNavigationDirection.Next);
-                            elem.MoveFocus(request);
-                        }
+                        EnfocarSiguiente(elem);
                     }
                 };
+            }
+        }
+
+        public static void EnfocarSiguiente(UIElement elem)
+        {
+            var siguiente = GetSiguienteFoco(elem);
+
+            if (siguiente != null)
+            {
+                if (siguiente is IEnfocable enfocable)
+                    enfocable.Enfocar();
+                else
+                    siguiente.Focus();
+            }
+            else
+            {
+                var request = new TraversalRequest(FocusNavigationDirection.Next);
+                elem.MoveFocus(request);
             }
         }
     }

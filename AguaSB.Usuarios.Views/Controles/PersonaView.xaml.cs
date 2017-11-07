@@ -35,6 +35,12 @@ namespace AguaSB.Usuarios.Views.Controles
             get { return (IEnumerable<string>)GetValue(SugerenciasApellidosProperty); }
             set { SetValue(SugerenciasApellidosProperty, value); }
         }
+
+        public bool Editable
+        {
+            get { return (bool)GetValue(EditableProperty); }
+            set { SetValue(EditableProperty, value); }
+        }
         #endregion
 
         #region DP´s
@@ -46,6 +52,9 @@ namespace AguaSB.Usuarios.Views.Controles
 
         public static readonly DependencyProperty SugerenciasApellidosProperty =
             DependencyProperty.Register(nameof(SugerenciasApellidos), typeof(IEnumerable<string>), typeof(PersonaView), new PropertyMetadata(Enumerable.Empty<string>()));
+
+        public static readonly DependencyProperty EditableProperty =
+            DependencyProperty.Register(nameof(Editable), typeof(bool), typeof(PersonaView), new PropertyMetadata(true));
         #endregion
     }
 }

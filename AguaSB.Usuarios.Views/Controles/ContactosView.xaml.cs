@@ -108,6 +108,8 @@ namespace AguaSB.Usuarios.Views.Controles
         {
             if (Lista.HasItems)
                 ObtenerCajasDeContactos().FirstOrDefault()?.Focus();
+            else
+                Foco.EnfocarSiguiente(this);
         }
 
         private IEnumerable<TextBox> ObtenerCajasDeContactos() =>
@@ -140,12 +142,21 @@ namespace AguaSB.Usuarios.Views.Controles
             set { SetValue(ContactosProperty, value); }
         }
 
+        public bool Editable
+        {
+            get { return (bool)GetValue(EditableProperty); }
+            set { SetValue(EditableProperty, value); }
+        }
+
         #region DP´s
         public static readonly DependencyProperty TiposContactoProperty =
             DependencyProperty.Register(nameof(TiposContacto), typeof(IEnumerable<TipoContacto>), typeof(ContactosView), new PropertyMetadata(Enumerable.Empty<TipoContacto>()));
 
         public static readonly DependencyProperty ContactosProperty =
             DependencyProperty.Register(nameof(Contactos), typeof(ObservableCollection<Contacto>), typeof(ContactosView), new PropertyMetadata(new ObservableCollection<Contacto>()));
+
+        public static readonly DependencyProperty EditableProperty =
+            DependencyProperty.Register(nameof(Editable), typeof(bool), typeof(ContactosView), new PropertyMetadata(true));
         #endregion
 
         #region Sincronizar icono de caja de texto

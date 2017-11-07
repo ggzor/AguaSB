@@ -13,6 +13,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Estilos.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/AguaSB.Views;component/Utilerias/Conversores.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -22,7 +23,8 @@
             <icons:PackIconMaterial Kind="Account" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=Nombre}"
                                     Estilos:Icono.Enfocado="{Binding ElementName=Nombre, Path=IsKeyboardFocusWithin}"/>
             <ComboBox Name="Nombre" Tag="Nombre(s)" Estilos:Foco.SiguienteFoco="{Binding ElementName=Paterno}"
-                      ItemsSource="{Binding ElementName=This, Path=SugerenciasNombres}"
+                      ItemsSource="{Binding ElementName=This, Path=SugerenciasNombres}" 
+                      IsReadOnly="{Binding ElementName=This, Path=Editable, Converter={StaticResource InvertBool}}"
                       Text="{Binding ElementName=This, Path=Persona.Nombre, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
         </DockPanel>
 
@@ -31,6 +33,7 @@
                                     Estilos:Icono.Enfocado="{Binding ElementName=Paterno, Path=IsKeyboardFocusWithin}"/>
             <ComboBox Name="Paterno" Tag="Apellido paterno" Estilos:Foco.SiguienteFoco="{Binding ElementName=Materno}"
                       ItemsSource="{Binding ElementName=This, Path=SugerenciasApellidos}"
+                      IsReadOnly="{Binding ElementName=This, Path=Editable, Converter={StaticResource InvertBool}}"
                       Text="{Binding ElementName=This, Path=Persona.ApellidoPaterno, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
         </DockPanel>
 
@@ -39,6 +42,7 @@
                                     Estilos:Icono.Enfocado="{Binding ElementName=Materno, Path=IsKeyboardFocusWithin}"/>
             <ComboBox Name="Materno" Tag="Apellido materno" Estilos:Foco.SiguienteFoco="{Binding ElementName=This, Path=(Estilos:Foco.SiguienteFoco)}"
                       ItemsSource="{Binding ElementName=This, Path=SugerenciasApellidos}"
+                      IsReadOnly="{Binding ElementName=This, Path=Editable, Converter={StaticResource InvertBool}}"
                       Text="{Binding ElementName=This, Path=Persona.ApellidoMaterno, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
         </DockPanel>
     </StackPanel>

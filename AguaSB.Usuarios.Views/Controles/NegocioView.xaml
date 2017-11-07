@@ -13,6 +13,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Estilos.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/AguaSB.Views;component/Utilerias/Conversores.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -22,6 +23,7 @@
             <icons:PackIconMaterial Kind="City" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=Nombre}"
                                     Estilos:Icono.Enfocado="{Binding ElementName=Nombre, Path=IsKeyboardFocusWithin}"/>
             <TextBox Name="Nombre" Tag="Nombre" Estilos:Foco.SiguienteFoco="{Binding ElementName=Rfc}"
+                     IsReadOnly="{Binding ElementName=This, Path=Editable, Converter={StaticResource InvertBool}}"
                      Text="{Binding ElementName=This, Path=Negocio.Nombre, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
         </DockPanel>
 
@@ -29,6 +31,7 @@
             <icons:PackIconFontAwesome Kind="Registered" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=Rfc}"
                                        Estilos:Icono.Enfocado="{Binding ElementName=Rfc, Path=IsKeyboardFocusWithin}"/>
             <TextBox Name="Rfc" Tag="Rfc" Estilos:Foco.SiguienteFoco="{Binding ElementName=This, Path=(Estilos:Foco.SiguienteFoco)}"
+                     IsReadOnly="{Binding ElementName=This, Path=Editable, Converter={StaticResource InvertBool}}"
                      Text="{Binding ElementName=This, Path=Negocio.Rfc, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
         </DockPanel>
     </StackPanel>

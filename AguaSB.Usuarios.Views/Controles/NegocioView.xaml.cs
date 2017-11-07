@@ -23,5 +23,14 @@ namespace AguaSB.Usuarios.Views.Controles
 
         public static readonly DependencyProperty NegocioProperty =
             DependencyProperty.Register(nameof(Negocio), typeof(Negocio), typeof(NegocioView), new PropertyMetadata(new Negocio()));
+
+        public bool Editable
+        {
+            get { return (bool)GetValue(EditableProperty); }
+            set { SetValue(EditableProperty, value); }
+        }
+
+        public static readonly DependencyProperty EditableProperty =
+            DependencyProperty.Register(nameof(Editable), typeof(bool), typeof(NegocioView), new PropertyMetadata(true));
     }
 }
