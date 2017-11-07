@@ -66,7 +66,7 @@ namespace AguaSB.Usuarios.Views.Controles
 
         private async void ContactosCambiados(object sender, NotifyCollectionChangedEventArgs e)
         {
-            await Task.Delay(100);
+            await Task.Delay(20).ConfigureAwait(true);
 
             if (Lista.Items.Count > 1)
             {
