@@ -95,6 +95,7 @@
     <Compile Include="Utilerias\DictionaryConverter.cs" />
     <Compile Include="Utilerias\EqualsToConverter.cs" />
     <Compile Include="Utilerias\FuncComparer.cs" />
+    <Compile Include="Utilerias\InvertBoolConverter.cs" />
     <Compile Include="Utilerias\NullConverters.cs" />
     <Compile Include="Utilerias\FuncValueConverter.cs" />
     <Compile Include="Utilerias\VisualTreeUtils.cs" />

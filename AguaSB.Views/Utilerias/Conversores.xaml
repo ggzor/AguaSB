@@ -5,4 +5,5 @@
     <local:IsNullConverter x:Key="IsNull"/>
     <local:IsNotNullConverter x:Key="IsNotNull"/>
     <local:EqualsToConverter x:Key="EqualsTo"/>
+    <local:InvertBoolConverter x:Key="InvertBool"/>
 </ResourceDictionary>
