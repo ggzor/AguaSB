@@ -13,7 +13,7 @@ namespace AguaSB.Estilos
         {
             var valor = (bool)e.NewValue;
 
-            if (valor == true && d is TextBox elem)
+            if (valor && d is TextBox elem)
             {
                 elem.GotKeyboardFocus += async (_, __) =>
                 {

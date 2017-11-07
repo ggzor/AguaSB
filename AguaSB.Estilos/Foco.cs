@@ -8,8 +8,14 @@ namespace AguaSB.Estilos
         public static readonly DependencyProperty EnterAvanzaFocoProperty =
             DependencyProperty.RegisterAttached("EnterAvanzaFoco", typeof(bool), typeof(Foco), new PropertyMetadata(false, ManejarEnterAvanzaFoco));
 
+        public static void SetEnterAvanzaFoco(UIElement elem, bool valor) => elem.SetValue(EnterAvanzaFocoProperty, valor);
+        public static bool GetEnterAvanzaFoco(UIElement elem) => (bool)elem.GetValue(EnterAvanzaFocoProperty);
+
         public static readonly DependencyProperty SiguienteFocoProperty =
             DependencyProperty.RegisterAttached("SiguienteFoco", typeof(UIElement), typeof(Foco), new PropertyMetadata(null));
+
+        public static void SetSiguienteFoco(UIElement elem, bool valor) => elem.SetValue(SiguienteFocoProperty, valor);
+        public static bool GetSiguienteFoco(UIElement elem) => (bool)elem.GetValue(SiguienteFocoProperty);
 
         private static void ManejarEnterAvanzaFoco(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -38,16 +44,5 @@ namespace AguaSB.Estilos
                 };
             }
         }
-
-        public static void SetEnterAvanzaFoco(UIElement elem, bool valor) => elem.SetValue(EnterAvanzaFocoProperty, valor);
-        public static bool GetEnterAvanzaFoco(UIElement elem) => (bool)elem.GetValue(EnterAvanzaFocoProperty);
-
-        public static void SetSiguienteFoco(UIElement elem, bool valor) => elem.SetValue(SiguienteFocoProperty, valor);
-        public static bool GetSiguienteFoco(UIElement elem) => (bool)elem.GetValue(SiguienteFocoProperty);
-    }
-
-    public interface IEnfocable
-    {
-        void Enfocar();
     }
 }

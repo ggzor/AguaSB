@@ -76,6 +76,7 @@
   <ItemGroup>
     <Compile Include="Foco.cs" />
     <Compile Include="Icono.cs" />
+    <Compile Include="IEnfocable.cs" />
     <Compile Include="Tema.cs" />
     <Compile Include="Temas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
