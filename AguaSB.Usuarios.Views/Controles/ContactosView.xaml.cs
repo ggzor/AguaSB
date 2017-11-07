@@ -8,11 +8,13 @@ using System.Windows.Controls;
 using System.Windows.Data;
 
 using MahApps.Metro.IconPacks;
+using MoreLinq;
 
 using AguaSB.Estilos;
 using AguaSB.Nucleo;
 using AguaSB.Views.Utilerias;
 using System.Waf.Applications;
+using System.Collections.Specialized;
 
 namespace AguaSB.Usuarios.Views.Controles
 {
@@ -65,11 +67,35 @@ namespace AguaSB.Usuarios.Views.Controles
                 TipoContacto = telefono,
                 Informacion = "241 420 51 91"
             });
+
+            ((INotifyCollectionChanged)Lista.Items).CollectionChanged += ContactosCambiados;
+        }
+
+        private async void ContactosCambiados(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            await Task.Delay(100);
+
+            if (Lista.Items.Count > 1)
+            {
+                ObtenerCajasDeContactos()
+                    .Windowed(2)
+                    .ForEach(w => w.Fold((t1, t2) =>
+                    {
+                        t1.SetValue(Foco.SiguienteFocoProperty, t2);
+                        return 0;
+                    }));
+            }
+
+            if (Lista.HasItems)
+                ObtenerCajasDeContactos().LastOrDefault()?.SetValue(Foco.SiguienteFocoProperty, GetValue(Foco.SiguienteFocoProperty));
+
+            if (e.Action == NotifyCollectionChangedAction.Add)
+                ObtenerCajasDeContactos().LastOrDefault()?.Focus();
         }
 
         private void Agregar_Click(object sender, RoutedEventArgs e) => OpcionesTiposContacto.IsOpen = true;
 
-        private async void AgregarContacto(object param)
+        private void AgregarContacto(object param)
         {
             if (param is TipoContacto contacto)
             {
@@ -78,9 +104,6 @@ namespace AguaSB.Usuarios.Views.Controles
                 Contactos.Add(nuevoContacto);
 
                 OpcionesTiposContacto.IsOpen = false;
-
-                await Task.Delay(200);
-                ObtenerCajasDeContactos().LastOrDefault()?.Focus();
             }
         }
 
