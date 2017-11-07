@@ -10,8 +10,10 @@ using AguaSB.Utilerias;
 namespace AguaSB.Nucleo
 {
     [Table("TiposContacto")]
-    public class TipoContacto
+    public class TipoContacto : IEntidad, INotifyPropertyChanged, INotifyDataErrorInfo
     {
+        public int Id { get; set; }
+
         private string nombre;
         private string expresionRegular;
 
