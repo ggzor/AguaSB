@@ -3,10 +3,64 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:AguaSB.Usuarios.Views.Controles"
+             xmlns:Conversores="clr-namespace:AguaSB.Views.Utilerias;assembly=AguaSB.Views"
+             xmlns:Nucleo="clr-namespace:AguaSB.Nucleo;assembly=AguaSB.Nucleo"
              mc:Ignorable="d" 
+             Background="White"
+             Name="This"
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
-    </Grid>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Estilos.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/AguaSB.Views;component/Utilerias/Conversores.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <Conversores:CallbackConverter x:Key="Iconos"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <StackPanel>
+        <Button Name="Agregar" Click="Agregar_Click" HorizontalAlignment="Right" Style="{StaticResource UtilityButton}">
+            <StackPanel Orientation="Horizontal">
+                <icons:PackIconModern Kind="Add" VerticalAlignment="Center"/>
+                <TextBlock Margin="10 0 0 0" Text="Agregar contacto" FontSize="{StaticResource TamanoH4}"/>
+            </StackPanel>
+        </Button>
+        <Popup Name="OpcionesTiposContacto" PlacementTarget="{Binding ElementName=Agregar}" AllowsTransparency="True" PopupAnimation="Fade" StaysOpen="False">
+            <Border Margin="0 5" Background="White" BorderBrush="#33000000" BorderThickness="1" CornerRadius="8">
+                <ListView Margin="0 10" ItemsSource="{Binding ElementName=This, Path=TiposContacto}" SelectionMode="Single" ItemContainerStyle="{StaticResource UnselectableItem}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate DataType="{x:Type Nucleo:TipoContacto}">
+                            <Button Command="{Binding RelativeSource={RelativeSource AncestorType=local:ContactosView}, Path=AgregarContactoComando}" CommandParameter="{Binding}" 
+                                    Style="{StaticResource UtilityButton}" material:RippleAssist.IsDisabled="True">
+                                <StackPanel Orientation="Horizontal">
+                                    <ContentControl Content="{Binding Nombre, Converter={StaticResource Iconos}, ConverterParameter=N}" VerticalAlignment="Center"/>
+                                    <TextBlock Margin="20 0 40 0" Text="{Binding Nombre}" Opacity="0.6" Style="{StaticResource h4}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Border>
+        </Popup>
+        <ListView Name="Lista" ItemsSource="{Binding ElementName=This, Path=Contactos}" ItemContainerStyle="{StaticResource PlainItem}">
+            <ListView.ItemTemplate>
+                <DataTemplate DataType="{x:Type Nucleo:Contacto}">
+                    <DockPanel>
+                        <ContentControl Content="{Binding TipoContacto.Nombre, Converter={StaticResource Iconos}}" local:ContactosView.UnirCon="{Binding ElementName=Box}"/>
+                        <Button Margin="15 0 0 15" DockPanel.Dock="Right" Content="{icons:PackIconMaterial Kind=Delete}" 
+                                ToolTip="Borrar" VerticalAlignment="Center" Style="{StaticResource UtilityButton}"
+                                Command="{Binding RelativeSource={RelativeSource AncestorType=local:ContactosView}, Path=BorrarContactoComando}"
+                                CommandParameter="{Binding}"/>
+                        <TextBox Name="Box" Tag="{Binding TipoContacto.Nombre}" Text="{Binding Informacion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
+                                 Focusable="True"/>
+                    </DockPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackPanel>
 </UserControl>
