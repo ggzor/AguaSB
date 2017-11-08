@@ -2,22 +2,24 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows.Input;
+using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Waf.Applications;
 using System.Waf.Foundation;
+using System.Windows.Input;
 
 using GGUtils.MVVM.Async;
 using MoreLinq;
 
-using AguaSB.Nucleo;
-using AguaSB.Utilerias;
-using AguaSB.ViewModels;
-using AguaSB.Navegacion;
 using AguaSB.Datos;
+using AguaSB.Nucleo;
+using AguaSB.Navegacion;
 using AguaSB.Operaciones;
+using AguaSB.Utilerias;
+using AguaSB.Utilerias.IO;
+using AguaSB.ViewModels;
 
 namespace AguaSB.Usuarios.ViewModels
 {
@@ -27,6 +29,9 @@ namespace AguaSB.Usuarios.ViewModels
         // Serán inicializadas junto con los comandos.
         private Persona persona;
         private Negocio negocio;
+
+        private IEnumerable<string> sugerenciasNombres;
+        private IEnumerable<string> sugerenciasApellidos;
 
         private bool puedeReestablecerPersona = true;
         private bool mostrarMensajeErrorPersona = true;
@@ -53,6 +58,18 @@ namespace AguaSB.Usuarios.ViewModels
         {
             get { return negocio; }
             set { SetProperty(ref negocio, value); }
+        }
+
+        public IEnumerable<string> SugerenciasNombres
+        {
+            get { return sugerenciasNombres; }
+            set { SetProperty(ref sugerenciasNombres, value); }
+        }
+
+        public IEnumerable<string> SugerenciasApellidos
+        {
+            get { return sugerenciasApellidos; }
+            set { SetProperty(ref sugerenciasApellidos, value); }
         }
 
         public bool MostrarMensajeErrorPersona
@@ -163,6 +180,8 @@ namespace AguaSB.Usuarios.ViewModels
             Navegador = navegador ?? throw new ArgumentNullException(nameof(navegador));
 
             Nodo = new Nodo { Entrada = Entrar };
+
+            Task.Factory.StartNew(CargarSugerencias);
         }
 
         private void ConfigurarComandos()
@@ -236,6 +255,63 @@ namespace AguaSB.Usuarios.ViewModels
             InvocarEnfocar();
 
             return Task.CompletedTask;
+        }
+
+        private void CargarSugerencias()
+        {
+            try
+            {
+                IEnumerable<string> nombresArchivo = Enumerable.Empty<string>();
+                IEnumerable<string> apellidosArchivo = Enumerable.Empty<string>();
+
+                try
+                {
+                    nombresArchivo = Configuracion.Cargar<List<string>>(nameof(SugerenciasNombres), subdirectorio: "Datos");
+                    apellidosArchivo = Configuracion.Cargar<List<string>>(nameof(SugerenciasApellidos), subdirectorio: "Datos");
+                }
+                catch (FileNotFoundException archivo)
+                {
+                    // TODO: Log
+                    Console.WriteLine($"No se encontró el archivo de sugerencias: {archivo.FileName}");
+                }
+                catch (IOException ex)
+                {
+                    Console.WriteLine($"Ocurrió un error al leer los archivos de sugerencias: {ex.Message}");
+                }
+
+                SugerenciasNombres = nombresArchivo.OrderBy(_ => _).Distinct().ToList();
+                SugerenciasApellidos = apellidosArchivo.OrderBy(_ => _).Distinct().ToList();
+
+                IEnumerable<Persona> personas = UsuariosRepo.Datos.OfType<Persona>();
+
+                var nombresBaseDeDatos = personas.Select(_ => _.Nombre)
+                    .OrderBy(_ => _)
+                    .Distinct()
+                    .ToList();
+
+                var apellidosBaseDeDatos = personas.Select(_ => _.ApellidoPaterno)
+                    .Concat(personas.Select(_ => _.ApellidoMaterno))
+                    .OrderBy(_ => _)
+                    .Distinct()
+                    .ToList();
+
+                SugerenciasNombres = SugerenciasNombres.OrderedMerge(nombresBaseDeDatos).ToList();
+                SugerenciasApellidos = SugerenciasApellidos.OrderedMerge(apellidosBaseDeDatos).ToList();
+
+                try
+                {
+                    Configuracion.Guardar(SugerenciasNombres, nombre: nameof(SugerenciasNombres), subdirectorio: "Datos", indentar: false);
+                    Configuracion.Guardar(SugerenciasApellidos, nombre: nameof(SugerenciasApellidos), subdirectorio: "Datos", indentar: false);
+                }
+                catch (IOException ex)
+                {
+                    Console.WriteLine($"Ocurrió un error al guardar las sugerencias: {ex.Message}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ocurrió un error al obtener las sugerencias: {ex.Message}");
+            }
         }
 
         private bool PuedeAgregarPersona() =>

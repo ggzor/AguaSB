@@ -18,7 +18,7 @@ namespace AguaSB.Usuarios.Views
 
             TipoUsuario.SelectionChanged += async (_, __) =>
             {
-                await Task.Delay(20);
+                await Task.Delay(20).ConfigureAwait(true);
                 Enfocar();
             };
 

@@ -58,6 +58,7 @@
                     <ScrollViewer Name="CamposPersona" Padding="20 0">
                         <StackPanel Margin="0 20" VerticalAlignment="Center">
                             <Controles:PersonaView x:Name="Persona" Persona="{Binding Persona}" Estilos:Foco.SiguienteFoco="{Binding ElementName=ContactosPersona}"
+                                                   SugerenciasNombres="{Binding SugerenciasNombres}" SugerenciasApellidos="{Binding SugerenciasApellidos}"
                                                    Editable="{Binding PuedeReestablecerPersona}"/>
 
                             <Controles:ContactosView x:Name="ContactosPersona" Estilos:Foco.SiguienteFoco="{Binding ElementName=BotonesPersona}"
@@ -95,6 +96,7 @@
                             <TextBlock Margin="0 20" Text="Representante:" Opacity="0.6" Style="{StaticResource h3}"/>
 
                             <Controles:PersonaView x:Name="Representante" Persona="{Binding Negocio.Representante}" Estilos:Foco.SiguienteFoco="{Binding ElementName=ContactosRepresentante}"
+                                                   SugerenciasNombres="{Binding SugerenciasNombres}" SugerenciasApellidos="{Binding SugerenciasApellidos}"
                                                    Editable="{Binding PuedeReestablecerNegocio}"/>
 
                             <Controles:ContactosView x:Name="ContactosRepresentante" Estilos:Foco.SiguienteFoco="{Binding ElementName=BotonesNegocio}"
