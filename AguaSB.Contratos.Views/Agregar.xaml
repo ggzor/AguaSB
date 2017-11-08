@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:Views="clr-namespace:AguaSB.Views.Controles;assembly=AguaSB.Views"
@@ -44,94 +43,92 @@
 
         <material:Card Grid.Column="1" Grid.Row="1" Margin="10" Padding="40 20" 
                        VerticalAlignment="Stretch">
-            <metro:FlipView IsBannerEnabled="False" IsNavigationEnabled="False" MouseHoverBorderEnabled="False">
-                <ScrollViewer Padding="20 10">
-                    <Grid VerticalAlignment="Center">
-                        <Grid.Resources>
-                            <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
-                                <Setter Property="IsReadOnly" Value="{Binding AgregarNegocioComando.Execution.IsNotCompleted}"/>
-                            </Style>
-                        </Grid.Resources>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
+            <ScrollViewer Padding="20 10">
+                <Grid VerticalAlignment="Center">
+                    <Grid.Resources>
+                        <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                            <Setter Property="IsReadOnly" Value="{Binding AgregarNegocioComando.Execution.IsNotCompleted}"/>
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Row="0" Grid.Column="1" Text="Usuario:" 
-                                   Opacity="0.6" Style="{StaticResource h3}"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="Usuario:" 
+                                Opacity="0.6" Style="{StaticResource h3}"/>
 
-                        <icons:PackIconMaterial Grid.Row="1" Kind="Account" Estilos:Icono.Error="{Binding Contrato.Usuario, Converter={StaticResource IsNull}}"
-                                                Estilos:Icono.Enfocado="{Binding Contrato.Usuario, Converter={StaticResource IsNotNull}}"
-                                                Tag="{Binding ElementName=Usuario}" Style="{StaticResource IconoLateral}"/>
-                        <TextBlock Name="Usuario" Grid.Row="1" Grid.Column="1" Margin="0 20 0 30" Text="{Binding Contrato.Usuario.NombreCompleto, FallbackValue=No especificado}" 
-                                   Style="{StaticResource h4}"/>
+                    <icons:PackIconMaterial Grid.Row="1" Kind="Account" Estilos:Icono.Error="{Binding Contrato.Usuario, Converter={StaticResource IsNull}}"
+                                            Estilos:Icono.Enfocado="{Binding Contrato.Usuario, Converter={StaticResource IsNotNull}}"
+                                            Tag="{Binding ElementName=Usuario}" Style="{StaticResource IconoLateral}"/>
+                    <TextBlock Name="Usuario" Grid.Row="1" Grid.Column="1" Margin="0 20 0 30" Text="{Binding Contrato.Usuario.NombreCompleto, FallbackValue=No especificado}" 
+                               Style="{StaticResource h4}"/>
 
-                        <icons:PackIconMaterial Grid.Row="2" Kind="ViewList" Estilos:Icono.Enfocado="{Binding ElementName=TipoContrato, Path=IsKeyboardFocusWithin}"
-                                                Tag="{Binding ElementName=TipoContrato}" Style="{StaticResource IconoLateral}"/>
-                        <ComboBox Name="TipoContrato" Grid.Row="2" Grid.Column="1" Tag="Tipo de contrato"
-                                  Estilos:Foco.SiguienteFoco="{Binding ElementName=MedidaToma}"
-                                  SelectedItem="{Binding TipoContrato, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
-                                  ItemsSource="{Binding TiposContrato}" ItemTemplate="{StaticResource PlantillaTipoContrato}"/>
+                    <icons:PackIconMaterial Grid.Row="2" Kind="ViewList" Estilos:Icono.Enfocado="{Binding ElementName=TipoContrato, Path=IsKeyboardFocusWithin}"
+                                            Tag="{Binding ElementName=TipoContrato}" Style="{StaticResource IconoLateral}"/>
+                    <ComboBox Name="TipoContrato" Grid.Row="2" Grid.Column="1" Tag="Tipo de contrato"
+                              Estilos:Foco.SiguienteFoco="{Binding ElementName=MedidaToma}"
+                              SelectedItem="{Binding TipoContrato, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
+                              ItemsSource="{Binding TiposContrato}" ItemTemplate="{StaticResource PlantillaTipoContrato}"/>
 
-                        <icons:PackIconEntypo Grid.Row="3" Kind="FlowBranch"
-                                              Tag="{Binding ElementName=MedidaToma}" Style="{StaticResource IconoLateral}"/>
-                        <ComboBox Name="MedidaToma" Grid.Row="3" Grid.Column="1" Tag="Tamaño de la toma (pulgadas)"
-                                  Estilos:Foco.SiguienteFoco="{Binding ElementName=Adeudo}"
-                                  Text="{Binding Contrato.MedidaToma, StringFormat={}{0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
-                                  ItemsSource="{Binding SugerenciasMedidasToma}"/>
+                    <icons:PackIconEntypo Grid.Row="3" Kind="FlowBranch"
+                                          Tag="{Binding ElementName=MedidaToma}" Style="{StaticResource IconoLateral}"/>
+                    <ComboBox Name="MedidaToma" Grid.Row="3" Grid.Column="1" Tag="Tamaño de la toma (pulgadas)"
+                              Estilos:Foco.SiguienteFoco="{Binding ElementName=Adeudo}"
+                              Text="{Binding Contrato.MedidaToma, StringFormat={}{0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
+                              ItemsSource="{Binding SugerenciasMedidasToma}"/>
 
-                        <icons:PackIconModern Grid.Row="4" Kind="CurrencyDollar"
-                                              Tag="{Binding ElementName=Adeudo}" Style="{StaticResource IconoLateral}"/>
-                        <TextBox Name="Adeudo" Grid.Row="4" Grid.Column="1" Tag="Adeudo inicial" 
-                                 Text="{Binding Contrato.AdeudoInicial, StringFormat={}{0:C}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True, Delay=500}"/>
+                    <icons:PackIconModern Grid.Row="4" Kind="CurrencyDollar"
+                                          Tag="{Binding ElementName=Adeudo}" Style="{StaticResource IconoLateral}"/>
+                    <TextBox Name="Adeudo" Grid.Row="4" Grid.Column="1" Tag="Adeudo inicial" 
+                             Text="{Binding Contrato.AdeudoInicial, StringFormat={}{0:C}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True, Delay=500}"/>
 
-                        <TextBlock Grid.Row="5" Grid.Column="1" Margin="0 20" Text="Domicilio:" 
-                                   Opacity="0.6" Style="{StaticResource h3}"/>
+                    <TextBlock Grid.Row="5" Grid.Column="1" Margin="0 20" Text="Domicilio:" 
+                               Opacity="0.6" Style="{StaticResource h3}"/>
 
-                        <icons:PackIconMaterial Grid.Row="6" Kind="ViewGrid" Estilos:Icono.Enfocado="{Binding ElementName=Seccion, Path=IsKeyboardFocusWithin}"
-                                                Tag="{Binding ElementName=Seccion}" Style="{StaticResource IconoLateral}"/>
-                        <ComboBox Name="Seccion" Grid.Row="6" Grid.Column="1" Tag="Sección" ItemsSource="{Binding Secciones}" 
-                                  Estilos:Foco.SiguienteFoco="{Binding ElementName=Calle}"
-                                  SelectedItem="{Binding Seccion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+                    <icons:PackIconMaterial Grid.Row="6" Kind="ViewGrid" Estilos:Icono.Enfocado="{Binding ElementName=Seccion, Path=IsKeyboardFocusWithin}"
+                                            Tag="{Binding ElementName=Seccion}" Style="{StaticResource IconoLateral}"/>
+                    <ComboBox Name="Seccion" Grid.Row="6" Grid.Column="1" Tag="Sección" ItemsSource="{Binding Secciones}" 
+                              Estilos:Foco.SiguienteFoco="{Binding ElementName=Calle}"
+                              SelectedItem="{Binding Seccion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
 
-                        <icons:PackIconEntypo Grid.Row="7" Kind="Address" Estilos:Icono.Enfocado="{Binding ElementName=Calle, Path=IsKeyboardFocusWithin}"
-                                              Tag="{Binding ElementName=Calle}" Style="{StaticResource IconoLateral}"/>
-                        <ComboBox Name="Calle" Grid.Row="7" Grid.Column="1" Tag="Calle" ItemsSource="{Binding Calles}" 
-                                  Estilos:Foco.SiguienteFoco="{Binding ElementName=Numero}"
-                                  SelectedItem="{Binding Calle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+                    <icons:PackIconEntypo Grid.Row="7" Kind="Address" Estilos:Icono.Enfocado="{Binding ElementName=Calle, Path=IsKeyboardFocusWithin}"
+                                          Tag="{Binding ElementName=Calle}" Style="{StaticResource IconoLateral}"/>
+                    <ComboBox Name="Calle" Grid.Row="7" Grid.Column="1" Tag="Calle" ItemsSource="{Binding Calles}" 
+                              Estilos:Foco.SiguienteFoco="{Binding ElementName=Numero}"
+                              SelectedItem="{Binding Calle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
 
-                        <icons:PackIconFontAwesome Grid.Row="8" Kind="Hashtag"
-                                                   Tag="{Binding ElementName=Numero}" Style="{StaticResource IconoLateral}"/>
-                        <TextBox Name="Numero" Grid.Row="8" Grid.Column="1" Tag="Número" 
-                                 Estilos:Foco.SiguienteFoco="{Binding ElementName=Botones, Path=Primario}"
-                                 Text="{Binding Contrato.Domicilio.Numero, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+                    <icons:PackIconFontAwesome Grid.Row="8" Kind="Hashtag"
+                                                Tag="{Binding ElementName=Numero}" Style="{StaticResource IconoLateral}"/>
+                    <TextBox Name="Numero" Grid.Row="8" Grid.Column="1" Tag="Número" 
+                             Estilos:Foco.SiguienteFoco="{Binding ElementName=Botones, Path=Primario}"
+                             Text="{Binding Contrato.Domicilio.Numero, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
 
-                        <TextBlock Grid.Row="9" Grid.Column="1" Name="MensajeErrorNegocio" Text="{Binding AgregarContratoComando.Execution.ExceptionMessage}" Style="{StaticResource error}"
-                                   Tag="{Binding MostrarMensajeError}"/>
+                    <TextBlock Grid.Row="9" Grid.Column="1" Name="MensajeErrorNegocio" Text="{Binding AgregarContratoComando.Execution.ExceptionMessage}" Style="{StaticResource error}"
+                               Tag="{Binding MostrarMensajeError}"/>
 
-                        <Views:AnilloProgreso Grid.Row="10" Grid.Column="1" Margin="0 10" EsVisible="{Binding AgregarContratoComando.Execution.IsNotCompleted}"
-                                              Texto="{Binding AgregarContratoComando.ProgressMessage}"/>
+                    <Views:AnilloProgreso Grid.Row="10" Grid.Column="1" Margin="0 10" EsVisible="{Binding AgregarContratoComando.Execution.IsNotCompleted}"
+                                          Texto="{Binding AgregarContratoComando.ProgressMessage}"/>
 
-                        <Views:ParBotones Name="Botones" Grid.Row="11" Grid.Column="1" Margin="0 20" TextoPrimario="Agregar" TextoSecundario="Reestablecer"
-                                          ComandoPrimario="{Binding AgregarContratoComando}"
-                                          ComandoSecundario="{Binding ReestablecerComando}"/>
-                    </Grid>
-                </ScrollViewer>
-            </metro:FlipView>
+                    <Views:ParBotones Name="Botones" Grid.Row="11" Grid.Column="1" Margin="0 20" TextoPrimario="Agregar" TextoSecundario="Reestablecer"
+                                      ComandoPrimario="{Binding AgregarContratoComando}"
+                                      ComandoSecundario="{Binding ReestablecerComando}"/>
+                </Grid>
+            </ScrollViewer>
         </material:Card>
 
         <Views:CoverProgreso Grid.Row="1" Grid.ColumnSpan="4" 

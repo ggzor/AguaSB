@@ -1,9 +1,11 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/HamburgerMenu.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="ScrollViewer" BasedOn="{StaticResource HamburgerScrollViewerStyle}">
         <Setter Property="Focusable" Value="False"/>
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
     </Style>
 </ResourceDictionary>
