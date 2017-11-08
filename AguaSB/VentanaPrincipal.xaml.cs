@@ -47,7 +47,7 @@ namespace AguaSB
 
             administrador = new AdministradorViews(Vista);
         }
-        
+
         void IVentanaPrincipal.Mostrar() => ShowDialog();
 
         private void TransformarExtensiones(VentanaPrincipalViewModel viewModel, ITransformadorExtensiones transformador)
@@ -62,7 +62,7 @@ namespace AguaSB
                 return extension;
             }).ForEach(_ => Extensiones.Children.Add(_));
         }
-        
+
         private void RegistrarNavegacionDePaginas(NavegadorDirectorio<Operacion> navegador)
         {
             foreach (var extension in ViewModel.Extensiones)
@@ -80,27 +80,24 @@ namespace AguaSB
                 await Navegar(operacion, null).ConfigureAwait(false);
         }
 
-        private async void VolverAPrincipal(object sender, RoutedEventArgs e) =>
-            await VolverAPrincipal().ConfigureAwait(false);
+        private void VolverAPrincipal(object sender, RoutedEventArgs e) => VolverAPrincipal();
 
-        private async Task VolverAPrincipal()
+        private void VolverAPrincipal()
         {
             Atras.Visibility = Visibility.Collapsed;
-            await administrador.VolverAPrincipal().ConfigureAwait(false);
+            administrador.VolverAPrincipal();
         }
 
-#pragma warning disable RCS1090 // Call 'ConfigureAwait(false)'.
         public async Task Navegar(Operacion operacion, object parametro)
         {
-            await VolverAPrincipal();
+            VolverAPrincipal();
 
             Atras.Visibility = Visibility.Visible;
 
-            await administrador.TraerAlFrente(operacion.Visualization);
+            administrador.TraerAlFrente(operacion.Visualization);
 
-            await operacion.ViewModel.Nodo.Entrar(parametro);
+            await operacion.ViewModel.Nodo.Entrar(parametro).ConfigureAwait(false);
         }
-#pragma warning restore RCS1090
 
         public Task EnDireccionNoEncontrada(string direccion)
         {

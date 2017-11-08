@@ -230,6 +230,7 @@ namespace AguaSB.Contratos.ViewModels
                 MostrarProgreso = false;
             }
 
+            await Task.Delay(100).ConfigureAwait(true);
             Enfocar?.Invoke(this, EventArgs.Empty);
         }
 
@@ -267,7 +268,7 @@ namespace AguaSB.Contratos.ViewModels
             try
             {
                 progreso.Report((0.0, "Agregando contrato..."));
-                var resultado = await Contratos.Agregar(Contrato).ConfigureAwait(true);
+                var resultado = await Contratos.Agregar(Contrato).ConfigureAwait(false);
                 // TODO: Probablemente remover con EF
                 Contrato.Usuario.Contratos.Add(Contrato);
 

@@ -10,10 +10,7 @@ namespace AguaSB
 {
     public static class Animaciones
     {
-
-        private static TimeSpan Retraso = TimeSpan.FromMilliseconds(100);
-
-        public static async Task MostrarEnPanel(Panel panel, FrameworkElement view)
+        public static void MostrarEnPanel(Panel panel, FrameworkElement view)
         {
             var children = panel.Children.OfType<UIElement>();
 
@@ -33,8 +30,6 @@ namespace AguaSB
             {
                 AnimarYAgregar(panel, view);
             }
-
-            await Task.Delay(Retraso);
         }
 
         private static void AnimarYAgregar(Panel panel, FrameworkElement view)
@@ -44,7 +39,7 @@ namespace AguaSB
             AplicarAnimacionEntrada(view);
         }
 
-        public static async Task RemoverDeVista(Panel panel, FrameworkElement view)
+        public static async void RemoverDeVista(Panel panel, FrameworkElement view)
         {
             var children = panel.Children.OfType<UIElement>();
 
@@ -55,7 +50,7 @@ namespace AguaSB
                     PrepararParaSalida(view);
                     AplicarAnimacionSalida(view);
 
-                    await Task.Delay(Retraso + TimeSpan.FromMilliseconds(200));
+                    await Task.Delay(DuracionAnimaciones).ConfigureAwait(true);
 
                     panel.Children.Remove(view);
                 }
@@ -77,8 +72,8 @@ namespace AguaSB
         private static void PrepararParaEntrada(FrameworkElement view) => PrepararParaAnimacion(view, 0.2, 0.85);
         private static void PrepararParaSalida(FrameworkElement view) => PrepararParaAnimacion(view, 1.0, 1.0);
 
-        private static TimeSpan DuracionAnimaciones = TimeSpan.FromMilliseconds(500);
-        private static IEasingFunction EasingFunction = new PowerEase() { Power = 5, EasingMode = EasingMode.EaseOut };
+        private static readonly TimeSpan DuracionAnimaciones = TimeSpan.FromMilliseconds(500);
+        private static readonly IEasingFunction EasingFunction = new PowerEase() { Power = 5, EasingMode = EasingMode.EaseOut };
 
         private static void AplicarAnimacion(FrameworkElement view, double escalaFinal, double opacidadFinal)
         {
@@ -90,7 +85,7 @@ namespace AguaSB
             escalarY.SetValue(Storyboard.TargetPropertyProperty, new PropertyPath($"{nameof(FrameworkElement.RenderTransform)}.{nameof(ScaleTransform.ScaleY)}"));
             aparecer.SetValue(Storyboard.TargetPropertyProperty, new PropertyPath($"{nameof(FrameworkElement.Opacity)}"));
 
-            Storyboard s = new Storyboard()
+            var s = new Storyboard()
             {
                 Children = { escalarX, escalarY, aparecer }
             };

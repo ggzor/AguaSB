@@ -121,8 +121,6 @@ namespace AguaSB.Usuarios.ViewModels
             BuscarComando = new AsyncDelegateCommand<ResultadoSolicitud>(Buscar, multipleExecutionSupported: true);
             AgregarContratoComando = new DelegateCommand(AgregarContrato);
 
-            RegistrarAgrupadores();
-
             this.ToObservableProperties().Subscribe(_ => RegistrarUniones(_.Args));
 
             Solicitud = new Solicitud
@@ -134,43 +132,6 @@ namespace AguaSB.Usuarios.ViewModels
             Solicitud.Columnas.FechaRegistro = false;
 
             Estado = new EstadoBusqueda();
-        }
-
-        private async void RegistrarAgrupadores()
-        {
-            await Task.Delay(30);
-
-            string ExtraerMes(object objeto) =>
-                            objeto is DateTime d
-                            ? Cadenas.Capitalizar(d.ToString("MMMM yyyy"))
-                            : "Desconocido";
-
-            string Clasificar(decimal d)
-            {
-                var residuo = d / 500;
-                return $"{residuo * 500:C} - {(residuo + 1) * 500:C}";
-            }
-
-            CriteriosAgrupacion = new[]
-            {
-                Agrupador.Ninguno,
-                new Agrupador { Nombre = "Sección", Propiedad = "Domicilio.Calle.Seccion.Nombre" },
-                new Agrupador { Nombre = "Calle", Propiedad = "Domicilio.Calle.Nombre" },
-                new Agrupador {
-                    Nombre = "Adeudo",
-                    Descripcion = "En pesos",
-                    Propiedad = "Adeudo",
-                    Conversor = x =>
-                    {
-                        if(x is decimal d)
-                            return Clasificar(d);
-                        else
-                            return "Desconocido";
-                    }
-                },
-                new Agrupador { Nombre = "Pagado hasta", Propiedad = "PagadoHasta", Conversor = ExtraerMes},
-                new Agrupador { Nombre = "Fecha de registro", Propiedad = "Usuario.FechaRegistro", Conversor = ExtraerMes }
-            };
         }
 
         private IDisposable Propiedades;
@@ -199,7 +160,6 @@ namespace AguaSB.Usuarios.ViewModels
                 Propiedades = props.Merge()
                     .Where(_ => !excepto.Contains(_.Args.PropertyName))
                     .Throttle(TiempoEsperaBusqueda)
-                    .Skip(1)
                     .Subscribe(_ => BuscarComando.Execute(null));
 
                 Solicitud.Filtros.Seccion.ToObservableProperties()
@@ -223,26 +183,17 @@ namespace AguaSB.Usuarios.ViewModels
         private void AgregarContrato(object o)
         {
             if (o is ResultadoUsuario u)
-            {
                 Navegador.Navegar("Contratos/Agregar", u.Usuario.Id);
-            }
-            else
-            {
-                // TODO: Log
-            }
         }
 
         #region Inicializacion
         private IDictionary<Seccion, IList<Calle>> CallesAgrupadas;
         private IDictionary<ClaseContrato, IList<TipoContrato>> TiposContratoAgrupados;
 
-        private async Task Inicializar()
+        private Task Inicializar() => Task.Run(() =>
         {
-            var callesAgrupadasTarea = Task.Run(() => Domicilios.CallesAgrupadas(SeccionesRepo));
-            var tiposContratoAgrupadosTarea = Task.Run(() => Contratos.TiposContratoAgrupados(TiposContratoRepo));
-
-            CallesAgrupadas = await callesAgrupadasTarea.ConfigureAwait(continueOnCapturedContext: false);
-            TiposContratoAgrupados = await tiposContratoAgrupadosTarea.ConfigureAwait(continueOnCapturedContext: false);
+            CallesAgrupadas = Domicilios.CallesAgrupadas(SeccionesRepo);
+            TiposContratoAgrupados = Contratos.TiposContratoAgrupados(TiposContratoRepo);
 
             Secciones = CallesAgrupadas.Keys.OrderBy(_ => _.Orden).ToList();
             ClasesContrato = TiposContratoAgrupados.Keys.ToList();
@@ -260,7 +211,9 @@ namespace AguaSB.Usuarios.ViewModels
 
                 ActualizarListadoDeTiposContrato();
             }
-        }
+
+            RegistrarAgrupadores();
+        });
 
         private void ActualizarListadoDeCalles()
         {
@@ -279,32 +232,65 @@ namespace AguaSB.Usuarios.ViewModels
                 Solicitud.Filtros.TipoContrato.Valor = TiposContrato.FirstOrDefault();
             }
         }
+
+        private void RegistrarAgrupadores()
+        {
+            string ExtraerMes(object objeto) =>
+                   objeto is DateTime d
+                   ? Cadenas.Capitalizar(d.ToString("MMMM yyyy"))
+                   : "Desconocido";
+
+            string Clasificar(decimal d)
+            {
+                var residuo = d / 500;
+                return $"{residuo * 500:C} - {(residuo + 1) * 500:C}";
+            }
+
+            CriteriosAgrupacion = new[]
+            {
+                Agrupador.Ninguno,
+                new Agrupador { Nombre = "Sección", Propiedad = "Domicilio.Calle.Seccion.Nombre" },
+                new Agrupador { Nombre = "Calle", Propiedad = "Domicilio.Calle.Nombre" },
+                new Agrupador {
+                    Nombre = "Adeudo",
+                    Descripcion = "En pesos",
+                    Propiedad = "Adeudo",
+                    Conversor = x =>
+                    {
+                        if(x is decimal d)
+                            return Clasificar(d);
+                        else
+                            return "Desconocido";
+                    }
+                },
+                new Agrupador { Nombre = "Pagado hasta", Propiedad = "PagadoHasta", Conversor = ExtraerMes},
+                new Agrupador { Nombre = "Fecha de registro", Propiedad = "Usuario.FechaRegistro", Conversor = ExtraerMes }
+            };
+        }
         #endregion
 
         private Task Entrar(object arg)
         {
             Enfocar?.Invoke(this, EventArgs.Empty);
-            BuscarComando.Execute(null);
             return Task.CompletedTask;
         }
 
-        private async Task<ResultadoSolicitud> Buscar()
+        private Task<ResultadoSolicitud> Buscar() => Task.Run(() =>
         {
             var estado = Estado = new EstadoBusqueda
             {
                 Buscando = true
             };
 
-            var resultados = await Task.Run(() =>
-                Solicitud.Filtros.Aplicar(UsuariosRepo.Datos.AsQueryable(),
-                (pagadoHasta, tipoContrato) => Adeudos.Calcular(pagadoHasta, tipoContrato, TarifasRepo.Datos.OrderBy(_ => _.FechaRegistro).ToArray())));
+            var resultados = Solicitud.Filtros.Aplicar(UsuariosRepo.Datos.AsQueryable(),
+                (pagadoHasta, tipoContrato) => Adeudos.Calcular(pagadoHasta, tipoContrato, TarifasRepo.Datos.OrderBy(_ => _.FechaRegistro).ToArray()));
 
             var conteo = resultados.LongCount();
 
             estado.Buscando = false;
             estado.HayResultados = conteo > 0;
 
-            return estado.HayResultados == true ? new ResultadoSolicitud { Resultados = resultados, Conteo = resultados.LongCount() } : null;
-        }
+            return new ResultadoSolicitud { Resultados = resultados, Conteo = resultados.LongCount() };
+        });
     }
 }

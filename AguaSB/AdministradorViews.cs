@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -13,17 +12,13 @@ namespace AguaSB
         public AdministradorViews(Panel vista) =>
             Vista = vista ?? throw new ArgumentNullException(nameof(vista));
 
-        public async Task TraerAlFrente(FrameworkElement element)
-        {
-            await Animaciones.MostrarEnPanel(Vista, element);
-        }
+        public void TraerAlFrente(FrameworkElement element) =>
+            Animaciones.MostrarEnPanel(Vista, element);
 
-        public async Task VolverAPrincipal()
+        public void VolverAPrincipal()
         {
             if (Vista.Children.Count > 1 && Vista.Children.OfType<FrameworkElement>().Last() is FrameworkElement elem)
-            {
-                await Animaciones.RemoverDeVista(Vista, elem);
-            }
+                Animaciones.RemoverDeVista(Vista, elem);
         }
     }
 }
