@@ -179,7 +179,7 @@ namespace AguaSB.Usuarios.ViewModels
 
             Navegador = navegador ?? throw new ArgumentNullException(nameof(navegador));
 
-            Nodo = new Nodo { Entrada = Entrar };
+            Nodo = new Nodo { PrimeraEntrada = Inicializar, Entrada = Entrar };
 
             Task.Factory.StartNew(CargarSugerencias);
         }
@@ -225,7 +225,7 @@ namespace AguaSB.Usuarios.ViewModels
 
         private async void InvocarEnfocar()
         {
-            await Task.Delay(100).ConfigureAwait(true);
+            await Task.Delay(50).ConfigureAwait(true);
 
             Enfocar?.Invoke(this, EventArgs.Empty);
         }
@@ -245,15 +245,17 @@ namespace AguaSB.Usuarios.ViewModels
                 lista.Add(new Contacto { TipoContacto = tipoContacto });
         }
 
-        private Task Entrar(object arg)
+        private async Task Inicializar()
         {
-            TiposContacto = TiposContactoRepo.Datos.ToList();
+            TiposContacto = await Task.Run(() => TiposContactoRepo.Datos.ToList()).ConfigureAwait(true);
 
             ConfigurarComandos();
             ConfigurarUniones();
+        }
 
+        private Task Entrar(object arg)
+        {
             InvocarEnfocar();
-
             return Task.CompletedTask;
         }
 
@@ -363,10 +365,10 @@ namespace AguaSB.Usuarios.ViewModels
             {
                 var resultado = await AgregarUsuario(progreso).ConfigureAwait(true);
 
+                var _ = Navegador.Navegar("Contratos/Agregar", resultado);
+
                 puedeReestablecer(true);
                 reestablecer.Execute(null);
-
-                await Navegador.Navegar("Contratos/Agregar", resultado).ConfigureAwait(true);
 
                 return resultado;
             }
@@ -376,20 +378,20 @@ namespace AguaSB.Usuarios.ViewModels
             }
         }
 
-        private async Task<int> AgregarUsuario(IProgress<(double, string)> progreso = null)
+        private Task<int> AgregarUsuario(IProgress<(double, string)> progreso = null) => Task.Run(() =>
         {
             progreso.Report((0.0, "Buscando duplicados..."));
 
-            if (await OperacionesUsuarios.BuscarDuplicadosAsync(Usuario, UsuariosRepo).ConfigureAwait(false) is Usuario u)
+            if (OperacionesUsuarios.BuscarDuplicados(Usuario, UsuariosRepo) is Usuario u)
                 throw new Exception($"El usuario \"{u.NombreCompleto}\" ya está registrado en el sistema.");
 
             progreso.Report((50.0, "Agregando usuario..."));
 
-            var usuario = await UsuariosRepo.Agregar(Usuario).ConfigureAwait(false);
+            var usuario = UsuariosRepo.Agregar(Usuario).Result;
 
             progreso.Report((100.0, "Completado."));
 
             return usuario.Id;
-        }
+        });
     }
 }
