@@ -177,7 +177,7 @@ namespace AguaSB.Contratos.ViewModels
                 {
                     this, Contrato, Contrato.Domicilio
                 },
-                () => Enumerable.Empty<INotifyPropertyChanged>(),
+                Enumerable.Empty<INotifyPropertyChanged>,
                 () => new ICommand[]
                 {
                     AgregarContratoComando, ReestablecerComando
@@ -186,28 +186,23 @@ namespace AguaSB.Contratos.ViewModels
 
         private IDictionary<Seccion, IList<Calle>> callesAgrupadas;
 
-        private async Task Inicializar()
+        private Task Inicializar() => Task.Run(() =>
         {
             TextoProgreso = "Cargando información de secciones y calles...";
             MostrarProgreso = true;
 
-            var callesAgrupadasTarea = Task.Run(() => Domicilios.CallesAgrupadas(SeccionesRepo));
+            callesAgrupadas = Domicilios.CallesAgrupadas(SeccionesRepo);
 
-            var tiposContratoTarea = Task.Run(() =>
-            {
-                return (from tipo in TiposContratoRepo.Datos
-                        orderby tipo.Nombre
-                        select tipo).ToList();
-            });
-
-            callesAgrupadas = await callesAgrupadasTarea;
-            TiposContrato = await tiposContratoTarea;
+            TiposContrato = (from tipo in TiposContratoRepo.Datos
+                             orderby tipo.Nombre
+                             select tipo).ToList();
 
             Secciones = callesAgrupadas.Keys;
 
             ReestablecerTipoContratoYCalles();
+
             MostrarProgreso = false;
-        }
+        });
 
         private async Task Entrar(object arg)
         {
@@ -272,16 +267,16 @@ namespace AguaSB.Contratos.ViewModels
             try
             {
                 progreso.Report((0.0, "Agregando contrato..."));
-                var resultado = await Contratos.Agregar(Contrato).ConfigureAwait(false);
+                var resultado = await Contratos.Agregar(Contrato).ConfigureAwait(true);
                 // TODO: Probablemente remover con EF
                 Contrato.Usuario.Contratos.Add(Contrato);
 
                 progreso.Report((100.0, "Completado."));
 
+                var _ = Navegador.Navegar("Usuarios/Listado", Contrato.Usuario.NombreCompleto);
+
                 PuedeReestablecer = true;
                 Reestablecer();
-
-                await Navegador.Navegar("Usuarios/Listado", Contrato.Usuario.NombreCompleto);
 
                 return resultado.Id;
             }

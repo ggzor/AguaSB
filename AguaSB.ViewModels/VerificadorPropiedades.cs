@@ -30,7 +30,11 @@ namespace AguaSB.ViewModels
             Propiedades = propiedades ?? throw new ArgumentNullException(nameof(propiedades));
             Comandos = comandos ?? throw new ArgumentNullException(nameof(comandos));
 
-            Padre.ToObservableProperties().Subscribe(RegistrarObservadoresDeCambios);
+            Padre.ToObservableProperties()
+                .ObserveOnDispatcher()
+                .SubscribeOnDispatcher()
+                .Subscribe(RegistrarObservadoresDeCambios);
+
             RegistrarObservadoresDeCambios((this, new PropertyChangedEventArgs("None")));
         }
 
@@ -54,7 +58,12 @@ namespace AguaSB.ViewModels
 
             var unaVez = Observable.Return(Unit.Default);
 
-            ObservadorDePropiedades = Observable.Merge(observablesError.Concat(observables)).Merge(unaVez).Subscribe(_ => VerificarPuedeEjecutar());
+            ObservadorDePropiedades = observablesError.Concat(observables)
+                .Merge()
+                .Merge(unaVez)
+                .ObserveOnDispatcher()
+                .SubscribeOnDispatcher()
+                .Subscribe(_ => VerificarPuedeEjecutar());
         }
 
         public void VerificarPuedeEjecutar() => UtileriasComandos.VerificarPuedeEjecutarEn(Comandos());
