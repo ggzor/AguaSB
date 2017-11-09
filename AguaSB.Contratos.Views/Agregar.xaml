@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:Controles="clr-namespace:AguaSB.Contratos.Views.Controles"
              xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:Views="clr-namespace:AguaSB.Views.Controles;assembly=AguaSB.Views"
@@ -100,23 +101,9 @@
                     <TextBlock Grid.Row="5" Grid.Column="1" Margin="0 20" Text="Domicilio:" 
                                Opacity="0.6" Style="{StaticResource h3}"/>
 
-                    <icons:PackIconMaterial Grid.Row="6" Kind="ViewGrid" Estilos:Icono.Enfocado="{Binding ElementName=Seccion, Path=IsKeyboardFocusWithin}"
-                                            Tag="{Binding ElementName=Seccion}" Style="{StaticResource IconoLateral}"/>
-                    <ComboBox Name="Seccion" Grid.Row="6" Grid.Column="1" Tag="Sección" ItemsSource="{Binding Secciones}" 
-                              Estilos:Foco.SiguienteFoco="{Binding ElementName=Calle}"
-                              SelectedItem="{Binding Seccion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
-
-                    <icons:PackIconEntypo Grid.Row="7" Kind="Address" Estilos:Icono.Enfocado="{Binding ElementName=Calle, Path=IsKeyboardFocusWithin}"
-                                          Tag="{Binding ElementName=Calle}" Style="{StaticResource IconoLateral}"/>
-                    <ComboBox Name="Calle" Grid.Row="7" Grid.Column="1" Tag="Calle" ItemsSource="{Binding Calles}" 
-                              Estilos:Foco.SiguienteFoco="{Binding ElementName=Numero}"
-                              SelectedItem="{Binding Calle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
-
-                    <icons:PackIconFontAwesome Grid.Row="8" Kind="Hashtag"
-                                                Tag="{Binding ElementName=Numero}" Style="{StaticResource IconoLateral}"/>
-                    <TextBox Name="Numero" Grid.Row="8" Grid.Column="1" Tag="Número" 
-                             Estilos:Foco.SiguienteFoco="{Binding ElementName=Botones, Path=Primario}"
-                             Text="{Binding Contrato.Domicilio.Numero, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+                    <Controles:DomicilioView Grid.Row="8" Grid.ColumnSpan="2" CallesAgrupadas="{Binding CallesAgrupadas}"
+                                             Domicilio="{Binding Contrato.Domicilio}" Editable="{Binding PuedeReestablecer}"
+                                             Estilos:Foco.SiguienteFoco="{Binding ElementName=Botones}"/>
 
                     <TextBlock Grid.Row="9" Grid.Column="1" Name="MensajeErrorNegocio" Text="{Binding AgregarContratoComando.Execution.ExceptionMessage}" Style="{StaticResource error}"
                                Tag="{Binding MostrarMensajeError}"/>
@@ -135,7 +122,7 @@
                              Texto="{Binding TextoProgreso}" Visible="{Binding MostrarProgreso}"/>
 
         <material:PopupBox Margin="32" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
-                           HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                           HorizontalAlignment="Right" VerticalAlignment="Bottom" StaysOpen="False" Panel.ZIndex="-100">
             <StackPanel>
                 <StackPanel.Resources>
                     <Style TargetType="Button" BasedOn="{StaticResource ActionButton}">

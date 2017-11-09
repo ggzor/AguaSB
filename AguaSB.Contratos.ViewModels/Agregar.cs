@@ -33,12 +33,10 @@ namespace AguaSB.Contratos.ViewModels
         private Contrato contrato;
 
         private TipoContrato tipoContrato;
-        private Seccion seccion;
-        private Calle calle;
 
         private IEnumerable<TipoContrato> tiposContrato = Enumerable.Empty<TipoContrato>();
-        private IEnumerable<Seccion> secciones = Enumerable.Empty<Seccion>();
-        private IEnumerable<Calle> calles = Enumerable.Empty<Calle>();
+
+        private IDictionary<Seccion, IList<Calle>> callesAgrupadas;
         #endregion
 
         #region Propiedades
@@ -83,52 +81,19 @@ namespace AguaSB.Contratos.ViewModels
             set { SetPropertyAndValidate(ref tipoContrato, value); }
         }
 
-        [Required(ErrorMessage = "Debe seleccionar una sección existente.")]
-        public Seccion Seccion
-        {
-            get { return seccion; }
-            set
-            {
-                SetPropertyAndValidate(ref seccion, value);
-                if (value != null)
-                {
-                    Calles = callesAgrupadas[value];
-                    Calle = Calles.FirstOrDefault();
-                }
-                else
-                {
-                    Calle = null;
-                    Calles = null;
-                }
-            }
-        }
-
-        [Required(ErrorMessage = "Debe seleccionar una calle registrada.")]
-        public Calle Calle
-        {
-            get { return calle; }
-            set { SetPropertyAndValidate(ref calle, value); }
-        }
-
         public IEnumerable<TipoContrato> TiposContrato
         {
             get { return tiposContrato; }
             set { SetProperty(ref tiposContrato, value); }
         }
 
-        public IEnumerable<Seccion> Secciones
-        {
-            get { return secciones; }
-            set { SetProperty(ref secciones, value); }
-        }
-
-        public IEnumerable<Calle> Calles
-        {
-            get { return calles; }
-            set { SetProperty(ref calles, value); }
-        }
-
         public IEnumerable<string> SugerenciasMedidasToma { get; } = new[] { "1/2", "1", "1 1/2", "2" };
+
+        public IDictionary<Seccion, IList<Calle>> CallesAgrupadas
+        {
+            get { return callesAgrupadas; }
+            set { SetProperty(ref callesAgrupadas, value); }
+        }
         #endregion
 
         #region Comandos
@@ -184,22 +149,18 @@ namespace AguaSB.Contratos.ViewModels
                 });
         }
 
-        private IDictionary<Seccion, IList<Calle>> callesAgrupadas;
-
         private Task Inicializar() => Task.Run(() =>
         {
             TextoProgreso = "Cargando información de secciones y calles...";
             MostrarProgreso = true;
 
-            callesAgrupadas = Domicilios.CallesAgrupadas(SeccionesRepo);
+            CallesAgrupadas = Domicilios.CallesAgrupadas(SeccionesRepo);
 
             TiposContrato = (from tipo in TiposContratoRepo.Datos
                              orderby tipo.Nombre
                              select tipo).ToList();
 
-            Secciones = callesAgrupadas.Keys;
-
-            ReestablecerTipoContratoYCalles();
+            TipoContrato = TiposContrato.FirstOrDefault();
 
             MostrarProgreso = false;
         });
@@ -242,13 +203,7 @@ namespace AguaSB.Contratos.ViewModels
                 Domicilio = new Domicilio()
             };
 
-            ReestablecerTipoContratoYCalles();
-        }
-
-        private void ReestablecerTipoContratoYCalles()
-        {
             TipoContrato = TiposContrato.FirstOrDefault();
-            Seccion = Secciones.FirstOrDefault();
         }
 
         private bool PuedeAgregarContrato() =>
@@ -260,7 +215,6 @@ namespace AguaSB.Contratos.ViewModels
         private async Task<int> AgregarContrato(IProgress<(double, string)> progreso)
         {
             Contrato.TipoContrato = TipoContrato;
-            Contrato.Domicilio.Calle = Calle;
 
             MostrarMensajeError = true;
             PuedeReestablecer = false;

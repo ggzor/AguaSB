@@ -438,9 +438,7 @@
                 <Grid Name="Resultados" Background="White" Opacity="0" Tag="{Binding Estado.HayResultados}" Style="{StaticResource FadeTag}">
                     <Grid>
                         <ListView ItemsSource="{Binding BuscarComando.Execution.Result.Resultados}" Name="ListaResultados"
-                                  VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.IsVirtualizingWhenGrouping="True"
-                                  VirtualizingPanel.CacheLength="3" VirtualizingPanel.CacheLengthUnit="Item" VirtualizingPanel.IsContainerVirtualizable="True"
-                                  VirtualizingPanel.VirtualizationMode="Standard">
+                                  VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.IsVirtualizingWhenGrouping="True">
                             <ListView.View>
                                 <GridView AllowsColumnReorder="False">
                                     <GridView.ColumnHeaderTemplate>
