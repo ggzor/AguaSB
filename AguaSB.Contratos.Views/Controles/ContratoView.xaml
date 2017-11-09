@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="AguaSB.Contratos.Views.Controles.ContratoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:Estilos="clr-namespace:AguaSB.Estilos;assembly=AguaSB.Estilos"
+             mc:Ignorable="d" 
+             Background="White"
+             d:DesignHeight="500" d:DesignWidth="400"
+             Name="This">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Estilos.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/AguaSB.Views;component/Utilerias/Conversores.xaml"/>
+                <ResourceDictionary Source="../Plantillas/AgregarPlantillas.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <StackPanel DataContext="{Binding ElementName=This}">
+        <DockPanel>
+            <icons:PackIconMaterial Kind="Account" Style="{StaticResource IconoLateral}"
+                                    Estilos:Icono.Enfocado="{Binding Contrato.Usuario, Converter={StaticResource IsNotNull}}"
+                                    Estilos:Icono.Error="{Binding Contrato.Usuario, Converter={StaticResource IsNull}}"/>
+            <TextBlock Margin="0 20 0 30" Text="{Binding Contrato.Usuario.NombreCompleto, FallbackValue=No especificado}" Style="{StaticResource h4}"
+                       IsEnabled="{Binding Editable}"/>
+        </DockPanel>
+
+        <DockPanel>
+            <icons:PackIconMaterial Kind="ViewList" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=CajaTipoContrato}"
+                                    Estilos:Icono.Enfocado="{Binding ElementName=CajaTipoContrato, Path=IsKeyboardFocusWithin}"/>
+            <ComboBox Name="CajaTipoContrato" Tag="Tipo de contrato" Estilos:Foco.SiguienteFoco="{Binding ElementName=TamanoToma}"
+                      ItemsSource="{Binding TiposContrato}" ItemTemplate="{StaticResource PlantillaTipoContrato}"
+                      IsEnabled="{Binding Editable}"
+                      SelectedItem="{Binding TipoContrato, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+        </DockPanel>
+
+        <DockPanel>
+            <icons:PackIconEntypo Kind="FlowBranch" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=TamanoToma}"
+                                  Estilos:Icono.Enfocado="{Binding ElementName=TamanoToma, Path=IsKeyboardFocusWithin}"/>
+            <ComboBox Name="TamanoToma" Tag="Tamaño de la toma" Estilos:Foco.SiguienteFoco="{Binding ElementName=CajaPagadoHasta}"
+                      ItemsSource="{Binding SugerenciasMedidasTomas}"
+                      IsEnabled="{Binding Editable}"
+                      Text="{Binding Contrato.MedidaToma, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+        </DockPanel>
+
+        <DockPanel>
+            <icons:PackIconMaterial Kind="CalendarClock" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=CajaPagadoHasta}"
+                                    Estilos:Icono.Enfocado="{Binding ElementName=CajaPagadoHasta, Path=IsKeyboardFocusWithin}"/>
+
+            <DatePicker Name="CajaPagadoHasta" Margin="0 20 0 30" Tag="Pagado hasta" Estilos:Foco.SiguienteFoco="{Binding ElementName=This, Path=(Estilos:Foco.SiguienteFoco)}"
+                        FocusVisualStyle="{x:Null}" Estilos:Foco.EnterAvanzaFoco="True"
+                        IsEnabled="{Binding Editable}"
+                        Text="{Binding PagadoHasta, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        </DockPanel>
+    </StackPanel>
+</UserControl>
