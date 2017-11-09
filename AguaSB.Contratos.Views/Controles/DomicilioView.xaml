@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="AguaSB.Contratos.Views.Controles.DomicilioView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:Estilos="clr-namespace:AguaSB.Estilos;assembly=AguaSB.Estilos"
+             mc:Ignorable="d" 
+             Background="White"
+             d:DesignHeight="300" d:DesignWidth="300"
+             Name="This">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Estilos.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/AguaSB.Views;component/Utilerias/Conversores.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <StackPanel>
+        <DockPanel>
+            <icons:PackIconMaterial Kind="ViewGrid" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=CajaSecciones}"
+                                    Estilos:Icono.Enfocado="{Binding ElementName=CajaSecciones, Path=IsKeyboardFocusWithin}"/>
+            <ComboBox Name="CajaSecciones" Tag="Sección" Estilos:Foco.SiguienteFoco="{Binding ElementName=CajaCalles}"
+                      ItemsSource="{Binding ElementName=This, Path=Secciones}"
+                      IsReadOnly="{Binding ElementName=This, Path=Editable, Converter={StaticResource InvertBool}}"
+                      SelectedItem="{Binding ElementName=This, Path=Seccion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+        </DockPanel>
+
+        <DockPanel>
+            <icons:PackIconEntypo Kind="Address" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=CajaCalles}"
+                                  Estilos:Icono.Enfocado="{Binding ElementName=CajaCalles, Path=IsKeyboardFocusWithin}"/>
+            <ComboBox Name="CajaCalles" Tag="Calle" Estilos:Foco.SiguienteFoco="{Binding ElementName=Numero}"
+                      ItemsSource="{Binding ElementName=This, Path=Calles}"
+                      IsReadOnly="{Binding ElementName=This, Path=Editable, Converter={StaticResource InvertBool}}"
+                      SelectedItem="{Binding ElementName=This, Path=Calle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+        </DockPanel>
+
+        <DockPanel>
+            <icons:PackIconFontAwesome Kind="Hashtag" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=Numero}"
+                                       Estilos:Icono.Enfocado="{Binding ElementName=Numero, Path=IsKeyboardFocusWithin}"/>
+            <TextBox Name="Numero" Tag="Número" Estilos:Foco.SiguienteFoco="{Binding ElementName=This, Path=(Estilos:Foco.SiguienteFoco)}"
+                     IsReadOnly="{Binding ElementName=This, Path=Editable, Converter={StaticResource InvertBool}}"
+                     Text="{Binding ElementName=This, Path=Domicilio.Numero, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+        </DockPanel>
+    </StackPanel>
+</UserControl>
