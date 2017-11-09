@@ -13,7 +13,6 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Estilos.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/AguaSB.Views;component/Utilerias/Conversores.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -23,7 +22,7 @@
                                     Estilos:Icono.Enfocado="{Binding ElementName=CajaSecciones, Path=IsKeyboardFocusWithin}"/>
             <ComboBox Name="CajaSecciones" Tag="Sección" Estilos:Foco.SiguienteFoco="{Binding ElementName=CajaCalles}"
                       ItemsSource="{Binding ElementName=This, Path=Secciones}"
-                      IsReadOnly="{Binding ElementName=This, Path=Editable, Converter={StaticResource InvertBool}}"
+                      IsEnabled="{Binding ElementName=This, Path=Editable}"
                       SelectedItem="{Binding ElementName=This, Path=Seccion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
         </DockPanel>
 
@@ -32,7 +31,7 @@
                                   Estilos:Icono.Enfocado="{Binding ElementName=CajaCalles, Path=IsKeyboardFocusWithin}"/>
             <ComboBox Name="CajaCalles" Tag="Calle" Estilos:Foco.SiguienteFoco="{Binding ElementName=Numero}"
                       ItemsSource="{Binding ElementName=This, Path=Calles}"
-                      IsReadOnly="{Binding ElementName=This, Path=Editable, Converter={StaticResource InvertBool}}"
+                      IsEnabled="{Binding ElementName=This, Path=Editable}"
                       SelectedItem="{Binding ElementName=This, Path=Calle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
         </DockPanel>
 
@@ -40,7 +39,7 @@
             <icons:PackIconFontAwesome Kind="Hashtag" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=Numero}"
                                        Estilos:Icono.Enfocado="{Binding ElementName=Numero, Path=IsKeyboardFocusWithin}"/>
             <TextBox Name="Numero" Tag="Número" Estilos:Foco.SiguienteFoco="{Binding ElementName=This, Path=(Estilos:Foco.SiguienteFoco)}"
-                     IsReadOnly="{Binding ElementName=This, Path=Editable, Converter={StaticResource InvertBool}}"
+                     IsEnabled="{Binding ElementName=This, Path=Editable}"
                      Text="{Binding ElementName=This, Path=Domicilio.Numero, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
         </DockPanel>
     </StackPanel>

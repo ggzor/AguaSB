@@ -16,7 +16,6 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Estilos.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/AguaSB.Views;component/Utilerias/Conversores.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <Conversores:CallbackConverter x:Key="Iconos"/>
@@ -58,7 +57,7 @@
                                 Command="{Binding RelativeSource={RelativeSource AncestorType=local:ContactosView}, Path=BorrarContactoComando}"
                                 CommandParameter="{Binding}" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=local:ContactosView}, Path=Editable}"/>
                         <TextBox Name="Box" Tag="{Binding TipoContacto.Nombre}" Text="{Binding Informacion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
-                                 Focusable="True" IsReadOnly="{Binding RelativeSource={RelativeSource AncestorType=local:ContactosView}, Path=Editable, Converter={StaticResource InvertBool}}"/>
+                                 Focusable="True" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=local:ContactosView}, Path=Editable}"/>
                     </DockPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
