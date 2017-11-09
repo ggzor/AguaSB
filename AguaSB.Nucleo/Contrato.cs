@@ -16,7 +16,6 @@ namespace AguaSB.Nucleo
         private Usuario usuario;
         private TipoContrato tipoContrato;
         private string medidaToma;
-        private decimal adeudoInicial;
         private Domicilio domicilio;
 
         public int Id { get; set; }
@@ -42,12 +41,6 @@ namespace AguaSB.Nucleo
         {
             get { return medidaToma; }
             set { N.Validate(ref medidaToma, value); }
-        }
-
-        public decimal AdeudoInicial
-        {
-            get { return adeudoInicial; }
-            set { N.Set(ref adeudoInicial, value); }
         }
 
         [Required(ErrorMessage = Validacion.CampoRequerido)]
@@ -77,7 +70,7 @@ namespace AguaSB.Nucleo
         public bool HasErrors => N.TieneErrores;
         public IEnumerable GetErrors(string propertyName) => N.Errores(propertyName);
 
-        private Lazy<Notificador> notificador;
+        private readonly Lazy<Notificador> notificador;
         [NotMapped]
         protected Notificador N => notificador.Value;
         #endregion

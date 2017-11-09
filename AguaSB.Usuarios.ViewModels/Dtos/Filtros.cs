@@ -94,7 +94,6 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
                 valores = from usuario in valores
                           where usuario.NombreSolicitud.Contains(texto)
                           select usuario;
-
             }
 
             if (Seccion.Activo && Seccion.TieneValor)
@@ -102,7 +101,7 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
                 var seccion = Seccion.Valor;
                 valores = from usuario in valores
                           where usuario.Contratos.Count > 0
-                          let c = usuario.Contratos.OrderByDescending(c => c.AdeudoInicial).First()
+                          let c = usuario.Contratos.OrderByDescending(_ => _.Pagos.OrderByDescending(p => p.Hasta).FirstOrDefault()).First()
                           where c.Domicilio.Calle.Seccion == seccion
                           select usuario;
             }
@@ -112,7 +111,7 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
                 var calle = Calle.Valor;
                 valores = from usuario in valores
                           where usuario.Contratos.Count > 0
-                          let c = usuario.Contratos.OrderByDescending(c => c.AdeudoInicial).First()
+                          let c = usuario.Contratos.OrderByDescending(_ => _.Pagos.OrderByDescending(p => p.Hasta).FirstOrDefault()).First()
                           where c.Domicilio.Calle == calle
                           select usuario;
             }
@@ -152,7 +151,7 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
 
             var resultados = valores.ToList().Select(u =>
             {
-                if(u.Contratos.Count > 1)
+                if (u.Contratos.Count > 1)
                     Console.WriteLine("Here");
                 var resultado = new ResultadoUsuario
                 {

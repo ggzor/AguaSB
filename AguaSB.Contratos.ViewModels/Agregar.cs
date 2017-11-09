@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Waf.Applications;
@@ -32,10 +31,9 @@ namespace AguaSB.Contratos.ViewModels
 
         private Contrato contrato;
 
-        private TipoContrato tipoContrato;
+        private DateTime pagadoHasta;
 
-        private IEnumerable<TipoContrato> tiposContrato = Enumerable.Empty<TipoContrato>();
-
+        private IEnumerable<TipoContrato> tiposContrato;
         private IDictionary<Seccion, IList<Calle>> callesAgrupadas;
         #endregion
 
@@ -63,7 +61,7 @@ namespace AguaSB.Contratos.ViewModels
             get { return puedeReestablecer; }
             set
             {
-                puedeReestablecer = value;
+                SetProperty(ref puedeReestablecer, value);
                 ReestablecerComando.RaiseCanExecuteChanged();
             }
         }
@@ -74,11 +72,10 @@ namespace AguaSB.Contratos.ViewModels
             set { SetProperty(ref contrato, value); }
         }
 
-        [Required(ErrorMessage = "Debe seleccionar un tipo de contrato existente.")]
-        public TipoContrato TipoContrato
+        public DateTime PagadoHasta
         {
-            get { return tipoContrato; }
-            set { SetPropertyAndValidate(ref tipoContrato, value); }
+            get { return pagadoHasta; }
+            set { SetProperty(ref pagadoHasta, value); }
         }
 
         public IEnumerable<TipoContrato> TiposContrato
@@ -160,8 +157,6 @@ namespace AguaSB.Contratos.ViewModels
                              orderby tipo.Nombre
                              select tipo).ToList();
 
-            TipoContrato = TiposContrato.FirstOrDefault();
-
             MostrarProgreso = false;
         });
 
@@ -203,7 +198,7 @@ namespace AguaSB.Contratos.ViewModels
                 Domicilio = new Domicilio()
             };
 
-            TipoContrato = TiposContrato.FirstOrDefault();
+            PagadoHasta = Fecha.MesDe(Fecha.Ahora);
         }
 
         private bool PuedeAgregarContrato() =>
@@ -214,8 +209,6 @@ namespace AguaSB.Contratos.ViewModels
 
         private async Task<int> AgregarContrato(IProgress<(double, string)> progreso)
         {
-            Contrato.TipoContrato = TipoContrato;
-
             MostrarMensajeError = true;
             PuedeReestablecer = false;
 

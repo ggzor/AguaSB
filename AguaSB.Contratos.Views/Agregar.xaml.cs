@@ -19,7 +19,7 @@ namespace AguaSB.Contratos.Views
 
             InitializeComponent();
 
-            ViewModel.Enfocar += (_, __) => TipoContrato.Focus();
+            ViewModel.Enfocar += (_, __) => Contrato.Enfocar();
         }
     }
 }
