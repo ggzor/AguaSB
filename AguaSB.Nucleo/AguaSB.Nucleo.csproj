@@ -45,7 +45,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Adeudos.cs" />
+    <Compile Include="Ajustador.cs" />
     <Compile Include="Calle.cs" />
+    <Compile Include="ICoercible.cs" />
     <Compile Include="Tarifa.cs" />
     <Compile Include="Contacto.cs" />
     <Compile Include="Contrato.cs" />

@@ -9,7 +9,7 @@ using AguaSB.Utilerias;
 namespace AguaSB.Nucleo
 {
     [Table("Pagos")]
-    public class Pago : IEntidad, IAuditable, INotifyPropertyChanged, INotifyDataErrorInfo
+    public class Pago : IEntidad, IAuditable, ICoercible, INotifyPropertyChanged, INotifyDataErrorInfo
     {
         public int Id { get; set; }
 
@@ -19,6 +19,8 @@ namespace AguaSB.Nucleo
         private DateTime hasta;
         private Contrato contrato;
         private decimal monto;
+        private decimal montoParcial;
+        private Ajustador ajustador;
 
         public DateTime Desde
         {
@@ -45,6 +47,19 @@ namespace AguaSB.Nucleo
             set { N.Validate(ref monto, value); }
         }
 
+        [Range(typeof(decimal), "0", "1000000")]
+        public decimal MontoParcial
+        {
+            get { return montoParcial; }
+            set { N.Validate(ref montoParcial, value); }
+        }
+
+        public Ajustador Ajustador
+        {
+            get { return ajustador; }
+            set { N.Set(ref ajustador, value); }
+        }
+
         public Pago()
         {
             notificador = new Lazy<Notificador>(() =>
@@ -65,5 +80,18 @@ namespace AguaSB.Nucleo
         [NotMapped]
         protected Notificador N => notificador.Value;
         #endregion
+
+        public void Coercer()
+        {
+            CalcularMontoFinal();
+        }
+
+        private void CalcularMontoFinal()
+        {
+            if (Ajustador != null)
+                Monto = MontoParcial * Ajustador.Multiplicador;
+            else
+                Monto = MontoParcial;
+        }
     }
 }

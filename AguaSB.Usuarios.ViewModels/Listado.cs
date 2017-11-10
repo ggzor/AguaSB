@@ -283,7 +283,7 @@ namespace AguaSB.Usuarios.ViewModels
             };
 
             var resultados = Solicitud.Filtros.Aplicar(UsuariosRepo.Datos.AsQueryable(),
-                (pagadoHasta, tipoContrato) => Adeudos.Calcular(pagadoHasta, tipoContrato, TarifasRepo.Datos.OrderBy(_ => _.FechaRegistro).ToArray()));
+                (pagadoHasta, tipoContrato) => Adeudos.Calcular(pagadoHasta, tipoContrato, Tarifas.Obtener(TarifasRepo)));
 
             var conteo = resultados.LongCount();
 

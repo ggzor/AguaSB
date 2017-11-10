@@ -44,7 +44,7 @@
                                 Opacity="0.6" Style="{StaticResource h3}"/>
 
                     <Controles:ContratoView x:Name="Contrato" Contrato="{Binding Contrato}" TiposContrato="{Binding TiposContrato}" 
-                                            SugerenciasMedidasTomas="{Binding SugerenciasMedidasToma}" PagadoHasta="{Binding PagadoHasta}"
+                                            SugerenciasMedidasTomas="{Binding SugerenciasMedidasToma}" PagadoHasta="{Binding PagadoHasta, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                             Estilos:Foco.SiguienteFoco="{Binding ElementName=Domicilio}"
                                             Editable="{Binding PuedeReestablecer}"/>
 

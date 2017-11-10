@@ -102,10 +102,12 @@ namespace AguaSB.Contratos.ViewModels
         #endregion
 
         #region Dependencias
-        private IRepositorio<Usuario> Usuarios { get; }
-        private IRepositorio<Contrato> Contratos { get; }
+        private IRepositorio<Usuario> UsuariosRepo { get; }
+        private IRepositorio<Contrato> ContratosRepo { get; }
         private IRepositorio<TipoContrato> TiposContratoRepo { get; }
         private IRepositorio<Seccion> SeccionesRepo { get; }
+        private IRepositorio<Ajustador> AjustadoresRepo { get; }
+        private IRepositorio<Tarifa> TarifasRepo { get; }
 
         private IAdministradorNotificaciones Notificaciones { get; }
         private INavegador Navegador { get; }
@@ -116,13 +118,17 @@ namespace AguaSB.Contratos.ViewModels
         public INodo Nodo { get; }
 
         public Agregar(
-            IRepositorio<Usuario> usuarios, IRepositorio<Contrato> contratos, IRepositorio<TipoContrato> tiposContrato,
-            IRepositorio<Seccion> secciones, IAdministradorNotificaciones notificaciones, INavegador navegador)
+            IRepositorio<Usuario> usuariosRepo, IRepositorio<Contrato> contratosRepo, IRepositorio<TipoContrato> tiposContratoRepo,
+            IRepositorio<Seccion> seccionesRepo, IRepositorio<Ajustador> ajustadoresRepo, IRepositorio<Tarifa> tarifasRepo,
+            IAdministradorNotificaciones notificaciones, INavegador navegador)
         {
-            Usuarios = usuarios ?? throw new ArgumentNullException(nameof(usuarios));
-            Contratos = contratos ?? throw new ArgumentNullException(nameof(contratos));
-            TiposContratoRepo = tiposContrato ?? throw new ArgumentNullException(nameof(tiposContrato));
-            SeccionesRepo = secciones ?? throw new ArgumentNullException(nameof(secciones));
+            UsuariosRepo = usuariosRepo ?? throw new ArgumentNullException(nameof(usuariosRepo));
+            ContratosRepo = contratosRepo ?? throw new ArgumentNullException(nameof(contratosRepo));
+            TiposContratoRepo = tiposContratoRepo ?? throw new ArgumentNullException(nameof(tiposContratoRepo));
+            SeccionesRepo = seccionesRepo ?? throw new ArgumentNullException(nameof(seccionesRepo));
+            AjustadoresRepo = ajustadoresRepo ?? throw new ArgumentNullException(nameof(ajustadoresRepo));
+            TarifasRepo = tarifasRepo ?? throw new ArgumentNullException(nameof(tarifasRepo));
+
             Notificaciones = notificaciones ?? throw new ArgumentNullException(nameof(notificaciones));
             Navegador = navegador ?? throw new ArgumentNullException(nameof(navegador));
 
@@ -167,7 +173,7 @@ namespace AguaSB.Contratos.ViewModels
                 MostrarProgreso = true;
                 TextoProgreso = "Cargando datos de usuario...";
 
-                var buscarUsuario = Task.Run(() => Usuarios.Datos.SingleOrDefault(u => u.Id == id));
+                var buscarUsuario = Task.Run(() => UsuariosRepo.Datos.SingleOrDefault(u => u.Id == id));
 
                 if (await buscarUsuario is Usuario usuario)
                 {
@@ -214,12 +220,7 @@ namespace AguaSB.Contratos.ViewModels
 
             try
             {
-                progreso.Report((0.0, "Agregando contrato..."));
-                var resultado = await Contratos.Agregar(Contrato).ConfigureAwait(false);
-                // TODO: Probablemente remover con EF
-                Contrato.Usuario.Contratos.Add(Contrato);
-
-                progreso.Report((100.0, "Completado."));
+                var resultado = await EjecutarAgregarContrato(progreso).ConfigureAwait(true);
 
                 var _ = Navegador.Navegar("Usuarios/Listado", Contrato.Usuario.NombreCompleto);
 
@@ -233,5 +234,37 @@ namespace AguaSB.Contratos.ViewModels
                 PuedeReestablecer = true;
             }
         }
+
+        private Task<Contrato> EjecutarAgregarContrato(IProgress<(double, string)> progreso) => Task.Run(() =>
+        {
+            progreso.Report((20.0, "Registrando pago inicial..."));
+
+            var ajustadorRegistro = AjustadoresRepo.Datos.FirstOrDefault(a => a.Nombre == "Registro");
+
+            if (ajustadorRegistro == null)
+                throw new Exception("No se ha establecido el ajustador para el registro inicial. Registre en la sección \"Editar ajustadores\" un ajustador con el nombre \"Registro\"");
+
+            var pago = new Pago
+            {
+                Ajustador = ajustadorRegistro,
+                Contrato = Contrato,
+                Desde = Fecha.MesDe(PagadoHasta),
+                Hasta = Fecha.MesDe(PagadoHasta),
+                FechaRegistro = Fecha.Ahora
+            };
+
+            pago.Coercer();
+
+            Contrato.Pagos.Add(pago);
+
+            progreso.Report((50.0, "Agregando contrato..."));
+
+            var resultado = ContratosRepo.Agregar(Contrato).Result;
+            // TODO: Probablemente remover con EF
+            Contrato.Usuario.Contratos.Add(Contrato);
+
+            progreso.Report((100.0, "Completado."));
+            return resultado;
+        });
     }
 }

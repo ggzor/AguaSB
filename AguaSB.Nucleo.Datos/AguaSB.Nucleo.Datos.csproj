@@ -43,6 +43,7 @@
     <Compile Include="Contratos.cs" />
     <Compile Include="Domicilios.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tarifas.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AguaSB.Datos\AguaSB.Datos.csproj">
