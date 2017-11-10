@@ -25,6 +25,7 @@ namespace AguaSB
         private readonly AdministradorViews administrador;
 
         public VentanaPrincipal(VentanaPrincipalViewModel viewModel, ITransformadorExtensiones transformador,
+            IProveedorNotificaciones notificaciones, ITransformadorNotificaciones transformadorNotificaciones,
             ManejadorNavegacion<Operacion> manejadorNavegacion, NavegadorDirectorio<Operacion> navegador)
         {
             DataContext = ViewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
@@ -46,6 +47,12 @@ namespace AguaSB
             RegistrarNavegacionDePaginas(navegador);
 
             administrador = new AdministradorViews(Vista);
+
+            notificaciones.Notificaciones
+                .ObserveOnDispatcher()
+                .SubscribeOnDispatcher()
+                .Select(transformadorNotificaciones.Transformar)
+                .Subscribe(Notificaciones.AgregarNotificacion);
         }
 
         void IVentanaPrincipal.Mostrar() => ShowDialog();
