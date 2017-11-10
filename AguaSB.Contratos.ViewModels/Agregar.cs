@@ -192,7 +192,7 @@ namespace AguaSB.Contratos.ViewModels
                 MostrarProgreso = false;
             }
 
-            await Task.Delay(100).ConfigureAwait(true);
+            await Task.Delay(200).ConfigureAwait(true);
             Enfocar?.Invoke(this, EventArgs.Empty);
         }
 

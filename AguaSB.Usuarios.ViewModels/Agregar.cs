@@ -225,7 +225,7 @@ namespace AguaSB.Usuarios.ViewModels
 
         private async void InvocarEnfocar()
         {
-            await Task.Delay(50).ConfigureAwait(true);
+            await Task.Delay(200).ConfigureAwait(true);
 
             Enfocar?.Invoke(this, EventArgs.Empty);
         }

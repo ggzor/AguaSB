@@ -269,10 +269,10 @@ namespace AguaSB.Usuarios.ViewModels
         }
         #endregion
 
-        private Task Entrar(object arg)
+        private async Task Entrar(object arg)
         {
+            await Task.Delay(200).ConfigureAwait(true);
             Enfocar?.Invoke(this, EventArgs.Empty);
-            return Task.CompletedTask;
         }
 
         private Task<ResultadoSolicitud> Buscar() => Task.Run(() =>
