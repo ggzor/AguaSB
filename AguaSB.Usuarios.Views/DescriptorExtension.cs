@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 
@@ -16,10 +17,22 @@ namespace AguaSB.Usuarios.Views
 
         public Listado Listado { get; }
 
+        public IEnumerable<Operacion> Operaciones { get; }
+
+        public IEnumerable<Operacion> OperacionesMenuPrincipal { get; }
+
         public DescriptorExtension(Agregar agregar, Listado listado)
         {
             Agregar = agregar ?? throw new ArgumentNullException(nameof(agregar));
             Listado = listado ?? throw new ArgumentNullException(nameof(listado));
+
+            OperacionesMenuPrincipal = new[]
+            {
+                new Operacion(this, "Agregar usuario", Agregar, Agregar, Agregar.ViewModel),
+                new Operacion(this, "Listado de usuarios", Listado, Listado, Listado.ViewModel)
+            };
+
+            Operaciones = OperacionesMenuPrincipal;
         }
 
         public string Nombre => nameof(Usuarios);
@@ -36,11 +49,5 @@ namespace AguaSB.Usuarios.Views
         };
 
         public Tema Tema { get; } = Temas.Azul;
-
-        public IEnumerable<Operacion> Operaciones => new[]
-        {
-            new Operacion(this, "Agregar usuario", Agregar, Agregar, Agregar.ViewModel),
-            new Operacion(this, "Listado de usuarios", Listado, Listado, Listado.ViewModel)
-        };
     }
 }

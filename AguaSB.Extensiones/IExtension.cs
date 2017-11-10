@@ -18,5 +18,7 @@ namespace AguaSB.Extensiones
         Tema Tema { get; }
 
         IEnumerable<Operacion> Operaciones { get; }
+
+        IEnumerable<Operacion> OperacionesMenuPrincipal { get; }
     }
 }

@@ -12,8 +12,14 @@ namespace AguaSB.Pagos.Views
 {
     public class DescriptorExtension : IExtension
     {
+        public IEnumerable<Operacion> Operaciones { get; }
+
+        public IEnumerable<Operacion> OperacionesMenuPrincipal { get; }
+
         public DescriptorExtension()
         {
+            OperacionesMenuPrincipal = new Operacion[0];
+            Operaciones = OperacionesMenuPrincipal;
         }
 
         public string Nombre => nameof(Pagos);
@@ -30,9 +36,5 @@ namespace AguaSB.Pagos.Views
         };
 
         public Tema Tema { get; } = Temas.Verde;
-
-        public IEnumerable<Operacion> Operaciones => new Operacion[]
-        {
-        };
     }
 }

@@ -11,7 +11,7 @@ namespace AguaSB.Extensiones
             {
                 Titulo = extension.Nombre,
                 Descripcion = extension.Descripcion,
-                Elementos = extension.Operaciones,
+                Elementos = extension.OperacionesMenuPrincipal,
                 Icono = extension.Icono,
                 FondoIcono = extension.Tema.BrochaSolidaWPF,
             };

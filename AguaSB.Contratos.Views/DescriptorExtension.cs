@@ -12,12 +12,22 @@ namespace AguaSB.Contratos.Views
 {
     public class DescriptorExtension : IExtension
     {
-
         public Agregar Agregar { get; }
+
+        public IEnumerable<Operacion> Operaciones { get; }
+
+        public IEnumerable<Operacion> OperacionesMenuPrincipal { get; }
 
         public DescriptorExtension(Agregar agregar)
         {
             Agregar = agregar ?? throw new ArgumentNullException(nameof(agregar));
+
+            OperacionesMenuPrincipal = new[]
+            {
+                new Operacion(this, "Agregar contrato", Agregar, Agregar, Agregar.ViewModel)
+            };
+
+            Operaciones = OperacionesMenuPrincipal;
         }
 
         public string Nombre => nameof(Contratos);
@@ -34,10 +44,5 @@ namespace AguaSB.Contratos.Views
         };
 
         public Tema Tema { get; } = Temas.Naranja;
-
-        public IEnumerable<Operacion> Operaciones => new[]
-        {
-            new Operacion(this, "Agregar contrato", Agregar, Agregar, Agregar.ViewModel)
-        };
     }
 }
