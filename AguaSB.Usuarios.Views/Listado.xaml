@@ -198,7 +198,7 @@
                 <Button Name="AjustarColumnasBoton" Margin="0 0 10 0" ToolTip="Ajustar columnas (Ctrl + A)" Foreground="White" Style="{StaticResource UtilityButton}"
                         Content="{icons:PackIconMaterial Kind=TableColumnWidth, Width=20, Height=20}" Click="AjustarColumnas_Click"/>
                 <Button Name="AgregarContrato" Margin="0 0 10 0" ToolTip="Agregar contrato (Ctrl + C)" Foreground="White" Style="{StaticResource UtilityButton}"
-                        Content="{icons:PackIconModern Kind=Add, Width=20, Height=20}" Command="{Binding AgregarContratoComando}" CommandParameter="{Binding ElementName=ListaResultados, Path=SelectedItem}"
+                        Content="{icons:PackIconModern Kind=AlignJustify, Width=20, Height=20}" Command="{Binding AgregarContratoComando}" CommandParameter="{Binding ElementName=ListaResultados, Path=SelectedItem}"
                         IsEnabled="{Binding ElementName=ListaResultados, Path=SelectedItems.Count, Converter={StaticResource EqualsTo}, ConverterParameter=1}"/>
                 <Button Name="FiltrosColumnasBoton" ToolTip="Configuración" Click="MostrarFiltrosColumnas" Foreground="White" Style="{StaticResource UtilityButton}" 
                         Content="{icons:PackIconMaterial Kind=Settings, Width=20, Height=20}"/>

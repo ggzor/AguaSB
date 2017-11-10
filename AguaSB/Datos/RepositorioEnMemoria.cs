@@ -7,7 +7,7 @@ namespace AguaSB.Datos
 {
     public class RepositorioEnMemoria<T> : IRepositorio<T> where T : IEntidad
     {
-        private List<T> Entidades = new List<T>();
+        private readonly List<T> Entidades = new List<T>();
 
         public IEnumerable<T> Datos => Entidades;
 
