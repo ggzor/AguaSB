@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -10,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 
 using MahApps.Metro.IconPacks;
+using MoreLinq;
 
 using AguaSB.Views;
 using AguaSB.Views.Utilerias;
@@ -121,17 +123,49 @@ namespace AguaSB.Usuarios.Views
 
         private void ManejarTeclas(object sender, KeyEventArgs e)
         {
-            if (e.KeyboardDevice.Modifiers.HasFlag(ModifierKeys.Control))
+            if ((e.KeyboardDevice.Modifiers & ModifierKeys.Control) != 0)
             {
                 switch (e.Key)
                 {
+                    case Key.A:
+                        AjustarColumnas();
+                        break;
                     case Key.C:
                         if (AgregarContrato.IsEnabled)
                             AgregarContrato.Command?.Execute(ListaResultados.SelectedItem);
                         break;
                 }
             }
+            else
+            {
+                switch (e.Key)
+                {
+                    case Key.F5:
+                        ViewModel.BuscarComando.Execute(null);
+                        break;
+                }
+            }
         }
+
+        private void AjustarColumnas()
+        {
+            if (ListaResultados.View is GridView view)
+            {
+                view.Columns
+                    .Where(c => c.GetValue(AguaSB.Views.Utilerias.Columnas.EsVisibleProperty) is bool b && b)
+                    .ForEach(c =>
+                    {
+                        if (double.IsNaN(c.Width))
+                            c.Width = ActualWidth;
+
+                        c.Width = double.NaN;
+                    });
+            }
+        }
+
+        private void AjustarColumnas_Click(object sender, RoutedEventArgs e) => AjustarColumnas();
+
+        private void Actualizar_Click(object sender, RoutedEventArgs e) => ViewModel.BuscarComando.Execute(null);
     }
 
     public class SortAdorner : Adorner
