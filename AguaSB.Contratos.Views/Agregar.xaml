@@ -28,50 +28,50 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="600"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
 
         <Views:BarraSuperior Grid.ColumnSpan="3" Titulo="Agregar nuevo contrato" Foreground="White" Icono="{icons:PackIconModern Kind=Add, Width=20, Height=20}"/>
 
-        <material:Card Grid.Column="1" Grid.Row="1" Margin="10" Padding="40 20" 
-                       VerticalAlignment="Stretch">
-            <ScrollViewer Name="CamposPersona" Padding="20 0">
-                <StackPanel Margin="0 20" VerticalAlignment="Center">
-                    <TextBlock Grid.Row="0" Grid.Column="1" Text="Usuario:" 
-                                Opacity="0.6" Style="{StaticResource h3}"/>
+        <ScrollViewer Name="Deslizador" Grid.Row="1" Padding="20 0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="500"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-                    <Controles:ContratoView x:Name="Contrato" Contrato="{Binding Contrato}" TiposContrato="{Binding TiposContrato}" 
-                                            SugerenciasMedidasTomas="{Binding SugerenciasMedidasToma}" PagadoHasta="{Binding PagadoHasta, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                            Estilos:Foco.SiguienteFoco="{Binding ElementName=Domicilio}"
-                                            Editable="{Binding PuedeReestablecer}"/>
+                <material:Card Grid.Column="1" Margin="10" Padding="40 20" VerticalAlignment="Stretch">
+                    <StackPanel Margin="0 20" VerticalAlignment="Center">
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="Usuario:" Opacity="0.6" Style="{StaticResource h3}"/>
 
-                    <TextBlock Grid.Row="5" Grid.Column="1" Margin="0 20" Text="Domicilio:" 
-                               Opacity="0.6" Style="{StaticResource h3}"/>
+                        <Controles:ContratoView x:Name="Contrato" Contrato="{Binding Contrato}" TiposContrato="{Binding TiposContrato}" 
+                                                SugerenciasMedidasTomas="{Binding SugerenciasMedidasToma}" PagadoHasta="{Binding PagadoHasta, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                Estilos:Foco.SiguienteFoco="{Binding ElementName=Domicilio}"
+                                                Editable="{Binding PuedeReestablecer}"/>
 
-                    <Controles:DomicilioView x:Name="Domicilio" CallesAgrupadas="{Binding CallesAgrupadas}" Estilos:Foco.SiguienteFoco="{Binding ElementName=Botones}"
-                                             Domicilio="{Binding Contrato.Domicilio}" Editable="{Binding PuedeReestablecer}"/>
+                        <TextBlock Grid.Row="5" Grid.Column="1" Margin="0 20" Text="Domicilio:" 
+                                   Opacity="0.6" Style="{StaticResource h3}"/>
 
-                    <TextBlock Grid.Row="9" Grid.Column="1" Name="MensajeErrorNegocio" Text="{Binding AgregarContratoComando.Execution.ExceptionMessage}" Style="{StaticResource error}"
-                               Tag="{Binding MostrarMensajeError}"/>
+                        <Controles:DomicilioView x:Name="Domicilio" CallesAgrupadas="{Binding CallesAgrupadas}" Estilos:Foco.SiguienteFoco="{Binding ElementName=Botones}"
+                                                 Domicilio="{Binding Contrato.Domicilio}" Editable="{Binding PuedeReestablecer}"/>
 
-                    <Views:AnilloProgreso Grid.Row="10" Grid.Column="1" Margin="0 10" EsVisible="{Binding AgregarContratoComando.Execution.IsNotCompleted}"
-                                          Texto="{Binding AgregarContratoComando.ProgressMessage}"/>
+                        <TextBlock Grid.Row="9" Grid.Column="1" Name="MensajeErrorNegocio" Text="{Binding AgregarContratoComando.Execution.ExceptionMessage}" Style="{StaticResource error}"
+                                   Tag="{Binding MostrarMensajeError}"/>
 
-                    <Views:ParBotones Name="Botones" Grid.Row="11" Grid.Column="1" Margin="0 20" TextoPrimario="Agregar" TextoSecundario="Reestablecer"
-                                      ComandoPrimario="{Binding AgregarContratoComando}"
-                                      ComandoSecundario="{Binding ReestablecerComando}"/>
-                </StackPanel>
-            </ScrollViewer>
-        </material:Card>
+                        <Views:AnilloProgreso Grid.Row="10" Grid.Column="1" Margin="0 10" EsVisible="{Binding AgregarContratoComando.Execution.IsNotCompleted}"
+                                              Texto="{Binding AgregarContratoComando.ProgressMessage}"/>
 
-        <Views:CoverProgreso Grid.Row="1" Grid.ColumnSpan="4" 
-                             Texto="{Binding TextoProgreso}" Visible="{Binding MostrarProgreso}"/>
+                        <Views:ParBotones Name="Botones" Grid.Row="11" Grid.Column="1" Margin="0 20" TextoPrimario="Agregar" TextoSecundario="Reestablecer"
+                                          ComandoPrimario="{Binding AgregarContratoComando}"
+                                          ComandoSecundario="{Binding ReestablecerComando}"/>
+                    </StackPanel>
+                </material:Card>
+            </Grid>
+        </ScrollViewer>
 
-        <material:PopupBox Margin="32" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
-                           HorizontalAlignment="Right" VerticalAlignment="Bottom" StaysOpen="False" Panel.ZIndex="-100">
+        <Views:CoverProgreso Grid.Row="1" Texto="{Binding TextoProgreso}" Visible="{Binding MostrarProgreso}"/>
+
+        <material:PopupBox Margin="32" Grid.Row="1" StaysOpen="False" Panel.ZIndex="-100"
+                           HorizontalAlignment="Right" VerticalAlignment="Bottom">
             <StackPanel>
                 <StackPanel.Resources>
                     <Style TargetType="Button" BasedOn="{StaticResource ActionButton}">
@@ -80,13 +80,11 @@
                     </Style>
                 </StackPanel.Resources>
 
-                <Button Name="AgregarUsuario" ToolTip="Agregar usuario"
-                        Command="{Binding NavegarA}" CommandParameter="Usuarios/Agregar"
+                <Button Name="AgregarUsuario" ToolTip="Agregar usuario" Command="{Binding NavegarA}" CommandParameter="Usuarios/Agregar"
                         Background="{StaticResource MaterialLightBlue}">
                     <icons:PackIconMaterial Width="25" Height="25" Kind="AccountPlus" Foreground="White"/>
                 </Button>
-                <Button Name="BuscarUsuario" ToolTip="Buscar usuario"
-                        Command="{Binding NavegarA}" CommandParameter="Usuarios/Listado"
+                <Button Name="BuscarUsuario" ToolTip="Buscar usuario" Command="{Binding NavegarA}" CommandParameter="Usuarios/Listado"
                         Background="{StaticResource MaterialLightBlue}">
                     <icons:PackIconModern Width="25" Height="25" Kind="PeopleMagnify" Foreground="White"/>
                 </Button>

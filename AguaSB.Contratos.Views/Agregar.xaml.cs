@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Controls;
+using System.Windows.Media.Animation;
 
+using AguaSB.Estilos;
 using AguaSB.Views;
 using AguaSB.Navegacion;
 
@@ -19,7 +21,18 @@ namespace AguaSB.Contratos.Views
 
             InitializeComponent();
 
-            ViewModel.Enfocar += (_, __) => Contrato.Enfocar();
+            ViewModel.Enfocar += (_, __) =>
+            {
+                var animacion = new DoubleAnimation
+                {
+                    Duration = TimeSpan.FromMilliseconds(1000),
+                    To = 0
+                };
+
+                Deslizar.Aplicar(Deslizador, animacion);
+
+                Contrato.Enfocar();
+            };
         }
     }
 }
