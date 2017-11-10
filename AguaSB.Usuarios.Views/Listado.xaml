@@ -193,10 +193,10 @@
             </Popup>
 
             <StackPanel Grid.Column="2" Margin="0 0 16 0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                <Button Name="AjustarColumnasBoton" Margin="0 0 10 0" ToolTip="Ajustar columnas (Ctrl + A)" Foreground="White" Style="{StaticResource UtilityButton}"
-                        Content="{icons:PackIconMaterial Kind=TableColumnWidth, Width=20, Height=20}" Click="AjustarColumnas_Click"/>
                 <Button Name="Actualizar" Margin="0 0 10 0" ToolTip="Actualizar (F5)" Foreground="White" Style="{StaticResource UtilityButton}"
                         Content="{icons:PackIconMaterial Kind=Refresh, Width=20, Height=20}" Click="Actualizar_Click"/>
+                <Button Name="AjustarColumnasBoton" Margin="0 0 10 0" ToolTip="Ajustar columnas (Ctrl + A)" Foreground="White" Style="{StaticResource UtilityButton}"
+                        Content="{icons:PackIconMaterial Kind=TableColumnWidth, Width=20, Height=20}" Click="AjustarColumnas_Click"/>
                 <Button Name="AgregarContrato" Margin="0 0 10 0" ToolTip="Agregar contrato (Ctrl + C)" Foreground="White" Style="{StaticResource UtilityButton}"
                         Content="{icons:PackIconModern Kind=Add, Width=20, Height=20}" Command="{Binding AgregarContratoComando}" CommandParameter="{Binding ElementName=ListaResultados, Path=SelectedItem}"
                         IsEnabled="{Binding ElementName=ListaResultados, Path=SelectedItems.Count, Converter={StaticResource EqualsTo}, ConverterParameter=1}"/>
