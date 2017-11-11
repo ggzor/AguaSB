@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 
 using AguaSB.Views;
+using AguaSB.Estilos;
 
 namespace AguaSB.Usuarios.Views
 {
@@ -28,9 +29,15 @@ namespace AguaSB.Usuarios.Views
         public void Enfocar()
         {
             if (TipoUsuario.SelectedIndex == 0)
+            {
+                Deslizar.HastaArriba(DeslizadorPersona);
                 Persona.Enfocar();
+            }
             else if (TipoUsuario.SelectedIndex == 1)
+            {
+                Deslizar.HastaArriba(DeslizadorNegocio);
                 Negocio.Enfocar();
+            }
         }
     }
 }

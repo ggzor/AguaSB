@@ -27,36 +27,33 @@
     <Grid Name="Principal" Style="{StaticResource CorrectTextRendering}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="600"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
 
         <Views:BarraSuperior Grid.ColumnSpan="3" Titulo="Agregar nuevo usuario" Foreground="White" Icono="{icons:PackIconModern Kind=Add, Width=20, Height=20}"/>
 
-        <material:Card Grid.Column="1" Grid.Row="1" Margin="10" Padding="40 20" VerticalAlignment="Stretch">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+        <ListBox Grid.Row="1" Name="TipoUsuario" Margin="0 10 0 5" HorizontalAlignment="Center" SelectedIndex="0" Style="{StaticResource ToggleList}">
+            <Button Tag="Persona">
+                <icons:PackIconModern Kind="User"/>
+            </Button>
+            <Button Tag="Negocio">
+                <icons:PackIconModern Kind="City"/>
+            </Button>
+        </ListBox>
 
-                <ListBox Name="TipoUsuario" HorizontalAlignment="Center" SelectedIndex="0" Style="{StaticResource ToggleList}">
-                    <Button Tag="Persona">
-                        <icons:PackIconModern Kind="User"/>
-                    </Button>
-                    <Button Tag="Negocio">
-                        <icons:PackIconModern Kind="City"/>
-                    </Button>
-                </ListBox>
+        <metro:FlipView Name="Campos" Grid.Column="1" Grid.Row="2" SelectedIndex="{Binding ElementName=TipoUsuario, Path=SelectedIndex}" 
+                            IsBannerEnabled="False" IsNavigationEnabled="False" MouseHoverBorderEnabled="False">
+            <ScrollViewer Name="DeslizadorPersona" Padding="20 0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="500"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-                <metro:FlipView Name="Campos" Grid.Row="2" SelectedIndex="{Binding ElementName=TipoUsuario, Path=SelectedIndex}" 
-                                IsBannerEnabled="False" IsNavigationEnabled="False" MouseHoverBorderEnabled="False">
-                    <ScrollViewer Name="CamposPersona" Padding="20 0">
-                        <StackPanel Margin="0 20" VerticalAlignment="Center">
+                    <material:Card Margin="10" Grid.Column="1" Padding="40 20" VerticalAlignment="Stretch">
+                        <StackPanel Margin="0 10" VerticalAlignment="Center">
                             <Controles:PersonaView x:Name="Persona" Persona="{Binding Persona}" Estilos:Foco.SiguienteFoco="{Binding ElementName=ContactosPersona}"
                                                    SugerenciasNombres="{Binding SugerenciasNombres}" SugerenciasApellidos="{Binding SugerenciasApellidos}"
                                                    Editable="{Binding PuedeReestablecerPersona}"/>
@@ -74,10 +71,20 @@
                             <Views:ParBotones Name="BotonesPersona" Margin="0 20" TextoPrimario="Agregar" TextoSecundario="Reestablecer"
                                               ComandoPrimario="{Binding AgregarPersonaComando}" ComandoSecundario="{Binding ReestablecerPersonaComando}"/>
                         </StackPanel>
-                    </ScrollViewer>
+                    </material:Card>
+                </Grid>
+            </ScrollViewer>
 
-                    <ScrollViewer Name="CamposNegocio" Padding="20 0">
-                        <StackPanel>
+            <ScrollViewer Name="DeslizadorNegocio" Padding="20 0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="500"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <material:Card Margin="10" Grid.Column="1" Padding="40 20" VerticalAlignment="Stretch">
+                        <StackPanel Margin="0 10" VerticalAlignment="Center">
                             <StackPanel.Resources>
                                 <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
                                     <Setter Property="IsReadOnly" Value="{Binding AgregarNegocioComando.Execution.IsNotCompleted}"/>
@@ -112,18 +119,16 @@
                             <Views:ParBotones Name="BotonesNegocio" Margin="0 20" TextoPrimario="Agregar" TextoSecundario="Reestablecer"
                                               ComandoPrimario="{Binding AgregarNegocioComando}" ComandoSecundario="{Binding ReestablecerNegocioComando}"/>
                         </StackPanel>
-                    </ScrollViewer>
-                </metro:FlipView>
+                    </material:Card>
+                </Grid>
+            </ScrollViewer>
+        </metro:FlipView>
 
-                <StackPanel Name="TextoCuandoNoHaySeleccion" Grid.Row="1" IsHitTestVisible="False" Style="{StaticResource FadeTag}" Opacity="0"
-                            Tag="{Binding ElementName=Campos, Path=SelectedIndex, Converter={StaticResource EqualsTo}, ConverterParameter=-1}"
-                            HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" 
-                               Width="400" Panel.ZIndex="-10"
-                               Text="Seleccione alguna de las opciones que aparece en la parte superior"
-                               Style="{StaticResource h3}"/>
-                </StackPanel>
-            </Grid>
-        </material:Card>
+        <StackPanel Name="TextoCuandoNoHaySeleccion" Grid.Row="2" IsHitTestVisible="False" Style="{StaticResource FadeTag}" Opacity="0"
+                    Tag="{Binding ElementName=Campos, Path=SelectedIndex, Converter={StaticResource EqualsTo}, ConverterParameter=-1}"
+                    HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Width="400" Panel.ZIndex="-10" Style="{StaticResource h3}"
+                       Text="Seleccione alguna de las opciones que aparece en la parte superior"/>
+        </StackPanel>
     </Grid>
 </UserControl>

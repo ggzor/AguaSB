@@ -7,6 +7,16 @@ namespace AguaSB.Estilos
 {
     public static class Deslizar
     {
+        public static void HastaArriba(ScrollViewer deslizador)
+        {
+            var animacion = new DoubleAnimation
+            {
+                Duration = TimeSpan.FromMilliseconds(1000),
+                To = 0
+            };
+
+            Aplicar(deslizador, animacion);
+        }
 
         public static void Aplicar(ScrollViewer panel, DoubleAnimation animacion) => new Deslizador(panel, animacion);
 
