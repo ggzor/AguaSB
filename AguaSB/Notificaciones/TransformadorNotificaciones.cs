@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 using MahApps.Metro.IconPacks;
@@ -13,30 +14,34 @@ namespace AguaSB.Notificaciones
 {
     public class TransformadorNotificaciones : ITransformadorNotificaciones
     {
-        private static Func<FrameworkElement> IconoDe(PackIconModernKind kind) => () =>
-            new PackIconModern()
-            {
-                Kind = kind,
-                Width = 40,
-                Height = 40,
-                Foreground = Brushes.White
-            };
+        private static Control Preparar(Control elem)
+        {
+            elem.Width = 40;
+            elem.Height = 40;
+            elem.Foreground = Brushes.White;
 
-        private static readonly (Func<FrameworkElement>, Brush) ConfiguracionUsuarios = (IconoDe(PackIconModernKind.User), Temas.Azul.BrochaSolidaWPF);
+            return elem;
+        }
+
+        private static Func<FrameworkElement> IconoModern(PackIconModernKind kind) => () =>
+            Preparar(new PackIconModern() { Kind = kind });
+
+        private static Func<FrameworkElement> IconoMaterial(PackIconMaterialKind kind) => () =>
+            Preparar(new PackIconMaterial() { Kind = kind });
 
         private static readonly Dictionary<Type, (Func<FrameworkElement> Icono, Brush Fondo)> Diccionario = new Dictionary<Type, (Func<FrameworkElement> Icono, Brush Fondo)>()
         {
-            [typeof(EntidadAgregada<Usuario>)] = ConfiguracionUsuarios,
-            [typeof(EntidadAgregada<Contrato>)] = (IconoDe(PackIconModernKind.AlignJustify), Temas.Naranja.BrochaSolidaWPF),
-            [typeof(NotificacionError)] = (IconoDe(PackIconModernKind.Close), Temas.Rojo.BrochaSolidaWPF)
+            [typeof(EntidadAgregada<Usuario>)] = (IconoModern(PackIconModernKind.User), Temas.Azul.BrochaSolidaWPF),
+            [typeof(EntidadActualizada<Usuario>)] = (IconoMaterial(PackIconMaterialKind.AccountCheck), Temas.Azul.BrochaSolidaWPF),
+            [typeof(EntidadAgregada<Contrato>)] = (IconoModern(PackIconModernKind.AlignJustify), Temas.Naranja.BrochaSolidaWPF),
+            [typeof(NotificacionError)] = (IconoModern(PackIconModernKind.Close), Temas.Rojo.BrochaSolidaWPF)
         };
-
 
         public NotificacionView Transformar(Notificacion notificacion)
         {
             (var Icono, var Fondo) = ObtenerConfiguracion(notificacion);
 
-            var notificacionView = new NotificacionView()
+            return new NotificacionView()
             {
                 Titulo = notificacion.Titulo,
                 Contenido = notificacion.Descripcion,
@@ -45,8 +50,6 @@ namespace AguaSB.Notificaciones
                 Icono = Icono(),
                 Background = Fondo
             };
-
-            return notificacionView;
         }
 
         private static (Func<FrameworkElement> Icono, Brush Fondo) ObtenerConfiguracion(Notificacion notificacion)
@@ -55,7 +58,7 @@ namespace AguaSB.Notificaciones
             if (Diccionario.ContainsKey(tipo))
                 return Diccionario[tipo];
             else
-                return (IconoDe(PackIconModernKind.NotificationMultiple), Temas.Azul.BrochaSolidaWPF);
+                return (IconoModern(PackIconModernKind.NotificationMultiple), Temas.Azul.BrochaSolidaWPF);
         }
     }
 }
