@@ -34,9 +34,11 @@ namespace AguaSB.ViewModels
                 .ObserveOnDispatcher()
                 .SubscribeOnDispatcher()
                 .Subscribe(RegistrarObservadoresDeCambios);
-
-            RegistrarObservadoresDeCambios((this, new PropertyChangedEventArgs("None")));
+            RegistrarObservadoresDeCambios();
         }
+
+        public void RegistrarObservadoresDeCambios() =>
+            RegistrarObservadoresDeCambios((this, new PropertyChangedEventArgs("None")));
 
         private IDisposable ObservadorDePropiedades;
 

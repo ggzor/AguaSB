@@ -1,4 +1,13 @@
-﻿using System;
+﻿using AguaSB.Datos;
+using AguaSB.Navegacion;
+using AguaSB.Nucleo;
+using AguaSB.Nucleo.Datos;
+using AguaSB.Usuarios.ViewModels.Dtos;
+using AguaSB.Utilerias;
+using AguaSB.ViewModels;
+using GGUtils.MVVM.Async;
+using MoreLinq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -6,17 +15,6 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Waf.Applications;
 using System.Waf.Foundation;
-
-using GGUtils.MVVM.Async;
-using MoreLinq;
-
-using AguaSB.Datos;
-using AguaSB.Navegacion;
-using AguaSB.Nucleo;
-using AguaSB.Nucleo.Datos;
-using AguaSB.ViewModels;
-using AguaSB.Usuarios.ViewModels.Dtos;
-using AguaSB.Utilerias;
 
 namespace AguaSB.Usuarios.ViewModels
 {
@@ -87,6 +85,7 @@ namespace AguaSB.Usuarios.ViewModels
         public AsyncDelegateCommand<ResultadoSolicitud> BuscarComando { get; }
 
         public DelegateCommand AgregarContratoComando { get; }
+        public DelegateCommand EditarUsuarioComando { get; }
         #endregion
 
         #region Eventos
@@ -119,7 +118,9 @@ namespace AguaSB.Usuarios.ViewModels
             DesactivarFiltrosComando = new DelegateCommand(DesactivarFiltros);
             MostrarColumnasTodasComando = new DelegateCommand(MostrarColumnasTodas);
             BuscarComando = new AsyncDelegateCommand<ResultadoSolicitud>(Buscar, multipleExecutionSupported: true);
+
             AgregarContratoComando = new DelegateCommand(AgregarContrato);
+            EditarUsuarioComando = new DelegateCommand(EditarUsuario);
 
             this.ToObservableProperties().Subscribe(_ => RegistrarUniones(_.Args));
 
@@ -184,6 +185,12 @@ namespace AguaSB.Usuarios.ViewModels
         {
             if (o is ResultadoUsuario u)
                 Navegador.Navegar("Contratos/Agregar", u.Usuario.Id);
+        }
+
+        private void EditarUsuario(object o)
+        {
+            if (o is ResultadoUsuario u)
+                Navegador.Navegar("Usuarios/Editar", u.Usuario.Id);
         }
 
         #region Inicializacion

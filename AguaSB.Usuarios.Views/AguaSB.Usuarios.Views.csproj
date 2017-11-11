@@ -92,6 +92,9 @@
       <DependentUpon>PersonaView.xaml</DependentUpon>
     </Compile>
     <Compile Include="DescriptorExtension.cs" />
+    <Compile Include="Editar.xaml.cs">
+      <DependentUpon>Editar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Listado.xaml.cs">
       <DependentUpon>Listado.xaml</DependentUpon>
     </Compile>
@@ -136,6 +139,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controles\PersonaView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Editar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

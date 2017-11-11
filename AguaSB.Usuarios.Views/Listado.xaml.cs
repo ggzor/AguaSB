@@ -131,8 +131,12 @@ namespace AguaSB.Usuarios.Views
                         AjustarColumnas();
                         break;
                     case Key.C:
-                        if (AgregarContrato.IsEnabled)
-                            AgregarContrato.Command?.Execute(ListaResultados.SelectedItem);
+                        if (ListaResultados.SelectedItems.Count == 1)
+                            EjecutarAgregarContrato();
+                        break;
+                    case Key.E:
+                        if (ListaResultados.SelectedItems.Count == 1)
+                            EjecutarEditarUsuario();
                         break;
                 }
             }
@@ -166,6 +170,26 @@ namespace AguaSB.Usuarios.Views
         private void AjustarColumnas_Click(object sender, RoutedEventArgs e) => AjustarColumnas();
 
         private void Actualizar_Click(object sender, RoutedEventArgs e) => ViewModel.BuscarComando.Execute(null);
+
+        private void SeleccionCambiada(object sender, SelectionChangedEventArgs e)
+        {
+            ActualizarEstadoDeBotonesDependientesDeSeleccion();
+        }
+
+        private void ActualizarEstadoDeBotonesDependientesDeSeleccion()
+        {
+            new[] { AgregarContrato, EditarUsuario }
+                    .ForEach(_ => _.IsEnabled = ListaResultados.SelectedItems.Count == 1);
+        }
+
+        private void AgregarContrato_Click(object sender, RoutedEventArgs e) =>
+            EjecutarAgregarContrato();
+
+        private void EjecutarAgregarContrato() => ViewModel.AgregarContratoComando.Execute(ListaResultados.SelectedItem);
+
+        private void EditarUsuario_Click(object sender, RoutedEventArgs e) => EjecutarEditarUsuario();
+
+        private void EjecutarEditarUsuario() => ViewModel.EditarUsuarioComando.Execute(ListaResultados.SelectedItem);
     }
 
     public class SortAdorner : Adorner

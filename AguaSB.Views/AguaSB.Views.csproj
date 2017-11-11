@@ -93,6 +93,7 @@
     <Compile Include="Utilerias\CallbackConverter.cs" />
     <Compile Include="Utilerias\Columnas.cs" />
     <Compile Include="Utilerias\DictionaryConverter.cs" />
+    <Compile Include="Utilerias\EnumToIntConverter.cs" />
     <Compile Include="Utilerias\EqualsToConverter.cs" />
     <Compile Include="Utilerias\FuncComparer.cs" />
     <Compile Include="Utilerias\InvertBoolConverter.cs" />

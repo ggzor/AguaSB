@@ -17,13 +17,16 @@ namespace AguaSB.Usuarios.Views
 
         public Listado Listado { get; }
 
+        public Editar Editar { get; }
+
         public IEnumerable<Operacion> Operaciones { get; }
 
         public IEnumerable<Operacion> OperacionesMenuPrincipal { get; }
 
-        public DescriptorExtension(Agregar agregar, Listado listado)
+        public DescriptorExtension(Agregar agregar, Editar editar, Listado listado)
         {
             Agregar = agregar ?? throw new ArgumentNullException(nameof(agregar));
+            Editar = editar ?? throw new ArgumentNullException(nameof(editar));
             Listado = listado ?? throw new ArgumentNullException(nameof(listado));
 
             OperacionesMenuPrincipal = new[]
@@ -32,7 +35,9 @@ namespace AguaSB.Usuarios.Views
                 new Operacion(this, "Listado de usuarios", Listado, Listado, Listado.ViewModel)
             };
 
-            Operaciones = OperacionesMenuPrincipal;
+            Operaciones = OperacionesMenuPrincipal.Concat(new[] {
+                new Operacion(this, "Editar usuario", Editar, Editar, Editar.ViewModel)
+            });
         }
 
         public string Nombre => nameof(Usuarios);

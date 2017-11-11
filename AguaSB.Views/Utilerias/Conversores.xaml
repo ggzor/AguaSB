@@ -6,4 +6,5 @@
     <local:IsNotNullConverter x:Key="IsNotNull"/>
     <local:EqualsToConverter x:Key="EqualsTo"/>
     <local:InvertBoolConverter x:Key="InvertBool"/>
+    <local:EnumToIntConverter x:Key="EnumToInt"/>
 </ResourceDictionary>

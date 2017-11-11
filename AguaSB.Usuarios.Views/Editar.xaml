@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="AguaSB.Usuarios.Views.Agregar"
+﻿<UserControl x:Class="AguaSB.Usuarios.Views.Editar"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -13,7 +13,7 @@
              mc:Ignorable="d"
              Background="White"
              Name="This"
-             d:DataContext="{d:DesignInstance Type=ViewModel:Agregar, IsDesignTimeCreatable=False}"
+             d:DataContext="{d:DesignInstance Type=ViewModel:Editar, IsDesignTimeCreatable=False}"
              d:DesignHeight="768" d:DesignWidth="1024">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -23,26 +23,15 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-
     <Grid Name="Principal" Style="{StaticResource CorrectTextRendering}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Views:BarraSuperior Grid.ColumnSpan="3" Titulo="Agregar nuevo usuario" Foreground="White" Icono="{icons:PackIconModern Kind=Add, Width=20, Height=20}"/>
+        <Views:BarraSuperior Grid.ColumnSpan="3" Titulo="Editar usuario" Foreground="White" Icono="{icons:PackIconMaterial Kind=AccountEdit, Width=20, Height=20}"/>
 
-        <ListBox Grid.Row="1" Name="TipoUsuario" Margin="0 10 0 5" HorizontalAlignment="Center" SelectedIndex="0" Style="{StaticResource ToggleList}">
-            <Button Tag="Persona">
-                <icons:PackIconModern Kind="User"/>
-            </Button>
-            <Button Tag="Negocio">
-                <icons:PackIconModern Kind="City"/>
-            </Button>
-        </ListBox>
-
-        <metro:FlipView Name="Campos" Grid.Column="1" Grid.Row="2" SelectedIndex="{Binding ElementName=TipoUsuario, Path=SelectedIndex}" 
+        <metro:FlipView Name="Campos" Grid.Column="1" Grid.Row="1" SelectedIndex="{Binding TipoUsuario, Mode=OneWay, Converter={StaticResource EnumToInt}}"  
                         IsBannerEnabled="False" IsNavigationEnabled="False" MouseHoverBorderEnabled="False">
             <ScrollViewer Name="DeslizadorPersona" Padding="20 0">
                 <Grid>
@@ -63,13 +52,13 @@
                                                      TiposContacto="{Binding TiposContacto}" Editable="{Binding PuedeReestablecerPersona}"/>
 
                             <TextBlock Margin="45 0 0 0" Name="MensajeErrorPersona" Tag="{Binding MostrarMensajeErrorPersona}" Style="{StaticResource error}"
-                                       Text="{Binding AgregarPersonaComando.Execution.ExceptionMessage}"/>
+                                       Text="{Binding EditarPersonaComando.Execution.ExceptionMessage}"/>
 
-                            <Views:AnilloProgreso Margin="0 10" EsVisible="{Binding AgregarPersonaComando.Execution.IsNotCompleted}"
-                                                  Texto="{Binding AgregarPersonaComando.ProgressMessage}"/>
+                            <Views:AnilloProgreso Margin="0 10" EsVisible="{Binding EditarPersonaComando.Execution.IsNotCompleted}"
+                                                  Texto="{Binding EditarPersonaComando.ProgressMessage}"/>
 
-                            <Views:ParBotones Name="BotonesPersona" Margin="0 20" TextoPrimario="Agregar" TextoSecundario="Reestablecer"
-                                              ComandoPrimario="{Binding AgregarPersonaComando}" ComandoSecundario="{Binding ReestablecerPersonaComando}"/>
+                            <Views:ParBotones Name="BotonesPersona" Margin="0 20" TextoPrimario="Guardar" TextoSecundario="Cancelar"
+                                              ComandoPrimario="{Binding EditarPersonaComando}" ComandoSecundario="{Binding CancelarComando}"/>
                         </StackPanel>
                     </material:Card>
                 </Grid>
@@ -105,24 +94,17 @@
                                                      TiposContacto="{Binding TiposContacto}" Editable="{Binding PuedeReestablecerNegocio}"/>
 
                             <TextBlock Margin="45 0 0 0" Name="MensajeErrorNegocio" Tag="{Binding MostrarMensajeErrorNegocio}" Style="{StaticResource error}"
-                                       Text="{Binding AgregarNegocioComando.Execution.ExceptionMessage}"/>
+                                       Text="{Binding EditarNegocioComando.Execution.ExceptionMessage}"/>
 
-                            <Views:AnilloProgreso Margin="0 10" EsVisible="{Binding AgregarNegocioComando.Execution.IsNotCompleted}"
-                                                  Texto="{Binding AgregarNegocioComando.ProgressMessage}"/>
+                            <Views:AnilloProgreso Margin="0 10" EsVisible="{Binding EditarNegocioComando.Execution.IsNotCompleted}"
+                                                  Texto="{Binding EditarNegocioComando.ProgressMessage}"/>
 
-                            <Views:ParBotones Name="BotonesNegocio" Margin="0 20" TextoPrimario="Agregar" TextoSecundario="Reestablecer"
-                                              ComandoPrimario="{Binding AgregarNegocioComando}" ComandoSecundario="{Binding ReestablecerNegocioComando}"/>
+                            <Views:ParBotones Name="BotonesNegocio" Margin="0 20" TextoPrimario="Guardar" TextoSecundario="Cancelar"
+                                              ComandoPrimario="{Binding EditarNegocioComando}" ComandoSecundario="{Binding CancelarComando}"/>
                         </StackPanel>
                     </material:Card>
                 </Grid>
             </ScrollViewer>
         </metro:FlipView>
-
-        <StackPanel Name="TextoCuandoNoHaySeleccion" Grid.Row="2" IsHitTestVisible="False" Style="{StaticResource FadeTag}" Opacity="0"
-                    Tag="{Binding ElementName=Campos, Path=SelectedIndex, Converter={StaticResource EqualsTo}, ConverterParameter=-1}"
-                    HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Width="400" Panel.ZIndex="-10" Style="{StaticResource h3}"
-                       Text="Seleccione alguna de las opciones que aparece en la parte superior"/>
-        </StackPanel>
     </Grid>
 </UserControl>

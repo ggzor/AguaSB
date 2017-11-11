@@ -67,7 +67,9 @@
     <Compile Include="Dtos\ResultadoSolicitud.cs" />
     <Compile Include="Dtos\ResultadoUsuario.cs" />
     <Compile Include="Dtos\Solicitud.cs" />
+    <Compile Include="Editar.cs" />
     <Compile Include="Listado.cs" />
+    <Compile Include="ModificarUsuarioBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -78,6 +80,10 @@
     <ProjectReference Include="..\AguaSB.Navegacion\AguaSB.Navegacion.csproj">
       <Project>{b51b553c-10d5-47ea-93bb-deced914d5f6}</Project>
       <Name>AguaSB.Navegacion</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AguaSB.Notificaciones\AguaSB.Notificaciones.csproj">
+      <Project>{39485A38-6CB1-40ED-BBC4-E4E2B8F1F74F}</Project>
+      <Name>AguaSB.Notificaciones</Name>
     </ProjectReference>
     <ProjectReference Include="..\AguaSB.Nucleo.Datos\AguaSB.Nucleo.Datos.csproj">
       <Project>{ebeb09b5-eb4d-495b-aa6a-4504f21554ad}</Project>

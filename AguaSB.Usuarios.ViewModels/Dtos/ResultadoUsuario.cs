@@ -1,7 +1,6 @@
-﻿using System;
+﻿using AguaSB.Nucleo;
+using System;
 using System.Collections.Generic;
-
-using AguaSB.Nucleo;
 
 namespace AguaSB.Usuarios.ViewModels.Dtos
 {

@@ -1,15 +1,13 @@
-﻿using System;
+﻿using AguaSB.Nucleo;
+using AguaSB.Utilerias;
+using AguaSB.ViewModels;
+using MoreLinq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reactive.Linq;
-
-using MoreLinq;
-
-using AguaSB.Nucleo;
-using AguaSB.Utilerias;
-using AguaSB.ViewModels;
 
 namespace AguaSB.Usuarios.ViewModels.Dtos
 {

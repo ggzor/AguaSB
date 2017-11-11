@@ -21,6 +21,7 @@
                 <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Estilos.xaml"/>
                 <ResourceDictionary Source="Plantillas/AgregarPlantillas.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ListView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/AguaSB.Views;component/Utilerias/Conversores.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
@@ -197,11 +198,30 @@
                         Content="{icons:PackIconMaterial Kind=Refresh, Width=20, Height=20}" Click="Actualizar_Click"/>
                 <Button Name="AjustarColumnasBoton" Margin="0 0 10 0" ToolTip="Ajustar columnas (Ctrl + A)" Foreground="White" Style="{StaticResource UtilityButton}"
                         Content="{icons:PackIconMaterial Kind=TableColumnWidth, Width=20, Height=20}" Click="AjustarColumnas_Click"/>
-                <Button Name="AgregarContrato" Margin="0 0 10 0" ToolTip="Agregar contrato (Ctrl + C)" Foreground="White" Style="{StaticResource UtilityButton}"
-                        Content="{icons:PackIconModern Kind=AlignJustify, Width=20, Height=20}" Command="{Binding AgregarContratoComando}" CommandParameter="{Binding ElementName=ListaResultados, Path=SelectedItem}"
-                        IsEnabled="{Binding ElementName=ListaResultados, Path=SelectedItems.Count, Converter={StaticResource EqualsTo}, ConverterParameter=1}"/>
                 <Button Name="FiltrosColumnasBoton" ToolTip="Configuración" Click="MostrarFiltrosColumnas" Foreground="White" Style="{StaticResource UtilityButton}" 
                         Content="{icons:PackIconMaterial Kind=Settings, Width=20, Height=20}"/>
+
+                <material:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Foreground="White" Style="{StaticResource MaterialDesignToolPopupBox}">
+                    <StackPanel>
+                        <StackPanel.Resources>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource h4}">
+                                <Setter Property="Opacity" Value="0.9"/>
+                            </Style>
+                        </StackPanel.Resources>
+                        <Button Name="AgregarContrato" Click="AgregarContrato_Click" IsEnabled="False" HorizontalContentAlignment="Stretch">
+                            <DockPanel>
+                                <TextBlock Margin="10 0 0 0" Text="Ctrl + C" DockPanel.Dock="Right" Opacity="0.6"/>
+                                <TextBlock Text="Agregar contrato"/>
+                            </DockPanel>
+                        </Button>
+                        <Button Name="EditarUsuario" Click="EditarUsuario_Click" IsEnabled="False" HorizontalContentAlignment="Stretch">
+                            <DockPanel>
+                                <TextBlock Margin="10 0 0 0" Text="Ctrl + E" DockPanel.Dock="Right" Opacity="0.6"/>
+                                <TextBlock Text="Editar usuario"/>
+                            </DockPanel>
+                        </Button>
+                    </StackPanel>
+                </material:PopupBox>
             </StackPanel>
 
             <Popup Name="FiltrosColumnas" PlacementTarget="{Binding ElementName=FiltrosColumnasBoton}" AllowsTransparency="True" PopupAnimation="Fade" StaysOpen="False">
@@ -442,7 +462,8 @@
                 <Grid Name="Resultados" Background="White" Opacity="0" Tag="{Binding Estado.HayResultados}" Style="{StaticResource FadeTag}">
                     <Grid>
                         <ListView ItemsSource="{Binding BuscarComando.Execution.Result.Resultados}" Name="ListaResultados"
-                                  VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.IsVirtualizingWhenGrouping="True">
+                                  VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+                                  SelectionChanged="SeleccionCambiada">
                             <ListView.View>
                                 <GridView AllowsColumnReorder="False">
                                     <GridView.ColumnHeaderTemplate>
