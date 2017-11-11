@@ -106,5 +106,7 @@
                 </Grid>
             </ScrollViewer>
         </metro:FlipView>
+
+        <Views:CoverProgreso Grid.Row="1" Texto="{Binding TextoProgreso}" Visible="{Binding MostrarProgreso}"/>
     </Grid>
 </UserControl>

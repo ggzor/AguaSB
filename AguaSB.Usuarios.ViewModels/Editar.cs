@@ -18,6 +18,9 @@ namespace AguaSB.Usuarios.ViewModels
     {
         #region Campos
         private TipoUsuario tipoUsuario;
+
+        private bool mostrarProgreso;
+        private string textoProgreso;
         #endregion
 
         #region Propiedades
@@ -25,6 +28,18 @@ namespace AguaSB.Usuarios.ViewModels
         {
             get { return tipoUsuario; }
             set { SetProperty(ref tipoUsuario, value); }
+        }
+
+        public bool MostrarProgreso
+        {
+            get { return mostrarProgreso; }
+            set { SetProperty(ref mostrarProgreso, value); }
+        }
+
+        public string TextoProgreso
+        {
+            get { return textoProgreso; }
+            set { SetProperty(ref textoProgreso, value); }
         }
         #endregion
 
@@ -59,6 +74,8 @@ namespace AguaSB.Usuarios.ViewModels
             {
                 try
                 {
+                    MostrarProgreso = true;
+                    TextoProgreso = "Obteniendo información de usuario...";
                     var usuario = await Task.Run(() => UsuariosRepo.Datos.SingleOrDefault(_ => _.Id == id)).ConfigureAwait(true);
 
                     if (usuario != null)
@@ -111,6 +128,10 @@ namespace AguaSB.Usuarios.ViewModels
 
                     var _ = Navegador.Navegar("Usuarios/Listado", null);
                     // TODO: Log error
+                }
+                finally
+                {
+                    MostrarProgreso = false;
                 }
             }
             else
