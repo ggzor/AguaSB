@@ -19,5 +19,8 @@ namespace AguaSB.Datos
 
             return Task.FromResult(entidad);
         }
+
+        public Task<T> Actualizar(T entidad) =>
+            Task.FromResult(entidad);
     }
 }

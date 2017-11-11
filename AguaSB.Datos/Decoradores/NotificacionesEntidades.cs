@@ -7,7 +7,7 @@ namespace AguaSB.Datos.Decoradores
     {
         public T Entidad { get; }
 
-        public NotificacionEntidad(T entidad)
+        protected NotificacionEntidad(T entidad)
         {
             Entidad = entidad;
             Clase = "Base de datos";
@@ -20,6 +20,15 @@ namespace AguaSB.Datos.Decoradores
         {
             Titulo = $"Nuevo {typeof(T).Name.ToLower()}";
             Descripcion = $"Se agregó \"{Entidad}\" a la base de datos.";
+        }
+    }
+
+    public sealed class EntidadActualizada<T> : NotificacionEntidad<T> where T : IEntidad
+    {
+        public EntidadActualizada(T entidad) : base(entidad)
+        {
+            Titulo = $"Actualizando {typeof(T).Name.ToLower()}";
+            Descripcion = $"Se actualizó a {Entidad}";
         }
     }
 }

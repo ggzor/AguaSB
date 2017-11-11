@@ -34,9 +34,19 @@ namespace AguaSB.Datos.Decoradores
 
         public async Task<T> Agregar(T entidad)
         {
-            var resultado = await Repositorio.Agregar(entidad);
+            var resultado = await Repositorio.Agregar(entidad).ConfigureAwait(false);
 
             var notificacion = new EntidadAgregada<T>(resultado);
+            RepositorioCambiado?.Invoke(this, notificacion);
+
+            return resultado;
+        }
+
+        public async Task<T> Actualizar(T entidad)
+        {
+            var resultado = await Repositorio.Actualizar(entidad).ConfigureAwait(false);
+
+            var notificacion = new EntidadActualizada<T>(resultado);
             RepositorioCambiado?.Invoke(this, notificacion);
 
             return resultado;

@@ -10,5 +10,6 @@ namespace AguaSB.Datos
         IEnumerable<T> Datos { get; }
 
         Task<T> Agregar(T entidad);
+        Task<T> Actualizar(T entidad);
     }
 }
