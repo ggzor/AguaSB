@@ -34,6 +34,7 @@ namespace AguaSB.Notificaciones
             [typeof(EntidadAgregada<Usuario>)] = (IconoModern(PackIconModernKind.User), Temas.Azul.BrochaSolidaWPF),
             [typeof(EntidadActualizada<Usuario>)] = (IconoMaterial(PackIconMaterialKind.AccountCheck), Temas.Azul.BrochaSolidaWPF),
             [typeof(EntidadAgregada<Contrato>)] = (IconoModern(PackIconModernKind.AlignJustify), Temas.Naranja.BrochaSolidaWPF),
+            [typeof(EntidadActualizada<Contrato>)] = (IconoMaterial(PackIconMaterialKind.AccountCardDetails), Temas.Naranja.BrochaSolidaWPF),
             [typeof(NotificacionError)] = (IconoModern(PackIconModernKind.Close), Temas.Rojo.BrochaSolidaWPF)
         };
 

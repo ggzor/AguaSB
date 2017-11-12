@@ -6,11 +6,11 @@ using AguaSB.Views;
 
 namespace AguaSB.Contratos.Views
 {
-    public partial class Agregar : UserControl, IView
+    public partial class Editar : UserControl, IView
     {
-        public ViewModels.Agregar ViewModel { get; }
+        public ViewModels.Editar ViewModel { get; }
 
-        public Agregar(ViewModels.Agregar viewModel)
+        public Editar(ViewModels.Editar viewModel)
         {
             DataContext = ViewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
 

@@ -45,7 +45,7 @@
                       Text="{Binding Contrato.MedidaToma, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
         </DockPanel>
 
-        <DockPanel>
+        <DockPanel Visibility="{Binding MostrarPagadoHasta, Converter={StaticResource BooleanToVisibilityConverter}}">
             <icons:PackIconMaterial Kind="CalendarClock" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=CajaPagadoHasta}"
                                     Estilos:Icono.Enfocado="{Binding ElementName=CajaPagadoHasta, Path=IsKeyboardFocusWithin}"/>
 
