@@ -20,17 +20,25 @@
     </Style>
 
     <Style x:Key="HighlightButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="metro:ButtonHelper.PreserveTextCase" Value="True"/>
         <Setter Property="BorderThickness" Value="1"/>
     </Style>
 
-    <Style x:Key="DialogButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}"/>
+    <Style x:Key="DialogButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+    </Style>
 
-    <Style x:Key="ToggleButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}"/>
+    <Style x:Key="ToggleButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+    </Style>
 
-    <Style x:Key="ActionButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignFloatingActionButton}"/>
+    <Style x:Key="ActionButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignFloatingActionButton}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+    </Style>
 
     <Style x:Key="UtilityButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignToolButton}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="material:RippleAssist.RippleSizeMultiplier" Value="0.3"/>
     </Style>
 </ResourceDictionary>
