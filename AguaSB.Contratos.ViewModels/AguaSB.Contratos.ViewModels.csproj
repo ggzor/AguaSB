@@ -51,6 +51,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Agregar.cs" />
+    <Compile Include="Editar.cs" />
+    <Compile Include="ModificarContratoBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

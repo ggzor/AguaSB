@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 
@@ -14,20 +15,25 @@ namespace AguaSB.Contratos.Views
     {
         public Agregar Agregar { get; }
 
+        public Editar Editar { get; }
+
         public IEnumerable<Operacion> Operaciones { get; }
 
         public IEnumerable<Operacion> OperacionesMenuPrincipal { get; }
 
-        public DescriptorExtension(Agregar agregar)
+        public DescriptorExtension(Agregar agregar, Editar editar)
         {
             Agregar = agregar ?? throw new ArgumentNullException(nameof(agregar));
+            Editar = editar ?? throw new ArgumentNullException(nameof(editar));
 
             OperacionesMenuPrincipal = new[]
             {
                 new Operacion(this, "Agregar contrato", Agregar, Agregar, Agregar.ViewModel)
             };
 
-            Operaciones = OperacionesMenuPrincipal;
+            Operaciones = OperacionesMenuPrincipal.Concat(new[] {
+                new Operacion(this, "Editar contrato", Editar, Editar, Editar.ViewModel)
+            });
         }
 
         public string Nombre => nameof(Contratos);

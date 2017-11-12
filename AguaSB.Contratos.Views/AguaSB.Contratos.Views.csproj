@@ -79,6 +79,9 @@
       <DependentUpon>DomicilioView.xaml</DependentUpon>
     </Compile>
     <Compile Include="DescriptorExtension.cs" />
+    <Compile Include="Editar.xaml.cs">
+      <DependentUpon>Editar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -112,6 +115,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controles\DomicilioView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Editar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

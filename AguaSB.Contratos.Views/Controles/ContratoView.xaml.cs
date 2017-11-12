@@ -98,6 +98,15 @@ namespace AguaSB.Contratos.Views.Controles
         public static readonly DependencyProperty EditableProperty =
             DependencyProperty.Register(nameof(Editable), typeof(bool), typeof(ContratoView), new PropertyMetadata(true));
 
+        public bool MostrarPagadoHasta
+        {
+            get { return (bool)GetValue(MostrarPagadoHastaProperty); }
+            set { SetValue(MostrarPagadoHastaProperty, value); }
+        }
+
+        public static readonly DependencyProperty MostrarPagadoHastaProperty =
+            DependencyProperty.Register(nameof(MostrarPagadoHasta), typeof(bool), typeof(ContratoView), new PropertyMetadata(true));
+
         #region PropertyChanged y DataErrorInfo
         public event PropertyChangedEventHandler PropertyChanged;
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
