@@ -59,6 +59,14 @@
     <Compile Include="Notificante.cs" />
     <Compile Include="NotifyPropertyChangedEx.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Solicitudes\Condicion.cs" />
+    <Compile Include="Solicitudes\ConversorPropiedad.cs" />
+    <Compile Include="Solicitudes\ConversorSolicitud.cs" />
+    <Compile Include="Solicitudes\Propiedad.cs" />
+    <Compile Include="Solicitudes\PropiedadEx.cs" />
+    <Compile Include="Solicitudes\PropiedadFechaEx.cs" />
+    <Compile Include="Solicitudes\PropiedadNumericaEx.cs" />
+    <Compile Include="Solicitudes\Solicitud.cs" />
     <Compile Include="UtileriasErrores.cs" />
   </ItemGroup>
   <ItemGroup>
