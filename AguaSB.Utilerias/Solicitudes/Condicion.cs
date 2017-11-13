@@ -1,18 +1,55 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 using Newtonsoft.Json;
 
 namespace AguaSB.Utilerias.Solicitudes
 {
     [JsonConverter(typeof(CondicionConverter))]
-    public abstract class Condicion
+    public abstract class Condicion : INotifyPropertyChanged, INotifyDataErrorInfo
     {
         public Propiedad Propiedad { get; set; }
+
+        protected Condicion()
+        {
+            notificador = new Lazy<Notificador>(() =>
+                new Notificador(this,
+                    (src, args) => PropertyChanged?.Invoke(src, args),
+                    (src, args) => ErrorsChanged?.Invoke(src, args)));
+        }
+
+        #region PropertyChanged y DataErrorInfo
+        public event PropertyChangedEventHandler PropertyChanged;
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+
+        [JsonIgnore]
+        public bool HasErrors => N.TieneErrores;
+        public IEnumerable GetErrors(string propertyName) => N.Errores(propertyName);
+
+        private readonly Lazy<Notificador> notificador;
+
+        [JsonIgnore]
+        protected Notificador N => notificador.Value;
+        #endregion
     }
 
     public sealed class Igual<T> : Condicion
     {
-        public T Valor { get; set; }
+        private const string PropiedadRequerida = "Debe seleccionar un valor";
+
+        private T valor;
+
+        [Required(ErrorMessage = PropiedadRequerida)]
+        public T Valor
+        {
+            get { return valor; }
+            set { N.Validate(ref valor, value); }
+        }
+
+        public bool TieneValor => EqualityComparer<T>.Default.Equals(valor, default);
 
         public override string ToString() => $"{Propiedad} igual a {Valor?.ToString()}";
     }
@@ -25,13 +62,13 @@ namespace AguaSB.Utilerias.Solicitudes
         public T Desde
         {
             get { return desde; }
-            set { desde = value; Coercer(); }
+            set { desde = value; Coercer(); Cambio(); }
         }
 
         public T Hasta
         {
             get { return hasta; }
-            set { hasta = value; Coercer(); }
+            set { hasta = value; Coercer(); Cambio(); }
         }
 
         private void Coercer()
@@ -48,6 +85,14 @@ namespace AguaSB.Utilerias.Solicitudes
                 desde = hasta;
                 hasta = temp;
             }
+        }
+
+        private void Cambio()
+        {
+            N.Change(nameof(Desde));
+            N.Change(nameof(Hasta));
+            N.Change(nameof(TieneInicio));
+            N.Change(nameof(TieneFin));
         }
 
         private static readonly EqualityComparer<T> EqualityComparer = EqualityComparer<T>.Default;
