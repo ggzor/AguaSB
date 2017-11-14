@@ -62,6 +62,7 @@
     <Compile Include="Solicitudes\Condicion.cs" />
     <Compile Include="Solicitudes\ConversorPropiedad.cs" />
     <Compile Include="Solicitudes\ConversorSolicitud.cs" />
+    <Compile Include="Solicitudes\Ordenamiento.cs" />
     <Compile Include="Solicitudes\Propiedad.cs" />
     <Compile Include="Solicitudes\PropiedadEx.cs" />
     <Compile Include="Solicitudes\PropiedadFechaEx.cs" />
