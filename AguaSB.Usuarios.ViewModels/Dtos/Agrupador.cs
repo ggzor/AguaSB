@@ -1,34 +1,38 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using System.Collections.Generic;
+using System.Linq;
+
+using AguaSB.Utilerias;
+using AguaSB.Utilerias.Solicitudes;
 
 namespace AguaSB.Usuarios.ViewModels.Dtos
 {
-    public class Agrupador : INotifyPropertyChanged
+    public interface IAgrupador
     {
-        public static readonly Agrupador Ninguno = new Agrupador() { Activo = true, Nombre = nameof(Ninguno) };
+        string Nombre { get; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void Raise([CallerMemberName]string propiedad = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propiedad));
+        Propiedad Propiedad { get; }
 
-        private bool activo;
+        IEnumerable<Grupo> Agrupar(IEnumerable<ResultadoUsuario> elementos);
+    }
 
+    public class Agrupador<T> : Notificante, IAgrupador
+    {
         public string Nombre { get; set; }
 
-        public bool Activo
-        {
-            get { return activo; }
-            set { activo = value; Raise(); }
-        }
+        public Propiedad Propiedad { get; set; }
 
-        public string Descripcion { get; set; }
+        public Func<ResultadoUsuario, T> SelectorClave { get; set; }
 
-        public bool TieneDescripcion => !string.IsNullOrWhiteSpace(Descripcion);
+        public Func<T, string> SelectorNombre { get; set; }
 
-        public string Propiedad { get; set; }
+        public IComparer<T> Comparador { get; set; }
 
-        public Func<object, object, int> Ordenador { get; set; }
-        public Func<object, string> Conversor { get; set; }
+        public IEnumerable<Grupo> Agrupar(IEnumerable<ResultadoUsuario> elementos) =>
+            elementos.GroupBy(SelectorClave)
+            .OrderBy(g => g.Key, Comparador)
+            .Select(g => new Grupo { Nombre = SelectorNombre(g.Key), Valores = g.ToList() })
+            .ToList();
 
         public override string ToString() => Nombre;
     }

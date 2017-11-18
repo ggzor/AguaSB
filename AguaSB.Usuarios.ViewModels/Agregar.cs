@@ -5,6 +5,7 @@ using AguaSB.Operaciones;
 using GGUtils.MVVM.Async;
 using System;
 using System.Threading.Tasks;
+using System.Waf.Applications;
 
 namespace AguaSB.Usuarios.ViewModels
 {
@@ -13,6 +14,8 @@ namespace AguaSB.Usuarios.ViewModels
         #region Comandos
         public AsyncDelegateCommand<int> AgregarPersonaComando { get; }
         public AsyncDelegateCommand<int> AgregarNegocioComando { get; }
+
+        public DelegateCommand NavegarA { get; }
         #endregion
 
         #region Dependencias
@@ -27,6 +30,8 @@ namespace AguaSB.Usuarios.ViewModels
 
             AgregarPersonaComando = new AsyncDelegateCommand<int>(AgregarPersona, TodosCamposPersonaValidos);
             AgregarNegocioComando = new AsyncDelegateCommand<int>(AgregarNegocio, TodosCamposNegocioValidos);
+
+            NavegarA = new DelegateCommand(o => Navegador.Navegar((string)o, null));
         }
 
         private Task<int> AgregarPersona(IProgress<(double, string)> progreso) =>

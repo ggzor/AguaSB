@@ -15,7 +15,7 @@ namespace AguaSB.Nucleo
     {
         public int Id { get; set; }
 
-        public DateTime FechaRegistro { get; set; }
+        public DateTime FechaRegistro { get; set; } = Fecha.Ahora;
 
         [NotMapped]
         public abstract string NombreCompleto { get; }
@@ -59,7 +59,6 @@ namespace AguaSB.Nucleo
             var sb = new StringBuilder();
 
             char[] caracteres = texto.AsEnumerable()
-                .Where(_ => !char.IsWhiteSpace(_))
                 .Select(char.ToLower)
                 .ToArray();
 

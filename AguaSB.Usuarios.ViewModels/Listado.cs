@@ -9,12 +9,13 @@ using GGUtils.MVVM.Async;
 using MoreLinq;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Waf.Applications;
 using System.Waf.Foundation;
+using AguaSB.Utilerias.Solicitudes;
+using System.Collections;
 
 namespace AguaSB.Usuarios.ViewModels
 {
@@ -29,9 +30,15 @@ namespace AguaSB.Usuarios.ViewModels
         private IEnumerable<Calle> calles;
         private IEnumerable<ClaseContrato> clasesContrato;
         private IEnumerable<TipoContrato> tiposContrato;
+        private IEnumerable<IAgrupador> agrupadores;
+        private Ordenamientos ordenamientos;
 
-        private IEnumerable<Agrupador> criteriosAgrupacion;
-        private Solicitud solicitud;
+        private IAgrupador agrupador;
+        private Columnas columnas;
+        private Filtros filtros;
+        private IOrdenamiento ordenamiento;
+        private string textoBusqueda;
+
         private EstadoBusqueda estado;
         #endregion
 
@@ -60,16 +67,46 @@ namespace AguaSB.Usuarios.ViewModels
             set { SetProperty(ref tiposContrato, value); }
         }
 
-        public IEnumerable<Agrupador> CriteriosAgrupacion
+        public IEnumerable<IAgrupador> Agrupadores
         {
-            get { return criteriosAgrupacion; }
-            set { SetProperty(ref criteriosAgrupacion, value); }
+            get { return agrupadores; }
+            set { SetProperty(ref agrupadores, value); }
         }
 
-        public Solicitud Solicitud
+        public Ordenamientos Ordenamientos
         {
-            get { return solicitud; }
-            set { SetProperty(ref solicitud, value); }
+            get { return ordenamientos; }
+            set { SetProperty(ref ordenamientos, value); }
+        }
+
+        public IAgrupador Agrupador
+        {
+            get { return agrupador; }
+            set { SetProperty(ref agrupador, value); }
+        }
+
+        public Columnas Columnas
+        {
+            get { return columnas; }
+            set { SetProperty(ref columnas, value); }
+        }
+
+        public Filtros Filtros
+        {
+            get { return filtros; }
+            set { SetProperty(ref filtros, value); }
+        }
+
+        public IOrdenamiento Ordenamiento
+        {
+            get { return ordenamiento; }
+            set { ordenamiento = value; OrdenamientoCambiado?.Invoke(this, value); RaisePropertyChanged(); }
+        }
+
+        public string TextoBusqueda
+        {
+            get { return textoBusqueda; }
+            set { SetProperty(ref textoBusqueda, value); }
         }
 
         public EstadoBusqueda Estado
@@ -89,11 +126,11 @@ namespace AguaSB.Usuarios.ViewModels
         #endregion
 
         #region Eventos
-        public event EventHandler<Agrupador> AgrupadorCambiado;
+        public event EventHandler<IOrdenamiento> OrdenamientoCambiado;
         public event EventHandler Enfocar;
         #endregion
 
-        #region Servicios
+        #region Dependencias
         public IRepositorio<Usuario> UsuariosRepo { get; }
         public IRepositorio<Seccion> SeccionesRepo { get; }
         public IRepositorio<TipoContrato> TiposContratoRepo { get; }
@@ -122,64 +159,49 @@ namespace AguaSB.Usuarios.ViewModels
             AgregarContratoComando = new DelegateCommand(AgregarContrato);
             EditarUsuarioComando = new DelegateCommand(EditarUsuario);
 
-            this.ToObservableProperties().Subscribe(_ => RegistrarUniones(_.Args));
+            Columnas = new Columnas();
 
-            Solicitud = new Solicitud
-            {
-                Filtros = new Filtros(),
-                Columnas = Columnas.Todas
-            };
-            Solicitud.Columnas.UltimoPago = false;
-            Solicitud.Columnas.FechaRegistro = false;
+            Columnas.FechaRegistro.Activo = false;
+            Columnas.UltimoPago.Activo = false;
+
+            Filtros = new Filtros();
+
+            Ordenamientos = new Ordenamientos();
 
             Estado = new EstadoBusqueda();
+
+            RegistrarUniones();
         }
 
-        private IDisposable Propiedades;
-
-        private void RegistrarUniones(PropertyChangedEventArgs args)
+        private void RegistrarUniones()
         {
-            if (args.PropertyName == nameof(Solicitud))
-            {
-                Propiedades?.Dispose();
+            var filtros = Filtros.ToObservableProperties().Select(_ => _.Args.PropertyName).Where(_ => _ != nameof(Filtros.NombreCompleto));
 
-                var excepto = new HashSet<string>
-                {
-                    nameof(Solicitud.Agrupador), nameof(Solicitud.Columnas)
-                };
+            filtros.Where(p => p == nameof(Filtros.Seccion))
+                .ObserveOnDispatcher()
+                .Subscribe(_ => ActualizarListadoDeCalles());
 
-                var filtros = Solicitud.Filtros.Todos
-                    .Select(NotifyPropertyChangedEx.ToObservableProperties)
-                    .Merge()
-                    .Throttle(TimeSpan.FromMilliseconds(300)) // Tiempo de espera para la primera actualizacion realizada por la interfaz de usuario.
-                    .Skip(1);
+            filtros.Where(p => p == nameof(Filtros.ClaseContrato))
+                .ObserveOnDispatcher()
+                .Subscribe(_ => ActualizarListadoDeTiposContrato());
 
-                var props = new INotifyPropertyChanged[] { Solicitud, Solicitud.Filtros }
-                    .Select(NotifyPropertyChangedEx.ToObservableProperties)
-                    .Concat(new[] { filtros });
+            var propiedades = this.ToObservableProperties()
+                .Select(_ => _.Args.PropertyName)
+                .Where(_ => _ == nameof(Agrupador) || _ == nameof(Ordenamiento));
 
-                Propiedades = props.Merge()
-                    .Where(_ => !excepto.Contains(_.Args.PropertyName))
-                    .Throttle(TiempoEsperaBusqueda)
-                    .Subscribe(_ => BuscarComando.Execute(null));
+            var textoBusqueda = this.ToObservableProperties()
+                .Select(_ => _.Args.PropertyName)
+                .Where(_ => _ == nameof(TextoBusqueda) && !string.IsNullOrEmpty(TextoBusqueda));
 
-                Solicitud.Filtros.Seccion.ToObservableProperties()
-                    .Where(_ => _.Args.PropertyName == nameof(Solicitud.Filtros.Calle.Valor))
-                    .Subscribe(_ => ActualizarListadoDeCalles());
-
-                Solicitud.Filtros.ClaseContrato.ToObservableProperties()
-                    .Where(_ => _.Args.PropertyName == nameof(Solicitud.Filtros.ClaseContrato.Valor))
-                    .Subscribe(_ => ActualizarListadoDeTiposContrato());
-
-                Solicitud.ToObservableProperties()
-                .Where(_ => _.Args.PropertyName == nameof(Solicitud.Agrupador))
-                .Subscribe(_ => AgrupadorCambiado?.Invoke(this, Solicitud.Agrupador));
-            }
+            new[] { filtros, propiedades, textoBusqueda }.Merge().Throttle(TiempoEsperaBusqueda)
+                .Skip(1)
+                .ObserveOnDispatcher()
+                .Subscribe(_ => BuscarComando.Execute(null));
         }
 
-        private void MostrarColumnasTodas() => Solicitud.Columnas = Columnas.Todas;
+        private void MostrarColumnasTodas() => Columnas = new Columnas();
 
-        private void DesactivarFiltros() => Solicitud.Filtros.Todos.ForEach(f => f.Activo = false);
+        private void DesactivarFiltros() => Filtros.Todos.ForEach(_ => _.Activo = false);
 
         private void AgregarContrato(object o)
         {
@@ -207,97 +229,165 @@ namespace AguaSB.Usuarios.ViewModels
 
             if (Secciones.FirstOrDefault() is Seccion seccion)
             {
-                Solicitud.Filtros.Seccion.Valor = seccion;
+                Filtros.Seccion.Valor.Valor = seccion.Nombre;
 
                 ActualizarListadoDeCalles();
             }
 
             if (ClasesContrato.FirstOrDefault() is ClaseContrato claseContrato)
             {
-                Solicitud.Filtros.ClaseContrato.Valor = claseContrato;
+                Filtros.ClaseContrato.Valor.Valor = claseContrato.ToString();
 
                 ActualizarListadoDeTiposContrato();
             }
 
-            RegistrarAgrupadores();
+            Agrupadores = Dtos.Agrupadores.Todos;
         });
 
         private void ActualizarListadoDeCalles()
         {
-            if (Solicitud.Filtros.Seccion.Valor is Seccion seccion)
+            if (Filtros.Seccion.Valor.Valor is string nombreSeccion && Secciones.SingleOrDefault(_ => _.Nombre == nombreSeccion) is Seccion seccion)
             {
                 Calles = CallesAgrupadas[seccion];
-                Solicitud.Filtros.Calle.Valor = Calles.FirstOrDefault();
+                Filtros.Calle.Valor.Valor = Calles.FirstOrDefault()?.Nombre;
             }
         }
 
         private void ActualizarListadoDeTiposContrato()
         {
-            if (Solicitud.Filtros.ClaseContrato.Valor is ClaseContrato claseContrato)
+            if (Filtros.ClaseContrato.Valor.Valor is string nombreClaseContrato
+                && ClasesContrato.SingleOrDefault(_ => _.ToString() == nombreClaseContrato) is ClaseContrato claseContrato)
             {
                 TiposContrato = TiposContratoAgrupados[claseContrato];
-                Solicitud.Filtros.TipoContrato.Valor = TiposContrato.FirstOrDefault();
+                Filtros.TipoContrato.Valor.Valor = TiposContrato.FirstOrDefault()?.Nombre;
             }
-        }
-
-        private void RegistrarAgrupadores()
-        {
-            string ExtraerMes(object objeto) =>
-                   objeto is DateTime d
-                   ? Cadenas.Capitalizar(d.ToString("MMMM yyyy"))
-                   : "Desconocido";
-
-            string Clasificar(decimal d)
-            {
-                var residuo = d / 500;
-                return $"{residuo * 500:C} - {(residuo + 1) * 500:C}";
-            }
-
-            CriteriosAgrupacion = new[]
-            {
-                Agrupador.Ninguno,
-                new Agrupador { Nombre = "Sección", Propiedad = "Domicilio.Calle.Seccion.Nombre" },
-                new Agrupador { Nombre = "Calle", Propiedad = "Domicilio.Calle.Nombre" },
-                new Agrupador {
-                    Nombre = "Adeudo",
-                    Descripcion = "En pesos",
-                    Propiedad = "Adeudo",
-                    Conversor = x =>
-                    {
-                        if(x is decimal d)
-                            return Clasificar(d);
-                        else
-                            return "Desconocido";
-                    }
-                },
-                new Agrupador { Nombre = "Pagado hasta", Propiedad = "PagadoHasta", Conversor = ExtraerMes},
-                new Agrupador { Nombre = "Fecha de registro", Propiedad = "Usuario.FechaRegistro", Conversor = ExtraerMes }
-            };
         }
         #endregion
 
         private async Task Entrar(object arg)
         {
+            if (arg != null)
+            {
+                if (arg is string texto)
+                {
+                    if (Solicitud.IntentarObtener(texto, out Solicitud solicitud))
+                    {
+
+                    }
+                    else
+                    {
+                        TextoBusqueda = texto;
+                    }
+                }
+
+                await InvocarEnfocar().ConfigureAwait(true);
+                await Task.Delay(TiempoEsperaBusqueda).ConfigureAwait(true);
+
+                if (BuscarComando.Execution == null)
+                    BuscarComando.Execute(null);
+            }
+            else
+            {
+                BuscarComando.Execute(null);
+                await InvocarEnfocar().ConfigureAwait(true);
+            }
+        }
+
+        private async Task InvocarEnfocar()
+        {
             await Task.Delay(200).ConfigureAwait(true);
             Enfocar?.Invoke(this, EventArgs.Empty);
         }
 
+        private static readonly EjecutorSolicitud EjecutorSolicitud = new EjecutorSolicitud();
+
+        private string SolicitudAnterior;
+        private ResultadoSolicitud ResultadoAnterior;
+        private bool forzar;
+
+        public void EjecutarBusqueda()
+        {
+            forzar = true;
+            BuscarComando.Execute(null);
+        }
+
         private Task<ResultadoSolicitud> Buscar() => Task.Run(() =>
         {
+            if (!string.IsNullOrWhiteSpace(TextoBusqueda))
+            {
+                Filtros.NombreCompleto.Valor.Valor = TextoBusqueda;
+                Filtros.NombreCompleto.Activo = true;
+            }
+            else
+            {
+                Filtros.NombreCompleto.Valor.Valor = "";
+                Filtros.NombreCompleto.Activo = false;
+            }
+
+            var solicitud = new Solicitud
+            {
+                Agrupadores = new List<Propiedad> { Agrupador?.Propiedad },
+                Columnas = Columnas.Todas.Where(_ => _.Activo).Select(_ => _.Nombre).Select(_ => (Propiedad)_).ToList(),
+                Filtros = Filtros.Todos.Where(_ => _.Activo).Select(_ => _.Valor).Cast<Condicion>().ToList(),
+                Ordenamientos = new List<Ordenamiento> { new Ordenamiento { Propiedad = Ordenamiento?.Propiedad, Direccion = Ordenamiento?.Direccion } }
+            };
+
+            solicitud.Coercer();
+            var cadenaSolicitud = solicitud.ToString();
+
+            if (!forzar && cadenaSolicitud == SolicitudAnterior)
+            {
+                return ResultadoAnterior;
+            }
+
+            forzar = false;
+            SolicitudAnterior = cadenaSolicitud;
+
             var estado = Estado = new EstadoBusqueda
             {
                 Buscando = true
             };
 
-            var resultados = Solicitud.Filtros.Aplicar(UsuariosRepo.Datos.AsQueryable(),
-                (pagadoHasta, tipoContrato) => Adeudos.Calcular(pagadoHasta, tipoContrato, Tarifas.Obtener(TarifasRepo)));
-
-            var conteo = resultados.LongCount();
+            var resultadosUsuarios = EjecutorSolicitud.Ejecutar(
+                UsuariosRepo.Datos.AsQueryable(), solicitud,
+                (pagadoHasta, tipoContrato) => Adeudos.Calcular(pagadoHasta, tipoContrato, TarifasRepo.Datos.OrderBy(_ => _.FechaRegistro).ToArray()));
 
             estado.Buscando = false;
-            estado.HayResultados = conteo > 0;
+            estado.HayResultados = resultadosUsuarios.Count > 0;
 
-            return new ResultadoSolicitud { Resultados = resultados, Conteo = resultados.LongCount() };
+            IEnumerable resultados;
+            var puntosNavegacion = new List<PuntoNavegacion>();
+
+            ResultadoUsuario Obtener(Grupo g) =>
+                new ResultadoUsuario { Titulo = g.ToString(), Subtitulo = $"{g.Valores.Select(_ => _.Adeudo).Sum():C}" };
+
+            if (Agrupador != null)
+            {
+                var resultadosAgrupados = Agrupador.Agrupar(resultadosUsuarios);
+
+                var indiceAcumulado = 0;
+                foreach (var grupo in resultadosAgrupados)
+                {
+                    puntosNavegacion.Add(new PuntoNavegacion { Nombre = grupo.ToString(), Indice = indiceAcumulado });
+                    indiceAcumulado += grupo.Valores.Count() + 1;
+                }
+
+                if (Ordenamiento?.Direccion != null)
+                    resultados = resultadosAgrupados.SelectMany(g => Obtener(g).Concat(Ordenamiento.Ordenar(g.Valores).ToList()));
+                else
+                    resultados = resultadosAgrupados.SelectMany(g => Obtener(g).Concat(g.Valores));
+            }
+            else
+            {
+                if (Ordenamiento?.Direccion != null)
+                    resultados = Ordenamiento.Ordenar(resultadosUsuarios).ToList();
+                else
+                    resultados = resultadosUsuarios;
+            }
+
+            ResultadoAnterior = new ResultadoSolicitud { Conteo = resultadosUsuarios.Count, Resultados = resultados, PuntosNavegacion = puntosNavegacion };
+
+            return ResultadoAnterior;
         });
     }
 }

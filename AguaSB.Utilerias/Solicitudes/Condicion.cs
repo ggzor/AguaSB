@@ -34,6 +34,8 @@ namespace AguaSB.Utilerias.Solicitudes
         [JsonIgnore]
         protected Notificador N => notificador.Value;
         #endregion
+
+        public abstract void Coercer();
     }
 
     public sealed class Igual<T> : Condicion
@@ -46,10 +48,13 @@ namespace AguaSB.Utilerias.Solicitudes
         public T Valor
         {
             get { return valor; }
-            set { N.Validate(ref valor, value); }
+            set { N.Validate(ref valor, value); N.Change(nameof(TieneValor)); }
         }
 
+        [JsonIgnore]
         public bool TieneValor => EqualityComparer<T>.Default.Equals(valor, default);
+
+        public override void Coercer() { }
 
         public override string ToString() => $"{Propiedad} igual a {Valor?.ToString()}";
     }
@@ -62,16 +67,16 @@ namespace AguaSB.Utilerias.Solicitudes
         public T Desde
         {
             get { return desde; }
-            set { desde = value; Coercer(); Cambio(); }
+            set { N.Set(ref desde, value); N.Change(nameof(TieneInicio)); }
         }
 
         public T Hasta
         {
             get { return hasta; }
-            set { hasta = value; Coercer(); Cambio(); }
+            set { N.Set(ref hasta, value); N.Change(nameof(TieneFin)); }
         }
 
-        private void Coercer()
+        public override void Coercer()
         {
             if (TieneInicio && TieneFin)
                 CoercerPorValor();
@@ -84,15 +89,10 @@ namespace AguaSB.Utilerias.Solicitudes
                 T temp = desde;
                 desde = hasta;
                 hasta = temp;
-            }
-        }
 
-        private void Cambio()
-        {
-            N.Change(nameof(Desde));
-            N.Change(nameof(Hasta));
-            N.Change(nameof(TieneInicio));
-            N.Change(nameof(TieneFin));
+                N.Change(nameof(Desde));
+                N.Change(nameof(Hasta));
+            }
         }
 
         private static readonly EqualityComparer<T> EqualityComparer = EqualityComparer<T>.Default;

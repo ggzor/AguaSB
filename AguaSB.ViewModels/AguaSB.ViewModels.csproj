@@ -57,8 +57,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activable.cs" />
+    <Compile Include="FuncComparer.cs" />
     <Compile Include="IViewModel.cs" />
     <Compile Include="ObjetoActivable.cs" />
+    <Compile Include="ObjetoNombrado.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UtileriasComandos.cs" />
     <Compile Include="VerificadorPropiedades.cs" />

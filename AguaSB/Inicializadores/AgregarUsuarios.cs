@@ -22,15 +22,24 @@ namespace AguaSB.Inicializadores
             public string Numero { get; set; }
             public string Contrato { get; set; }
             public DateTime PagadoHasta { get; set; }
+            public DateTime UltimoPago { get; set; }
         }
 
         public AgregarUsuarios(IRepositorio<Usuario> usuarios, IRepositorio<Contrato> contratos, IRepositorio<TipoContrato> tiposContrato, IRepositorio<Pago> pagos,
-            IRepositorio<Calle> calles, IRepositorio<Seccion> secciones, IRepositorio<Domicilio> domicilios) =>
-            Llenar(usuarios, contratos, tiposContrato, pagos, calles, secciones, domicilios);
+            IRepositorio<Calle> calles, IRepositorio<Seccion> secciones, IRepositorio<Domicilio> domicilios, IRepositorio<Ajustador> ajustadores) =>
+            Llenar(usuarios, contratos, tiposContrato, pagos, calles, secciones, domicilios, ajustadores);
 
         private async void Llenar(IRepositorio<Usuario> usuariosRepo, IRepositorio<Contrato> contratosRepo, IRepositorio<TipoContrato> tiposContratoRepo, IRepositorio<Pago> pagosRepo,
-            IRepositorio<Calle> callesRepo, IRepositorio<Seccion> seccionesRepo, IRepositorio<Domicilio> domiciliosRepo)
+            IRepositorio<Calle> callesRepo, IRepositorio<Seccion> seccionesRepo, IRepositorio<Domicilio> domiciliosRepo, IRepositorio<Ajustador> ajustadoresRepo)
         {
+            var ajustadorRegistro = new Ajustador
+            {
+                Nombre = "Registro",
+                Multiplicador = 1
+            };
+
+            await ajustadoresRepo.Agregar(ajustadorRegistro).ConfigureAwait(true);
+
             Console.WriteLine("Obteniendo archivo...");
             IList<UsuarioCSV> todos = null;
             using (var reader = File.OpenText("Nombres.csv"))
@@ -82,7 +91,7 @@ namespace AguaSB.Inicializadores
                     Nombre = usuariocsv.Nombre,
                     ApellidoPaterno = usuariocsv.Paterno,
                     ApellidoMaterno = usuariocsv.Materno,
-                    FechaRegistro = new DateTime(r.Next(2010, 2015), r.Next(1, 13), r.Next(1, 29))
+                    FechaRegistro = new DateTime(r.Next(2010, 2014), r.Next(1, 13), r.Next(1, 29))
                 };
 
                 var domicilio = new Domicilio
@@ -105,28 +114,21 @@ namespace AguaSB.Inicializadores
                 await domiciliosRepo.Agregar(domicilio);
                 await contratosRepo.Agregar(contrato);
 
-                var primeraFecha = new DateTime(usuario.FechaRegistro.Year, usuario.FechaRegistro.Month, 1);
-                for (int i = 0; i < r.Next(20); i++)
+                var pago = new Pago
                 {
-                    var segundaFecha = primeraFecha.AddMonths(r.Next(1, 12));
+                    Contrato = contrato,
+                    Desde = usuariocsv.PagadoHasta,
+                    Hasta = usuariocsv.PagadoHasta,
+                    Ajustador = ajustadorRegistro,
+                    FechaRegistro = contrato.FechaRegistro,
+                    MontoParcial = 0m
+                };
 
-                    if (segundaFecha > new DateTime(DateTime.Today.Year + 1, 01, 01))
-                        break;
+                pago.Coercer();
 
-                    var pago = new Pago
-                    {
-                        Contrato = contrato,
-                        Desde = primeraFecha,
-                        Hasta = segundaFecha,
-                        FechaRegistro = primeraFecha.AddDays(r.Next(-30, 31)),
-                        Monto = (int)segundaFecha.Subtract(primeraFecha).TotalDays / 30 * 60
-                    };
+                contrato.Pagos.Add(pago);
 
-                    contrato.Pagos.Add(pago);
-                    await pagosRepo.Agregar(pago);
-
-                    primeraFecha = segundaFecha;
-                }
+                await pagosRepo.Agregar(pago);
             }
         }
     }

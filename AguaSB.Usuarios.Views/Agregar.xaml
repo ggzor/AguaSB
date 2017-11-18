@@ -124,5 +124,22 @@
             <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Width="400" Panel.ZIndex="-10" Style="{StaticResource h3}"
                        Text="Seleccione alguna de las opciones que aparece en la parte superior"/>
         </StackPanel>
+
+        <material:PopupBox Margin="32" Grid.Row="2" StaysOpen="False" Panel.ZIndex="-100"
+                           HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <StackPanel>
+                <StackPanel.Resources>
+                    <Style TargetType="Button" BasedOn="{StaticResource ActionButton}">
+                        <Setter Property="ToolTipService.Placement" Value="Left"/>
+                        <Setter Property="Margin" Value="0 0 0 5"/>
+                    </Style>
+                </StackPanel.Resources>
+
+                <Button Name="BuscarUsuario" ToolTip="Buscar usuario" Command="{Binding NavegarA}" CommandParameter="Usuarios/Listado"
+                        Background="{StaticResource MaterialLightBlue}">
+                    <icons:PackIconModern Width="25" Height="25" Kind="PeopleMagnify" Foreground="White"/>
+                </Button>
+            </StackPanel>
+        </material:PopupBox>
     </Grid>
 </UserControl>

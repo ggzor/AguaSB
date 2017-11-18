@@ -2,7 +2,12 @@
 
 namespace AguaSB.ViewModels
 {
-    public class ObjetoActivable<T> : Activable
+    public interface IObjetoActivable : IActivable
+    {
+        object Valor { get; set; }
+    }
+
+    public class ObjetoActivable<T> : Activable, IObjetoActivable
     {
         private T valor;
 
@@ -11,6 +16,8 @@ namespace AguaSB.ViewModels
             get { return valor; }
             set { N.Set(ref valor, value); }
         }
+
+        object IObjetoActivable.Valor { get => Valor; set { Valor = (T)value; } }
 
         public Func<T, string> Formato { get; set; } = v => v?.ToString();
 

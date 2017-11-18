@@ -61,12 +61,15 @@
   <ItemGroup>
     <Compile Include="Agregar.cs" />
     <Compile Include="Dtos\Agrupador.cs" />
+    <Compile Include="Dtos\Agrupadores.cs" />
     <Compile Include="Dtos\Columnas.cs" />
+    <Compile Include="Dtos\Grupo.cs" />
+    <Compile Include="Dtos\Ordenamientos.cs" />
+    <Compile Include="EjecutorSolicitud.cs" />
     <Compile Include="Dtos\EstadoBusqueda.cs" />
     <Compile Include="Dtos\Filtros.cs" />
     <Compile Include="Dtos\ResultadoSolicitud.cs" />
     <Compile Include="Dtos\ResultadoUsuario.cs" />
-    <Compile Include="Dtos\Solicitud.cs" />
     <Compile Include="Editar.cs" />
     <Compile Include="Listado.cs" />
     <Compile Include="ModificarUsuarioBase.cs" />

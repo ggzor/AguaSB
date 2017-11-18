@@ -2,6 +2,6 @@
 {
     public static class Cadenas
     {
-        public static string Capitalizar(string s) => char.ToUpper(s[0]) + s.Substring(1);
+        public static string Capitalizar(this string s) => char.ToUpper(s[0]) + s.Substring(1);
     }
 }

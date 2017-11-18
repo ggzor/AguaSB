@@ -125,7 +125,6 @@
     <Compile Include="Inicializadores\AgregarUsuarios.cs" />
     <Compile Include="Inicializadores\IInicializador.cs" />
     <Compile Include="Inicializadores\Inicializador.cs" />
-    <Compile Include="Inicializadores\InicializarAjustadores.cs" />
     <Compile Include="Inicializadores\Tarifas.cs" />
     <Compile Include="Instaladores\Extensiones.cs" />
     <Compile Include="Instaladores\Inicializadores.cs" />
@@ -184,15 +183,15 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Nombres.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Nombres.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>

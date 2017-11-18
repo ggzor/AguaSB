@@ -27,7 +27,7 @@ namespace AguaSB.Utilerias
 
         public IEnumerable Errores(string propiedad)
         {
-            if (errores.ContainsKey(propiedad))
+            if (propiedad != null && errores.ContainsKey(propiedad))
                 return errores[propiedad];
             else
                 return null;

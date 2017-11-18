@@ -2,7 +2,12 @@
 
 namespace AguaSB.ViewModels
 {
-    public class Activable : Notificante
+    public interface IActivable
+    {
+        bool Activo { get; set; }
+    }
+
+    public class Activable : Notificante, IActivable
     {
         private bool activo;
 

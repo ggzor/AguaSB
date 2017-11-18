@@ -105,7 +105,7 @@ namespace AguaSB.Contratos.ViewModels
         protected INavegador Navegador { get; }
         #endregion
 
-        #region Comandos
+        #region Eventos
         public event EventHandler Enfocar;
         #endregion
 

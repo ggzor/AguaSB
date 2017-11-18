@@ -61,6 +61,6 @@ namespace AguaSB.Nucleo
         protected Notificador N => notificador.Value;
         #endregion
 
-        public override string ToString() => $"{Nombre} - {ClaseContrato}";
+        public override string ToString() => Nombre;
     }
 }

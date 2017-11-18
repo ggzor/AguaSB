@@ -1,916 +1,597 @@
-﻿Id,Nombre,Paterno,Materno,Seccion,Calle,Numero,Contrato,PagadoHasta
-1,Juan,Abasolo,Amador,4,Mixcoahtecutli,1,A,01/04/2015
-3,Maria Elena,Acosta,Rodriguez,3,Mixcoahtecutli,2,A,01/02/2014
-4,Roberto,Acosta,Rodriguez,4,Mixcoahtecutli,3,A,01/06/2016
-7,Alejandro,Agapito,Hernandez,3,Teziutlan,1,A,01/02/2016
-8,Roman,Agapito,Mendez,4,Luis,1,A,01/03/2017
-9,Manuel,Aguilar,Fernandez,4,California,1,A,01/12/2016
-11,Josue,Alcantara,Blancas,1,Xicohtencatl,1,A,01/04/2013
-12,Pablo,Alcantara,Perez,1,Xicohtencatl,2,A,01/02/2017
-13,Josefa,Alida,Segarra,3,Cholula,1,A,01/10/2013
-14,Alfonso Alberto,Alvarado,Leal,3,Noviembre,1,A,01/10/2016
-16,Annecy,Arias,Escobar,4,Chiapas,1,A,01/12/2017
-17,Hector,Armenta,Hernandez,3,Tepic,1,A,01/06/2016
-18,Pedro,Armenta,Trujillo,3,Morelos,1,A,01/12/2016
-19,Venancia Sabina,Avila,Cruz,1,Tlahuicole,1,A,01/08/2016
-20,Mayra,Hernandez,Hernandez,3,Iturbide,1,A,01/02/2015
-21,Maribel,Badillo,Carrasco,2,Monclova,1,A,01/04/2016
-22,Francisco,Badillo,Espejel,2,Allende,1,A,01/09/2012
-23,Guillermo,Badillo,Espejel,2,Monclova,2,A,01/09/2014
-24,Guillermo,Badillo,Maldonado,2,Monclova,3,A,01/06/2012
-25,Jesucita,Baez,Davila,3,Michoacan,1,B,01/12/2015
-26,Erick,Baez,Hernandez,3,Noviembre,2,A,01/12/2015
-24,Fabian,Baez,Hernandez,4,Mixcoahtecutli,4,A,01/12/2014
-28,Jeronimo,Baez,Hernandez,4,Mixcoahtecutli,5,A,01/02/2016
-29,Luciano,Baez,Hernandez,4,Mixcoahtecutli,6,A,01/06/2015
-30,Maria Jovita,Baez,Hernandez,4,Mixcoahtecutli,7,A,01/09/2016
-31,Victor,Baez,Hernandez,4,Mixcoahtecutli,8,A,01/11/2016
-32,Marco Antonio,Balderas,Pedraza,3,Puebla,1,A,01/02/2017
-33,Maribel,Balles,Montalvo,3,Principal,1,A,01/11/2015
-34,Cruz,Barranco,Ramirez,4,Vicente,1,A,01/12/2017
-35,Hortencia,Barranco,Ramirez,4,Vicente,2,A,01/12/2017
-36,Lourdes,Barrera,Hernandez,3,Acatlan,1,A,01/04/2014
-42,Rogelio,Beristain,Gutierrez,2,Guanajuato,1,A,01/12/2015
-43,Julian,Bernal,Paez,4,Chabacanos,1,B,01/12/2017
-44,Hipolito Noe,Bonilla,Gonzalez,3,Carretera,1,A,01/12/2017
-45,Maria Candelaria,Bonilla,Lopez,2,Coahuila,1,B,01/12/2016
-46,Arnulfo,Bravo,Modesto,4,Nayarit,1,A,01/03/2017
-47,Alicia,Briones,Gonzalez,4,Chiapas,2,B,01/06/2014
-48,Josafat,Briones,Huerta,4,Guatemala,1,A,01/12/2016
-49,Alejandro Octavio,Cabrera,Hernandez,4,Sonora,1,A,01/12/2016
-51,Vicente,Cabrera,Martinez,1,Tlahuicole,2,A,01/01/2016
-52,Erika Gabriela,Cabrera,Monter,4,Jardines,1,A,01/06/2013
-53,Sergio,Cabrera,Tellez,2,Monclova,4,A,01/05/2013
-55,Lourdes,Calatayud,Garcia,4,Vicente,3,C,01/09/2016
-57,Elias,Cano,Morales,3,Morelos,2,A,01/09/2016
-59,Eduardo,Carmona,Carmona,4,Jardines,2,A,01/12/2008
-61,Luisa,Carmona,Carmona,3,Michoacan,2,A,01/03/2015
-62,Olivia,Carmona,Carmona,3,Teziutlan,2,A,01/10/2013
-64,Sofia Rocio,Carmona,Carmona,3,No67,1,A,01/01/2012
-66,Dulce Janeth,Carmona,Cisneros,3,Teziutlan,3,A,01/07/2014
-68,Augusto,Carmona,Garcia,3,Noviembre,3,A,01/12/2016
-69,Carlos,Carmona,Garcia,1,Aguascalientes,1,A,01/12/2016
-70,Edgar,Carmona,Garcia,1,Aguascalientes,2,B,01/12/2017
-71,Julio Cesar,Carmona,Garcia,3,Noviembre,4,A,01/05/2014
-72,Victor Manuel,Carmona,Garcia,4,Jardines,3,A,01/06/2016
-73,Vicente,Carmona,Gomez,4,Matehuala,1,A,01/12/2016
-74,Martha,Carmona,Guarneros,1,No5,1,A,01/12/2010
-75,Armando,Carmona,Gutierrez,1,Cacaxtla,1,A,01/12/2015
-76,Apolonia,Carmona,Hernandez,3,Teziutlan,4,A,01/02/2017
-78,Martha,Carmona,Hernandez,4,Mixcoahtecutli,9,A,01/12/2014
-81,Zenaida,Carmona,Lopez,1,Aguascalientes,3,A,01/12/2017
-82,Jose Dionisio Eleuterio,Carmona,Macias,4,Tienda,1,A,01/12/2016
-85,Victor,Carmona,Martinez,3,Teuzitlan,1,A,01/06/2016
-86,Alejandra,Carmona,Padilla,4,Vicente,4,A,01/12/2016
-87,Silverioa,Carmona,Palafox,3,Noviembre,5,A,01/04/2010
-89,Jael Irene,Carmona,Reyes,4,Paz,1,A,01/12/2015
-90,Javier,Carmona,Reyes,4,Mixcoahtecutli,10,A,01/10/2016
-91,Martha,Carmona,Reyes,4,Mixcoahtecutli,11,A,01/12/2017
-92,Rafael,Carmona,Reyes,4,No28,1,A,01/12/2011
-93,Gilberto,Carmona,Rodriguez,4,Chiapas,3,A,01/12/2017
-94,Oscar,Carmona,Rodriguez,1,Cuatlapanga,1,A,01/12/2013
-95,Alfredo,Carmona,Sanchez,1,Cacaxtla,2,A,01/12/2017
-96,Emilio,Carmona,Sanchez,2,Monclova,5,A,01/06/2016
-97,Hipolito,Carmona,Sanchez,3,Tonala,1,A,01/12/2016
-98,Jose Andres,Carmona,Sanchez,3,Noviembre,6,A,01/12/2016
-99,Juan Eleuterio,Carmona,Sanchez,4,Naranjos,1,A,01/09/2016
-100,Niceforo,Bcarmona,Sanchez,3,Tonala,2,A,01/12/2016
-101,Niceforo,Carmona,Sanchez,3,Noviembre,7,A,01/12/2016
-102,Oscar,Carmona,Sanchez,1,No7,1,A,01/12/2012
-103,Reyna Isabel,Carmona,Sanchez,3,Zapopan,1,A,01/12/2017
-104,Arcadio Alfredo,Carmona,Suarez,4,Xalapa,1,A,01/06/2015
-105,Concepcion,Carmona,Suarez,4,Mixcoahtecutli,12,A,01/11/2014
-106,Irene,Carmona,Suarez,1,No3,1,A,01/12/2011
-108,De Cv,Pcmi,Sa,4,Carretera,2,A,01/12/2015
-109,Miguel Pedro,Carmona,Suarez,4,Vicente,5,A,01/06/2016
-112,Manuel De Jesus,Carmona,Viruel,1,Tlaxcala,1,A,01/10/2011
-113,Pedro,Caro,Briones,4,Colima,1,A,01/09/2012
-114,Florisel,Carreño,Piedras,1,Tlaxcala,2,A,01/12/2016
-115,Natividad,Carreño,Piedras,1,Tlaxcala,3,A,01/12/2016
-116,Eduardo,Castañeda,Aguilar,4,Jardines,4,A,01/12/2014
-117,Antonia,Castillo,Espinoza,1,Malintzi,1,A,01/12/2013
-119,Candido Alfredo,Cazares,Cabrera,2,Pachuca,1,A,01/12/2016
-120,Patricia,Cazares,Ortiz,4,Veracruz,1,A,01/09/2013
-121,Efrain,Cebada,Lopez,1,Tlaxcala,4,A,01/12/2017
-123,Jorge Luis,Cervantes,Cordero,1,Malintzi,2,A,01/12/2016
-124,Maria Martha,Cervantes,Cordero,1,Principal,2,A,01/12/2015
-126,Jose Orlando,Chavero,Ramos,4,Mixcoahtecutli,13,A,01/12/2015
-127,Saga Sa De Cv,Conjuntos,Habitacionales,4,Fraccionamiento,1,P,01/02/2015
-128,Catarino,Corona,Mozo,3,Jalisco,1,A,01/12/2016
-129,Clara,Corona,Mozo,3,Jalisco,2,A,01/12/2012
-130,Andres,Corona,Mozo,3,Jalisco,3,A,01/12/2016
-131,Maria Guadalupe,Corona,Perez,3,Acatlan,2,A,01/02/2016
-132,Martina,Cortes,Ceron,2,Guanajuato,2,A,01/05/2017
-135,Alfredo,Cortes,Perez,1,Xicohtencatl,3,A,01/06/2015
-136,Gustavo,Cortes,Vazquez,3,Michoacan,3,A,01/06/2016
-137,Maria De Jesus,Cossio,Terrazas,3,Morelia,1,B,01/12/2016
-139,Maria De Los Angeles,Cruz,Lopez,1,Aguascalientes,4,A,01/12/2016
-140,Joel,Cruz,Luna,4,Vicente,6,A,01/12/2015
-141,Camilo,Cruz,Sanchez,2,Guanajuato,3,A,01/06/2015
-142,Maria Ignacia,Cuellar,Hernandez,3,Nayarit,2,A,01/01/2017
-144,Gaudencio,Cuellar,Medina,4,Cordoba,1,A,01/01/2015
-146,Gustavo,Davila,Alvarez,4,Vicente,7,A,01/12/2017
-147,Araceli,Davila,Bacasegua,4,No55,1,A,01/12/2016
-149,Narda,Davila,Carmona,2,Torreon,1,A,01/12/2016
-150,Cirilo,Davila,Cid,2,No37,1,A,01/11/2008
-151,Maria Candelaria,Davila,Davila,1,Santa,1,A,01/09/2016
-153,Valentina,Davila,Fernandez,3,Nayarit,3,A,01/12/2015
-154,Abel,Davila,Garcia,3,Puebla,2,A,01/12/2016
-155,Rita,Serrano,Vazquez,3,Diagonal,1,A,01/01/2016
-156,Maria Isabel,Davila,Garcia,3,No71,1,A,01/08/2012
-159,Santiago,Davila,Hernandez,3,Oaxaca,1,A,01/09/2016
-161,Juana,Davila,Lopez,3,Carretera,3,A,01/12/2013
-162,Ruth,Davila,Montiel,2,Saltillo,1,A,01/01/2015
-164,Filiberta,Davila,Ramos,1,Malintzi,3,A,01/02/2017
-165,Maria Pascuala,Davila,Ramos,1,Xicohtencatl,4,A,01/06/2017
-166,Alfredo,Davila,Suarez,2,Torreon,2,A,01/12/2016
-167,Abel,Davila,Tellez,1,Chihuahua,1,A,01/02/2013
-168,Ana Maria,Davila,Tellez,3,Carretera,4,A,01/10/2015
-172,Francisco,Lopez,Rodriguez,4,Carretera,5,C,01/12/2016
-174,Nicanor,Davila,Tellez,2,Durango,1,A,01/02/2013
-175,Sofia Irene,Davila,Tellez,2,Parras,1,B,01/04/2010
-176,Alma Delia,Davila,Vazquez,4,Xalapa,2,A,01/12/2017
-177,Daniel,Davila,Vazquez,4,Vicente,8,A,01/12/2017
-178,Jose Juan,Davila,Vazquez,4,Vicente,9,A,01/12/2017
-181,Genaro,Degante,Cardenas,1,Paseo,1,A,01/01/2016
-182,Gregorio,Degante,Davila,1,Aguascalientes,5,A,01/06/2017
-183,Jose Onel,Degante,Davila,1,Cuautlapanga,1,A,01/01/2016
-184,Gabriel,Degante,Huerta,1,Malintzi,4,A,01/02/2014
-185,Genaro,Degante,Huerta,1,Aguascalientes,6,B,01/12/2016
-186,Pedroza David,Del,Razo,4,Mixcoahtecutli,14,C,01/09/2010
-187,Pedroza David,Del,Razo,4,Mixcoahtecutli,15,A,01/10/2015
-188,Pedroza Francisco Javier,Del,Razo,4,Mixcoahtecutli,16,A,01/08/2016
-189,Sanchez Elena,Del,Razo,1,Zacatelco,1,A,01/12/2016
-191,Sanchez Judith,Del,Razo,1,Malintzi,5,A,01/01/2017
-192,Sanchez Lazaro,Del,Razo,4,Loreto,1,A,01/08/2016
-193,Sanchez Marcos,Del,Razo,1,Cuatlapanga,2,A,01/07/2016
-195,Martin Padilla Moya,Demetrio,Yo,4,Apoyaron,1,A,01/02/2016
-196,Ignacio,Diaz,Morales,4,Duraznos,1,A,01/05/2016
-197,Fidencio,Dionicio,Juarez,1,Tlaxcala,5,A,01/11/2016
-198,Ramiro,Dominguez,Rodriguez,4,Nayarit,4,A,01/02/2014
-199,Motor Srdel,Emmanuel,Automotriz,1,Allende,2,A,01/12/2014
-200,Edmundo,Espinoza,Carrillo,1,Mixcoahtecutli,17,A,01/02/2017
-201,Cirilo Edmundo,Ferman,Cervantes,3,Oaxaca,2,A,01/05/2015
-203,Maria Rufina Osvelia,Fernandez,Carrillo,2,Carretera,6,A,01/12/2017
-204,Nicolas,Fernandez,Carrillo,2,Mesquital,1,B,01/12/2016
-206,Filemon,Fernandez,Cortes,3,Nayarit,5,A,01/12/2013
-207,Lilia,Fernandez,Cortes,3,Revolucion,1,A,01/09/2012
-208,Olga,Fernandez,Cortes,3,Cmixcoahtecutli,1,A,01/12/2012
-209,Jose Edgar,Fernandez,Garcia,3,Atotonilco,1,A,01/05/2014
-210,Filemon,Fernandez,Gonzalez,3,Nayarit,6,B,01/12/2017
-211,Luis,Fernandez,Guarneros,3,Jalisco,4,B,01/06/2017
-212,Marcial,Fernandez,Guarneros,3,Noviembre,8,A,01/12/2015
-213,Martin Virgilio,Fernandez,Guarneros,3,Nuevo,1,A,01/12/2017
-214,Maria Del Socorro Hilda,Fernandez,Lopez,1,Tlaxcala,6,A,01/12/2017
-217,Diego,Fernandez,Morales,3,28c,1,A,01/08/2012
-218,Antonio,Fernandez,Palafox,3,Tepeaca,1,A,01/09/2016
-219,Leticia,Fernandez,Palafox,3,Tepeaca,2,A,01/06/2017
-220,Victoria,Fernandez,Palafox,3,Tepeaca,3,A,01/05/2016
-221,Isidoro,Fernandez,Quintero,3,Sayula,1,A,01/06/2012
-222,Nicolas,Fernandez,Quintero,3,Cancun,1,A,01/02/2016
-223,Silvia,Fernandez,Quintero,3,Noviembre,9,A,01/10/2015
-224,Cesario,Fernandez,Sanchez,4,Paz,2,A,01/08/2016
-226,Delfino,Flores,Bermeo,4,Chabacanos,2,A,01/01/2017
-228,Marcelino,Flores,Cortes,1,Marzo,1,A,01/02/2016
-229,Andres,Flores,Degante,3,Noviembre,10,A,01/01/2013
-230,Ranulfo,Flores,Degante,3,Michoacan,4,A,01/02/2013
-231,Veronica,Flores,Degante,3,Michoacan,5,A,01/02/2016
-232,Jorge Luis,Flores,Gaytan,4,Veracruz,2,A,01/12/2014
-233,Antonio,Flores,Gracia,2,Mixcoahtecutli,18,A,01/12/2017
-234,Carolina,Flores,Hernandez,1,Calientes,1,A,01/12/2012
-235,Natividad,Flores,Hernandez,1,Aguascalientes,7,A,01/04/2013
-236,Maria Enedina,Flores,Muñoz,4,Sonora,2,A,01/12/2016
-237,Hilario,Fonseca,Hernandez,1,Tlaxcala,7,A,01/10/2016
-238,Felipe De Jesus,Fuentes,Rivera,3,Puebla,3,A,01/10/2017
-239,Maria Del Carmen,Fuentes,Rivera,3,Cholula,2,A,01/02/2017
-240,Quirino,Fuentes,Sampayo,2,Guanajuato,4,A,01/12/2012
-241,Hugo,Galaviz,Leal,2,Torreon,3,A,01/12/2014
-242,Pedro,Galaviz,Leal,4,Apizaco,1,A,01/12/2015
-243,Jose Rodrigo,Galicia,Martin,3,Febrero,1,A,01/12/2017
-244,Jose Guadalupe,Gallardo,Cortez,3,Cholula,3,A,01/03/2016
-246,Angelica,Garcia,Altamirano,3,Paztcuaro,1,A,01/02/2017
-247,Esteban Omar,Garcia,Altamirano,3,Paztcuaro,2,A,01/12/2016
-252,Maria Salustia,Garcia,Davila,3,Carretera,7,A,01/12/2016
-254,Razo Jonathan,Garcia,Del,3,Cholula,4,A,01/02/2014
-255,Arturo,Garcia,Fernandez,3,Noviembre,11,A,01/06/2014
-256,Jose Juan,Garcia,Fernandez,3,Noviembre,12,A,01/10/2011
-259,Adan,Garcia,Garcia,3,Puebla,4,A,01/10/2016
-261,Benita,Garcia,Garcia,3,Cholula,5,A,01/04/2013
-262,Maria Ernestina Lucina,Garcia,Garcia,4,Chiapas,4,A,01/08/2017
-263,Fernando,Garcia,Garcia,4,Veracruz,3,B,01/12/2016
-264,Maria Anel,Garcia,Garcia,1,Tlaxcala,8,A,01/12/2016
-265,Rita,Garcia,Garcia,3,Cholula,6,A,01/12/2016
-266,Bernarda,Garcia,Gonzalez,3,Noviembre,13,B,01/12/2016
-267,Fernando Federico,Garcia,Gonzalez,4,Veracruz,4,A,01/12/2015
-268,Hector,Garcia,Gonzalez,3,Teziutlan,5,A,01/12/2016
-269,Isidro,Garcia,Gonzalez,4,Veracruz,5,A,01/12/2016
-270,Victorino,Garcia,Gonzalez,4,Apizacotlaxco,1,B,01/01/2016
-271,Florencio,Garcia,Guarneros,4,Vicente,10,A,01/09/2016
-272,Gildardo Javier,Garcia,Guarneros,2,Guanacevi,1,A,01/12/2014
-273,Ivan,Garcia,Guarneros,2,Guanacevi,2,A,01/01/2014
-274,Juan Bernardino,Garcia,Guarneros,3,Patzcuaro,1,B,01/12/2017
-275,Sergio,Garcia,Guarneros,4,Carretera,8,B,01/06/2017
-276,Sergio,Garcia,Gutierrez,1,Mexicali,1,A,01/12/2016
-277,Alejandro,Garcia,Hernandez,3,Teziutlan,6,A,01/05/2017
-281,Fidelia,Garcia,Morales,1,Tlaxcala,9,A,01/03/2017
-282,Guadalupe,Garcia,Morales,1,Aguascalientes,8,A,01/08/2016
-283,Guadalupe,Garcia,Morales,1,33a,1,A,01/12/2016
-285,Norma,Garcia,Morales,1,Tlaxcala,10,A,01/12/2017
-286,Adriana,Garcia,Ñañez,4,Carrtera,1,A,01/12/2016
-287,Roman,Garcia,Ñañez,3,Guadalajara,1,A,01/03/2017
-290,Delfino,Garcia,Rodriguez,2,Monclova,6,A,01/06/2012
-291,Luis,Garcia,Rodriguez,1,Tlaxcala,11,B,01/04/2017
-292,Faustina,Garcia,Santiago,2,Mixcoahtecutli,19,B,01/12/2016
-293,Francisco,Garcia,Solis,3,Noviembre,14,A,01/12/2014
-296,Jose Gabriel Baldomero,Garcia,Tellez,3,Patzcuaro,2,A,01/05/2010
-297,Maria Martha,Garcia,Tellez,3,Morelia,2,A,01/12/2016
-298,Norberto,Garcia,Tellez,2,Durango,2,A,01/05/2012
-300,Jose Luis,Garcia,Vazquez,1,Zitlaltepec,1,A,01/12/2016
-301,Luis Pablo,Garcia,Vazquez,3,Cancun,2,A,01/12/2017
-302,Victor,Garcia,Vazquez,1,Zitlaltepec,2,A,01/02/2017
-303,Yenni,Garcia,Velazco,2,Apizaco,2,A,01/05/2014
-305,Judith,Garrido,Tellez,2,Parras,2,A,01/10/2015
-306,Salomon,Gomez,Barcenas,2,Mapimi,1,A,01/10/2014
-308,Luis Antonio,Gomez,Dominguez,2,Mapimi,2,B,01/12/2016
-309,Catalina,Gomez,Fernandez,4,Loreto,2,A,01/12/2015
-310,Silvestre,Gomez,Fernandez,3,Blas,1,A,01/02/2017
-311,Argelio,Gomez,Lopez,3,Blas,2,A,01/01/2015
-312,Margarita,Gomez,Sosa,2,Guanajuato,5,A,01/06/2017
-313,Paula,Gomez,Villegas,3,Blas,3,A,01/07/2015
-314,Jaime,Gonzalez,Hernandez,3,Oaxaca,3,A,01/12/2015
-316,Ranulfo,Gonzalez,Guevara,3,Galeana,1,A,01/12/2016
-317,Andres,Gonzalez,Hernandez,3,No54,1,A,01/12/2014
-318,Antonio,Gonzalez,Hernandez,3,Oaxaca,4,A,01/12/2016
-319,Hugo,Gonzalez,Hernandez,3,Oaxaca,5,A,01/12/2016
-320,Ignacio,Gonzalez,Hernandez,3,Cteziutlan,1,A,01/12/2017
-322,Adalberto,Gonzalez,Leon,4,Apizaco,3,A,01/02/2017
-323,Jose Angel,Gonzalez,Marin,4,No9,1,A,01/09/2012
-324,Paola,Gonzalez,Martinez,4,34923p1l,1,A,01/12/2014
-325,Martha,Gonzalez,Perez,4,Cmixcoahtecutli,2,A,01/03/2017
-326,Antonio,Gonzalez,Villalba,3,Oaxaca,6,B,01/12/2017
-327,Ignacio,Gonzalez,Villalba,3,Oaxaca,7,B,01/12/2017
-329,Adrian,Guarneros,Carmona,3,Oaxaca,8,B,01/12/2017
-330,Bernardo,Guarneros,Carmona,3,Carretera,9,B,01/12/2017
-331,Jose Pedro Irineo,Guarneros,Carmona,3,Carretera,10,A,01/02/2017
-332,Roberto,Guarneros,Carmona,3,Carretera,11,B,01/12/2017
-333,Blanca,Guarneros,Cortes,3,Oaxaca,9,A,01/03/2017
-335,Laura,Guarneros,Cruz,1,Cacaxtla,3,A,01/11/2013
-336,Sebastian,Guarneros,Cruz,2,Guanasevi,1,A,01/02/2016
-339,Emeterio,Guarneros,Garcia,3,Michoacan,6,A,01/12/2017
-340,Miguel Angel,Guarneros,Garcia,3,Noviembre,15,A,01/10/2013
-341,Timoteo Filiberto,Guarneros,Garcia,3,Michoacan,7,A,01/12/2016
-342,Jose Emeterio,Guarneros,Guarneros,3,Jalisco,5,A,01/03/2015
-344,Andres,Guarneros,Hernandez,2,Saltillo,2,A,01/11/2013
-345,Eleazar,Guarneros,Hernandez,1,Tlaxcala,12,A,01/06/2012
-349,Israel,Guarneros,Hernandez,4,Carretera,12,A,01/06/2013
-350,Jose Pascual,Guarneros,Hernandez,4,Matehuala,2,A,01/12/2016
-351,Jose Hector,Guarneros,Ibarra,4,Vicente,11,A,01/12/2017
-352,Maria Graciela,Guarneros,Ibarra,3,Carretera,13,A,01/07/2017
-353,Arturo,Guarneros,Ibarra,3,Carretera,14,A,01/12/2017
-354,Roberto,Guarneros,Padilla,1,Tlaxcala,13,A,01/06/2014
-357,Abraham,Guarneros,Rodriguez,4,Matehuala,3,A,01/02/2017
-359,Arnulfo,Guarneros,Suarez,2,Guanacevi,3,A,01/12/2016
-360,Basilio,Guarneros,Suarez,3,Noviembre,16,B,01/12/2016
-361,Benito,Guarneros,Suarez,2,Guanacevi,4,A,01/09/2014
-362,Jose Edmundo,Guarneros,Suarez,3,Mixcoahtecutli,20,A,01/05/2016
-363,Maria Francisca,Guarneros,Suarez,2,Guanacevi,5,A,01/12/2015
-364,Norberto,Guarneros,Suarez,4,Vicente,12,A,01/12/2016
-365,Santos,Guarneros,Suarez,3,Noviembre,17,A,01/01/2015
-366,Silvia Hilaria,Guarneros,Suarez,2,Guanasevi,2,M,01/12/2016
-367,Teodora,Guarneros,Suarez,2,Ciudad,1,A,01/05/2015
-368,Wiliulfo,Guarneros,Suarez,3,Jalisco,6,B,01/12/2016
-369,Alonso,Guarneros,Torres,4,Veracruz,6,A,01/04/2016
-370,Domingo,Guarneros,Torres,4,Vicente,13,A,01/02/2012
-372,Raul,Gallardo,Hernandez,4,Mixcoahtecutli,21,A,01/02/2017
-373,Jose Luis,Guevara,Gonzalez,3,Tehuacan,1,A,01/12/2017
-374,Armando,Gutierrez,Cervantes,3,Galeana,2,B,01/01/2015
-376,Felix,Gutierrez,Cuellar,4,Carretera,15,A,01/12/2017
-377,Alejandro,Gutierrez,Garcia,1,Gutierrez,1,A,01/07/2016
-378,Jose Luis,Gutierrez,Garcia,1,Gutierrez,2,A,01/08/2016
-379,Jose Palemon,Gutierrez,Garcia,1,Gutierrez,3,A,01/12/2017
-380,Jose Palemon,Gutierrez,Garcia,1,Gutierrez,4,A,01/12/2016
-381,Antonio,Gutierrez,Hernandez,1,Mixcoahtecutli,22,A,01/06/2017
-382,Lazaro,Gutierrez,Garcia,1,Calientes,2,A,01/11/2016
-383,Rogaciano,Gutierrez,Garcia,1,Gutierrez,5,B,01/12/2013
-384,Juventino,Gutierrez,Gonzalez,4,Carretera,16,A,01/03/2017
-385,Juventino,Gutierrez,Gonzalez,4,Carretera,17,A,01/02/2017
-386,Benjamin,Gutierrez,Hernandez,1,Rosarito,1,A,01/12/2016
-388,Felipe,Gutierrez,Hernandez,1,Rosarito,2,A,01/12/2017
-389,Guadalupe,Gutierrez,Hernandez,1,Rosarito,3,A,01/12/2017
-391,Minerva,Gutierrez,Hernandez,1,Mixcoahtecutli,23,A,01/12/2016
-392,Natividad,Gutierrez,Hernandez,3,Monterrey,1,A,01/12/2016
-393,Rufina,Gutierrez,Hernandez,2,Carretera,18,B,01/08/2018
-394,Jose Antonio,Gutierrez,Mendez,1,Mexicali,2,A,01/12/2017
-395,Jose Tomas Nicanor,Gutierrez,Morales,3,Carretera,19,A,01/12/2017
-396,Rufina,Gutierrez,Morales,1,Mixcoahtecutli,24,A,01/05/2013
-397,Teresa,Gutierrez,Morales,1,Mixcoahtecutli,25,B,01/12/2016
-398,Jose Luis,Gutierrez,Muñoz,1,Mixcoahtecutli,26,A,01/12/2017
-400,Luis Alberto,Gutierrez,Rodriguez,1,Gutierrez,6,A,01/12/2016
-402,Lucia,Gutierrez,Suarez,1,Chimalpa,1,B,01/12/2016
-403,Pedro,Gutierrez,Suarez,1,Mexicali,3,A,01/12/2017
-404,Alfredo,Hernandez,Arroyo,1,Zitlaltepec,3,A,01/12/2013
-405,Crispin,Hernandez,Arroyo,1,Zitlaltepec,4,A,01/11/2015
-409,Jesus,Hernandez,Arroyo,1,Zitlaltepec,5,A,01/03/2014
-410,Apolinar Rogelio,Hernandez,Avila,3,Oaxaca,10,A,01/12/2016
-411,Carlos Alberto,Hernandez,Badillo,2,Monclova,7,A,01/02/2015
-412,Jose Ciriaco,Hernandez,Badillo,4,Chiapas,5,B,01/09/2014
-414,Jose Luis,Hernandez,Badillo,1,Marzo,2,A,01/08/2015
-415,Jose Tomas,Hernandez,Badillo,3,Oaxaca,11,A,01/12/2015
-416,Panuncio,Hernandez,Badillo,3,Oaxaca,12,A,01/11/2013
-417,Rolando,Hernandez,Badillo,3,Oaxaca,13,A,01/12/2017
-418,Teresa,Hernandez,Badillo,1,Marzo,3,A,01/12/2015
-419,Andrea,Hernandez,Barranco,4,29a,1,A,01/03/2016
-420,Margarita,Hernandez,Bonilla,2,Monclova,8,A,01/08/2015
-421,Cristina,Hernandez,Carmona,4,Mixcoahtecutli,27,M,01/04/2013
-422,Columba,Hernandez,Carrasco,4,Carretera,20,A,01/12/2015
-423,Javier,Hernandez,Cuachayo,3,Privada,1,A,01/12/2016
-424,Oscar,Hernandez,Dander,3,Galeana,3,A,01/12/2015
-426,Cornelio,Hernandez,Davila,1,Santa,2,A,01/01/2016
-427,Humberto,Hernandez,Davila,4,Loreto,3,A,01/09/2016
-429,Maura,Hernandez,Davila,1,Santa,3,A,01/09/2016
-430,Ruben,Hernandez,Davila,1,Santa,4,A,01/12/2017
-431,Evaristo,Hernandez,Dominguez,4,Mixcoahtecutli,28,A,01/10/2016
-432,Genoveva,Hernandez,Dorantes,1,Tlaxcala,14,A,01/12/2016
-433,Joel,Hernandez,Fernandez,1,Parral,1,B,01/06/2017
-434,Yolanda,Hernandez,Fernandez,3,Cnayarit,1,A,01/11/2014
-436,Jose Dolores,Hernandez,Garcia,1,Chihuahua,2,A,01/07/2012
-437,Miguel Angel,Hernandez,Garcia,1,Marzo,4,B,01/04/2012
-440,Miguel,Hernandez,Gonzalez,2,Monclova,9,A,01/04/2016
-442,Arturo,Hernandez,Hernandez,3,Galeana,4,A,01/12/2016
-443,Elizabeth,Hernandez,Hernandez,3,Nayarit,7,A,01/09/2014
-444,Pedroza David,Del,Razo,4,Mixcoahtecutli,29,A,01/10/2015
-445,Pedroza David,Del,Razo,4,Mixcoahtecutli,30,A,01/09/2016
-446,Erasmo,Hernandez,Hernandez,4,Teziutlan,7,A,01/12/2014
-447,Hugo,Hernandez,Hernandez,3,Iturbide,2,A,01/04/2017
-448,Israel,Hernandez,Hernandez,3,Cadereita,1,A,01/02/2011
-451,Jorge,Hernandez,Hernandez,3,No51,1,A,01/04/2010
-453,Juan Carlos,Hernandez,Hernandez,3,Nuevo,2,A,01/12/2017
-454,Luciano,Hernandez,Hernandez,3,Texmelucan,1,A,01/05/2013
-455,Marcos Antonio,Hernandez,Hernandez,3,Cadereita,2,A,01/04/2016
-456,Mauro,Hernandez,Hernandez,3,Priv,1,B,01/09/2016
-457,Nazario,Hernandez,Hernandez,3,Texmelucan,2,A,01/12/2016
-458,Patricia,Hernandez,Hernandez,2,Chilpancingo,1,A,01/03/2017
-460,Micaela,Hernandez,Herrera,3,Blas,4,A,01/12/2017
-461,Gregorio Platero,Hernandez,Jimenez,1,Marzo,5,A,01/03/2010
-464,Maria Antonia,Hernandez,Leon,4,California,2,A,01/08/2013
-467,Petra,Hernandez,Rojas,4,Chiapas,6,A,01/09/2016
-469,Jose Manuel,Hernandez,Lopez,1,Calientes,3,B,01/12/2016
-470,Jose Manuel,Hernandez,Lopez,4,Carretera,21,A,01/12/2016
-472,Alejandra,Hernandez,Luna,3,Privada,2,B,01/06/2016
-473,Cirilo,Hernandez,Luna,2,Chilpancingo,2,A,01/12/2016
-474,Concepcion,Hernandez,Luna,2,Chilpancingo,3,A,01/08/2014
-476,Francisco,Hernandez,Luna,3,Nayarit,8,A,01/03/2017
-478,Jose Felipe,Hernandez,Luna,2,Chilpancingo,4,B,01/12/2015
-479,Jose Felix,Hernandez,Luna,1,Marzo,6,A,01/04/2015
-480,Juan,Hernandez,Luna,3,Teuzitlan,2,B,01/12/2016
-481,Margarita,Hernandez,Luna,2,Chilpancingo,5,A,01/12/2015
-482,Maximino,Hernandez,Luna,2,Chilpancingo,6,A,01/11/2016
-483,Omar,Hernandez,Luna,3,Nayarit,9,A,01/08/2012
-486,Roberto,Hernandez,Luna,2,Chilpancingo,7,A,01/12/2015
-487,Carlos,Hernandez,Maldonado,2,Taxco,1,A,01/12/2016
-488,Salvador,Hernandez,Maldonado,3,No100,1,A,01/03/2017
-493,Javier,Hernandez,Mendez,2,Monclova,10,A,01/06/2015
-494,Fidel,Hernandez,Meza,1,Marzo,7,A,01/03/2016
-495,Francisco,Hernandez,Meza,1,Marzo,8,A,01/12/2013
-496,Julio,Hernandez,Meza,1,Marzo,9,A,01/12/2015
-497,Martha,Hernandez,Montiel,4,Puente,1,A,01/05/2016
-498,Araceli,Hernandez,Morales,3,Iturbide,3,A,01/02/2015
-499,Cesar,Hernandez,Morales,3,Puebla,5,A,01/02/2017
-501,Marisol,Hernandez,Morales,3,Cadereita,3,A,01/12/2016
-503,Sonia,Hernandez,Morales,3,Cadereita,4,A,01/12/2016
-504,Ana Maria,Hernandez,Moya,1,No37,2,A,01/12/2015
-505,Guadalupe,Hernandez,Moya,1,No111,1,A,01/02/2013
-506,Alberto,Hernandez,Mozo,3,Jalisco,7,A,01/12/2016
-507,Alfonso,Hernandez,Mozo,3,Nuevo,3,A,01/04/2016
-508,Ana Karina,Hernandez,Mozo,1,No41,1,A,01/12/2013
-509,Isaac,Hernandez,Mozo,3,Febrero,2,A,01/01/2017
-511,Bernarda,Hernandez,Munguia,2,Chilpancingo,8,A,01/09/2016
-512,Martiniano,Hernandez,Munguia,2,Chilpancingo,9,B,01/01/2017
-513,Juana,Hernandez,Ordoñez,3,Morelos,3,A,01/12/2016
-514,Agustin,Hernandez,Ortega,3,Febrero,3,A,01/12/2016
-516,Jose Luis,Hernandez,Ortega,3,Febrero,4,A,01/06/2016
-517,Roberto Abel,Hernandez,Padilla,3,Mixcoahtecutli,31,A,01/12/2016
-519,Epifanio,Hernandez,Palafox,3,Iturbide,4,B,01/12/2017
-520,Jose Gumaro,Hernandez,Palafox,3,No48,1,A,01/12/2015
-521,Jose,Hernandez,Pedroza,4,Colima,2,B,01/10/2017
-522,Juan Manuel,Hernandez,Peralta,1,Aguascalientes,9,A,01/10/2015
-523,Ismael,Hernandez,Perez,1,Marzo,10,A,01/12/2017
-525,Fernando,Hernandez,Ramos,4,Colima,3,A,01/01/2016
-526,Veronica,Hernandez,Rivera,3,Teziutlan,8,A,01/12/2017
-528,Eduardo,Hernandez,Rodriguez,1,Marzo,11,B,01/12/2017
-530,Policarpo Martin,Hernandez,Rodriguez,1,Marzo,12,B,01/12/2017
-531,Cenobia,Hernandez,Rojas,4,Chiapas,7,A,01/12/2017
-532,Luis Gabriel,Hernandez,Romano,3,Tepetzingo,1,A,01/02/2017
-533,Angelina,Hernandez,Sanchez,1,Marzo,13,A,01/02/2017
-534,Angelita,Hernandez,Sanchez,1,Marzo,14,A,01/06/2013
-535,Benito,Hernandez,Sanchez,1,Marzo,15,A,01/12/2014
-537,Elvira,Luna,Suarez,2,Tixtla,1,A,01/12/2016
-538,Faustino,Hernandez,Sanchez,3,Revolucion,2,A,01/01/2017
-539,Filomeno,Hernandez,Sanchez,3,Citurbide,1,A,01/12/2013
-542,Mateo,Hernandez,Sanchez,3,Zapata,1,A,01/12/2015
-543,Roberto,Hernandez,Sanchez,4,29a,2,A,01/12/2017
-544,Diego,Hernandez,Solis,3,Acatlan,3,A,01/12/2017
-545,Adela y Marcelino,Hernandez,Sosa,2,Guanajuato,6,A,01/12/2017
-547,Hilario,Hernandez,Suarez,4,Chiapas,8,A,01/03/2016
-548,Jaime,Hernandez,Suarez,4,Colonia,1,A,01/05/2017
-549,Jose Fulgencio,Hernandez,Suarez,1,Carretera,22,A,01/06/2013
-550,Laurencio,Hernandez,Suarez,4,Mixcoahtecutli,32,A,01/12/2015
-551,Lazaro,Hernandez,Suarez,4,Loreto,4,A,01/12/2017
-552,Maria Angela,Hernandez,Suarez,1,Isidro,1,A,01/12/2015
-553,Maria Angela,Hernandez,Suarez,2,Mixcoahtecutli,33,C,01/12/2016
-554,Martina,Cortez,Ceron,1,Guanajuato,7,A,01/12/2017
-555,Arturo,Hernandez,Tellez,4,Vicente,14,A,01/12/2016
-556,Jose Matias,Hernandez,Tellez,1,Marzo,16,A,01/12/2016
-557,Jose Francisco,Hernandez,Torres,4,Tuxpan,1,A,01/03/2016
-558,Juan,Hernandez,Vargas,3,Noviembre,18,A,01/04/2014
-559,Enrique,Hernandez,Vazquez,3,Oaxaca,14,A,01/08/2016
-560,Jose Felipe,Hernandez,Vazquez,4,Paz,3,B,01/12/2017
-562,Jose Gaudencio,Hernandez,Vazquez,3,Teziutlan,9,A,01/12/2016
-563,Jose Gaudencio,Hernandez,Vazquez,3,Nuevo,4,A,01/01/2017
-564,Maria Elena,Hernandez,Vazquez,4,Paz,4,A,01/06/2017
-565,Martin,Hernandez,Vazquez,3,Oaxaca,15,A,01/10/2015
-566,Aurelia Mercedes,Hernandez,Vazquez,3,Nuevo,5,A,01/03/2017
-567,Oscar Alfonso,Hernandez,Vazquez,3,Esquina,1,A,01/02/2016
-568,Silverio,Hernandez,Vazquez,3,Nuevo,6,A,01/12/2015
-569,Bertha,Herrera,Flores,3,Jalisco,8,A,01/12/2016
-570,Miguel,Huerta,Davila,1,Malintzi,6,A,01/10/2016
-571,Moises,Huerta,Davila,2,Celaya,1,A,01/09/2013
-574,Cesareo,Huerta,Portillo,2,Carretera,23,A,01/06/2015
-576,Enrique,Huerta,Tellez,4,Veracruz,7,B,01/12/2017
-577,Maria Ernestina Lucina,Garcia,Garcia,2,Allende,3,A,01/08/2017
-578,Sergio Adrian,Huerta,Tellez,2,Allende,4,A,01/11/2017
-579,Joaquin,Huitzil,Chapul,1,Fraccion,1,A,01/03/2016
-580,Universal Sa De Cv,Jarr,Mm,3,Apizacotlaxco,2,C,01/12/2015
-581,Sa De Cv,Jihl,Prefabricados,3,Cadereita,5,D,01/03/2017
-582,Faustino,Jimenez,Beristain,3,Cadereita,6,A,01/03/2017
-583,Horacio,Jimenez,Beristain,3,Galeana,5,D,01/06/2016
-584,Pascual,Jimenez,Garcia,3,Oaxaca,16,A,01/11/2016
-585,Jose Leonardo Faustino,Jimenez,Huerta,3,Cadereita,7,A,01/03/2017
-586,Hilda,Jimenez,Huerta,1,Mixcoahtecutli,34,A,01/08/2015
-588,Maria Antonieta,Jose,Mayoral,1,Tlaxcala,15,A,01/03/2015
-589,Maria Leticia,Juarez,Torres,3,Teziutlan,10,A,01/03/2015
-590,Angelica Maria,Larios,Hernandez,4,Chabacanos,3,A,01/08/2013
-591,Eugenio,Leal,Carmona,3,Nayarit,10,A,01/05/2017
-594,Gil,Leal,Palestina,4,Sonora,3,A,01/10/2016
-595,Maria Paula Inocencia,Leal,Perez,3,Nayarit,11,A,01/12/2016
-596,Efrain,Leal,Perez,3,Nayarit,12,A,01/02/2016
-597,Saul,Leal,Perez,3,Nayarit,13,A,01/06/2016
-598,Teodulo,Lobato,Lopez,4,Jardines,5,B,01/12/2015
-599,Adrian,Lopez,Avendaño,3,Cholula,7,A,01/01/2016
-600,Joaquin,Lopez,Buendia,4,Jardines,6,A,01/10/2016
-601,Razo Luz Estela,Lopez,Del,4,Vicente,15,A,01/11/2016
-602,Amner Yovani,Lopez,Duran,2,Apizaco,4,A,01/01/2017
-603,Judith,Lopez,Fernandez,1,Tlaxcala,16,B,01/06/2017
-605,Jose,Lopez,Garcia,4,Cabos,1,A,01/03/2016
-606,Karina,Lopez,Garcia,1,Tlaxcala,17,A,01/12/2016
-607,Maria Martha,Lopez,Garcia,3,Cholula,8,A,01/06/2017
-609,Ismael,Lopez,Gonzalez,3,Quebradora,1,A,01/04/2015
-610,Evaristo,Lopez,Hernandez,3,Noviembre,19,A,01/12/2016
-611,Irma,Lopez,Huerta,3,Michoacan,8,A,01/12/2016
-613,Efrain,Lopez,Leal,3,Nayarit,14,A,01/03/2013
-614,Antonio,Lopez,Lozada,3,Huajuapan,1,A,01/12/2017
-615,Maria Cenobia,Lopez,Lozada,3,Galeana,6,A,01/12/2017
-616,Maria Cenobia,Lopez,Lozada,3,Michoacan,9,A,01/12/2017
-618,Marcelino,Lopez,Martinez,2,Carretera,24,A,01/09/2016
-620,Mauricio,Lopez,Mora,4,Chabacanos,4,A,01/06/2012
-621,Humberto,Lopez,Moreno,3,Oaxaca,17,A,01/10/2016
-622,Eleuterio Benjamin,Torres,Osornio,4,Chiapas,9,A,01/10/2015
-624,Constantina,Lopez,Moya,2,Carretera,25,A,01/11/2016
-625,Jokabed,Lopez,Moya,2,Laredo,1,A,01/04/2016
-628,Oscar,Lopez,Ortega,4,Loreto,5,A,01/09/2012
-629,Alberto,Lopez,Otero,4,Colima,4,A,01/01/2017
-631,Gudelio,Lopez,Sanchez,3,Acatlan,4,A,01/08/2016
-632,Onesimo,Lopez,Sanchez,4,Chiapas,10,A,01/12/2015
-633,Maria Felix,Luna,Alonso,3,Cholula,9,A,01/12/2017
-634,Domingo,Luna,Carmona,3,Noviembre,20,B,01/12/2017
-635,Mauro,Luna,Carmona,4,Matehuala,4,A,01/05/2016
-636,Domingo,Luna,Contreras,3,Noviembre,21,A,01/12/2017
-637,Juan,Luna,Contreras,3,Teuzitlan,3,A,01/11/2015
-638,Lucio,Luna,Contreras,3,Noviembre,22,A,01/08/2016
-639,Mariano,Luna,Gomez,4,Cabos,2,A,01/12/2016
-640,David,Luna,Hernandez,3,Morelia,3,A,01/03/2017
-641,Emilio,Luna,Hernandez,3,Noviembre,23,A,01/08/2017
-642,j Carmen,Luna,Hernandez,3,Noviembre,24,A,01/03/2017
-643,Juan,Hernandez,Luna,3,Nayarit,15,A,01/07/2015
-644,Maria Felix,Luna,Hernandez,2,Chilpanzingo,1,A,01/09/2016
-645,Maria Virginia Andrea,Luna,Hernandez,3,Oaxaca,18,A,01/12/2016
-646,Mariano,Luna,Hernandez,3,Noviembre,25,A,01/12/2015
-647,Mauro,Luna,Hernandez,2,Chilpancingo,10,A,01/12/2014
-648,Miguel,Luna,Hernandez,3,Noviembre,26,A,01/12/2016
-649,Remedios,Luna,Hernandez,2,Chilpancingo,11,A,01/06/2013
-650,Silvia,Luna,Hernandez,2,Chilpancingo,12,A,01/12/2015
-651,Jose,Luna,Leal,4,Matehuala,5,A,01/02/2017
-653,Ma Claudia Venedit,Zamora,Abelar,3,Calle,1,A,01/12/2016
-655,Marciano,Luna,Martinez,4,Esquina,2,A,01/04/2016
-656,Gustavo,Luna,Mendez,4,Constitucion,1,A,01/12/2016
-657,Emiliano,Luna,Montiel,3,Galeana,7,A,01/12/2017
-658,Jose Crisoforo,Luna,Montiel,3,Apizacotlaxco,3,A,01/12/2015
-659,Maria Felix,Luna,Montiel,3,Carretera,26,A,01/12/2015
-662,Jose Felix Manuel,Luna,Portillo,4,Mayo,1,A,01/12/2015
-664,Ana Maria,Luna,Romano,2,Ecatepec,1,A,01/12/2017
-665,Emiliano,Luna,Suarez,3,Noviembre,27,A,01/05/2017
-666,Estela,Luna,Suarez,3,Noviembre,28,A,01/12/2014
-667,Froilan,Luna,Suarez,2,No12,1,B,01/12/2013
-668,Maria Gilberta,Luna,Suarez,2,Chilpancingo,13,A,01/12/2017
-669,Eloy,Luna,Tovar,4,Mixcoahtecutli,35,A,01/12/2016
-670,Ignacia,Maldonado,Mendoza,3,No100,2,B,01/12/2016
-671,Sa De Cv,Maquilas,Santiago,3,Carretera,27,A,01/12/2016
-672,Heriberto,Marquez,Martinez,3,Jalisco,9,A,01/12/2016
-674,Roberto,Marquez,Sanchez,3,Piedad,1,A,01/04/2014
-675,Jose Antonio,Marquez,Vazquez,4,Chiapas,11,A,01/12/2014
-676,Francisco,Martinez,Lobato,3,Nayarit,16,A,01/02/2017
-677,Misael,Martinez,Fernandez,3,Quintanaroo,1,A,01/12/2016
-678,Arsenio,Martinez,Gomez,3,Nayarit,17,A,01/03/2017
-679,Bernardino,Martinez,Gomez,3,Nayarit,18,A,01/12/2017
-680,Ofelia Yazmin,Martinez,Granados,3,Nayarit,19,A,01/12/2015
-681,Victor,Martinez,Luna,3,Teuzitlan,4,A,01/12/2016
-684,Gloria,Medina,Alvarez,4,Carmona,1,A,01/03/2016
-685,Maricela,Medina,Alvarez,4,Loreto,6,A,01/12/2015
-686,Lorena,Mejia,Gutierrez,1,Mixcoahtecutli,36,A,01/12/2016
-687,Jose Eliuth,Mejia,Hernandez,1,Marzo,17,A,01/06/2014
-688,Jose Dario,Mejia,Hernandez,1,Mixcoahtecutli,37,A,01/12/2017
-690,Esteban,Mendez,Davila,1,Chihuahua,3,A,01/04/2013
-691,Felipe,Mendez,Hernandez,3,Nayarit,20,A,01/03/2017
-693,Maria De Jesus,Mendez,Torres,3,Cholula,10,A,01/07/2015
-694,j Felix,Mendez,Vazquez,4,Cabos,3,A,01/12/2016
-696,Virginia,Mendieta,Palafox,3,Iturbide,5,A,01/08/2017
-697,Teotila,Meneses,Lopez,2,Mixcoahtecutli,38,A,01/12/2017
-698,Roberto,Mercado,Martinez,3,Noviembre,29,A,01/12/2017
-699,Sira,Mohedano,Gomez,2,Ecatepec,2,A,01/12/2016
-702,Felix,Montiel,Davila,2,Saltillo,3,B,01/06/2016
-703,Francisco Javier,Montiel,Davila,4,Xalapa,3,A,01/03/2014
-704,Hassam Jesus,Montiel,Hernandez,4,Paz,5,A,01/06/2017
-705,Emilio,Montiel,Montiel,3,Galeana,8,B,01/06/2017
-707,Josefina,Morales,Cruz,4,Mixcoahtecutli,39,A,01/03/2017
-708,Alejandro,Morales,Guarneros,1,Csanta,1,A,01/12/2017
-709,Rodolfo,Morales,Montiel,4,Potosi,1,B,01/12/2016
-710,Daniela,Morales,Salado,3,Nayarit,21,A,01/08/2017
-711,Yanette,Morales,Salado,3,Nayarit,22,A,01/08/2015
-712,Maria Guadalupe,Morales,Tellez,4,No27,1,A,01/01/2012
-714,Isaac Ascencion,Moreno,Gonzalez,2,Pachuca,2,B,01/12/2017
-715,Melesio,Moreno,Gonzalez,2,Cpachuca,1,A,01/02/2017
-716,Melesio,Moreno,Gonzalez,3,Blas,5,B,01/04/2015
-718,Cecilia,Moreno,Suarez,2,Pachuca,3,A,01/08/2015
-719,Juana,Moreno,Suarez,2,Guanajuato,8,A,01/05/2016
-720,Lorena,Moreno,Suarez,2,Pachuca,4,A,01/12/2014
-721,Onesimo,Moreno,Suarez,2,Pachuca,5,A,01/03/2017
-722,Pedro,Moreno,Suarez,2,Pachuca,6,A,01/02/2017
-723,Jose Rigoberto,Mote,Ramirez,3,Carretera,28,A,01/10/2015
-724,Irma,Moya,Moreno,4,Mzna,1,A,01/01/2011
-728,Paciano,Moya,Sanchez,1,Xicohtencatl,5,A,01/12/2015
-729,Trinidad,Moya,Sanchez,4,Paz,6,A,01/12/2017
-730,Hilario,Mozo,Guarneros,3,Jalisco,10,A,01/12/2015
-732,Maria,Muñoz,Gomez,2,Guanajuato,9,A,01/01/2017
-733,Maria Teodora,Muñoz,Gomez,2,Guanajuato,10,A,01/03/2015
-734,Aristeo,Muñoz,Hernandez,2,Monclova,11,A,01/02/2016
-735,Cristina,Muñoz,Hernandez,2,Chilpancingo,14,M,01/12/2015
-736,Alejandro Yo Mh Constructora y Edificadora De Tlaxcala Sa De Cv a,Muñoz,Jimenez,1,Cacaxtla,4,C,01/12/2016
-737,Alejandro Yo Mh Constructora y Edificadora De Tlaxcala Sa De Cv b,Muñoz,Jimenez,1,Cacaxtla,5,C,01/12/2015
-738,Maria Del Carmen Clemencia,Muñoz,Molina,4,Mixcoahtecutli,40,B,01/06/2016
-739,Maria Francisca De Jesus,Muñoz,Portilla,3,Nayarit,23,A,01/04/2016
-740,Julia,Najera,Aguilar,2,Ciudad,2,B,01/09/2012
-741,Margarita,Najera,Gomez,3,Noviembre,30,A,01/02/2014
-742,Juan Manuel,Nava,Espinosa,4,Vicente,16,A,01/12/2015
-743,Evaristo,Nava,Montes,2,Carretera,29,A,01/03/2017
-744,Fidencio,Nava,Osorno,2,Durazno,1,A,01/06/2014
-745,Abraham,Nieto,Martinez,4,Mixcoahtecutli,41,A,01/04/2016
-746,Pablo,Noe,Salgado,4,Jardines,7,A,01/11/2014
-748,Carlos Gerardo,Olivares,Hernandez,1,Chihuahua,4,A,01/12/2013
-749,Angela,Olmos,Alcantar,1,Malintzi,7,A,01/12/2017
-750,Elodia,Ordoñez,Flores,3,Jalisco,11,A,01/03/2014
-751,Miguel,Ordoñez,Huerta,4,Chiapas,12,A,01/12/2017
-752,Eva,Ordoñez,Lopez,1,Cacaxtla,6,A,01/12/2014
-753,Fortino,Ordoñez,Lopez,3,Blas,6,A,01/06/2016
-754,Jaime,Ordoñez,Lopez,3,Zapata,2,A,01/12/2016
-755,Juan,Ordoñez,Lopez,3,Zapata,3,A,01/08/2016
-757,Leonor,Ordoñez,Padilla,4,Chiapas,13,A,01/12/2017
-758,Edilia,Ordoñez,Pedroza,4,Manzanillo,1,A,01/07/2011
-763,Dionicio,Ortega,Hernandez,2,No63,1,A,01/06/2012
-764,Jose Armando,Ortiz,Gonzalez,3,Nayarit,24,B,01/02/2017
-765,Maria Del Carmen,Ortiz,Martinez,4,Jardines,8,A,01/04/2014
-766,Ana Maria,Oseguera,Carmona,1,Tlaxcala,18,A,01/12/2015
-767,Ana Maria,Oseguera,Carmona,4,Matehuala,6,B,01/04/2016
-768,Moises Salvador,Oseguera,Carmona,2,Mixcoahtecutli,42,A,01/10/2016
-769,Maria Ignacia,Osorno,Dominguez,3,Cholula,11,A,01/06/2015
-770,Maria Guadalupe,Padilla,Acosta,3,Paz,7,A,01/12/2015
-772,Sergio,Padilla,Carmona,1,Ctlaxcala,1,A,01/10/2011
-773,Cristobal,Padilla,Cruz,3,Esquina,3,A,01/12/2016
-774,Edmundo,Padilla,Cruz,3,Nuevo,7,A,01/12/2016
-775,Marcos,Padilla,Cruz,3,Apizaco,5,A,01/12/2016
-776,Maria Catalina,Padilla,Cruz,3,Nuevo,8,A,01/04/2014
-778,Jorge,Padilla,Garcia,3,Carretera,30,A,01/12/2016
-779,Demetrio,Padilla,Moya,1,Tlaxcala,19,A,01/01/2017
-780,Graciela,Padilla,Moya,1,Tlaxcala,20,A,01/03/2016
-781,Martin,Padilla,Moya,1,Tlaxcala,21,A,01/12/2016
-783,Jose Antonio,Padilla,Olivares,1,Tlaxcala,22,A,01/12/2017
-784,Osvaldo Enrique,Padilla,Olivares,3,Cteziutlan,2,A,01/03/2017
-785,Jose Juan,Palafox,Aguirre,3,Apodaca,1,A,01/10/2016
-787,Jose Santos,Palafox,Aguirre,3,Apodaca,2,A,01/10/2016
-788,Maria Felix,Palafox,Aguirre,3,Apodaca,3,A,01/12/2016
-789,Maria Luisa,Palafox,Fernandez,3,Cadereyta,1,A,01/07/2013
-791,Alejandro,Palafox,Luna,3,Noviembre,31,A,01/09/2016
-792,Dionisio,Palafox,Luna,3,Noviembre,32,B,01/04/2012
-794,Concepcion,Palafox,Morales,2,Guanajuato,11,A,01/12/2017
-795,Cipriano,Palafox,Moreno,3,Quintanaroo,2,A,01/12/2017
-796,Guadalupe,Palafox,Pedroza,3,Aldama,1,B,01/12/2010
-798,Ricardo,Palestina,Hernandez,4,Veracruz,8,A,01/03/2016
-799,Angel,Papalotzi,Carmona,3,Puebla,6,A,01/12/2012
-800,Karen,Paredes,Cortez,2,Chilpancingo,15,A,01/12/2016
-801,Maria Isabel,Pasten,Hernandez,4,Vicente,17,A,01/07/2016
-802,Guadalupe Del Rocio,Pedraza,Carmona,2,Mixcoahtecutli,43,C,01/03/2015
-803,Liborio,Pedraza,Carmona,2,Guanacevi,6,A,01/12/2017
-804,Maria Ocotlan,Pedraza,Carmona,2,Coahuila,2,B,01/12/2017
-805,Daniel Ivan,Palafox,Pedroza,3,Aldama,2,A,01/12/2017
-806,Benjamin,Pedraza,Davila,2,Guanacevi,7,B,01/12/2017
-807,Jose Carmen,Pedraza,Davila,1,Mixcoahtecutli,44,C,01/12/2016
-808,Jessenia,Pedraza,Franco,3,Noviembre,33,A,01/09/2013
-809,Adrian,Pedraza,Hernandez,2,Guanacevi,8,A,01/12/2016
-810,Bernardo,Pedraza,Hernandez,2,Coahuila,3,A,01/12/2017
-811,Delfino,Pedraza,Hernandez,2,Mixcoahtecutli,45,B,01/12/2017
-812,Edilberto,Pedraza,Hernandez,2,Coahuila,4,A,01/12/2016
-813,Guillermo,Pedraza,Hernandez,2,Mixcoahtecutli,46,A,01/12/2017
-815,Jose Guillermo,Pedraza,Hernandez,2,Guanacevi,9,A,01/12/2017
-816,Jose Ladislao,Pedraza,Hernandez,2,Guanacevi,10,A,01/12/2017
-817,Ma De Los Angeles,Pedraza,Hernandez,2,Guanacevi,11,A,01/12/2017
-818,Enrique,Pedraza,Luna,4,Jardines,9,A,01/08/2014
-820,Maria Josefa Evangelina,Pedroza,Romero,1,Tlaxcala,23,A,01/07/2017
-823,Arturo,Pedroza,Davila,3,Aldama,3,M,01/12/2016
-825,Felix,Pedroza,Davila,3,Monterrey,2,B,01/12/2016
-827,Amalia,Pedroza,Gonzalez,4,Chiapas,14,A,01/08/2013
-828,Maria De Los Angeles,Pedroza,Hernandez,4,Manzanillo,2,A,01/04/2016
-829,Cecilia,Lopez,Carmona,3,Tepeaca,4,A,01/06/2016
-830,Alejandra,Pedroza,Montalvo,4,Chimalpa,2,A,01/01/2017
-831,Celestino,Pedroza,Montalvo,4,Manzanillo,3,A,01/01/2017
-832,Gaspar,Pedroza,Montalvo,4,Colima,5,A,01/04/2016
-833,Javier,Pedroza,Montalvo,4,Manzanillo,4,A,01/12/2016
-834,Nancy,Pedroza,Montalvo,4,Tabasco,1,A,01/06/2016
-836,Concepcion,Pedroza,Montiel,1,Mixcoahtecutli,47,A,01/02/2016
-838,Jose,Pedroza,Montiel,1,California,3,A,01/12/2016
-839,Melquiades,Pedroza,Montiel,1,California,4,A,01/12/2016
-840,Delfino,Pedroza,Ramirez,3,Apizaco,6,A,01/12/2016
-841,Luz Adriana,Pedroza,Ramirez,4,Talacheria,1,B,01/09/2014
-842,Francisco,Pelaes,Cruz,1,Lote,1,A,01/12/2013
-844,Adan,Perez,Bonilla,2,Monclova,12,A,01/02/2017
-845,Evodia Julieta,Perez,Escamilla,3,Nayarit,25,A,01/02/2017
-846,Daniel,Perez,Galicia,4,Mixcoahtecutli,48,C,01/06/2013
-848,Joel,Perez,Galicia,3,Nayarit,26,A,01/05/2016
-849,Josue Marcial,Perez,Galicia,4,Mixcoahtecutli,49,A,01/12/2014
-850,Obed,Perez,Galicia,3,Michoacan,10,A,01/06/2017
-853,Nery,Perez,Memije,3,Mixcoahtecutli,50,A,01/12/2014
-854,Maria De Los Angeles,Perez,Montaño,4,Jardines,10,A,01/08/2013
-857,Maria Carmen,Perez,Silva,1,Malintzi,8,A,01/12/2014
-859,Flora,Periañez,Ramirez,4,Chabacanos,5,A,01/03/2016
-860,Fortino,Platani,Angoa,3,Teziutlan,11,A,01/12/2016
-861,Victoria,Portilla,Lopez,3,Michoacan,11,A,01/12/2016
-862,Ignacio,Portillo,Acosta,2,Laredo,2,A,01/01/2016
-863,Paola,Portillo,Acosta,2,Apizaco,7,A,01/02/2016
-864,Alejandra,Portillo,Hernandez,2,Mapini,1,A,01/01/2012
-865,Erick,Portillo,Hernandez,2,Laredo,3,A,01/04/2015
-866,Juana,Portillo,Hernandez,2,Mapimi,3,A,01/02/2017
-867,Herminio,Portillo,Luna,2,Mapimi,4,A,01/12/2017
-868,Jacobo,Portillo,Luna,2,Francisco,1,A,01/10/2016
-869,Jose Maria,Portillo,Luna,2,Mapini,2,A,01/04/2013
-870,Marcos,Portillo,Luna,2,Laredo,4,A,01/02/2017
-871,Julio Cesar,Portillo,Moreno,2,Mapimi,5,A,01/08/2012
-872,Julieta,Portillo,Mota,2,Mapini,3,A,01/04/2015
-873,Sergio Cesar,Portillo,Palafox,4,Potosi,2,A,01/12/2017
-875,Ponciano,Pozos,Fernandez,4,Chiapas,15,A,01/02/2015
-876,Marcelina,Pozos,Gomez,4,Loreto,7,A,01/12/2015
-878,Apolinar,Quintero,Torres,4,Tuxpan,2,A,01/04/2016
-879,Silvano Eligio,Degante,Cardenas,1,Paseos,1,A,01/12/2015
-880,Maria Leticia,Quintero,Torres,4,Tuxpan,3,A,01/12/2016
-881,Juan Carlos,Quiroz,Cardenas,1,Aguascalientes,10,A,01/10/2016
-884,Maria Paula,Ramirez,Cortes,3,Noviembre,34,A,01/06/2016
-885,Martha,Ramirez,Escamilla,1,Cacaxtla,7,M,01/03/2013
-886,Felipe,Ramirez,Flores,4,Manzanillo,5,A,01/08/2016
-887,Alejandro,Ramirez,Gutierrez,4,Vicente,18,A,01/07/1905
-888,Marcela,Pedroza,Ramirez,3,Monterrey,3,A,01/12/2017
-889,Dominga,Ramirez,Gutierrez,4,Vicente,19,A,01/07/2016
-890,Martin,Ramirez,Gutierrez,4,Vicente,20,A,01/01/2017
-891,Ramon,Ramirez,Gutierrez,3,Apizaco,8,M,01/02/2012
-892,Silvestre,Ramirez,Gutierrez,4,Vicente,21,A,01/12/2016
-894,Eloy,Ramirez,Hernandez,4,Veracruz,9,A,01/12/2014
-895,Evaristo,Ramirez,Hernandez,4,Veracruz,10,B,01/12/2016
-897,Procora,Ramirez,Hernandez,3,Zitacuaro,1,A,01/01/2017
-898,Carolina,Ramirez,Martinez,2,Carretera,31,C,01/05/2016
-899,Marco Antonio,Ramirez,Montana,1,Malintzi,9,A,01/06/2015
-900,Ernesto,Ramirez,Pedroza,4,Manzanillo,6,A,01/09/2013
-901,Manuel Alejandro,Ramirez,Pedroza,4,Manzanillo,7,A,01/11/2011
-906,Carmen,Ramirez,Toriz,4,Veracruz,11,A,01/01/2017
-907,Enrique,Ramirez,Toriz,3,Huajuapan,2,A,01/12/2016
-908,Gregoria,Ramos,Hernandez,1,Cacaxtla,8,B,01/01/2016
-910,Juan,Rangel,Nava,3,Noviembre,35,B,01/06/2016
-911,Gregorio,Rangel,Suarez,3,Noviembre,36,A,01/10/2016
-912,Maria Felix,Reyes,Reyes,1,Malintzi,10,A,01/12/2016
-916,Jessica,Rivera,Hernandez,3,Privada,3,A,01/12/2016
-917,Teresa Angelica,Rivera,Huerta,1,Tlahuicole,3,A,01/12/2016
-918,Ramon,Rivera,Marquez,4,California,5,A,01/12/2016
-919,Marcos,Rivera,Mote,4,Vicente,22,A,01/01/2014
-921,Enrique,Robles,Cruz,3,No54,2,A,01/12/2014
-923,Margarita,Rodriguez,Flores,1,Cacaxtla,9,A,01/04/2016
-924,Jose Manuel,Rodriguez,Garrido,2,Parras,3,A,01/12/2016
-926,Juan,Rodriguez,Lopez,3,Iturbide,6,A,01/12/2017
-928,Juana,Rodriguez,Monjaraz,4,Chiapas,16,A,01/06/2015
-930,Sara,Rodriguez,Trujillo,4,Veracruz,12,A,01/12/2014
-931,Jose Arnulfo,Rojas,Hernandez,1,Cchihuahua,1,A,01/07/2012
-932,Jose Luis,Roman,Torres,2,Monclova,13,A,01/07/2015
-935,Maria Gloria,Romano,Hernandez,3,Tepetzingo,2,A,01/01/2017
-936,Maria Joaquina,Romano,Hernandez,3,Temixco,1,A,01/07/2016
-940,Jose Raymundo Miguel,Romero,Salazar,4,Tlahuicole,4,A,01/12/2017
-941,Jose Raymundo Miguel,Romero,Salazar,1,Loreto,8,A,01/12/2017
-942,Juan Miguel,Rosales,Perez,4,Vicente,23,C,01/09/2015
-943,Eloy,Rosas,Valdivia,3,Jalisco,12,A,01/12/2015
-944,Victoriana,Ruiz,Lopez,1,Xicohtencatl,6,B,01/12/2016
-945,Victor Manuel,Sabbagh,Garcia,3,Apizaco,9,A,01/06/2017
-946,Victor Manuel,Sabbagh,Garcia,3,Noviembre,37,A,01/06/2017
-948,Eugenia Del Carmen,Sabbagh,Lozano,3,Apatzingan,1,A,01/03/2016
-949,Marcos Antonio,Salado,Rios,3,Morelos,4,A,01/06/2016
-950,Jose Pablo,Salcedo,Landa,4,Sonora,4,A,01/01/2017
-951,Edilberto,Saldaña,Davila,3,Teziutlan,12,A,01/04/2017
-952,Gaudencio,Saldaña,Davila,3,Teziutlan,13,A,01/08/2014
-953,Jose Cruz,Saldaña,Davila,3,Tehuacan,2,A,01/12/2016
-954,Maria Eugenia,Saldaña,Davila,3,Ctehuacan,1,A,01/09/2012
-956,Silverio,Saldaña,Davila,3,Quebradora,2,A,01/01/2017
-957,Jose Luis,Saldaña,Hernandez,3,Teziutlan,14,A,01/04/2016
-958,Moises,Saldaña,Luna,3,Tehuacan,3,A,01/01/2017
-959,Alejandro,Saldaña,Padilla,3,Tehuacan,4,A,01/12/2015
-961,Victorino,Saldaña,Padilla,3,Nayarit,27,A,01/12/2015
-965,Jesus,Sanchez,Cervantes,3,Galena,1,B,01/05/2013
-966,Jesus Demetrio,Sanchez,Cervantes,3,Galeana,9,A,01/12/2017
-967,Maura,Sanchez,Chiman,4,Mixcoahtecutli,51,A,01/12/2016
-968,Felix,Sanchez,Cruz,3,Michoacan,12,A,01/12/2016
-969,Demetrio,Sanchez,Degante,2,No8,1,A,01/04/2014
-970,Maria,Sanchez,Espinoza,3,Nayarit,28,A,01/04/2015
-971,Heber David,Sanchez,Gonzalez,3,Cmixcoahtecutli,3,A,01/02/2012
-972,Jose Adolfo,Sanchez,Hernandez,1,Tlaxcala,24,A,01/12/2012
-974,Mateo,Sanchez,Hernandez,3,No18,1,A,01/12/2011
-976,Paulino,Sanchez,Mendez,3,Cholula,12,A,01/08/2015
-977,Angelica,Sanchez,Muñoz,2,Camino,1,A,01/11/2013
-978,Marcela,Sanchez,Pozos,4,Carretera,32,A,01/12/2015
-979,Vidal Juan,Sanchez,Rivera,4,Carretera,33,C,01/09/2014
-980,Leopoldo,Sanchez,Seseña,3,Cholula,13,A,01/10/2015
-981,Veronica,Sandoval,Jimenez,4,Jardines,11,A,01/10/2011
-982,Noemi,Sandoval,Ordoñez,2,Acuña,1,A,01/12/2015
-984,Edmundo,Santana,Moreno,4,No28,2,A,01/12/2011
-985,Eduardo,Santana,Moreno,4,No28,3,A,01/03/2012
-986,Francisco,Segundo,Perez,3,Puebla,7,A,01/02/2017
-987,Teresa Magdalena,Silva,Olguin,4,Loreto,9,A,01/12/2014
-988,Teresa Magdalena,Silva,Olguin,1,Mixcoahtecutli,52,A,01/12/2015
-989,Benjamin,Sosa,Vazquez,3,Guadalajara,2,A,01/01/2017
-990,Luis Alberto,Suarez,Acosta,4,Xalapa,4,A,01/07/2014
-993,Crisanto,Suarez,Cadena,2,Pachuca,7,A,01/04/2015
-994,Jesus Gabriel,Suarez,Cossio,1,Tlaxcala,25,A,01/12/2013
-995,Monica,Suarez,Cruz,3,Nayarit,29,A,01/08/2012
-996,Jose Felix Edmundo,Suarez,Davila,2,Guanajuato,12,A,01/12/2016
-997,Aaron,Suarez,Dorantes,3,Morelia,4,B,01/12/2016
-998,Efren,Suarez,Dorantes,3,Mixcoahtecutli,53,B,01/05/2013
-999,Efren,Suarez,Dorantes,3,Mixcoahtecutli,54,A,01/04/2014
-1000,Jose,Suarez,Dorantes,4,Vicente,24,B,01/12/2017
-1002,Noe,Suarez,Dorantes,4,Vicente,25,A,01/06/2016
-1004,Juan,Suarez,Fernandez,4,Vicente,26,A,01/06/2015
-1006,Felipe,Suarez,Fuentes,3,Morelia,5,A,01/12/2016
-1007,Felipe,Suarez,Garcia,4,Vicente,27,A,01/12/2016
-1009,Jose Joel,Suarez,Garcia,3,Morelia,6,A,01/12/2016
-1010,Miguel Angel,Suarez,Garcia,3,Oriental,1,A,01/12/2012
-1011,Domingo,Suarez,Gonzalez,2,Camino,2,A,01/04/2015
-1012,Luis Humberto,Suarez,Sanchez,4,Mixcoahtecutli,55,A,01/12/2016
-1014,Jose Carlos,Suarez,Gutierrez,4,Veracruz,13,A,01/08/2016
-1015,Abel,Suarez,Hernandez,3,Oriental,2,B,01/12/2015
-1016,Agustin,Suarez,Hernandez,4,Vicente,28,A,01/03/2016
-1017,Alejandro Jonathan,Suarez,Hernandez,1,Calientes,4,A,01/09/2015
-1018,Efren,Suarez,Hernandez,3,Mixcoahtecutli,56,A,01/10/2014
-1019,Evaristo,Suarez,Hernandez,1,Mixcoahtecutli,57,A,01/06/2016
-1021,Jose Esteban,Suarez,Hernandez,3,Morelos,5,B,01/12/2015
-1022,Jose Guadalupe,Suarez,Hernandez,1,Mixcoahtecutli,58,A,01/04/2017
-1023,Juan,Suarez,Hernandez,1,Mixcoahtecutli,59,A,01/04/2017
-1024,Maura,Suarez,Hernandez,3,No100,3,A,01/02/2012
-1025,Crispin Sabas,Suarez,Hernandez,3,Mixcoahtecutli,60,A,01/10/2016
-1026,Vicente,Suarez,Hernandez,3,Mixcoahtecutli,61,A,01/09/2009
-1028,Maria Adelaida,Suarez,Macias,3,Noviembre,38,B,01/12/2015
-1029,Lazaro,Suarez,Mendez,3,No63,2,A,01/12/2012
-1030,Santiago,Suarez,Mendez,3,Nayarit,30,A,01/12/2016
-1031,Angel,Suarez,Moreno,3,Oriental,3,A,01/06/2013
-1032,Aristeo,Suarez,Moreno,3,Oriental,4,A,01/12/2014
-1033,German,Suarez,Moreno,3,Oriental,5,A,01/03/2016
-1035,Gregoria,Suarez,Moreno,3,Oriental,6,A,01/12/2015
-1036,Sergio,Suarez,Moreno,3,Oriental,7,A,01/10/2013
-1037,Josefina,Suarez,Padilla,3,Jalisco,13,A,01/11/2015
-1038,Victor Abraham,Suarez,Pedraza,4,Carretera,34,A,01/12/2016
-1039,Adelita,Suarez,Reyes,3,Oaxaca,19,A,01/01/2017
-1040,Irma,Suarez,Reyes,3,Piedad,2,A,01/05/2014
-1041,Jose Juan,Suarez,Reyes,4,Veracruz,14,A,01/12/2016
-1042,Juan Antonio,Suarez,Reyes,3,Puebla,8,A,01/03/2016
-1043,Ricardo,Suarez,Reyes,4,Veracruz,15,A,01/12/2014
-1044,Blanca Estela,Suarez,Rodeo,2,Pachuca,8,A,01/10/2016
-1045,Margarito,Suarez,Sanchez,1,Cacaxtla,10,A,01/12/2016
-1046,Eulalia,Suarez,Suarez,3,Carretera,35,A,01/12/2017
-1047,Irene,Suarez,Suarez,1,Malintzi,11,A,01/06/2016
-1048,Francisca,Luna,Hernandez,3,Carretera,36,A,01/02/2017
-1049,Jose Justino,Suarez,Tellez,2,Mixcoahtecutli,62,A,01/03/2017
-1051,Juan,Suarez,Vazquez,1,Mixcoahtecutli,63,A,01/08/2016
-1052,Santos Floriberto,Suarez,Vazquez,1,Mixcoahtecutli,64,A,01/12/2014
-1053,Jose Jorge,Tapia,Huerta,4,Veracruz,16,A,01/12/2016
-1054,Oscar,Tapia,Luna,3,Carretera,37,C,01/12/2017
-1055,Oscar,Tapia,Luna,4,Vicente,29,C,01/12/2017
-1056,Guadalupe,Tapia,Vazquez,3,Oaxaca,20,A,01/07/2015
-1057,Marco Antonio,Tellez,Briones,2,Durango,3,A,01/12/2013
-1058,Tellez,Florencia,,3,Pazcuaro,1,B,01/12/2016
-1059,Alfreda Benita,Tellez,Hernandez,4,Potosi,3,A,01/12/2015
-1060,Juventino,Tellez,Hernandez,2,Durango,4,A,01/12/2016
-1062,Saul,Torres,Palafox,3,No27,2,A,01/08/2013
-1063,Bartolome,Tellez,Pedraza,4,Potosi,4,A,01/01/2014
-1064,Federico,Tellez,Pedraza,4,Potosi,5,A,01/12/2016
-1065,Rosendo,Tellez,Pedraza,4,Potosi,6,A,01/01/2017
-1066,Litman Gabino,Tellez,Penagos,2,Dolores,1,A,01/07/2016
-1067,Lilia,Tellez,Penagos,2,Guanajuato,13,A,01/06/2016
-1068,Francisca,Tellez,Portillo,2,Ciudad,3,B,01/01/2017
-1069,Francisca,Tellez,Pozos,4,Potosi,7,A,01/06/2016
-1070,Carlos,Tellez,Roldan,4,Potosi,8,A,01/04/2013
-1071,Fernando,Tellez,Valderrabano,4,Potosi,9,A,01/09/2014
-1072,Bardomiano,Tellez,Vazquez,1,Parral,2,A,01/12/2016
-1074,Epifanio,Torres,Fernandez,3,Mixcoahtecutli,65,A,01/12/2016
-1075,Guadalupe,Torres,Fernandez,4,Tuxpan,4,A,01/12/2017
-1076,Lucia,Torres,Fernandez,4,Tuxpan,5,B,01/03/2010
-1077,Espiridion,Torres,Hernandez,4,Chiapas,17,A,01/02/2013
-1078,Francisco,Torres,Hernandez,4,Chiapas,18,A,01/12/2016
-1079,Josefina,Torres,Palafox,3,Nayarit,31,A,01/05/2012
-1080,Saul,Torres,Palafox,3,Nayarit,32,A,01/08/2016
-1081,Genoveva,Torres,Rocha,4,Apizacotlaxco,4,A,01/06/2015
-1082,Maria De Los Angeles,Trejo,Hernandez,3,Febrero,5,A,01/12/2016
-1084,Fernando,Trejo,Tellez,4,Puebla,9,A,01/12/2012
-1085,Maria Concepcion,Trujillo,Silva,3,Morelos,6,B,01/12/2016
-1088,Maximina,Valderrabano,Fernandez,4,Vicente,30,C,01/08/2014
-1089,Cosme,Vargas,Avila,1,Tlahuicole,5,A,01/10/2015
-1091,Esteban,Suarez,Acosta,4,Xalapa,5,A,01/06/2016
-1092,Agustin,Vargas,Solis,4,Morelia,7,A,01/01/2017
-1096,Jose Francisco,Vazquez,Hernandez,4,Servidumbre,1,A,01/10/2015
-1097,Raul,Vazquez,Lozano,2,Guanajuato,14,A,01/05/2016
-1098,Maricela,Vazquez,Malpica,3,Diagonal,2,A,01/10/2016
-1099,Alberto,Vazquez,Mendoza,1,Cmixcoahtecutli,4,A,01/12/2012
-1100,Julio,Vazquez,Ramirez,4,Matehuala,7,A,01/12/2013
-1101,Enrique,Vazquez,Rivera,3,Acatlan,5,A,01/06/2015
-1102,Dulce Maria,Vazquez,Suarez,3,Oaxaca,21,A,01/04/2015
-1103,Jose Bonifacio,Vazquez,Suarez,1,Oaxaca,22,B,01/06/2014
-1104,Jose Julio,Vazquez,Suarez,3,Oaxaca,23,A,01/04/2015
-1105,Viridiana,Vazquez,Suarez,3,Nayarit,33,B,01/11/2013
-1106,Jose Ventura,Velazquez,Gracia,3,Puebla,10,A,01/12/2017
-1108,Maria Del Pilar,Vidal,Herrera,3,Galena,2,A,01/01/2016
-1109,Benita,Villalobos,Garcia,3,Noviembre,39,A,01/09/2016
-1110,Jorge,Villanueva,Rodriguez,4,Matehuala,8,A,01/12/2017
-1111,Raymundo,Vite,Guerrero,4,Sonora,5,A,01/03/2016
-1112,Mateo,Zamora,Avila,2,Francisco,2,A,01/05/2016
-1113,Manuel,Zamora,Diaz,3,Nuevo,9,A,01/12/2016
-1114,Margarito,Zamora,Portillo,2,Mapini,4,A,01/04/2016
-1115,Maria Marina,Zamora,Portillo,2,Mapimi,6,B,01/12/2016
-1116,Maria Sandra,Zamora,Portillo,2,Francisco,3,A,01/09/2016
-1117,Rosendo,Baez,Piedras,3,Texmelucan,3,A,01/04/2013
-1118,Macbeth Leonardo,Aguilar,Cruz,2,Guanajuato,15,A,01/12/2017
-1119,Rocio,Hernandez,Peralta,1,Aguascalientes,11,A,01/08/2016
-1120,Ma Elena,Reyes,Contreras,3,Puebla,11,A,01/12/2015
-1121,Juan Carlos,Sanchez,Romero,3,Nayarit,34,A,01/06/2015
-1122,Quirino,Parada,Hernandez,4,Sonora,6,B,01/12/2016
-1123,Hugo,Romero,Moya,4,Paz,8,A,01/05/2017
-1126,Mariano,Gonzalez,Hernandez,2,Mixcoahtecutli,66,A,01/04/2017
-1127,Leticia,Ramirez,Tellez,4,Progreso,1,B,01/10/2015
-1128,Elia,Hernandez,Peralta,1,Aguascalientes,12,A,01/02/2016
-1129,Yesenia Mayte,Lopez,Castillo,4,California,6,A,01/12/2016
-1130,Miguel Angel,Hernandez,Morales,4,Potosi,10,A,01/12/2017
-1131,Marco Antonio,Trejo,Hernandez,3,Priv,2,A,01/07/2012
-1132,Pedro,Nava,Leon,4,Vicente,31,A,01/09/2016
-1134,Daisy,Mendoza,Alvarado,4,Mixcoahtecutli,67,A,01/03/2014
-1135,Benito,Hernandez,Fernandez,1,Chihuahua,5,B,01/12/2014
-1136,Silvia,Flores,Hernandez,3,Puebla,12,A,01/12/2016
-1137,Maricela,Cano,Leal,3,Morelos,7,A,01/10/2016
-1138,Ana Maria,Oseguera,Carmona,4,Matehuala,9,A,01/07/2016
-1139,Gabino,Sanchez,Arroyo,3,Nuevo,10,A,01/12/2016
-1140,Juan,Hernandez,Luna,3,Loma,1,A,01/12/2016
-1141,Eder,Vazquez,Zavala,1,Xicohtencatl,7,A,01/12/2016
-1142,Juana,Hernandez,Ordoñez,2,Mixcoahtecutli,68,A,01/12/2014
-1143,Neftali,Hernandez,Duran,4,Loreto,10,A,01/12/2017
-1144,Lazaro,Hernandez,Duran,4,Loreto,11,A,01/12/2017
-1145,Marco Antonio,Hernandez,Carrasco,3,Zacatlan,1,A,01/12/2016
-1146,Carlos,Barrios,Rodriguez,3,Michoacan,13,A,01/06/2015
-1147,David,Luna,Mendez,4,Vicente,32,A,01/06/2006
-1148,Adela,Sanchez,Cruz,4,Veracruz,17,A,01/02/2017
-1149,Pedroza David,Del,Razo,4,Mixcoahtecutli,69,C,01/12/2016
-1150,Juan Alberto,Hernandez,Ramirez,4,Vicente,33,C,01/12/2017
-1151,Maria Guadalupe,Vargas,Carmona,4,Mixcoahtecutli,70,A,01/09/2016
-1152,Juana,Ramirez,Gutierrez,3,Mixcoahtecutli,71,C,01/11/2016
-1153,Ciri,Hernandez,Morales,3,Puebla,13,A,01/07/2016
-1154,Yazmin,Delgado,Padilla,4,Duraznos,2,A,01/03/2016
-1155,Eleuteria,Pedraza,Carmona,3,Revolucio,1,A,01/12/2016
-1156,Fernando,Trejo,Telles,4,Matehuala,10,A,01/05/2014
-1157,Monserrat,Mendoza,Calatayud,4,Vicente,34,C,01/12/2017
-1158,Rafael,Ruiz,Avendaño,4,Vicente,35,A,01/04/2017
-1159,Ana Maria,Oseguera,Carmona,3,Teuzitlan,5,A,01/02/2012
-1160,Luz Maria,Luna,Mendez,4,Mixcoahtecutli,72,A,01/11/2017
-1161,Angel,Rivera,Rivera,3,Teziutlan,15,A,01/12/2017
-1162,Obed,Perez,Galicia,1,No69,1,A,01/12/2016
-1165,Gerardo,Sanchez,Davila,4,Tlaxco,1,A,01/03/2017
-1166,Jose Francisco Pablo,Garcia,Perez,3,Nuevo,11,B,01/06/2016
-1169,Javier,Moreno,Sosa,3,Tepic,2,A,01/02/2017
-1170,Cecilia,Hernandez,Luna,3,Nayarit,35,A,01/03/2017
-1171,Carmona,Meliton,Martinez,3,Nayarit,36,B,01/04/2017
-1174,Fermin Antonio,Bonilla,De,4,Duraznos,3,A,01/02/2017
-1177,Francisca,Davila,Hernandez,3,Cmichoacan,1,A,01/03/2017
-1178,Isaac Isidro,Moreno,Moreno,3,Carnaval,1,A,01/12/2016
+﻿Id,Nombre,Paterno,Materno,Seccion,Calle,Numero,Contrato,PagadoHasta,UltimoPago
+1,Juan,Abasolo,Amador,4,Mixcoahtecutli,1,A,01/04/2015,31/05/2015
+4,Roberto,Acosta,Rodriguez,4,Mixcoahtecutli,2,A,01/09/2016,16/05/2017
+7,Alejandro,Agapito,Hernandez,3,Teziutlan,1,A,01/05/2017,22/05/2017
+8,Roman,Agapito,Mendez,4,Luis,1,A,01/07/2017,04/09/2017
+11,Josue,Alcantara,Blancas,1,Xicohtencatl,1,A,01/09/2014,18/06/2017
+12,Pablo,Alcantara,Perez,1,Xicohtencatl,2,B,01/10/2017,07/09/2017
+14,Alfonso Alberto,Alvarado,Leal,3,Noviembre,1,A,01/10/2016,18/02/2017
+17,Hector,Armenta,Hernandez,3,Tepic,1,A,01/06/2016,26/06/2016
+18,Pedro,Armenta,Trujillo,3,Morelos,1,A,01/07/2017,14/06/2017
+21,Maribel,Badillo,Carrasco,2,Monclova,1,A,01/08/2017,01/10/2017
+22,Francisco,Badillo,Espejel,2,Allende,1,A,01/09/2017,12/09/2017
+23,Guillermo,Badillo,Espejel,2,Monclova,2,A,01/09/2017,12/09/2017
+24,Guillermo,Badillo,Maldonado,2,Monclova,3,A,01/06/2012,02/02/2014
+25,Jesucita,Baez,Davila,3,Michoacan,1,B,01/12/2017,19/03/2017
+28,Jeronimo,Baez,Hernandez,4,Mixcoahtecutli,3,A,01/02/2016,10/02/2017
+29,Luciano,Baez,Hernandez,4,Mixcoahtecutli,4,A,01/06/2015,20/09/2015
+30,Maria Jovita,Baez,Hernandez,4,Mixcoahtecutli,5,A,01/05/2017,22/07/2017
+31,Victor,Baez,Hernandez,4,Mixcoahtecutli,6,A,01/11/2016,22/05/2016
+33,Maribel,Valles,Montalvo,3,Principal,1,A,01/12/2017,11/09/2017
+36,Lourdes,Barrera,Hernandez,3,Acatlan,1,A,01/04/2014,06/09/2015
+46,Arnulfo,Bravo,Modesto,4,Nayarit,1,A,01/06/2017,26/09/2017
+47,Alicia,Briones,Gonzalez,4,Chiapas,1,A,01/12/2014,08/10/2016
+48,Josafat,Briones,Huerta,4,Guatemala,1,A,01/06/2017,06/06/2017
+52,Erika Gabriela,Cabrera,Monter,4,Jardines,1,A,01/06/2013,01/09/2013
+53,Sergio,Cabrera,Tellez,2,Monclova,4,A,01/06/2017,25/06/2017
+55,Lourdes,Calatayud,Garcia,4,Vicente,1,C,01/09/2016,02/10/2016
+57,Elias,Cano,Morales,3,Morelos,2,A,01/09/2017,01/10/2017
+59,Eduardo,Carmona,Carmona,4,Jardines,2,A,01/12/2008,22/02/2012
+61,Luisa,Carmona,Carmona,3,Michoacan,2,A,01/03/2015,11/10/2015
+62,Olivia,Carmona,Carmona,3,Teziutlan,2,A,01/10/2013,21/02/2016
+66,Dulce Janeth,Carmona,Cisneros,3,Teziutlan,3,A,01/07/2014,12/07/2015
+68,Augusto,Carmona,Garcia,3,Noviembre,2,A,01/01/2017,24/03/2017
+69,Carlos,Carmona,Garcia,1,Aguascalientes,1,A,01/08/2017,03/09/2017
+71,Julio Cesar,Carmona,Garcia,3,Noviembre,3,A,01/05/2014,16/11/2014
+73,Vicente,Carmona,Gomez,4,Matehuala,1,A,01/12/2016,25/02/2017
+75,Armando,Carmona,Gutierrez,1,Cacaxtla,1,A,01/12/2016,11/06/2017
+76,Apolonia,Carmona,Hernandez,3,Teziutlan,4,A,01/08/2017,08/09/2017
+78,Martha,Carmona,Hernandez,4,Mixcoahtecutli,7,A,01/12/2015,29/03/2015
+82,Jose Dionisio Eleuterio,Carmona,Macias,4,Tienda,1,A,01/06/2017,06/06/2017
+85,Victor,Carmona,Martinez,3,Teuzitlan,1,A,01/11/2016,01/06/2016
+86,Alejandra,Carmona,Padilla,4,Vicente,2,A,01/12/2017,15/05/2017
+87,Silverioa,Carmona,Palafox,3,Noviembre,4,A,01/04/2010,28/07/2013
+89,Jael Irene,Carmona,Reyes,4,Paz,1,A,01/12/2016,09/10/2017
+90,Javier,Carmona,Reyes,4,Mixcoahtecutli,8,A,01/10/2017,28/09/2017
+92,Rafael,Carmona,Reyes,4,No28,1,A,01/12/2011,24/07/2011
+94,Oscar,Carmona,Rodriguez,1,Cuatlapanga,1,A,01/12/2015,05/07/2017
+96,Emilio,Carmona,Sanchez,2,Monclova,5,A,01/08/2017,26/06/2017
+99,Juan Eleuterio,Carmona,Sanchez,4,Naranjos,1,A,01/09/2016,18/09/2016
+102,Oscar,Carmona,Sanchez,1,No7,1,A,01/12/2012,29/07/2012
+105,Concepcion,Carmona,Suarez,4,Mixcoahtecutli,9,A,01/11/2014,05/07/2015
+107,Juan Manuel,Carmona,Suarez,1,Ctlaxcala,1,B,01/12/2017,11/10/2017
+108,De Cv,Pcmi,Sa,4,Carretera,1,A,01/12/2015,06/10/2015
+109,Miguel Pedro,Carmona,Suarez,4,Vicente,3,A,01/10/2017,06/06/2017
+113,Pedro,Caro,Briones,4,Colima,1,A,01/09/2012,13/07/2014
+117,Antonia,Castillo,Espinoza,1,Malintzi,1,A,01/12/2013,17/03/2013
+118,Lazaro,Castillo,Garcia,3,Apizaco,1,C,01/12/2014,27/07/2014
+120,Patricia,Cazares,Ortiz,4,Veracruz,1,A,01/09/2013,23/11/2014
+124,Maria Martha,Cervantes,Cordero,1,Principal,2,A,01/03/2017,09/10/2017
+126,Jose Orlando,Chavero,Ramos,4,Mixcoahtecutli,10,A,01/12/2015,08/02/2015
+128,Catarino,Corona,Mozo,3,Jalisco,1,A,01/12/2017,17/02/2017
+131,Maria Guadalupe,Corona,Perez,3,Acatlan,2,A,01/02/2016,31/03/2016
+135,Alfredo,Cortes,Perez,1,Xicohtencatl,3,A,01/06/2015,29/11/2015
+136,Gustavo,Cortes,Vazquez,3,Michoacan,3,A,01/06/2016,05/06/2016
+137,Maria De Jesus,Cossio,Terrazas,3,Morelia,1,B,01/12/2016,24/02/2017
+139,Maria De Los Angeles,Cruz,Lopez,1,Aguascalientes,2,A,01/12/2017,11/06/2017
+141,Camilo,Cruz,Sanchez,2,Guanajuato,1,A,01/11/2015,13/07/2017
+142,Maria Ignacia,Cuellar,Hernandez,3,Nayarit,2,A,01/07/2017,08/09/2017
+147,Araceli,Davila,Bacasegua,4,No55,1,A,01/12/2016,21/02/2016
+150,Cirilo,Davila,Cid,2,No37,1,A,01/11/2008,05/06/2011
+151,Maria Candelaria,Davila,Davila,1,Santa,1,A,01/04/2016,18/09/2016
+155,Rita,Serrano,Vazquez,3,Diagonal,1,A,01/08/2016,29/03/2017
+156,Maria Isabel,Davila,Garcia,3,No71,1,A,01/06/2017,18/06/2017
+159,Santiago,Davila,Hernandez,3,Oaxaca,1,A,01/09/2016,09/10/2016
+161,Juana,Davila,Lopez,3,Carretera,2,A,01/12/2013,24/11/2013
+162,Ruth,Davila,Montiel,2,Saltillo,1,A,01/02/2017,16/07/2017
+165,Maria Pascuala,Davila,Ramos,1,Xicohtencatl,4,A,01/12/2017,08/10/2017
+167,Abel,Davila,Tellez,1,Chihuahua,1,A,01/02/2013,17/02/2013
+168,Ana Maria,Davila,Tellez,3,Carretera,3,A,01/10/2015,15/03/2015
+172,Francisco,Lopez,Rodriguez,4,Carretera,4,C,01/12/2016,14/02/2016
+174,Nicanor,Davila,Tellez,2,Durango,1,A,01/12/2015,24/07/2017
+181,Genaro,Degante,Cardenas,1,Paseo,1,A,01/06/2017,14/05/2017
+182,Gregorio,Degante,Davila,1,Aguascalientes,3,A,01/12/2016,23/10/2016
+183,Jose Onel,Degante,Davila,1,Cuautlapanga,1,A,01/01/2016,09/10/2016
+187,Pedroza David,Del,Razo,4,Mixcoahtecutli,11,A,01/06/2017,02/07/2017
+188,Pedroza Francisco Javier,Del,Razo,4,Mixcoahtecutli,12,A,01/06/2017,21/05/2017
+189,Sanchez Elena,Del,Razo,1,Zacatelco,1,A,01/08/2017,04/09/2017
+191,Sanchez Judith,Del,Razo,1,Malintzi,2,A,01/10/2017,09/07/2017
+197,Fidencio,Dionicio,Juarez,1,Tlaxcala,1,A,01/05/2017,01/10/2017
+198,Ramiro,Dominguez,Rodriguez,4,Nayarit,3,A,01/02/2014,18/05/2014
+199,Motor Srdel,Emmanuel,Automotriz,1,Allende,2,A,01/12/2014,02/03/2014
+200,Edmundo,Espinoza,Carrillo,1,Mixcoahtecutli,13,A,01/05/2017,30/05/2017
+201,Cirilo Edmundo,Ferman,Cervantes,3,Oaxaca,2,A,01/05/2015,17/07/2016
+203,Maria Rufina Osvelia,Fernandez,Carrillo,2,Carretera,5,A,01/12/2017,01/02/2017
+204,Maria Alejandra,Fernandez,Guarneros,2,Ctorreon,1,A,01/12/2017,11/10/2017
+207,Lilia,Fernandez,Cortes,3,Revolucion,1,A,01/09/2012,23/11/2014
+208,Olga,Fernandez,Cortes,3,Cmixcoahtecutli,1,A,01/12/2012,02/09/2012
+212,Marcial,Fernandez,Guarneros,3,Noviembre,5,A,01/12/2017,28/05/2017
+213,Martin Virgilio,Fernandez,Guarneros,3,Nuevo,1,A,01/12/2017,22/02/2017
+214,Maria Del Socorro Hilda,Fernandez,Lopez,1,Tlaxcala,2,A,01/12/2017,07/02/2017
+218,Antonio,Fernandez,Palafox,3,Tepeaca,1,A,01/09/2016,18/09/2016
+219,Leticia,Fernandez,Palafox,3,Tepeaca,2,A,01/06/2017,13/03/2016
+220,Victoria,Fernandez,Palafox,3,Tepeaca,3,A,01/05/2016,16/10/2016
+222,Nicolas,Fernandez,Quintero,3,Cancun,1,A,01/02/2016,08/05/2016
+226,Delfino,Flores,Bermeo,4,Chabacanos,1,A,01/10/2017,11/06/2017
+228,Marcelino,Flores,Cortes,1,Marzo,1,A,01/12/2016,17/09/2017
+229,Andres,Flores,Degante,3,Noviembre,6,A,01/05/2014,05/06/2017
+233,Antonio,Flores,Gracia,2,Mixcoahtecutli,14,A,01/12/2017,05/03/2017
+234,Carolina,Flores,Hernandez,1,Calientes,1,B,01/12/2012,13/10/2013
+236,Maria Enedina,Flores,Muñoz,4,Sonora,1,A,01/10/2017,10/06/2017
+237,Hilario,Fonseca,Hernandez,1,Tlaxcala,3,A,01/08/2017,10/09/2017
+238,Felipe De Jesus,Fuentes,Rivera,3,Puebla,1,A,01/10/2015,24/02/2017
+239,Maria Del Carmen,Fuentes,Rivera,3,Cholula,1,A,01/02/2017,24/02/2017
+240,Quirino,Fuentes,Sampayo,2,Guanajuato,2,A,01/12/2012,03/03/2013
+242,Pedro,Galaviz,Leal,4,Apizaco,2,A,01/12/2015,08/03/2015
+244,Jose Guadalupe,Gallardo,Cortez,3,Cholula,2,A,01/03/2016,13/03/2016
+252,Maria Salustia,Garcia,Davila,3,Carretera,6,A,01/12/2017,17/03/2017
+259,Adan,Garcia,Garcia,3,Puebla,2,A,01/08/2017,12/06/2017
+261,Benita,Garcia,Garcia,3,Cholula,3,A,01/04/2013,03/03/2013
+262,Maria Ernestina Lucina,Garcia,Garcia,4,Chiapas,2,A,01/08/2017,26/02/2017
+265,Rita,Garcia,Garcia,3,Cholula,4,A,01/07/2017,21/05/2017
+268,Hector,Garcia,Gonzalez,3,Teziutlan,5,A,01/12/2016,09/10/2016
+271,Florencio,Garcia,Guarneros,4,Vicente,4,A,01/09/2016,11/09/2016
+273,Ivan,Garcia,Guarneros,2,Guanacevi,1,A,01/01/2014,02/03/2014
+276,Sergio,Garcia,Gutierrez,1,Mexicali,1,A,01/12/2016,06/03/2016
+281,Fidelia,Garcia,Morales,1,Tlaxcala,4,A,01/09/2017,07/10/2017
+282,Guadalupe,Garcia,Morales,1,Aguascalientes,4,A,01/04/2017,30/05/2017
+283,Guadalupe,Garcia,Morales,1,33a,1,A,01/03/2017,21/05/2017
+287,Roman,Garcia,Ñañez,3,Guadalajara,1,A,01/08/2017,16/06/2017
+290,Delfino,Garcia,Rodriguez,2,Monclova,6,A,01/06/2012,03/06/2012
+291,Luis,Garcia,Rodriguez,1,Tlaxcala,5,B,01/08/2017,26/09/2017
+293,Francisco,Garcia,Solis,3,Noviembre,7,A,01/12/2014,21/09/2014
+297,Maria Martha,Garcia,Tellez,3,Morelia,2,A,01/12/2016,09/10/2016
+302,Victor,Garcia,Vazquez,1,Zitlaltepec,1,A,01/06/2017,20/06/2017
+303,Yenni,Garcia,Velazco,2,Apizaco,3,A,01/05/2014,11/05/2014
+306,Salomon,Gomez,Barcenas,2,Mapimi,1,A,01/10/2014,17/05/2015
+308,Luis Antonio,Gomez,Dominguez,2,Mapimi,2,B,01/04/2017,15/07/2017
+310,Silvestre,Gomez,Fernandez,3,Blas,1,A,01/05/2017,25/05/2017
+313,Paula,Gomez,Villegas,3,Blas,2,A,01/07/2015,19/07/2015
+317,Andres,Gonzalez,Hernandez,3,No54,1,A,01/12/2014,23/11/2014
+319,Hugo,Gonzalez,Hernandez,3,Oaxaca,3,A,01/12/2017,17/06/2017
+324,Paola,Gonzalez,Martinez,4,34923p1l,1,A,01/12/2014,16/03/2014
+325,Martha,Gonzalez,Perez,4,Cmixcoahtecutli,2,A,01/03/2017,20/02/2017
+326,Antonio,Gonzalez,Villalba,3,Oaxaca,4,B,01/12/2017,21/02/2016
+327,Ignacio,Gonzalez,Villalba,3,Oaxaca,5,B,01/12/2017,21/02/2016
+329,Adrian,Guarneros,Carmona,3,Oaxaca,6,B,01/12/2017,27/02/2017
+331,Jose Pedro Irineo,Guarneros,Carmona,3,Carretera,7,A,01/06/2017,19/06/2017
+333,Blanca,Guarneros,Cortes,3,Oaxaca,7,A,01/12/2017,06/10/2017
+335,Laura,Guarneros,Cruz,1,Cacaxtla,2,A,01/11/2013,10/11/2013
+342,Jose Emeterio,Guarneros,Guarneros,3,Jalisco,2,A,01/03/2015,26/07/2015
+344,Andres,Guarneros,Hernandez,2,Saltillo,2,A,01/06/2017,25/07/2017
+349,Israel,Guarneros,Hernandez,4,Carretera,8,A,01/06/2013,09/11/2014
+350,Jose Pascual,Guarneros,Hernandez,4,Matehuala,2,A,01/12/2017,16/07/2017
+359,Arnulfo,Guarneros,Suarez,2,Guanacevi,2,A,01/12/2017,11/06/2017
+360,Basilio,Guarneros,Suarez,3,Noviembre,8,B,01/12/2016,14/02/2016
+362,Jose Edmundo,Guarneros,Suarez,3,Mixcoahtecutli,15,A,01/06/2017,17/09/2017
+367,Teodora,Guarneros,Suarez,2,Ciudad,1,A,01/05/2015,09/10/2016
+369,Alonso,Guarneros,Torres,4,Veracruz,2,A,01/05/2017,21/05/2017
+370,Domingo,Guarneros,Torres,4,Vicente,5,A,01/02/2012,01/11/2015
+372,Raul,Gallardo,Hernandez,4,Mixcoahtecutli,16,A,01/02/2017,05/02/2016
+374,Armando,Gutierrez,Cervantes,3,Galeana,1,B,01/01/2015,22/02/2015
+376,Felix,Gutierrez,Cuellar,4,Carretera,9,A,01/12/2017,15/05/2016
+377,Alejandro,Gutierrez,Garcia,1,Gutierrez,1,A,01/06/2017,06/06/2017
+378,Jose Luis,Gutierrez,Garcia,1,Gutierrez,2,A,01/02/2017,21/06/2017
+380,Jose Palemon,Gutierrez,Garcia,1,Gutierrez,3,A,01/12/2017,08/03/2017
+381,Antonio,Gutierrez,Hernandez,1,Mixcoahtecutli,17,A,01/12/2017,27/06/2017
+382,Lazaro,Gutierrez,Garcia,1,Calientes,2,A,01/03/2017,03/06/2017
+383,Rogaciano,Gutierrez,Garcia,1,Gutierrez,4,A,01/12/2013,23/06/2013
+384,Juventino,Gutierrez,Gonzalez,4,Carretera,10,A,01/07/2017,26/07/2017
+385,Juventino,Gutierrez,Gonzalez,4,Carretera,11,A,01/07/2017,26/07/2017
+386,Benjamin,Gutierrez,Hernandez,1,Rosarito,1,A,01/12/2017,12/05/2017
+392,Natividad,Gutierrez,Hernandez,3,Monterrey,1,A,01/06/2017,13/03/2017
+394,Jose Antonio,Gutierrez,Mendez,1,Mexicali,2,A,01/12/2017,20/02/2017
+396,Rufina,Gutierrez,Morales,1,Mixcoahtecutli,18,A,01/05/2013,04/09/2016
+397,Teresa,Gutierrez,Morales,1,Mixcoahtecutli,19,B,01/12/2016,09/10/2016
+400,Luis Alberto,Gutierrez,Rodriguez,1,Gutierrez,5,A,01/12/2016,11/09/2016
+403,Pedro,Gutierrez,Suarez,1,Mexicali,3,A,01/12/2017,20/02/2017
+404,Alfredo,Hernandez,Arroyo,1,Zitlaltepec,2,A,01/12/2013,24/11/2013
+405,Crispin,Hernandez,Arroyo,1,Zitlaltepec,3,A,01/11/2016,07/06/2017
+409,Jesus,Hernandez,Arroyo,1,Zitlaltepec,4,A,01/04/2015,31/07/2017
+411,Carlos Alberto,Hernandez,Badillo,2,Monclova,7,A,01/02/2015,29/03/2015
+412,Jose Ciriaco,Hernandez,Badillo,4,Chiapas,3,B,01/09/2014,04/10/2015
+416,Panuncio,Hernandez,Badillo,3,Oaxaca,8,A,01/06/2017,06/06/2017
+418,Teresa,Hernandez,Badillo,1,Marzo,2,A,01/12/2017,31/07/2017
+420,Margarita,Hernandez,Bonilla,2,Monclova,8,A,01/09/2017,04/10/2017
+421,Cristina,Hernandez,Carmona,4,Mixcoahtecutli,20,M,01/04/2013,24/11/2013
+422,Columba,Hernandez,Carrasco,4,Carretera,12,A,01/12/2015,06/10/2015
+423,Javier,Hernandez,Cuachayo,3,Privada,1,A,01/12/2016,05/06/2016
+426,Cornelio,Hernandez,Davila,1,Santa,2,A,01/01/2016,09/10/2016
+428,Maria Juana,Arroyo,Dimas,1,Tlaxcala,6,A,01/01/2018,10/10/2017
+429,Maura,Hernandez,Davila,1,Santa,3,A,01/05/2017,16/07/2017
+430,Ruben,Hernandez,Davila,1,Santa,4,A,01/12/2017,09/02/2017
+431,Evaristo,Hernandez,Dominguez,4,Mixcoahtecutli,21,A,01/09/2017,20/09/2017
+433,Joel,Hernandez,Fernandez,1,Parral,1,B,01/06/2017,22/11/2015
+434,Yolanda,Hernandez,Fernandez,3,Cnayarit,1,A,01/04/2017,24/09/2017
+436,Jose Dolores,Hernandez,Garcia,1,Chihuahua,2,A,01/07/2012,26/10/2014
+440,Miguel,Hernandez,Gonzalez,2,Monclova,9,A,01/12/2017,16/07/2017
+443,Elizabeth,Hernandez,Hernandez,3,Privada,2,A,01/04/2017,13/09/2017
+448,Israel,Hernandez,Hernandez,3,Cadereita,1,A,01/02/2011,29/03/2015
+451,Jorge,Hernandez,Hernandez,3,No51,1,A,01/04/2010,12/02/2012
+453,Juan Carlos,Hernandez,Hernandez,3,Nuevo,2,A,01/12/2017,23/02/2017
+454,Luciano,Hernandez,Hernandez,3,Texmelucan,1,A,01/05/2013,09/10/2016
+456,Mauro,Hernandez,Hernandez,3,Priv,1,A,01/09/2016,17/07/2016
+457,Nazario,Hernandez,Hernandez,3,Texmelucan,2,A,01/12/2017,30/07/2017
+458,Patricia,Hernandez,Hernandez,2,Chilpancingo,1,A,01/03/2017,21/02/2017
+460,Micaela,Hernandez,Herrera,3,Blas,3,A,01/12/2017,10/02/2017
+461,Gregorio Platero,Hernandez,Jimenez,1,Marzo,3,A,01/09/2013,01/09/2013
+464,Maria Antonia,Hernandez,Leon,4,California,1,A,01/08/2013,22/11/2015
+467,Petra,Hernandez,Rojas,4,Chiapas,4,A,01/09/2017,02/06/2017
+472,Alejandra,Hernandez,Luna,3,Privada,3,B,01/12/2017,08/10/2017
+473,Cirilo,Hernandez,Luna,2,Chilpancingo,2,A,01/09/2017,11/09/2017
+479,Jose Felix,Hernandez,Luna,1,Marzo,4,A,01/05/2016,10/09/2017
+480,Juan,Hernandez,Luna,3,Teuzitlan,2,B,01/12/2017,24/09/2017
+482,Maximino,Hernandez,Luna,2,Chilpancingo,3,A,01/02/2017,26/06/2017
+486,Roberto,Hernandez,Luna,2,Chilpancingo,4,A,01/08/2016,11/06/2017
+488,Salvador,Hernandez,Maldonado,3,No100,1,A,01/10/2017,24/09/2017
+493,Javier,Hernandez,Mendez,2,Monclova,10,A,01/06/2017,26/06/2017
+494,Fidel,Hernandez,Meza,1,Marzo,5,A,01/07/2017,07/07/2017
+495,Francisco,Hernandez,Meza,1,Marzo,6,A,01/12/2013,28/09/2014
+496,Julio,Hernandez,Meza,1,Marzo,7,A,01/12/2015,05/06/2016
+497,Martha,Hernandez,Montiel,4,Puente,1,A,01/05/2016,29/05/2016
+498,Araceli,Hernandez,Morales,3,Iturbide,1,A,01/07/2017,15/07/2017
+500,Lucia,Hernandez,Morales,1,Marzo,8,A,01/06/2017,06/07/2017
+501,Marisol,Hernandez,Morales,3,Cadereita,2,A,01/06/2017,03/02/2017
+503,Sonia,Hernandez,Morales,3,Cadereita,3,A,01/08/2017,07/06/2017
+505,Guadalupe,Hernandez,Moya,1,No111,1,A,01/05/2015,18/06/2017
+506,Alberto,Hernandez,Mozo,3,Jalisco,3,A,01/06/2017,24/03/2017
+508,Ana Karina,Hernandez,Mozo,1,No41,1,A,01/12/2013,25/05/2014
+509,Isaac,Hernandez,Mozo,3,Febrero,1,A,01/05/2017,20/06/2017
+511,Bernarda,Hernandez,Munguia,2,Chilpancingo,5,A,01/07/2017,28/03/2017
+512,Martiniano,Hernandez,Munguia,2,Chilpancingo,6,B,01/01/2017,05/02/2016
+513,Juana,Hernandez,Ordoñez,3,Morelos,3,A,01/12/2017,31/05/2017
+514,Agustin,Hernandez,Ortega,3,Febrero,2,A,01/06/2017,22/07/2017
+515,Benjamin,Hernandez,Ortega,3,Febrero,3,A,01/02/2012,19/07/2015
+516,Jose Luis,Hernandez,Ortega,3,Febrero,4,A,01/06/2016,27/11/2016
+517,Roberto Abel,Hernandez,Padilla,3,Mixcoahtecutli,22,A,01/12/2017,21/03/2017
+520,Jose Gumaro,Hernandez,Palafox,3,No48,1,A,01/12/2015,27/09/2015
+521,Jose,Hernandez,Pedroza,4,Colima,2,B,01/12/2018,03/07/2017
+522,Juan Manuel,Hernandez,Peralta,1,Aguascalientes,5,A,01/06/2017,12/06/2017
+523,Ismael,Hernandez,Perez,1,Marzo,9,A,01/12/2017,12/02/2017
+527,Carlos,Hernandez,Rodriguez,1,Marzo,10,A,01/12/2016,06/07/2017
+528,Eduardo,Hernandez,Rodriguez,1,Marzo,11,B,01/12/2016,27/03/2016
+530,Policarpo Martin,Hernandez,Rodriguez,1,Marzo,12,B,01/12/2017,13/03/2017
+532,Luis Gabriel,Hernandez,Romano,3,Tepetzingo,1,A,01/02/2017,27/02/2017
+534,Angelita,Hernandez,Sanchez,1,Marzo,13,A,01/06/2013,03/02/2013
+535,Benito,Hernandez,Sanchez,1,Marzo,14,A,01/09/2017,17/09/2017
+537,Elvira,Luna,Suarez,2,Tixtla,1,A,01/12/2017,02/07/2017
+538,Faustino,Hernandez,Sanchez,3,Revolucion,2,A,01/04/2017,04/09/2017
+542,Mateo,Hernandez,Sanchez,3,Zapata,1,A,01/12/2016,27/11/2016
+544,Diego,Hernandez,Solis,3,Acatlan,3,A,01/12/2017,12/02/2017
+545,Adela y Marcelino,Hernandez,Sosa,2,Guanajuato,3,A,01/12/2017,15/05/2016
+547,Hilario,Hernandez,Suarez,4,Chiapas,5,A,01/03/2016,09/10/2016
+548,Jaime,Hernandez,Suarez,4,Colonia,1,A,01/05/2017,01/05/2016
+552,Maria Angela,Hernandez,Suarez,1,Isidro,1,A,01/12/2017,28/06/2017
+553,Maria Angela,Hernandez,Suarez,2,Mixcoahtecutli,23,C,01/12/2016,28/02/2016
+554,Arturo,Hernandez,Tellez,1,Guanajuato,4,A,01/12/2017,21/02/2017
+557,Jose Francisco,Hernandez,Torres,4,Tuxpan,1,A,01/12/2017,03/10/2017
+558,Juan,Hernandez,Vargas,3,Noviembre,9,A,01/04/2014,23/11/2014
+559,Enrique,Hernandez,Vazquez,3,Oaxaca,9,A,01/09/2017,08/10/2017
+560,Jose Felipe,Hernandez,Vazquez,4,Paz,2,B,01/12/2017,15/02/2017
+564,Maria Elena,Hernandez,Vazquez,4,Paz,3,A,01/06/2017,15/02/2017
+565,Martin,Hernandez,Vazquez,3,Oaxaca,10,A,01/10/2015,22/05/2016
+566,Aurelia Mercedes,Hernandez,Vazquez,3,Nuevo,3,A,01/09/2017,02/10/2017
+567,Oscar Alfonso,Hernandez,Vazquez,3,Esquina,1,A,01/02/2016,21/02/2016
+570,Miguel,Huerta,Davila,1,Malintzi,3,A,01/10/2016,01/02/2017
+571,Moises,Huerta,Davila,2,Celaya,1,A,01/03/2014,28/07/2017
+577,Maria Ernestina Lucina,Garcia,Garcia,2,Allende,3,A,01/08/2017,26/02/2017
+580,Universal Sa De Cv,Jarr,Mm,3,Apizacotlaxco,1,C,01/12/2015,06/10/2015
+583,Horacio,Jimenez,Beristain,3,Galeana,2,D,01/07/2017,01/10/2017
+584,Pascual,Jimenez,Garcia,3,Oaxaca,11,A,01/05/2017,30/07/2017
+586,Hilda,Jimenez,Huerta,1,Mixcoahtecutli,24,A,01/10/2015,19/06/2017
+590,Angelica Maria,Larios,Hernandez,4,Chabacanos,2,A,01/08/2013,07/07/2013
+592,Gregoria,Leal,Carmona,1,Colonia,2,A,01/08/2017,24/09/2017
+594,Gil,Leal,Palestina,4,Sonora,2,A,01/12/2016,01/10/2017
+595,Maria Paula Inocencia,Leal,Perez,3,Nayarit,4,A,01/08/2017,13/10/2017
+596,Efrain,Leal,Perez,3,Nayarit,5,A,01/06/2016,23/09/2017
+597,Saul,Leal,Perez,3,Nayarit,6,A,01/06/2017,27/06/2017
+598,Teodulo,Lobato,Lopez,4,Jardines,3,A,01/12/2015,08/03/2015
+599,Adrian,Lopez,Avendaño,3,Cholula,5,A,01/01/2016,22/11/2015
+600,Joaquin,Lopez,Buendia,4,Jardines,4,A,01/10/2016,16/10/2016
+603,Judith,Lopez,Fernandez,1,Tlaxcala,7,B,01/12/2017,03/06/2017
+605,Jose,Lopez,Garcia,4,Cabos,1,A,01/03/2016,09/10/2016
+607,Maria Martha,Lopez,Garcia,3,Cholula,6,A,01/06/2017,22/02/2017
+609,Ismael,Lopez,Gonzalez,3,Quebradora,1,A,01/04/2015,22/03/2015
+610,Evaristo,Lopez,Hernandez,3,Noviembre,10,A,01/09/2017,03/10/2017
+614,Antonio,Lopez,Lozada,3,Huajuapan,1,A,01/12/2017,24/02/2017
+615,Maria Cenobia,Lopez,Lozada,3,Galeana,3,A,01/12/2017,08/05/2016
+616,Maria Cenobia,Lopez,Lozada,3,Michoacan,4,A,01/12/2017,08/05/2016
+618,Marcelino,Lopez,Martinez,2,Carretera,13,A,01/06/2017,16/07/2017
+621,Humberto,Lopez,Moreno,3,Oaxaca,12,A,01/07/2017,25/05/2017
+622,Eleuterio Benjamin,Torres,Osornio,4,Chiapas,6,A,01/10/2015,03/03/2017
+624,Constantina,Lopez,Moya,2,Carretera,14,A,01/09/2017,15/06/2017
+625,Jokabed,Lopez,Moya,2,Laredo,1,A,01/04/2016,20/03/2016
+628,Oscar,Lopez,Ortega,4,Loreto,1,A,01/09/2012,25/09/2016
+629,Alberto,Lopez,Otero,4,Colima,3,A,01/07/2017,27/06/2017
+631,Gudelio,Lopez,Sanchez,3,Acatlan,4,A,01/08/2016,09/10/2016
+632,Onesimo,Lopez,Sanchez,4,Chiapas,7,A,01/08/2016,03/07/2017
+636,Domingo,Luna,Contreras,3,Noviembre,11,A,01/12/2017,13/02/2017
+638,Lucio,Luna,Contreras,3,Noviembre,12,A,01/12/2016,05/06/2017
+640,David,Luna,Hernandez,3,Morelia,3,A,01/12/2017,28/03/2017
+641,Emilio,Luna,Hernandez,3,Noviembre,13,A,01/10/2017,29/09/2017
+643,Juan,Hernandez,Luna,3,Nayarit,7,A,01/01/2017,20/09/2017
+644,Maria Felix,Luna,Hernandez,2,Chilpanzingo,1,A,01/07/2017,28/03/2017
+645,Maria Virginia Andrea,Luna,Hernandez,3,Oaxaca,13,A,01/06/2017,22/06/2017
+646,Mariano,Luna,Hernandez,3,Noviembre,14,A,01/05/2017,24/09/2017
+647,Mauro,Luna,Hernandez,2,Chilpancingo,7,A,01/02/2017,22/06/2017
+648,Miguel,Luna,Hernandez,3,Noviembre,15,A,01/04/2017,05/06/2017
+649,Remedios,Luna,Hernandez,2,Chilpancingo,8,A,01/06/2013,28/07/2013
+650,Silvia,Luna,Hernandez,2,Chilpancingo,9,A,01/12/2017,20/09/2017
+651,Jose,Luna,Leal,4,Matehuala,3,A,01/09/2017,05/09/2017
+655,Marciano,Luna,Martinez,4,Esquina,2,A,01/08/2017,25/07/2017
+656,Gustavo,Luna,Mendez,4,Constitucion,1,A,01/12/2017,19/05/2017
+657,Emiliano,Luna,Montiel,3,Galeana,4,A,01/12/2017,05/02/2017
+662,Jose Felix Manuel,Luna,Portillo,4,Mayo,1,B,01/12/2017,06/07/2017
+665,Emiliano,Luna,Suarez,3,Noviembre,16,A,01/10/2017,17/09/2017
+666,Estela,Luna,Suarez,3,Noviembre,17,A,01/12/2017,29/07/2017
+667,Froilan,Luna,Suarez,2,No12,1,B,01/12/2013,24/02/2013
+669,Eloy,Luna,Tovar,4,Mixcoahtecutli,25,A,01/12/2016,09/10/2016
+671,Sa De Cv,Maquilas,Santiago,3,Carretera,15,A,01/12/2017,17/03/2017
+672,Heriberto,Marquez,Martinez,3,Jalisco,4,A,01/06/2017,19/06/2017
+674,Roberto,Marquez,Sanchez,3,Piedad,1,A,01/04/2014,13/07/2014
+675,Jose Antonio,Marquez,Vazquez,4,Chiapas,8,A,01/06/2017,18/06/2017
+678,Meliton,Martinez,Carmona,3,Nayarit,8,B,01/12/2017,03/09/2017
+679,Bernardino,Martinez,Gomez,3,Nayarit,9,A,01/12/2017,11/10/2015
+680,Ofelia Yazmin,Martinez,Granados,3,Nayarit,10,A,01/12/2015,22/03/2015
+684,Gloria,Medina,Alvarez,4,Carmona,1,A,01/03/2016,13/03/2016
+691,Felipe,Mendez,Hernandez,3,Nayarit,11,A,01/07/2017,26/07/2017
+693,Maria De Jesus,Mendez,Torres,3,Cholula,7,A,01/07/2015,26/07/2015
+694,j Felix,Mendez,Vazquez,4,Cabos,2,A,01/05/2017,11/06/2017
+696,Virginia,Mendieta,Palafox,3,Iturbide,2,A,01/08/2017,09/02/2017
+697,Teotila,Meneses,Lopez,2,Mixcoahtecutli,26,A,01/12/2017,05/03/2017
+699,Sira,Mohedano,Gomez,2,Ecatepec,1,A,01/12/2017,09/05/2017
+703,Francisco Javier,Montiel,Davila,4,Xalapa,1,A,01/03/2014,21/09/2014
+704,Hassam Jesus,Montiel,Hernandez,4,Paz,4,A,01/06/2017,15/02/2017
+705,Emilio,Montiel,Montiel,3,Galeana,5,B,01/10/2017,25/06/2017
+707,Josefina,Morales,Cruz,4,Mixcoahtecutli,27,A,01/05/2017,19/06/2017
+712,Maria Guadalupe,Morales,Tellez,4,No27,1,A,01/01/2012,08/07/2012
+719,Juana,Moreno,Suarez,2,Guanajuato,5,A,01/05/2016,01/05/2016
+721,Onesimo,Moreno,Suarez,2,Pachuca,1,A,01/03/2017,21/02/2017
+722,Pedro,Moreno,Suarez,2,Pachuca,2,A,01/09/2017,10/09/2017
+723,Jose Rigoberto,Mote,Ramirez,3,Carretera,16,A,01/10/2015,11/10/2015
+724,Irma,Moya,Moreno,4,Mzna,1,A,01/01/2011,13/02/2011
+728,Paciano,Moya,Sanchez,1,Xicohtencatl,5,A,01/12/2016,24/06/2017
+734,Aristeo,Muñoz,Hernandez,2,Monclova,11,A,01/07/2017,23/09/2017
+735,Cristina,Muñoz,Hernandez,2,Chilpancingo,10,M,01/12/2015,08/03/2015
+736,Alejandro Yo Mh Constructora y Edificadora De Tlaxcala Sa De Cv a,Muñoz,Jimenez,1,Cacaxtla,3,B,01/12/2017,22/09/2017
+737,Alejandro Yo Mh Constructora y Edificadora De Tlaxcala Sa De Cv b,Muñoz,Jimenez,1,Cacaxtla,4,B,01/12/2017,22/09/2017
+738,Maria Del Carmen Clemencia,Muñoz,Molina,4,Mixcoahtecutli,28,B,01/06/2017,19/06/2017
+742,Juan Manuel,Nava,Espinosa,4,Vicente,6,A,01/12/2015,25/10/2015
+743,Evaristo,Nava,Montes,2,Carretera,17,A,01/03/2017,04/03/2017
+749,Angela,Olmos,Alcantar,1,Malintzi,4,A,01/12/2017,20/02/2017
+750,Elodia,Ordoñez,Flores,3,Jalisco,5,A,01/03/2014,02/03/2014
+753,Fortino,Ordoñez,Lopez,3,Blas,4,A,01/12/2017,09/10/2017
+754,Jaime,Ordoñez,Lopez,3,Zapata,2,A,01/06/2017,07/07/2017
+756,Alberto,Ordoñez,Padilla,4,Chiapas,9,A,01/12/2017,07/10/2017
+758,Edilia,Ordoñez,Pedroza,4,Manzanillo,1,A,01/07/2011,05/10/2014
+763,Dionicio,Ortega,Hernandez,2,No63,1,A,01/06/2012,05/05/2013
+764,Jose Armando,Ortiz,Gonzalez,3,Nayarit,12,B,01/09/2017,11/06/2017
+765,Maria Del Carmen,Ortiz,Martinez,4,Jardines,5,A,01/04/2014,22/11/2015
+767,Ana Maria,Oseguera,Carmona,4,Matehuala,4,A,01/07/2017,24/07/2017
+768,Moises Salvador,Oseguera,Carmona,2,Mixcoahtecutli,29,A,01/02/2017,27/05/2017
+769,Maria Ignacia,Osorno,Dominguez,3,Cholula,8,A,01/06/2015,21/06/2015
+770,Maria Guadalupe,Padilla,Acosta,3,Paz,5,A,01/12/2015,21/02/2016
+772,Sergio,Padilla,Carmona,1,Ctlaxcala,2,A,01/10/2011,05/05/2013
+773,Cristobal,Padilla,Cruz,3,Esquina,3,A,01/12/2017,27/03/2017
+774,Edmundo,Padilla,Cruz,3,Nuevo,4,A,01/03/2017,22/03/2017
+775,Marcos,Padilla,Cruz,3,Apizaco,4,A,01/12/2017,14/06/2017
+776,Maria Catalina,Padilla,Cruz,3,Nuevo,5,A,01/04/2014,08/06/2014
+779,Demetrio,Padilla,Moya,1,Tlaxcala,8,A,01/01/2017,14/02/2017
+780,Graciela,Padilla,Moya,1,Tlaxcala,9,A,01/03/2017,22/03/2017
+781,Martin,Padilla,Moya,1,Tlaxcala,10,A,01/06/2017,07/05/2017
+784,Osvaldo Enrique,Padilla,Olivares,3,Cteziutlan,1,A,01/03/2017,19/02/2017
+785,Jose Juan,Palafox,Aguirre,3,Apodaca,1,A,01/10/2016,19/02/2017
+789,Maria Luisa,Palafox,Fernandez,3,Cadereyta,1,A,01/07/2013,24/11/2013
+792,Dionisio,Palafox,Luna,3,Noviembre,18,B,01/04/2012,29/06/2014
+793,Dionisio,Palafox,Luna,3,Mixcoahtecutli,30,A,01/05/2017,31/05/2017
+796,Guadalupe,Palafox,Pedroza,3,Aldama,1,A,01/12/2010,10/07/2011
+798,Ricardo,Palestina,Hernandez,4,Veracruz,3,A,01/07/2017,19/06/2017
+799,Angel,Papalotzi,Carmona,3,Puebla,3,A,01/12/2012,15/09/2013
+800,Karen,Paredes,Cortez,2,Chilpancingo,11,A,01/12/2017,09/07/2017
+801,Maria Isabel,Pasten,Hernandez,4,Vicente,7,A,01/07/2016,09/10/2016
+802,Guadalupe Del Rocio,Pedraza,Carmona,2,Mixcoahtecutli,31,C,01/07/2017,02/09/2017
+805,Daniel Ivan,Palafox,Pedraza,3,Aldama,2,A,01/12/2017,19/02/2017
+806,Benjamin,Pedraza,Davila,2,Guanacevi,3,B,01/12/2017,29/03/2017
+808,Jessenia,Pedraza,Franco,3,Noviembre,19,A,01/09/2013,01/09/2013
+823,Arturo,Pedroza,Davila,3,Aldama,3,M,01/12/2016,06/03/2016
+827,Amalia,Pedroza,Gonzalez,4,Chiapas,10,A,01/08/2013,16/11/2014
+828,Maria De Los Angeles,Pedroza,Hernandez,4,Manzanillo,2,A,01/04/2016,02/02/2017
+829,Cecilia,Lopez,Carmona,3,Tepeaca,4,A,01/06/2016,21/06/2015
+830,Alejandra,Pedroza,Montalvo,4,Chimalpa,1,A,01/10/2017,03/10/2017
+831,Celestino,Pedroza,Montalvo,4,Manzanillo,3,A,01/09/2017,11/09/2017
+833,Javier,Pedroza,Montalvo,4,Manzanillo,4,A,01/08/2017,06/06/2017
+834,Nancy,Pedroza,Montalvo,4,Tabasco,1,A,01/06/2016,03/07/2016
+836,Concepcion,Pedroza,Montiel,1,Mixcoahtecutli,32,A,01/10/2017,13/10/2017
+838,Jose,Pedroza,Montiel,1,California,2,A,01/10/2017,29/05/2017
+839,Melquiades,Pedroza,Montiel,1,California,3,A,01/12/2016,25/09/2016
+840,Delfino,Pedroza,Ramirez,3,Apizaco,5,A,01/12/2017,15/03/2017
+841,Luz Adriana,Pedroza,Ramirez,4,Talacheria,1,B,01/09/2014,28/09/2014
+842,Francisco,Pelaes,Cruz,1,Lote,1,A,01/08/2014,19/06/2017
+844,Adan,Perez,Bonilla,2,Monclova,12,A,01/10/2017,11/10/2017
+845,Evodia Julieta,Perez,Escamilla,3,Nayarit,13,A,01/10/2017,13/10/2017
+859,Flora,Periañez,Ramirez,4,Chabacanos,3,A,01/03/2016,09/10/2016
+861,Victoria,Portilla,Lopez,3,Michoacan,5,A,01/12/2017,03/10/2017
+862,Ignacio,Portillo,Acosta,2,Laredo,2,A,01/07/2017,27/05/2017
+864,Alejandra,Portillo,Hernandez,2,Mapini,1,A,01/01/2012,22/07/2012
+865,Erick,Portillo,Hernandez,2,Laredo,3,A,01/10/2016,27/06/2017
+866,Juana,Portillo,Hernandez,2,Mapimi,3,A,01/08/2017,09/09/2017
+868,Jacobo,Portillo,Luna,2,Francisco,1,A,01/09/2017,03/09/2017
+869,Jose Maria,Portillo,Luna,2,Mapini,2,A,01/04/2013,17/05/2015
+870,Marcos,Portillo,Luna,2,Laredo,4,A,01/12/2017,13/10/2017
+872,Julieta,Portillo,Mota,2,Mapini,3,A,01/04/2015,31/05/2015
+873,Sergio Cesar,Portillo,Palafox,4,Potosi,1,A,01/12/2017,19/02/2017
+875,Ponciano,Pozos,Fernandez,4,Chiapas,11,A,01/02/2015,12/06/2016
+878,Apolinar,Quintero,Torres,4,Tuxpan,2,A,01/06/2017,09/06/2017
+879,Silvano Eligio,Degante,Cardenas,1,Paseos,1,A,01/08/2016,03/07/2017
+880,Maria Leticia,Quintero,Torres,4,Tuxpan,3,A,01/05/2017,28/09/2017
+881,Juan Carlos,Quiroz,Cardenas,1,Aguascalientes,6,A,01/10/2016,04/02/2017
+885,Martha,Ramirez,Escamilla,1,Cacaxtla,5,A,01/03/2013,30/03/2014
+886,Felipe,Ramirez,Flores,4,Manzanillo,5,A,01/08/2016,28/02/2016
+887,Alejandro,Ramirez,Gutierrez,4,Vicente,8,A,01/04/2016,16/10/2016
+888,Marcela,Pedroza,Ramirez,3,Monterrey,2,A,01/12/2017,07/02/2017
+889,Dominga,Ramirez,Gutierrez,4,Vicente,9,A,01/12/2017,03/06/2017
+891,Ramon,Ramirez,Gutierrez,3,Apizaco,6,M,01/02/2012,02/02/2013
+892,Silvestre,Ramirez,Gutierrez,4,Vicente,10,A,01/12/2017,19/03/2017
+894,Eloy,Ramirez,Hernandez,4,Veracruz,4,A,01/06/2017,21/06/2017
+895,Evaristo,Ramirez,Hernandez,4,Veracruz,5,B,01/12/2017,16/03/2017
+898,Carolina,Ramirez,Martinez,2,Carretera,18,C,01/04/2017,08/06/2017
+899,Marco Antonio,Ramirez,Montana,1,Malintzi,5,A,01/06/2015,15/02/2015
+901,Manuel Alejandro,Ramirez,Pedroza,4,Manzanillo,6,A,01/11/2011,05/10/2014
+904,Veronica,Ramirez,Sosa,1,Chihuahua,3,A,01/05/2017,04/09/2017
+906,Carmen,Ramirez,Toriz,4,Veracruz,6,A,01/09/2017,12/10/2017
+907,Enrique,Ramirez,Toriz,3,Huajuapan,2,A,01/12/2017,23/05/2017
+908,Gregoria,Ramos,Hernandez,1,Cacaxtla,6,B,01/07/2017,18/06/2017
+911,Gregorio,Rangel,Suarez,3,Noviembre,20,A,01/10/2016,09/10/2016
+912,Maria Felix,Reyes,Reyes,1,Malintzi,6,A,01/12/2017,05/10/2017
+918,Ramon,Rivera,Marquez,4,California,4,A,01/12/2017,26/03/2017
+921,Enrique,Robles,Cruz,3,No54,2,A,01/12/2014,23/02/2014
+928,Juana,Rodriguez,Monjaraz,4,Chiapas,12,A,01/06/2015,28/06/2015
+930,Sara,Rodriguez,Trujillo,4,Veracruz,7,A,01/06/2017,13/07/2017
+931,Jose Arnulfo,Rojas,Hernandez,1,Cchihuahua,1,A,01/07/2012,23/03/2014
+932,Jose Luis,Roman,Torres,2,Monclova,13,A,01/07/2015,29/11/2015
+942,Juan Miguel,Rosales,Perez,4,Vicente,11,C,01/09/2015,10/10/2015
+943,Eloy,Rosas,Valdivia,3,Jalisco,6,A,01/12/2015,15/05/2016
+945,Victor Manuel,Sabbagh,Garcia,3,Apizaco,7,A,01/11/2017,11/10/2017
+946,Victor Manuel,Sabbagh,Garcia,3,Noviembre,21,A,01/10/2017,07/07/2017
+949,Marcos Antonio,Salado,Rios,3,Morelos,4,A,01/10/2016,01/10/2017
+951,Edilberto,Saldaña,Davila,3,Teziutlan,6,A,01/12/2017,24/06/2017
+954,Maria Eugenia,Saldaña,Davila,3,Ctehuacan,1,A,01/09/2012,14/07/2013
+955,Obdulia,Saldaña,Davila,3,Tehuacan,1,A,01/12/2017,08/10/2017
+957,Jose Luis,Saldaña,Hernandez,3,Teziutlan,7,A,01/04/2016,20/03/2016
+958,Moises,Saldaña,Luna,3,Tehuacan,2,A,01/09/2017,03/09/2017
+959,Alejandro,Saldaña,Padilla,3,Tehuacan,3,A,01/12/2017,08/10/2017
+966,Jesus Demetrio,Sanchez,Cervantes,3,Galeana,6,A,01/12/2017,24/02/2017
+968,Felix,Sanchez,Cruz,3,Michoacan,6,A,01/08/2017,22/09/2017
+970,Maria,Sanchez,Espinoza,3,Nayarit,14,A,01/12/2015,09/09/2017
+971,Heber David,Sanchez,Gonzalez,3,Cmixcoahtecutli,3,A,01/02/2012,13/02/2012
+972,Jose Adolfo,Sanchez,Hernandez,1,Tlaxcala,11,A,01/12/2012,28/07/2013
+974,Mateo,Sanchez,Hernandez,3,No18,1,A,01/12/2011,06/11/2011
+976,Silvia,Tamayo,Perez,3,Cholula,9,A,01/09/2016,11/09/2017
+978,Marcela,Sanchez,Pozos,4,Carretera,19,A,01/12/2015,14/06/2015
+979,Vidal Juan,Sanchez,Rivera,4,Carretera,20,C,01/09/2014,22/11/2015
+980,Leopoldo,Sanchez,Seseña,3,Cholula,10,A,01/10/2015,22/11/2015
+984,Edmundo,Santana,Moreno,4,No28,2,A,01/12/2011,16/11/2011
+987,Teresa Magdalena,Silva,Olguin,4,Loreto,2,A,01/05/2017,30/05/2017
+988,Teresa Magdalena,Silva,Olguin,1,Mixcoahtecutli,33,A,01/05/2017,30/05/2017
+989,Benjamin,Sosa,Vazquez,3,Guadalajara,2,A,01/01/2017,04/02/2017
+990,Juana,Caro,Briones,4,Jalapa,1,A,01/07/2014,02/10/2016
+993,Crisanto,Suarez,Cadena,2,Pachuca,3,A,01/08/2015,23/03/2017
+994,Jesus Gabriel,Suarez,Cossio,1,Tlaxcala,12,A,01/12/2013,15/06/2014
+996,Jose Felix Edmundo,Suarez,Davila,2,Guanajuato,6,A,01/05/2017,25/06/2017
+997,Aaron,Suarez,Dorantes,3,Morelia,4,B,01/12/2017,04/06/2017
+999,Efren,Suarez,Dorantes,3,Mixcoahtecutli,34,A,01/04/2014,02/02/2014
+1002,Noe,Suarez,Dorantes,4,Vicente,12,A,01/06/2016,26/06/2016
+1004,Juan,Suarez,Fernandez,4,Vicente,13,A,01/12/2017,24/09/2017
+1006,Felipe,Suarez,Fuentes,3,Morelia,5,A,01/12/2016,15/05/2016
+1007,Felipe,Suarez,Garcia,4,Vicente,14,A,01/04/2017,30/06/2017
+1009,Jose Joel,Suarez,Garcia,3,Morelia,6,A,01/04/2017,16/03/2017
+1010,Miguel Angel,Suarez,Garcia,3,Oriental,1,A,01/12/2012,02/03/2014
+1011,Domingo,Suarez,Gonzalez,2,Camino,1,A,01/04/2015,15/03/2015
+1014,Jose Carlos,Suarez,Gutierrez,4,Veracruz,8,A,01/03/2017,27/03/2017
+1015,Abel,Suarez,Hernandez,3,Oriental,2,A,01/12/2014,16/11/2017
+1016,Agustin,Suarez,Hernandez,4,Vicente,15,A,01/12/2016,27/06/2017
+1017,Alejandro Jonathan,Suarez,Hernandez,1,Calientes,3,A,01/09/2015,13/09/2015
+1018,Efren,Suarez,Hernandez,3,Mixcoahtecutli,35,A,01/10/2014,19/10/2014
+1019,Evaristo,Suarez,Hernandez,1,Mixcoahtecutli,36,A,01/08/2017,27/06/2017
+1020,Israel,Suarez,Hernandez,3,Oriental,3,A,01/03/2013,12/07/2015
+1022,Jose Guadalupe,Suarez,Hernandez,1,Mixcoahtecutli,37,A,01/07/2017,29/05/2017
+1023,Juan,Suarez,Hernandez,1,Mixcoahtecutli,38,A,01/10/2017,17/09/2017
+1024,Maura,Suarez,Hernandez,3,No100,2,A,01/02/2013,03/05/2017
+1025,Crispin Sabas,Suarez,Hernandez,3,Mixcoahtecutli,39,A,01/06/2017,11/06/2017
+1026,Vicente,Suarez,Hernandez,3,Mixcoahtecutli,40,A,01/12/2013,01/09/2013
+1030,Santiago,Suarez,Mendez,3,Nayarit,15,A,01/12/2017,14/05/2017
+1031,Angel,Suarez,Moreno,3,Oriental,4,A,01/06/2013,21/05/2016
+1036,Sergio,Suarez,Moreno,3,Oriental,5,A,01/10/2013,05/06/2016
+1037,Josefina,Suarez,Padilla,3,Jalisco,7,A,01/11/2015,29/11/2015
+1038,Victor Abraham,Suarez,Pedraza,4,Carretera,21,A,01/12/2016,04/09/2016
+1040,Irma,Suarez,Reyes,3,Piedad,2,A,01/05/2014,11/10/2015
+1042,Juan Antonio,Suarez,Reyes,3,Puebla,4,A,01/03/2016,09/10/2016
+1047,Irene,Suarez,Suarez,1,Malintzi,7,A,01/05/2017,04/06/2017
+1048,Francisca,Luna,Hernandez,3,Carretera,22,A,01/10/2017,14/09/2017
+1049,Jose Justino,Suarez,Tellez,2,Mixcoahtecutli,41,A,01/03/2017,23/10/2016
+1051,Juan,Suarez,Vazquez,1,Mixcoahtecutli,42,A,01/08/2016,09/03/2017
+1052,Santos Floriberto,Suarez,Vazquez,1,Mixcoahtecutli,43,A,01/12/2014,02/11/2014
+1053,Jose Jorge,Tapia,Huerta,4,Veracruz,9,A,01/12/2016,21/02/2016
+1054,Oscar,Tapia,Luna,3,Carretera,23,C,01/12/2017,05/02/2017
+1055,Oscar,Tapia,Luna,4,Vicente,16,C,01/12/2017,05/02/2017
+1056,Guadalupe,Tapia,Vazquez,3,Oaxaca,14,A,01/07/2015,08/05/2016
+1058,Tellez,Florencia,,3,Pazcuaro,1,B,01/12/2017,24/03/2017
+1060,Juventino,Tellez,Hernandez,2,Durango,2,A,01/06/2017,28/06/2017
+1062,Saul,Torres,Palafox,3,No27,2,A,01/08/2013,16/03/2014
+1065,Rosendo,Tellez,Pedraza,4,Potosi,2,A,01/01/2017,02/02/2017
+1067,Lilia,Tellez,Penagos,2,Guanajuato,7,A,01/06/2016,18/09/2016
+1068,Francisca,Tellez,Portillo,2,Ciudad,2,B,01/01/2017,16/10/2016
+1069,Francisca,Tellez,Pozos,4,Potosi,3,A,01/01/2017,27/05/2017
+1075,Guadalupe,Torres,Fernandez,4,Tuxpan,4,A,01/12/2017,08/02/2017
+1078,Francisco,Torres,Hernandez,4,Chiapas,13,A,01/12/2016,16/10/2016
+1079,Josefina,Torres,Palafox,3,Nayarit,16,A,01/08/2012,23/05/2017
+1080,Saul,Torres,Palafox,3,Nayarit,17,A,01/08/2016,22/11/2015
+1081,Jose Dario,Mejia,Hernandez,4,Vicente,17,A,01/10/2017,13/10/2017
+1082,Maria De Los Angeles,Trejo,Hernandez,3,Febrero,5,A,01/05/2017,01/06/2017
+1084,Fernando,Trejo,Telles,4,Matehuala,5,A,01/06/2017,24/07/2017
+1085,Maria Concepcion,Trujillo,Silva,3,Morelos,5,B,01/07/2017,14/06/2017
+1086,Jose Guadalupe,Urbina,Sanchez,1,Seccion,1,A,01/12/2017,04/09/2017
+1092,Agustin,Vargas,Solis,4,Morelia,7,A,01/12/2017,11/06/2017
+1096,Jose Francisco,Vazquez,Hernandez,4,Servidumbre,1,A,01/10/2015,04/10/2015
+1097,Raul,Vazquez,Lozano,2,Guanajuato,8,A,01/06/2017,02/07/2017
+1100,Julio,Vazquez,Ramirez,4,Matehuala,6,A,01/12/2013,30/11/2014
+1101,Enrique,Vazquez,Rivera,3,Acatlan,5,A,01/06/2015,03/09/2015
+1102,Dulce Maria,Vazquez,Suarez,3,Oaxaca,15,A,01/04/2015,28/02/2016
+1103,Jose Bonifacio,Vazquez,Suarez,1,Oaxaca,16,A,01/06/2014,02/11/2014
+1106,Jose Ventura,Velazquez,Gracia,3,Puebla,5,A,01/12/2017,26/02/2017
+1111,Raymundo,Vite,Guerrero,4,Sonora,3,A,01/03/2016,09/10/2016
+1112,Mateo,Zamora,Avila,2,Francisco,2,A,01/08/2017,14/09/2017
+1113,Manuel,Zamora,Diaz,3,Nuevo,6,A,01/12/2017,30/05/2017
+1114,Margarito,Zamora,Portillo,2,Mapini,4,A,01/04/2016,22/05/2016
+1115,Maria Marina,Zamora,Portillo,2,Mapimi,4,A,01/12/2016,01/05/2016
+1117,Rosendo,Baez,Piedras,3,Texmelucan,3,A,01/04/2013,17/09/2016
+1120,Ma Elena,Reyes,Contreras,3,Puebla,6,A,01/12/2015,05/06/2016
+1121,Juan Carlos,Sanchez,Romero,3,Nayarit,18,A,01/06/2015,14/06/2015
+1122,Quirino,Parada,Hernandez,4,Sonora,4,B,01/09/2017,28/09/2017
+1123,Hugo,Romero,Moya,4,Paz,6,A,01/09/2017,04/06/2017
+1125,Jose Marcos,Portillo,Acosta,2,Mapimi,5,A,01/06/2017,28/05/2017
+1126,Mariano,Gonzalez,Hernandez,2,Mixcoahtecutli,44,A,01/04/2017,12/02/2017
+1127,Leticia,Ramirez,Tellez,4,Progreso,1,B,01/10/2015,27/09/2015
+1130,Miguel Angel,Hernandez,Morales,4,Potosi,4,A,01/12/2017,14/02/2017
+1132,Pedro,Nava,Leon,4,Vicente,18,A,01/09/2016,11/09/2016
+1137,Maricela,Cano,Leal,3,Morelos,6,A,01/10/2016,09/10/2016
+1140,Juan,Hernandez,Luna,3,Loma,1,A,01/01/2017,24/09/2017
+1141,Eder,Vazquez,Zavala,1,Xicohtencatl,6,A,01/06/2017,24/06/2017
+1142,Juana,Hernandez,Ordoñez,2,Mixcoahtecutli,45,A,01/12/2017,31/05/2017
+1146,Carlos,Barrios,Rodriguez,3,Michoacan,7,A,01/08/2017,13/09/2017
+1147,David,Luna,Mendez,4,Vicente,19,A,01/06/2006,15/05/2016
+1149,Pedroza David,Del,Razo,4,Mixcoahtecutli,46,A,01/06/2017,02/07/2017
+1152,Juana,Ramirez,Gutierrez,3,Mixcoahtecutli,47,C,01/11/2016,26/09/2016
+1153,Ciri,Hernandez,Morales,3,Puebla,7,A,01/07/2016,25/09/2016
+1154,Yazmin,Delgado,Padilla,4,Duraznos,1,A,01/01/2017,09/06/2017
+1155,Eleuteria,Pedraza,Carmona,3,Revolucio,1,A,01/06/2017,13/09/2017
+1156,Fernando,Trejo,Tellez,4,Matehuala,7,A,01/12/2017,14/10/2012
+1158,Rafael,Ruiz,Avendaño,4,Vicente,20,A,01/10/2017,08/10/2017
+1162,Nadia Vianney,Yebra,Perez,1,Ctlahuicole,1,A,01/12/2017,12/09/2017
+1163,Pablo,Alcantara,Perez,4,Sonora,5,A,01/10/2017,07/09/2017
+1164,Fidel,Arroyo,Huerta,3,Carr,1,A,01/10/2017,07/10/2017
+1165,Gerardo,Sanchez,Davila,4,Tlaxco,1,A,01/12/2017,17/05/2017
+1167,Roberta,Davila,Tellez,1,Csanta,1,A,01/10/2017,04/10/2017
+1170,Cecilia,Hernandez,Luna,3,Nayarit,19,A,01/11/2017,05/10/2017
+1171,Carmona,Meliton,Martinez,3,Nayarit,20,B,01/04/2017,10/02/2017
+1172,Julio,Hernandez,Hernandez,3,Nuevo,7,A,01/10/2017,09/10/2017
+1173,Jose Juan,Sosa,Ñañez,3,Nayarit,21,A,01/12/2017,21/02/2017
+1174,Fermin Antonio,Bonilla,De,4,Duraznos,2,A,01/09/2017,30/09/2017
+1175,Adriana,Luna,Suarez,3,Revolucion,3,A,01/02/2017,22/07/2017
+1176,Degante,Andres,Cruz,2,Guanajuato,9,A,01/12/2017,16/10/2016
+1177,Francisca,Davila,Hernandez,3,Cmichoacan,1,A,01/03/2017,11/03/2017
+1180,Santa,Rebollo,Alcantara,4,Manzanillo,7,C,01/06/2017,27/06/2017
+1181,Esperanza,Degante,Degante,3,Cmixcoahtecutli,4,C,01/10/2017,30/07/2017
+1182,Gregoria Ascencion,Saldaña,Mendez,4,Matehuala,8,B,01/07/2017,03/07/2017
+1183,Jose Marcos,Portillo,Acosta,2,Privmapini,1,A,01/06/2017,28/05/2017
+1184,Marisela Elizabeth,Jimenez,Baez,4,Chabacanos,4,A,01/12/2017,28/05/2017
+1185,Aurelia,Luna,Carmona,4,Matehuala,9,A,01/06/2017,31/05/2017
+1186,Elva,Huerta,Huerta,4,Cmatehuala,1,A,01/08/2017,31/05/2017
+1190,Veronica,Hernandez,Vazquez,3,Nuevo,8,A,01/05/2017,25/06/2017
+1191,Julia,Sanchez,Cortes,4,Cchabacanos,1,B,01/06/2017,25/06/2017
+1193,Gerardo,Huerta,Tellez,2,Allende,4,A,01/10/2017,08/10/2017
+1194,Maddeleinne,Guerrero,Duarte,4,Cvicente,1,A,01/07/2017,04/09/2017
+1195,Mario,Tellez,Briones,2,Cdurango,1,A,01/03/2017,28/03/2017
+1202,Crispin,Hernandez,Mozo,3,Febrero,6,M,01/12/2017,22/07/2017
+1203,Beatriz,Hernandez,Ortega,3,Febrero,7,M,01/12/2017,22/07/2017
+1204,Efrain,Carreño,Piedras,1,Tlaxcala,13,A,01/06/2017,22/07/2017
+1205,Alma Victoria,Padilla,Carmona,1,Ctlaxcala,3,A,01/04/2017,15/05/2017
+1210,Jorge Arturo,Calixto,Soriano,4,Duraznos,3,A,01/09/2017,28/09/2017
+1215,Justino,Herrera,Lopez,3,Nayarit,22,A,01/10/2017,02/10/2017
+1222,Arsenio,Martinez,Gomez,3,Nayarit,23,A,01/06/2017,11/09/2017
+1228,Jose Juan,Sosa,Yañez,3,Nayarit,24,A,01/12/2017,21/02/2017
+1232,Rodrigo,Romano,Hernandez,4,Csonora,1,A,01/09/2017,28/09/2017
+1236,Leticia,Bautista,Hernandez,4,Potosi,5,A,01/01/2017,20/02/2017
+1237,Daniel Ivan,Palafox,Pedroza,3,Aldama,4,A,01/12/2017,19/02/2017
+1239,Antonia Eufrocina,Velazco,Cruz,2,Tlaxco,2,A,01/06/2017,01/06/2017
+1240,Jose Guadalupe,Perez,Guerrero,3,Int,1,A,01/05/2017,11/07/2017

@@ -1,78 +1,38 @@
-﻿using AguaSB.Utilerias;
+﻿using AguaSB.Nucleo;
+using AguaSB.Utilerias;
+using System.Collections.Generic;
 
 namespace AguaSB.Usuarios.ViewModels.Dtos
 {
+    public class Columna : Notificante
+    {
+        private bool activa = true;
+
+        public bool Activo
+        {
+            get { return activa; }
+            set { N.Set(ref activa, value); }
+        }
+
+        public string Nombre { get; set; }
+    }
+
     public class Columnas : Notificante
     {
-        private bool contratos;
-        private bool fechaRegistro;
-        private bool ultimoPago;
-        private bool pagadoHasta;
-        private bool adeudo;
-        private bool seccion;
-        private bool calle;
-        private bool numero;
+        public Columna Contratos { get; } = new Columna { Nombre = nameof(Contratos) };
 
-        public static Columnas Todas => new Columnas()
-        {
-            Contratos = true,
-            FechaRegistro = true,
-            UltimoPago = true,
-            PagadoHasta = true,
-            Adeudo = true,
-            Seccion = true,
-            Calle = true,
-            Numero = true
-        };
+        public Columna FechaRegistro { get; } = new Columna { Nombre = nameof(FechaRegistro) };
 
-        #region Propiedades
-        public bool Contratos
-        {
-            get { return contratos; }
-            set { N.Set(ref contratos, value); }
-        }
+        public Columna UltimoPago { get; } = new Columna { Nombre = nameof(UltimoPago) };
 
-        public bool FechaRegistro
-        {
-            get { return fechaRegistro; }
-            set { N.Set(ref fechaRegistro, value); }
-        }
+        public Columna UltimoMesPagado { get; } = new Columna { Nombre = nameof(UltimoMesPagado) };
 
-        public bool UltimoPago
-        {
-            get { return ultimoPago; }
-            set { N.Set(ref ultimoPago, value); }
-        }
+        public Columna Seccion { get; } = new Columna { Nombre = nameof(Seccion) };
 
-        public bool PagadoHasta
-        {
-            get { return pagadoHasta; }
-            set { N.Set(ref pagadoHasta, value); }
-        }
+        public Columna Calle { get; } = new Columna { Nombre = nameof(Calle) };
 
-        public bool Adeudo
-        {
-            get { return adeudo; }
-            set { N.Set(ref adeudo, value); }
-        }
+        public Columna Numero { get; } = new Columna { Nombre = nameof(Domicilio.Numero) };
 
-        public bool Seccion
-        {
-            get { return seccion; }
-            set { N.Set(ref seccion, value); }
-        }
-
-        public bool Calle
-        {
-            get { return calle; }
-            set { N.Set(ref calle, value); }
-        }
-
-        public bool Numero
-        {
-            get { return numero; }
-            set { N.Set(ref numero, value); }
-        }
-        #endregion
+        public IEnumerable<Columna> Todas => new[] { Contratos, FechaRegistro, UltimoPago, UltimoMesPagado, Seccion, Calle, Numero };
     }
 }
