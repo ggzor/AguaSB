@@ -150,19 +150,24 @@ namespace AguaSB.Contratos.ViewModels
             PagadoHasta = Fecha.MesDe(Fecha.Ahora);
         }
 
-        private Task Inicializar() => Task.Run(() =>
+        private async Task Inicializar()
         {
-            TextoProgreso = "Cargando información de secciones y calles...";
-            MostrarProgreso = true;
+            await Task.Run(() =>
+            {
+                TextoProgreso = "Cargando información de secciones y calles...";
+                MostrarProgreso = true;
 
-            CallesAgrupadas = Domicilios.CallesAgrupadas(SeccionesRepo);
+                CallesAgrupadas = Domicilios.CallesAgrupadas(SeccionesRepo);
 
-            TiposContrato = (from tipo in TiposContratoRepo.Datos
-                             orderby tipo.Nombre
-                             select tipo).ToList();
+                TiposContrato = (from tipo in TiposContratoRepo.Datos
+                                 orderby tipo.Nombre
+                                 select tipo).ToList();
 
-            MostrarProgreso = false;
-        });
+                MostrarProgreso = false;
+            }).ConfigureAwait(true);
+
+            InvocarEnfocar();
+        }
 
         protected abstract Task Entrar(object arg);
 
