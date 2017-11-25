@@ -5,6 +5,7 @@ using AguaSB.Nucleo;
 using AguaSB.Nucleo.Datos;
 using AguaSB.Utilerias;
 using AguaSB.ViewModels;
+using Mehdime.Entity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -96,10 +97,13 @@ namespace AguaSB.Contratos.ViewModels
         #endregion
 
         #region Dependencias
+        protected IDbContextScopeFactory Ambito { get; }
+
         protected IRepositorio<Usuario> UsuariosRepo { get; }
         protected IRepositorio<Contrato> ContratosRepo { get; }
         protected IRepositorio<TipoContrato> TiposContratoRepo { get; }
         protected IRepositorio<Seccion> SeccionesRepo { get; }
+        protected IRepositorio<Calle> CallesRepo { get; }
 
         protected IAdministradorNotificaciones Notificaciones { get; }
         protected INavegador Navegador { get; }
@@ -111,13 +115,16 @@ namespace AguaSB.Contratos.ViewModels
 
         public INodo Nodo { get; }
 
-        protected ModificarContratoBase(IRepositorio<Usuario> usuariosRepo, IRepositorio<Contrato> contratosRepo, IRepositorio<TipoContrato> tiposContratoRepo,
-            IRepositorio<Seccion> seccionesRepo, IAdministradorNotificaciones notificaciones, INavegador navegador)
+        protected ModificarContratoBase(IDbContextScopeFactory ambito, IRepositorio<Usuario> usuariosRepo, IRepositorio<Contrato> contratosRepo, IRepositorio<TipoContrato> tiposContratoRepo,
+            IRepositorio<Seccion> seccionesRepo, IRepositorio<Calle> callesRepo, IAdministradorNotificaciones notificaciones, INavegador navegador)
         {
+            Ambito = ambito ?? throw new ArgumentNullException(nameof(ambito));
+
             UsuariosRepo = usuariosRepo ?? throw new ArgumentNullException(nameof(usuariosRepo));
             ContratosRepo = contratosRepo ?? throw new ArgumentNullException(nameof(contratosRepo));
             TiposContratoRepo = tiposContratoRepo ?? throw new ArgumentNullException(nameof(tiposContratoRepo));
             SeccionesRepo = seccionesRepo ?? throw new ArgumentNullException(nameof(seccionesRepo));
+            CallesRepo = callesRepo ?? throw new ArgumentNullException(nameof(callesRepo));
 
             Notificaciones = notificaciones ?? throw new ArgumentNullException(nameof(notificaciones));
             Navegador = navegador ?? throw new ArgumentNullException(nameof(navegador));
@@ -154,16 +161,19 @@ namespace AguaSB.Contratos.ViewModels
         {
             await Task.Run(() =>
             {
-                TextoProgreso = "Cargando información de secciones y calles...";
-                MostrarProgreso = true;
+                using (var baseDeDatos = Ambito.CreateReadOnly())
+                {
+                    TextoProgreso = "Cargando información de secciones y calles...";
+                    MostrarProgreso = true;
 
-                CallesAgrupadas = Domicilios.CallesAgrupadas(SeccionesRepo);
+                    CallesAgrupadas = Domicilios.CallesAgrupadas(SeccionesRepo);
 
-                TiposContrato = (from tipo in TiposContratoRepo.Datos
-                                 orderby tipo.Nombre
-                                 select tipo).ToList();
+                    TiposContrato = (from tipo in TiposContratoRepo.Datos
+                                     orderby tipo.Nombre
+                                     select tipo).ToList();
 
-                MostrarProgreso = false;
+                    MostrarProgreso = false;
+                }
             }).ConfigureAwait(true);
 
             InvocarEnfocar();

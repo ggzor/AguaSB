@@ -3,6 +3,7 @@ using AguaSB.Navegacion;
 using AguaSB.Notificaciones;
 using AguaSB.Nucleo;
 using GGUtils.MVVM.Async;
+using Mehdime.Entity;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,9 +17,9 @@ namespace AguaSB.Contratos.ViewModels
         public DelegateCommand CancelarComando { get; }
         public AsyncDelegateCommand<int> EditarContratoComando { get; }
 
-        public Editar(IRepositorio<Usuario> usuariosRepo, IRepositorio<Contrato> contratosRepo, IRepositorio<TipoContrato> tiposContratoRepo,
-            IRepositorio<Seccion> seccionesRepo, IAdministradorNotificaciones notificaciones, INavegador navegador)
-            : base(usuariosRepo, contratosRepo, tiposContratoRepo, seccionesRepo, notificaciones, navegador)
+        public Editar(IDbContextScopeFactory ambito, IRepositorio<Usuario> usuariosRepo, IRepositorio<Contrato> contratosRepo, IRepositorio<TipoContrato> tiposContratoRepo,
+            IRepositorio<Seccion> seccionesRepo, IRepositorio<Calle> callesRepo, IAdministradorNotificaciones notificaciones, INavegador navegador)
+            : base(ambito, usuariosRepo, contratosRepo, tiposContratoRepo, seccionesRepo, callesRepo, notificaciones, navegador)
         {
             CancelarComando = new DelegateCommand(Cancelar);
             EditarContratoComando = new AsyncDelegateCommand<int>(EditarContrato, TodosCamposValidos);

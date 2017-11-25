@@ -10,6 +10,7 @@ using AguaSB.Navegacion;
 using AguaSB.Nucleo;
 using AguaSB.Utilerias;
 using AguaSB.Notificaciones;
+using Mehdime.Entity;
 
 namespace AguaSB.Contratos.ViewModels
 {
@@ -24,10 +25,10 @@ namespace AguaSB.Contratos.ViewModels
         private IRepositorio<Tarifa> TarifasRepo { get; }
         #endregion
 
-        public Agregar(
+        public Agregar(IDbContextScopeFactory ambito,
             IRepositorio<Usuario> usuariosRepo, IRepositorio<Contrato> contratosRepo, IRepositorio<TipoContrato> tiposContratoRepo,
-            IRepositorio<Seccion> seccionesRepo, IRepositorio<Ajustador> ajustadoresRepo, IRepositorio<Tarifa> tarifasRepo,
-            IAdministradorNotificaciones notificaciones, INavegador navegador) : base(usuariosRepo, contratosRepo, tiposContratoRepo, seccionesRepo, notificaciones, navegador)
+            IRepositorio<Seccion> seccionesRepo, IRepositorio<Calle> callesRepo, IRepositorio<Ajustador> ajustadoresRepo, IRepositorio<Tarifa> tarifasRepo,
+            IAdministradorNotificaciones notificaciones, INavegador navegador) : base(ambito, usuariosRepo, contratosRepo, tiposContratoRepo, seccionesRepo, callesRepo, notificaciones, navegador)
         {
             AjustadoresRepo = ajustadoresRepo ?? throw new ArgumentNullException(nameof(ajustadoresRepo));
             TarifasRepo = tarifasRepo ?? throw new ArgumentNullException(nameof(tarifasRepo));
@@ -44,21 +45,27 @@ namespace AguaSB.Contratos.ViewModels
                 MostrarProgreso = true;
                 TextoProgreso = "Cargando datos de usuario...";
 
-                var buscarUsuario = Task.Run(() => UsuariosRepo.Datos.SingleOrDefault(u => u.Id == id));
-
-                if (await buscarUsuario is Usuario usuario)
+                await Task.Run(() =>
                 {
-                    Contrato.Usuario = usuario;
-                }
-                else
-                {
-                    Notificaciones.Lanzar(new NotificacionError()
+                    using (var baseDeDatos = Ambito.CreateReadOnly())
                     {
-                        Titulo = "Error",
-                        Clase = "Base de datos",
-                        Descripcion = $"No se encontró al usuario con Id = {id}."
-                    });
-                }
+                        var usuarioBuscado = UsuariosRepo.Datos.SingleOrDefault(u => u.Id == id);
+
+                        if (usuarioBuscado is Usuario usuario)
+                        {
+                            Contrato.Usuario = usuario;
+                        }
+                        else
+                        {
+                            Notificaciones.Lanzar(new NotificacionError()
+                            {
+                                Titulo = "Error",
+                                Clase = "Base de datos",
+                                Descripcion = $"No se encontró al usuario con Id = {id}."
+                            });
+                        }
+                    }
+                }).ConfigureAwait(true);
 
                 MostrarProgreso = false;
             }
@@ -71,34 +78,38 @@ namespace AguaSB.Contratos.ViewModels
 
         private Task<Contrato> EjecutarAgregarContrato(IProgress<(double, string)> progreso) => Task.Run(() =>
         {
-            progreso.Report((20.0, "Registrando pago inicial..."));
-
-            var ajustadorRegistro = AjustadoresRepo.Datos.FirstOrDefault(a => a.Nombre == "Registro");
-
-            if (ajustadorRegistro == null)
-                throw new Exception("No se ha establecido el ajustador para el registro inicial. Registre en la sección \"Editar ajustadores\" un ajustador con el nombre \"Registro\"");
-
-            var pago = new Pago
+            using (var baseDeDatos = Ambito.Create())
             {
-                Ajustador = ajustadorRegistro,
-                Contrato = Contrato,
-                Desde = Fecha.MesDe(PagadoHasta),
-                Hasta = Fecha.MesDe(PagadoHasta),
-                FechaRegistro = Fecha.Ahora
-            };
+                progreso.Report((20.0, "Registrando pago inicial..."));
 
-            pago.Coercer();
+                var ajustadorRegistro = AjustadoresRepo.Datos.SingleOrDefault(a => a.Nombre == "Registro");
 
-            Contrato.Pagos.Add(pago);
+                if (ajustadorRegistro == null)
+                    throw new Exception("No se ha establecido el ajustador para el registro inicial. Registre en la sección \"Editar ajustadores\" un ajustador con el nombre \"Registro\"");
 
-            progreso.Report((50.0, "Agregando contrato..."));
+                var pago = new Pago
+                {
+                    Ajustador = ajustadorRegistro,
+                    Contrato = Contrato,
+                    Desde = Fecha.MesDe(PagadoHasta),
+                    Hasta = Fecha.MesDe(PagadoHasta),
+                    FechaRegistro = Fecha.Ahora
+                };
 
-            var resultado = ContratosRepo.Agregar(Contrato).Result;
-            // TODO: Probablemente remover con EF
-            Contrato.Usuario.Contratos.Add(Contrato);
+                pago.Coercer();
 
-            progreso.Report((100.0, "Completado."));
-            return resultado;
+                progreso.Report((50.0, "Agregando contrato..."));
+
+                Contrato.Pagos.Add(pago);
+
+                NormalizarReferencias.Contrato(Contrato, UsuariosRepo, TiposContratoRepo, CallesRepo);
+
+                var resultado = ContratosRepo.Agregar(Contrato);
+
+                baseDeDatos.SaveChanges();
+
+                return resultado;
+            }
         });
     }
 }
