@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB", "AguaSB\AguaSB.csproj", "{FC378380-823E-4FDE-8525-73C2D4992B3A}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -53,6 +53,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Nucleo.Datos", "AguaSB.Nucleo.Datos\AguaSB.Nucleo.Datos.csproj", "{EBEB09B5-EB4D-495B-AA6A-4504F21554AD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Pagos.Views", "AguaSB.Pagos.Views\AguaSB.Pagos.Views.csproj", "{37AF4178-5C1F-41F5-BA4E-5FB617F67648}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Datos.Entity", "AguaSB.Datos.Entity\AguaSB.Datos.Entity.csproj", "{7EA7DE19-8C59-489B-8105-FF74BD6A07CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -140,6 +142,10 @@ Global
 		{37AF4178-5C1F-41F5-BA4E-5FB617F67648}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37AF4178-5C1F-41F5-BA4E-5FB617F67648}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37AF4178-5C1F-41F5-BA4E-5FB617F67648}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EA7DE19-8C59-489B-8105-FF74BD6A07CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EA7DE19-8C59-489B-8105-FF74BD6A07CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EA7DE19-8C59-489B-8105-FF74BD6A07CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EA7DE19-8C59-489B-8105-FF74BD6A07CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -28,7 +28,16 @@ namespace AguaSB.Datos.Decoradores
         public EntidadActualizada(T entidad) : base(entidad)
         {
             Titulo = $"Actualizando {typeof(T).Name.ToLower()}";
-            Descripcion = $"Se actualizó a {Entidad}";
+            Descripcion = $"Se actualizó a \"{Entidad}\".";
+        }
+    }
+
+    public sealed class EntidadEliminada<T> : NotificacionEntidad<T> where T : IEntidad
+    {
+        public EntidadEliminada(T entidad) : base(entidad)
+        {
+            Titulo = $"Eliminando {typeof(T).Name.ToLower()}";
+            Descripcion = $"Se eliminó \"{Entidad}\"";
         }
     }
 }

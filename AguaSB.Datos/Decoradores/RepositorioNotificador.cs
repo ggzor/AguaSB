@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
-using System.Threading.Tasks;
 
 using AguaSB.Nucleo;
 using AguaSB.Notificaciones;
 
 namespace AguaSB.Datos.Decoradores
 {
-    public class RepositorioNotificador<T> : IRepositorio<T> where T : IEntidad
+    public class RepositorioNotificador<T> : IRepositorio<T> where T : class, IEntidad
     {
         public IRepositorio<T> Repositorio { get; }
 
@@ -30,11 +28,11 @@ namespace AguaSB.Datos.Decoradores
             notificaciones.AgregarFuente(observable);
         }
 
-        public IEnumerable<T> Datos => Repositorio.Datos;
+        public IQueryable<T> Datos => Repositorio.Datos;
 
-        public async Task<T> Agregar(T entidad)
+        public T Agregar(T entidad)
         {
-            var resultado = await Repositorio.Agregar(entidad).ConfigureAwait(false);
+            var resultado = Repositorio.Agregar(entidad);
 
             var notificacion = new EntidadAgregada<T>(resultado);
             RepositorioCambiado?.Invoke(this, notificacion);
@@ -42,11 +40,21 @@ namespace AguaSB.Datos.Decoradores
             return resultado;
         }
 
-        public async Task<T> Actualizar(T entidad)
+        public T Actualizar(T entidad)
         {
-            var resultado = await Repositorio.Actualizar(entidad).ConfigureAwait(false);
+            var resultado = Repositorio.Actualizar(entidad);
 
             var notificacion = new EntidadActualizada<T>(resultado);
+            RepositorioCambiado?.Invoke(this, notificacion);
+
+            return resultado;
+        }
+
+        public T Eliminar(T entidad)
+        {
+            var resultado = Repositorio.Eliminar(entidad);
+
+            var notificacion = new EntidadEliminada<T>(resultado);
             RepositorioCambiado?.Invoke(this, notificacion);
 
             return resultado;

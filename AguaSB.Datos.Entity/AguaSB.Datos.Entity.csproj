@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{965235B6-229E-4AEE-A759-F16DD1EE58F1}</ProjectGuid>
+    <ProjectGuid>{7EA7DE19-8C59-489B-8105-FF74BD6A07CB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AguaSB.Datos</RootNamespace>
-    <AssemblyName>AguaSB.Datos</AssemblyName>
+    <RootNamespace>AguaSB.Datos.Entity</RootNamespace>
+    <AssemblyName>AguaSB.Datos.Entity</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,7 +20,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,13 +28,25 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Mehdime.Entity, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mehdime.Entity.1.0.0\lib\Mehdime.Entity.dll</HintPath>
+    </Reference>
+    <Reference Include="RefactorThis.GraphDiff, Version=3.0.0.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <HintPath>..\packages\RefactorThis.GraphDiff.3.0.0\lib\RefactorThis.GraphDiff.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Reactive, Version=4.0.0.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Reactive.4.0.0-preview00001\lib\net46\System.Reactive.dll</HintPath>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.1.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.4.0\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -46,19 +56,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Decoradores\NotificacionesEntidades.cs" />
-    <Compile Include="Decoradores\RepositorioNotificador.cs" />
-    <Compile Include="IRepositorio.cs" />
-    <Compile Include="NormalizarReferencias.cs" />
+    <Compile Include="EntidadesDbContext.cs" />
+    <Compile Include="RepositorioContactos.cs" />
+    <Compile Include="RepositorioEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AguaSB.Notificaciones\AguaSB.Notificaciones.csproj">
-      <Project>{39485A38-6CB1-40ED-BBC4-E4E2B8F1F74F}</Project>
-      <Name>AguaSB.Notificaciones</Name>
+    <ProjectReference Include="..\AguaSB.Datos\AguaSB.Datos.csproj">
+      <Project>{965235b6-229e-4aee-a759-f16dd1ee58f1}</Project>
+      <Name>AguaSB.Datos</Name>
     </ProjectReference>
     <ProjectReference Include="..\AguaSB.Nucleo\AguaSB.Nucleo.csproj">
-      <Project>{10e1e718-ea42-4519-baa2-7cd3c21b442a}</Project>
+      <Project>{10E1E718-EA42-4519-BAA2-7CD3C21B442A}</Project>
       <Name>AguaSB.Nucleo</Name>
     </ProjectReference>
   </ItemGroup>

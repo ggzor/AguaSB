@@ -1,15 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-
+﻿using System.Linq;
 using AguaSB.Nucleo;
 
 namespace AguaSB.Datos
 {
-    public interface IRepositorio<T> where T : IEntidad
+    public interface IRepositorio<T> where T : class, IEntidad
     {
-        IEnumerable<T> Datos { get; }
+        IQueryable<T> Datos { get; }
 
-        Task<T> Agregar(T entidad);
-        Task<T> Actualizar(T entidad);
+        T Agregar(T entidad);
+        T Actualizar(T entidad);
+        T Eliminar(T entidad);
     }
 }
