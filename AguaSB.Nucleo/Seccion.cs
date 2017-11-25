@@ -19,12 +19,15 @@ namespace AguaSB.Nucleo
         private int orden;
 
         [Required(ErrorMessage = Validacion.CampoRequerido)]
+        [Index(IsUnique = true)]
+        [MaxLength(50)]
         public string Nombre
         {
             get { return nombre; }
             set { N.Validate(ref nombre, value); }
         }
 
+        [Index(IsUnique = true)]
         public int Orden
         {
             get { return orden; }

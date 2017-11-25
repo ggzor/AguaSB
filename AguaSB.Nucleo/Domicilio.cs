@@ -18,13 +18,14 @@ namespace AguaSB.Nucleo
         public int Id { get; set; }
 
         [Required(ErrorMessage = Validacion.CampoRequerido)]
-        public Calle Calle
+        public virtual Calle Calle
         {
             get { return calle; }
             set { N.Validate(ref calle, value); }
         }
 
         [Required(ErrorMessage = Validacion.CampoRequerido)]
+        [MaxLength(20)]
         public string Numero
         {
             get { return numero; }

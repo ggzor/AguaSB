@@ -19,6 +19,8 @@ namespace AguaSB.Nucleo
         private decimal multiplicador;
 
         [Required(ErrorMessage = Mensajes.Validacion.CampoRequerido)]
+        [MaxLength(100)]
+        [Index(IsUnique = true)]
         public string Nombre
         {
             get { return nombre; }

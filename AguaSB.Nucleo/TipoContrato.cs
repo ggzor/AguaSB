@@ -21,13 +21,15 @@ namespace AguaSB.Nucleo
         public int Id { get; set; }
 
         [Required(ErrorMessage = Validacion.CampoRequerido)]
+        [MaxLength(100)]
+        [Index(IsUnique = true)]
         public string Nombre
         {
             get { return nombre; }
             set { N.Validate(ref nombre, value); }
         }
 
-        // TODO: Agregar validación
+        [Range(typeof(decimal), "0.01", "100")]
         public decimal Multiplicador
         {
             get { return multiplicador; }

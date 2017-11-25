@@ -9,12 +9,16 @@ namespace AguaSB.Nucleo
     [Table("Personas")]
     public class Persona : Usuario
     {
+        public const string IndiceNombreUnico = "NombreUnico";
+
         private string nombre;
         private string apellidoPaterno;
         private string apellidoMaterno;
 
         [Required(ErrorMessage = Validacion.CampoRequerido)]
         [RegularExpression(Validacion.PatronNombrePersona, ErrorMessage = Validacion.NombrePersonaInvalido)]
+        [MaxLength(100)]
+        [Index(IndiceNombreUnico, IsUnique = true, Order = 3)]
         public string Nombre
         {
             get { return nombre; }
@@ -23,6 +27,8 @@ namespace AguaSB.Nucleo
 
         [Required(ErrorMessage = Validacion.CampoRequerido)]
         [RegularExpression(Validacion.PatronNombrePersona, ErrorMessage = Validacion.ApellidoInvalido)]
+        [MaxLength(100)]
+        [Index(IndiceNombreUnico, IsUnique = true, Order = 1)]
         public string ApellidoPaterno
         {
             get { return apellidoPaterno; }
@@ -31,6 +37,8 @@ namespace AguaSB.Nucleo
 
         [Required(ErrorMessage = Validacion.CampoRequerido)]
         [RegularExpression(Validacion.PatronNombrePersona, ErrorMessage = Validacion.ApellidoInvalido)]
+        [MaxLength(100)]
+        [Index(IndiceNombreUnico, IsUnique = true, Order = 2)]
         public string ApellidoMaterno
         {
             get { return apellidoMaterno; }

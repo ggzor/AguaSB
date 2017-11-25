@@ -13,6 +13,8 @@ namespace AguaSB.Nucleo
         private Persona representante;
 
         [Required(ErrorMessage = Validacion.CampoRequerido)]
+        [MaxLength(200)]
+        [Index(IsUnique = true)]
         public string Nombre
         {
             get { return nombre; }
@@ -24,6 +26,8 @@ namespace AguaSB.Nucleo
             }
         }
 
+        [MaxLength(16)]
+        [Index(IsUnique = true)]
         public string Rfc
         {
             get { return rfc; }
@@ -31,7 +35,7 @@ namespace AguaSB.Nucleo
         }
 
         [Required(ErrorMessage = Validacion.CampoRequerido)]
-        public Persona Representante
+        public virtual Persona Representante
         {
             get { return representante; }
             set { N.Validate(ref representante, value); }

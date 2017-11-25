@@ -18,6 +18,7 @@ namespace AguaSB.Nucleo
         public int Id { get; set; }
 
         [Required(ErrorMessage = Validacion.CampoRequerido)]
+        [MaxLength(200)]
         public string Nombre
         {
             get { return nombre; }
@@ -25,7 +26,7 @@ namespace AguaSB.Nucleo
         }
 
         [Required(ErrorMessage = Validacion.CampoRequerido)]
-        public Seccion Seccion
+        public virtual Seccion Seccion
         {
             get { return seccion; }
             set { N.Validate(ref seccion, value); }

@@ -53,7 +53,8 @@ namespace AguaSB.Nucleo
             get { return montoParcial; }
             set { N.Validate(ref montoParcial, value); }
         }
-
+        
+        [Required(ErrorMessage = "Todos los pagos deben tener ajustador. En caso de no ser una promoción deben llevar el ajustador por defecto.")]
         public Ajustador Ajustador
         {
             get { return ajustador; }

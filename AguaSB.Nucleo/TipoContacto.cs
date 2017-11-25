@@ -18,6 +18,8 @@ namespace AguaSB.Nucleo
         private string expresionRegular;
 
         [Required(ErrorMessage = Validacion.CampoRequerido)]
+        [MaxLength(50)]
+        [Index(IsUnique = true)]
         public string Nombre
         {
             get { return nombre; }

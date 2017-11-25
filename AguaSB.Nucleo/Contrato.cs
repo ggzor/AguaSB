@@ -30,13 +30,14 @@ namespace AguaSB.Nucleo
         }
 
         [Required(ErrorMessage = Validacion.CampoRequerido)]
-        public TipoContrato TipoContrato
+        public virtual TipoContrato TipoContrato
         {
             get { return tipoContrato; }
             set { N.Validate(ref tipoContrato, value); }
         }
 
         [Required(ErrorMessage = Validacion.CampoRequerido)]
+        [MaxLength(10)]
         public string MedidaToma
         {
             get { return medidaToma; }
@@ -44,7 +45,7 @@ namespace AguaSB.Nucleo
         }
 
         [Required(ErrorMessage = Validacion.CampoRequerido)]
-        public Domicilio Domicilio
+        public virtual Domicilio Domicilio
         {
             get { return domicilio; }
             set { N.Validate(ref domicilio, value); }

@@ -14,17 +14,30 @@ namespace AguaSB.Nucleo
     public class Contacto : IEntidad, INotifyPropertyChanged, INotifyDataErrorInfo
     {
         private string informacion;
+        private TipoContacto tipoContacto;
+        private Usuario usuario;
 
         public int Id { get; set; }
 
         [Required(ErrorMessage = Validacion.CampoRequerido)]
-        public TipoContacto TipoContacto { get; set; }
+        public virtual TipoContacto TipoContacto
+        {
+            get { return tipoContacto; }
+            set { N.Validate(ref tipoContacto, value); }
+        }
 
         [CustomValidation(typeof(Contacto), nameof(ValidarInformacion))]
         public string Informacion
         {
             get { return informacion; }
             set { N.Validate(ref informacion, value); }
+        }
+
+        [Required(ErrorMessage = "Se debe especificar el usuario propietario del contrato.")]
+        public Usuario Usuario
+        {
+            get { return usuario; }
+            set { N.Validate(ref usuario, value); }
         }
 
         public Contacto()
@@ -69,7 +82,7 @@ namespace AguaSB.Nucleo
                 }
                 else
                 {
-                    throw new ValidationException("El tipo de contacto debe estar establecido antes que la información.");
+                    return ValidationResult.Success;
                 }
             }
             else

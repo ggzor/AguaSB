@@ -8,13 +8,13 @@ namespace AguaSB.Nucleo
         /// <summary>
         /// IMPORTANTE: El arreglo tarifas debe estar ordenado desde la más antigua hasta la menos antigua. De lo contrario se calculara incorrectamente el adeudo.
         /// </summary>
-        public static decimal Calcular(DateTime ultimoMesPagado, TipoContrato tipoContrato, Tarifa[] tarifasOrdenadas)
+        public static decimal Calcular(DateTime ultimoMesPagado, decimal multiplicador, Tarifa[] tarifasOrdenadas)
         {
             var primerMesAdeudo = ultimoMesPagado.AddMonths(1);
             var esteMes = Fecha.MesDe(Fecha.Ahora);
 
             if (primerMesAdeudo <= esteMes)
-                return CalcularAdeudo(primerMesAdeudo, esteMes, tarifasOrdenadas) * tipoContrato.Multiplicador;
+                return CalcularAdeudo(primerMesAdeudo, esteMes, tarifasOrdenadas) * multiplicador;
             else
                 return 0.0m;
         }
