@@ -4,6 +4,7 @@ using AguaSB.Nucleo;
 using AguaSB.Utilerias;
 using AguaSB.Utilerias.IO;
 using AguaSB.ViewModels;
+using Mehdime.Entity;
 using MoreLinq;
 using System;
 using System.Collections.Generic;
@@ -134,14 +135,17 @@ namespace AguaSB.Usuarios.ViewModels
         #endregion
 
         #region Dependencias
+        protected IDbContextScopeFactory Ambito { get; }
+
         protected IRepositorio<Usuario> UsuariosRepo { get; }
         private IRepositorio<TipoContacto> TiposContactoRepo { get; }
         #endregion
 
         public INodo Nodo { get; }
 
-        protected ModificarUsuarioBase(IRepositorio<Usuario> usuariosRepo, IRepositorio<TipoContacto> tiposContactoRepo)
+        protected ModificarUsuarioBase(IDbContextScopeFactory ambito, IRepositorio<Usuario> usuariosRepo, IRepositorio<TipoContacto> tiposContactoRepo)
         {
+            Ambito = ambito ?? throw new ArgumentNullException(nameof(ambito));
             UsuariosRepo = usuariosRepo ?? throw new ArgumentNullException(nameof(usuariosRepo));
             TiposContactoRepo = tiposContactoRepo ?? throw new ArgumentNullException(nameof(tiposContactoRepo));
 
@@ -222,21 +226,24 @@ namespace AguaSB.Usuarios.ViewModels
                 SugerenciasNombres = nombresArchivo.OrderBy(_ => _).Distinct().ToList();
                 SugerenciasApellidos = apellidosArchivo.OrderBy(_ => _).Distinct().ToList();
 
-                IEnumerable<Persona> personas = UsuariosRepo.Datos.OfType<Persona>();
+                using (var baseDeDatos = Ambito.CreateReadOnly())
+                {
+                    IEnumerable<Persona> personas = UsuariosRepo.Datos.OfType<Persona>();
 
-                var nombresBaseDeDatos = personas.Select(_ => _.Nombre)
-                    .OrderBy(_ => _)
-                    .Distinct()
-                    .ToList();
+                    var nombresBaseDeDatos = personas.Select(_ => _.Nombre)
+                        .OrderBy(_ => _)
+                        .Distinct()
+                        .ToList();
 
-                var apellidosBaseDeDatos = personas.Select(_ => _.ApellidoPaterno)
-                    .Concat(personas.Select(_ => _.ApellidoMaterno))
-                    .OrderBy(_ => _)
-                    .Distinct()
-                    .ToList();
+                    var apellidosBaseDeDatos = personas.Select(_ => _.ApellidoPaterno)
+                        .Concat(personas.Select(_ => _.ApellidoMaterno))
+                        .OrderBy(_ => _)
+                        .Distinct()
+                        .ToList();
 
-                SugerenciasNombres = SugerenciasNombres.OrderedMerge(nombresBaseDeDatos).ToList();
-                SugerenciasApellidos = SugerenciasApellidos.OrderedMerge(apellidosBaseDeDatos).ToList();
+                    SugerenciasNombres = SugerenciasNombres.OrderedMerge(nombresBaseDeDatos).ToList();
+                    SugerenciasApellidos = SugerenciasApellidos.OrderedMerge(apellidosBaseDeDatos).ToList();
+                }
 
                 try
                 {
@@ -256,7 +263,11 @@ namespace AguaSB.Usuarios.ViewModels
 
         protected virtual async Task Inicializar()
         {
-            TiposContacto = await Task.Run(() => TiposContactoRepo.Datos.ToList()).ConfigureAwait(true);
+            TiposContacto = await Task.Run(() =>
+            {
+                using (var baseDeDatos = Ambito.CreateReadOnly())
+                    return TiposContactoRepo.Datos.ToList();
+            }).ConfigureAwait(true);
 
             ReestablecerPersonaComando.Execute(null);
             ReestablecerNegocioComando.Execute(null);
@@ -276,7 +287,7 @@ namespace AguaSB.Usuarios.ViewModels
 
         protected async void InvocarEnfocar()
         {
-            await Task.Delay(200).ConfigureAwait(true);
+            await Task.Delay(300).ConfigureAwait(true);
             Enfocar?.Invoke(this, EventArgs.Empty);
         }
 
@@ -297,34 +308,30 @@ namespace AguaSB.Usuarios.ViewModels
                 .ToArray())
             && (!Negocio?.TieneCamposRequeridosVacios ?? false) && (!Negocio?.Representante?.TieneCamposRequeridosVacios ?? false);
 
-        protected Task<int> EjecutarAccionEnPersona(Func<IProgress<(double, string)>, Task<int>> accion, IProgress<(double, string)> progreso)
+        protected Task<int> EjecutarAccionEnPersona(Func<IProgress<(double, string)>, Task<int>> accion, IProgress<(double, string)> progreso) =>
+            EjecutarAccionManejando(accion, Persona, b => MostrarMensajeErrorPersona = b, b => PuedeReestablecerPersona = b, ReestablecerPersonaComando, progreso);
+
+        protected Task<int> EjecutarAccionEnNegocio(Func<IProgress<(double, string)>, Task<int>> accion, IProgress<(double, string)> progreso) =>
+            EjecutarAccionManejando(accion, Negocio, b => MostrarMensajeErrorNegocio = b, b => PuedeReestablecerNegocio = b, ReestablecerNegocioComando, progreso);
+
+        protected IEnumerable<Contacto> NormalizarContactos(ICollection<Contacto> contactos)
         {
-            MostrarMensajeErrorPersona = true;
+            var tiposContactos = TiposContactoRepo.Datos.ToArray();
+            var borrados = new List<Contacto>();
 
-            Persona.Contactos = ContactosPersona.ToList();
+            contactos.Where(contacto => string.IsNullOrWhiteSpace(contacto?.Informacion)).ToList()
+                .ForEach(c => { contactos.Remove(c); borrados.Add(c); });
 
-            return EjecutarAccionManejando(accion, Persona, b => PuedeReestablecerPersona = b, ReestablecerPersonaComando, progreso);
+            foreach (var contacto in contactos)
+                contacto.TipoContacto = tiposContactos.Single(tc => tc.Nombre == contacto.TipoContacto.Nombre);
+
+            return borrados;
         }
 
-        protected Task<int> EjecutarAccionEnNegocio(Func<IProgress<(double, string)>, Task<int>> accion, IProgress<(double, string)> progreso)
+        private async Task<int> EjecutarAccionManejando(Func<IProgress<(double, string)>, Task<int>> accion,
+            Usuario usuario, Action<bool> mostrarMensajeError, Action<bool> puedeReestablecer, ICommand reestablecer, IProgress<(double, string)> progreso)
         {
-            MostrarMensajeErrorNegocio = true;
-
-            Negocio.Contactos = ContactosNegocio.ToList();
-            Negocio.Representante.Contactos = ContactosRepresentante.ToList();
-
-            return EjecutarAccionManejando(accion, Negocio, b => PuedeReestablecerNegocio = b, ReestablecerNegocioComando, progreso);
-        }
-
-        protected async Task<int> EjecutarAccionManejando(Func<IProgress<(double, string)>, Task<int>> accion,
-            Usuario usuario, Action<bool> puedeReestablecer, ICommand reestablecer, IProgress<(double, string)> progreso)
-        {
-            foreach (var contacto in usuario.Contactos.ToArray())
-            {
-                if (string.IsNullOrWhiteSpace(contacto?.Informacion))
-                    usuario.Contactos.Remove(contacto);
-            }
-
+            mostrarMensajeError(true);
             puedeReestablecer(false);
             Usuario = usuario;
 

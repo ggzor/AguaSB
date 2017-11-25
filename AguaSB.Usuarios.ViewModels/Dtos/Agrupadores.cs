@@ -8,22 +8,24 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
 {
     public static class Agrupadores
     {
+        private static readonly Seccion SinSeccion = new Seccion { Nombre = "Sin domicilios registrados", Orden = -1 };
+
         public static readonly Agrupador<Seccion> Seccion = new Agrupador<Seccion>
         {
             Nombre = "Sección",
             Propiedad = nameof(Seccion),
-            SelectorClave = _ => _.Domicilio.Calle.Seccion,
+            SelectorClave = _ => _?.Domicilio?.Calle?.Seccion ?? SinSeccion,
             SelectorNombre = _ => _.Nombre,
             Comparador = new FuncComparer<Seccion>((s1, s2) => s1.Orden.CompareTo(s2.Orden))
         };
 
-        public static readonly Agrupador<Calle> Calle = new Agrupador<Calle>
+        public static readonly Agrupador<string> Calle = new Agrupador<string>
         {
             Nombre = nameof(Calle),
             Propiedad = nameof(Calle),
-            SelectorClave = _ => _.Domicilio.Calle,
-            SelectorNombre = _ => _.Nombre,
-            Comparador = new FuncComparer<Calle>((c1, c2) => c1.Nombre.CompareTo(c2.Nombre))
+            SelectorClave = _ => _?.Domicilio?.Calle?.Nombre,
+            SelectorNombre = _ => _ ?? "Sin domicilios registrados",
+            Comparador = Comparer<string>.Default
         };
 
         public static readonly Agrupador<(decimal, decimal)> Adeudo = new Agrupador<(decimal, decimal)>

@@ -12,7 +12,6 @@ using MoreLinq;
 using AguaSB.Views.Utilerias;
 using AguaSB.Usuarios.Views.Utilerias;
 using AguaSB.Usuarios.ViewModels.Dtos;
-using System.Windows.Controls.Primitives;
 
 namespace AguaSB.Usuarios.Views
 {
@@ -144,7 +143,7 @@ namespace AguaSB.Usuarios.Views
             switch (tecla)
             {
                 case Key.F5:
-                    ViewModel.EjecutarBusqueda();
+                    ViewModel.Buscar(ViewModels.Listado.ModoBusqueda.Forzar);
                     break;
             }
         }
@@ -168,7 +167,7 @@ namespace AguaSB.Usuarios.Views
             }
         }
 
-        private void Actualizar_Click(object sender, RoutedEventArgs e) => ViewModel.EjecutarBusqueda();
+        private void Actualizar_Click(object sender, RoutedEventArgs e) => ViewModel.Buscar(ViewModels.Listado.ModoBusqueda.Forzar);
 
         private void SeleccionCambiada(object sender, SelectionChangedEventArgs e)
         {

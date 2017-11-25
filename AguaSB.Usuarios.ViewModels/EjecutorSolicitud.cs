@@ -9,11 +9,11 @@ using AguaSB.Utilerias;
 
 namespace AguaSB.Usuarios.ViewModels
 {
-    public delegate decimal CalculadorAdeudos(DateTime ultimoMesPagado, TipoContrato tipoContrato);
+    public delegate decimal CalculadorAdeudos(DateTime ultimoMesPagado, decimal multiplicador);
 
-    public sealed class EjecutorSolicitud
+    public static class EjecutorSolicitud
     {
-        public IList<ResultadoUsuario> Ejecutar(IQueryable<Usuario> valores, Solicitud solicitud, CalculadorAdeudos calculadorAdeudos)
+        public static IList<ResultadoUsuario> Ejecutar(IQueryable<Usuario> valores, Solicitud solicitud, CalculadorAdeudos calculadorAdeudos)
         {
             var filtros = new Func<IQueryable<Usuario>, Solicitud, IQueryable<Usuario>>[]
             {
@@ -23,33 +23,44 @@ namespace AguaSB.Usuarios.ViewModels
 
             valores = filtros.Aggregate(valores, (acc, f) => f(acc, solicitud));
 
-            var resultados = valores.ToList().Select(u =>
+            var usuariosSinContratos = valores.Where(_ => !_.Contratos.Any());
+
+            var usuariosConContratos = from Usuario in valores
+                                       where Usuario.Contratos.Any()
+                                       let PrimerContrato = Usuario.Contratos.OrderByDescending(_ => _.FechaRegistro).FirstOrDefault()
+                                       let Numero = PrimerContrato.Domicilio.Numero
+                                       let Calle = PrimerContrato.Domicilio.Calle
+                                       let Seccion = Calle.Seccion
+                                       let UltimoPago = PrimerContrato.Pagos.OrderByDescending(_ => _.FechaRegistro).FirstOrDefault().FechaRegistro
+                                       let DatosContratos = from Contrato in Usuario.Contratos
+                                                            let UltimoMesPagado = Contrato.Pagos.OrderByDescending(_ => _.FechaRegistro).FirstOrDefault().Hasta
+                                                            select new { Contrato, UltimoMesPagado, Contrato.TipoContrato }
+                                       select new { Usuario, Numero, Calle, Seccion, UltimoPago, DatosContratos };
+
+            var resultadosSinContratos = usuariosSinContratos.Select(usuario => new ResultadoUsuario { Usuario = usuario }).ToArray();
+
+            var resultadosConContratos = usuariosConContratos.ToArray().Select(datosUsuario =>
             {
                 var resultado = new ResultadoUsuario
                 {
-                    Usuario = u,
-                    Contratos = u.Contratos.ToList().Select(c =>
+                    Contratos = datosUsuario.DatosContratos.ToArray().Select(datosContrato => new ResultadoContrato
                     {
-                        var resultadoContrato = new ResultadoContrato
-                        {
-                            Contrato = c,
-                            UltimoMesPagado = c.Pagos.OrderByDescending(_ => _.FechaRegistro).FirstOrDefault()?.Hasta
-                        };
-
-                        if (resultadoContrato.UltimoMesPagado is DateTime d)
-                            resultadoContrato.Adeudo = calculadorAdeudos(d, c.TipoContrato);
-
-                        return resultadoContrato;
+                        Contrato = datosContrato.Contrato,
+                        UltimoMesPagado = datosContrato.UltimoMesPagado,
+                        Adeudo = calculadorAdeudos(datosContrato.UltimoMesPagado, datosContrato.TipoContrato.Multiplicador)
                     }),
-                    Domicilio = u.Contratos.FirstOrDefault()?.Domicilio,
-                    UltimoPago = u.Contratos.FirstOrDefault()?.Pagos.OrderByDescending(_ => _.FechaRegistro).FirstOrDefault()?.FechaRegistro
+                    Domicilio = new Domicilio { Numero = datosUsuario.Numero, Calle = new Calle { Nombre = datosUsuario.Calle.Nombre, Seccion = datosUsuario.Seccion } },
+                    UltimoMesPagado = Fecha.MesDe(datosUsuario.DatosContratos.OrderByDescending(_ => _.UltimoMesPagado).First().UltimoMesPagado),
+                    UltimoPago = datosUsuario.UltimoPago,
+                    Usuario = datosUsuario.Usuario
                 };
 
                 resultado.Adeudo = resultado.Contratos.Select(_ => _.Adeudo).Sum();
-                resultado.UltimoMesPagado = resultado.Contratos.Select(_ => _.UltimoMesPagado).Where(_ => _ != null).Min();
 
                 return resultado;
-            });
+            }).ToArray();
+
+            var resultados = resultadosConContratos.Concat(resultadosSinContratos).OrderBy(_ => _.Usuario.Id);
 
             return FiltrarPorAdeudo(solicitud, resultados);
         }
@@ -219,7 +230,7 @@ namespace AguaSB.Usuarios.ViewModels
                                   where usuario.Contratos.Any(contrato => contrato.Pagos.Any())
                                   where (from contrato in usuario.Contratos
                                          where contrato.Pagos.Any()
-                                         let pagadoHasta = contrato.Pagos.OrderByDescending(pago => pago.FechaRegistro).First().Hasta
+                                         let pagadoHasta = contrato.Pagos.OrderByDescending(pago => pago.FechaRegistro).FirstOrDefault().Hasta
                                          where desde <= pagadoHasta && pagadoHasta <= hasta
                                          select pagadoHasta).Any()
                                   select usuario;
@@ -230,7 +241,7 @@ namespace AguaSB.Usuarios.ViewModels
                                   where usuario.Contratos.Any(contrato => contrato.Pagos.Any())
                                   where (from contrato in usuario.Contratos
                                          where contrato.Pagos.Any()
-                                         let pagadoHasta = contrato.Pagos.OrderByDescending(pago => pago.FechaRegistro).First().Hasta
+                                         let pagadoHasta = contrato.Pagos.OrderByDescending(pago => pago.FechaRegistro).FirstOrDefault().Hasta
                                          where desde <= pagadoHasta
                                          select pagadoHasta).Any()
                                   select usuario;
@@ -246,7 +257,7 @@ namespace AguaSB.Usuarios.ViewModels
                                   where usuario.Contratos.Any(contrato => contrato.Pagos.Any())
                                   where (from contrato in usuario.Contratos
                                          where contrato.Pagos.Any()
-                                         let pagadoHasta = contrato.Pagos.OrderByDescending(pago => pago.FechaRegistro).First().Hasta
+                                         let pagadoHasta = contrato.Pagos.OrderByDescending(pago => pago.FechaRegistro).FirstOrDefault().Hasta
                                          where pagadoHasta <= hasta
                                          select pagadoHasta).Any()
                                   select usuario;

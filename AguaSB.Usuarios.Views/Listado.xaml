@@ -467,21 +467,21 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <StackPanel Grid.Row="0" Margin="22 0" Opacity="0.6" Orientation="Horizontal" Visibility="{Binding Estado.HayResultados, Converter={StaticResource BoolToVisibility}}">
+                    <StackPanel Grid.Row="0" Margin="22 0" Opacity="0.6" Orientation="Horizontal" Visibility="{Binding Busqueda.HayResultados, Converter={StaticResource BoolToVisibility}}">
                         <icons:PackIconMaterial Kind="Apps" Width="20" Height="20" VerticalAlignment="Center"/>
-                        <TextBlock Margin="10 0 0 0" Text="{Binding BuscarComando.Execution.Result.Conteo, StringFormat={}Resultados ({0}), FallbackValue=Resultados}" 
+                        <TextBlock Margin="10 0 0 0" Text="{Binding Busqueda.Conteo, StringFormat={}Resultados ({0}), FallbackValue=Resultados}" 
                                    FontSize="{StaticResource TamanoH3}" FontWeight="DemiBold" Style="{StaticResource FadeTag}"
                                    VerticalAlignment="Center"/>
                     </StackPanel>
 
-                    <Separator Grid.Row="1" Opacity="0.5" Margin="5" Visibility="{Binding Estado.HayResultados, Converter={StaticResource BoolToVisibility}}"/>
+                    <Separator Grid.Row="1" Opacity="0.5" Margin="5" Visibility="{Binding Busqueda.HayResultados, Converter={StaticResource BoolToVisibility}}"/>
 
-                    <StackPanel Name="Navegacion" Grid.Row="0" Margin="22 0" Orientation="Horizontal" HorizontalAlignment="Center" Visibility="{Binding Estado.HayResultados, Converter={StaticResource BoolToVisibility}}">
-                        <ComboBox Name="NavegadorResultados" Margin="20 0 0 0" Width="300" Tag="Ir a..." VerticalAlignment="Center" ItemsSource="{Binding BuscarComando.Execution.Result.PuntosNavegacion}"
+                    <StackPanel Name="Navegacion" Grid.Row="0" Margin="22 0" Orientation="Horizontal" HorizontalAlignment="Center" Visibility="{Binding Busqueda.HayResultados, Converter={StaticResource BoolToVisibility}}">
+                        <ComboBox Name="NavegadorResultados" Margin="20 0 0 0" Width="300" Tag="Ir a..." VerticalAlignment="Center" ItemsSource="{Binding Busqueda.PuntosNavegacion}"
                                   SelectionChanged="NavegadorResultados_SeleccionCambiada" Estilos:Foco.SiguienteFoco="{Binding ElementName=Busqueda}"/>
                     </StackPanel>
 
-                    <StackPanel Name="Agrupacion" Grid.Row="0" Margin="22 0" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding Estado.HayResultados, Converter={StaticResource BoolToVisibility}}">
+                    <StackPanel Name="Agrupacion" Grid.Row="0" Margin="22 0" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding Busqueda.HayResultados, Converter={StaticResource BoolToVisibility}}">
                         <icons:PackIconModern Kind="BoxLayered" Margin="0 0 0 5" Width="20" Height="20" VerticalAlignment="Bottom" Style="{StaticResource IconoLateral}"
                                               Estilos:Icono.Enfocado="{Binding ElementName=AgruparPor, Path=IsKeyboardFocusWithin}"/>
                         <ComboBox Name="AgruparPor" Margin="20 0 0 0" Tag="Agrupar por...      " ItemsSource="{Binding Agrupadores}"
@@ -498,33 +498,33 @@
                             </StackPanel>
                         </Grid>
 
-                        <Grid Name="Buscando" Background="White" Opacity="0" Tag="{Binding Estado.Buscando}" Style="{StaticResource FadeTag}">
+                        <Grid Name="Buscando" Background="White" Opacity="0" Tag="{Binding Busqueda.Buscando}" Style="{StaticResource FadeTag}">
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <metro:ProgressRing Width="100" Height="100" HorizontalAlignment="Center"/>
                                 <TextBlock Margin="20" Text="Buscando..." Style="{StaticResource h3}"/>
                             </StackPanel>
                         </Grid>
 
-                        <Grid Name="NoResultados" Background="White" Opacity="0" Tag="{Binding Estado.NoHayResultados}" Style="{StaticResource FadeTag}">
+                        <Grid Name="NoResultados" Background="White" Opacity="0" Tag="{Binding Busqueda.NoHayResultados}" Style="{StaticResource FadeTag}">
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <icons:PackIconModern Kind="MagnifyMinus" Width="100" Height="100" Opacity="0.6" HorizontalAlignment="Center"/>
                                 <TextBlock Margin="20" Text="No hay resultados" Opacity="0.6" Style="{StaticResource h3}"/>
                             </StackPanel>
                         </Grid>
 
-                        <Grid Name="Error" Background="White" Opacity="0" Tag="{Binding BuscarComando.Execution.IsFaulted}" Style="{StaticResource FadeTag}">
+                        <Grid Name="Error" Background="White" Opacity="0" Tag="{Binding Busqueda.TieneErrores}" Style="{StaticResource FadeTag}">
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <icons:PackIconModern Kind="Close" Width="100" Height="100" Opacity="0.6" HorizontalAlignment="Center"/>
                                 <TextBlock Margin="20" Text="Ocurrio un error" Opacity="0.6" Style="{StaticResource h3}"
                                            HorizontalAlignment="Center"/>
-                                <TextBlock MaxWidth="400" Text="{Binding BuscarComando.Execution.ExceptionMessage}" 
+                                <TextBlock MaxWidth="400" Text="{Binding Busqueda.Error}" 
                                            Opacity="0.5" Style="{StaticResource h4}" TextAlignment="Center" TextWrapping="WrapWithOverflow"/>
                             </StackPanel>
                         </Grid>
 
-                        <Grid Name="Resultados" Background="White" Opacity="0" Tag="{Binding Estado.HayResultados}" Style="{StaticResource FadeTag}">
+                        <Grid Name="Resultados" Background="White" Opacity="0" Tag="{Binding Busqueda.HayResultados}" Style="{StaticResource FadeTag}">
                             <Grid Grid.IsSharedSizeScope="True">
-                                <ListView ItemsSource="{Binding BuscarComando.Execution.Result.Resultados}" Name="ListaResultados"
+                                <ListView ItemsSource="{Binding Busqueda.Resultados}" Name="ListaResultados"
                                           VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.IsVirtualizingWhenGrouping="True"
                                           SelectionChanged="SeleccionCambiada" material:ListViewAssist.ListViewItemPadding="8 4.5">
                                     <ListView.View>

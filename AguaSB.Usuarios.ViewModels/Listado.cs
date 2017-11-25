@@ -16,6 +16,8 @@ using System.Waf.Applications;
 using System.Waf.Foundation;
 using AguaSB.Utilerias.Solicitudes;
 using System.Collections;
+using Mehdime.Entity;
+using System.Threading;
 
 namespace AguaSB.Usuarios.ViewModels
 {
@@ -39,7 +41,7 @@ namespace AguaSB.Usuarios.ViewModels
         private IOrdenamiento ordenamiento;
         private string textoBusqueda;
 
-        private EstadoBusqueda estado;
+        private Busqueda busqueda;
         #endregion
 
         #region Propiedades
@@ -109,17 +111,16 @@ namespace AguaSB.Usuarios.ViewModels
             set { SetProperty(ref textoBusqueda, value); }
         }
 
-        public EstadoBusqueda Estado
+        public Busqueda Busqueda
         {
-            get { return estado; }
-            set { SetProperty(ref estado, value); }
+            get { return busqueda; }
+            set { SetProperty(ref busqueda, value); }
         }
         #endregion
 
         #region Comandos
         public DelegateCommand DesactivarFiltrosComando { get; }
         public DelegateCommand MostrarColumnasTodasComando { get; }
-        public AsyncDelegateCommand<ResultadoSolicitud> BuscarComando { get; }
 
         public DelegateCommand AgregarContratoComando { get; }
         public DelegateCommand EditarUsuarioComando { get; }
@@ -131,6 +132,8 @@ namespace AguaSB.Usuarios.ViewModels
         #endregion
 
         #region Dependencias
+        private IDbContextScopeFactory Ambito { get; }
+
         public IRepositorio<Usuario> UsuariosRepo { get; }
         public IRepositorio<Seccion> SeccionesRepo { get; }
         public IRepositorio<TipoContrato> TiposContratoRepo { get; }
@@ -141,9 +144,10 @@ namespace AguaSB.Usuarios.ViewModels
 
         public INodo Nodo { get; }
 
-        public Listado(IRepositorio<Usuario> usuariosRepo, IRepositorio<Seccion> seccionesRepo, IRepositorio<TipoContrato> tiposContratoRepo,
+        public Listado(IDbContextScopeFactory ambito, IRepositorio<Usuario> usuariosRepo, IRepositorio<Seccion> seccionesRepo, IRepositorio<TipoContrato> tiposContratoRepo,
             IRepositorio<Tarifa> tarifasRepo, INavegador navegador)
         {
+            Ambito = ambito ?? throw new ArgumentNullException(nameof(ambito));
             UsuariosRepo = usuariosRepo ?? throw new ArgumentNullException(nameof(usuariosRepo));
             SeccionesRepo = seccionesRepo ?? throw new ArgumentNullException(nameof(seccionesRepo));
             TiposContratoRepo = tiposContratoRepo ?? throw new ArgumentNullException(nameof(tiposContratoRepo));
@@ -154,7 +158,6 @@ namespace AguaSB.Usuarios.ViewModels
 
             DesactivarFiltrosComando = new DelegateCommand(DesactivarFiltros);
             MostrarColumnasTodasComando = new DelegateCommand(MostrarColumnasTodas);
-            BuscarComando = new AsyncDelegateCommand<ResultadoSolicitud>(Buscar, multipleExecutionSupported: true);
 
             AgregarContratoComando = new DelegateCommand(AgregarContrato);
             EditarUsuarioComando = new DelegateCommand(EditarUsuario);
@@ -168,15 +171,18 @@ namespace AguaSB.Usuarios.ViewModels
 
             Ordenamientos = new Ordenamientos();
 
-            Estado = new EstadoBusqueda();
+            Busqueda = new Busqueda();
 
             RegistrarUniones();
         }
 
         private void RegistrarUniones()
         {
-            var filtros = Filtros.ToObservableProperties().Select(_ => _.Args.PropertyName).Where(_ => _ != nameof(Filtros.NombreCompleto));
+            var filtros = Filtros.ToObservableProperties()
+                .Select(_ => _.Args.PropertyName)
+                .Where(_ => _ != nameof(Filtros.NombreCompleto));
 
+            // Observar listados
             filtros.Where(p => p == nameof(Filtros.Seccion))
                 .ObserveOnDispatcher()
                 .Subscribe(_ => ActualizarListadoDeCalles());
@@ -185,18 +191,21 @@ namespace AguaSB.Usuarios.ViewModels
                 .ObserveOnDispatcher()
                 .Subscribe(_ => ActualizarListadoDeTiposContrato());
 
-            var propiedades = this.ToObservableProperties()
+            // Post operaciones
+            this.ToObservableProperties()
                 .Select(_ => _.Args.PropertyName)
-                .Where(_ => _ == nameof(Agrupador) || _ == nameof(Ordenamiento));
+                .Where(_ => _ == nameof(Agrupador) || _ == nameof(Ordenamiento))
+                .Throttle(TimeSpan.FromMilliseconds(500))
+                .Subscribe(_ => Buscar(ModoBusqueda.PostOperaciones));
 
             var textoBusqueda = this.ToObservableProperties()
                 .Select(_ => _.Args.PropertyName)
                 .Where(_ => _ == nameof(TextoBusqueda) && !string.IsNullOrEmpty(TextoBusqueda));
 
-            new[] { filtros, propiedades, textoBusqueda }.Merge().Throttle(TiempoEsperaBusqueda)
+            new[] { filtros, textoBusqueda }.Merge().Throttle(TiempoEsperaBusqueda)
                 .Skip(1)
                 .ObserveOnDispatcher()
-                .Subscribe(_ => BuscarComando.Execute(null));
+                .Subscribe(_ => Buscar());
         }
 
         private void MostrarColumnasTodas() => Columnas = new Columnas();
@@ -221,27 +230,30 @@ namespace AguaSB.Usuarios.ViewModels
 
         private Task Inicializar() => Task.Run(() =>
         {
-            CallesAgrupadas = Domicilios.CallesAgrupadas(SeccionesRepo);
-            TiposContratoAgrupados = Contratos.TiposContratoAgrupados(TiposContratoRepo);
-
-            Secciones = CallesAgrupadas.Keys.OrderBy(_ => _.Orden).ToList();
-            ClasesContrato = TiposContratoAgrupados.Keys.ToList();
-
-            if (Secciones.FirstOrDefault() is Seccion seccion)
+            using (var baseDeDatos = Ambito.CreateReadOnly())
             {
-                Filtros.Seccion.Valor.Valor = seccion.Nombre;
+                CallesAgrupadas = Domicilios.CallesAgrupadas(SeccionesRepo);
+                TiposContratoAgrupados = Contratos.TiposContratoAgrupados(TiposContratoRepo);
 
-                ActualizarListadoDeCalles();
+                Secciones = CallesAgrupadas.Keys.OrderBy(_ => _.Orden).ToList();
+                ClasesContrato = TiposContratoAgrupados.Keys.ToList();
+
+                if (Secciones.FirstOrDefault() is Seccion seccion)
+                {
+                    Filtros.Seccion.Valor.Valor = seccion.Nombre;
+
+                    ActualizarListadoDeCalles();
+                }
+
+                if (ClasesContrato.FirstOrDefault() is ClaseContrato claseContrato)
+                {
+                    Filtros.ClaseContrato.Valor.Valor = claseContrato.ToString();
+
+                    ActualizarListadoDeTiposContrato();
+                }
+
+                Agrupadores = Dtos.Agrupadores.Todos;
             }
-
-            if (ClasesContrato.FirstOrDefault() is ClaseContrato claseContrato)
-            {
-                Filtros.ClaseContrato.Valor.Valor = claseContrato.ToString();
-
-                ActualizarListadoDeTiposContrato();
-            }
-
-            Agrupadores = Dtos.Agrupadores.Todos;
         });
 
         private void ActualizarListadoDeCalles()
@@ -283,12 +295,11 @@ namespace AguaSB.Usuarios.ViewModels
                 await InvocarEnfocar().ConfigureAwait(true);
                 await Task.Delay(TiempoEsperaBusqueda).ConfigureAwait(true);
 
-                if (BuscarComando.Execution == null)
-                    BuscarComando.Execute(null);
+                var _ = Buscar();
             }
             else
             {
-                BuscarComando.Execute(null);
+                var _ = Buscar();
                 await InvocarEnfocar().ConfigureAwait(true);
             }
         }
@@ -299,20 +310,19 @@ namespace AguaSB.Usuarios.ViewModels
             Enfocar?.Invoke(this, EventArgs.Empty);
         }
 
-        private static readonly EjecutorSolicitud EjecutorSolicitud = new EjecutorSolicitud();
+        private static long IdBusqueda;
+        private static readonly object token = new object();
 
-        private string SolicitudAnterior;
-        private ResultadoSolicitud ResultadoAnterior;
-        private bool forzar;
+        public enum ModoBusqueda { Intentar, Forzar, PostOperaciones }
 
-        public void EjecutarBusqueda()
+        public Task Buscar(ModoBusqueda modoBusqueda = ModoBusqueda.Intentar) => Task.Run(() =>
         {
-            forzar = true;
-            BuscarComando.Execute(null);
-        }
+            if (modoBusqueda == ModoBusqueda.PostOperaciones)
+            {
+                AplicarPostOperaciones(Busqueda, Busqueda.Originales);
+                return;
+            }
 
-        private Task<ResultadoSolicitud> Buscar() => Task.Run(() =>
-        {
             if (!string.IsNullOrWhiteSpace(TextoBusqueda))
             {
                 Filtros.NombreCompleto.Valor.Valor = TextoBusqueda;
@@ -324,7 +334,54 @@ namespace AguaSB.Usuarios.ViewModels
                 Filtros.NombreCompleto.Activo = false;
             }
 
-            var solicitud = new Solicitud
+            Solicitud solicitud = ObtenerSolicitudActual();
+
+            var busqueda = new Busqueda { Buscando = true, Solicitud = solicitud.ToString() };
+
+            if (modoBusqueda == ModoBusqueda.Intentar && Busqueda?.Solicitud == busqueda.Solicitud)
+                return;
+
+            var id = Interlocked.Increment(ref IdBusqueda);
+
+            lock (token)
+            {
+                Busqueda = busqueda;
+            }
+
+            Console.WriteLine(solicitud);
+
+            try
+            {
+                var resultadosUsuarios = ObtenerUsuariosDesdeBaseDeDatos(solicitud);
+
+                // Ya hay una busqueda mas reciente en ejecucion.
+                if (Interlocked.Read(ref IdBusqueda) > id)
+                    return;
+
+                AplicarPostOperaciones(busqueda, resultadosUsuarios);
+
+                busqueda.Buscando = false;
+                busqueda.Conteo = resultadosUsuarios.Count;
+                busqueda.HayResultados = resultadosUsuarios.Count > 0;
+            }
+            catch (Exception ex)
+            {
+                busqueda.TieneErrores = true;
+                busqueda.Error = ex.Message;
+            }
+        });
+
+        private void AplicarPostOperaciones(Busqueda busqueda, IList<ResultadoUsuario> resultadosUsuarios)
+        {
+            var (puntosNavegacion, resultados) = AgruparOrdenar(resultadosUsuarios);
+            busqueda.PuntosNavegacion = puntosNavegacion;
+            busqueda.Resultados = resultados;
+            busqueda.Originales = resultadosUsuarios;
+        }
+
+        private Solicitud ObtenerSolicitudActual()
+        {
+            var resultado = new Solicitud
             {
                 Agrupadores = new List<Propiedad> { Agrupador?.Propiedad },
                 Columnas = Columnas.Todas.Where(_ => _.Activo).Select(_ => _.Nombre).Select(_ => (Propiedad)_).ToList(),
@@ -332,33 +389,28 @@ namespace AguaSB.Usuarios.ViewModels
                 Ordenamientos = new List<Ordenamiento> { new Ordenamiento { Propiedad = Ordenamiento?.Propiedad, Direccion = Ordenamiento?.Direccion } }
             };
 
-            solicitud.Coercer();
-            var cadenaSolicitud = solicitud.ToString();
+            resultado.Coercer();
 
-            if (!forzar && cadenaSolicitud == SolicitudAnterior)
+            return resultado;
+        }
+
+        private IList<ResultadoUsuario> ObtenerUsuariosDesdeBaseDeDatos(Solicitud solicitud)
+        {
+            using (var baseDeDatos = Ambito.CreateReadOnly())
             {
-                return ResultadoAnterior;
+                var tarifas = TarifasRepo.Datos.OrderBy(_ => _.FechaRegistro).ToArray();
+
+                return EjecutorSolicitud.Ejecutar(
+                    UsuariosRepo.Datos.AsQueryable(), solicitud,
+                    (pagadoHasta, multiplicador) => Adeudos.Calcular(pagadoHasta, multiplicador, tarifas));
             }
+        }
 
-            forzar = false;
-            SolicitudAnterior = cadenaSolicitud;
-
-            var estado = Estado = new EstadoBusqueda
-            {
-                Buscando = true
-            };
-
-            var resultadosUsuarios = EjecutorSolicitud.Ejecutar(
-                UsuariosRepo.Datos.AsQueryable(), solicitud,
-                (pagadoHasta, tipoContrato) => Adeudos.Calcular(pagadoHasta, tipoContrato, TarifasRepo.Datos.OrderBy(_ => _.FechaRegistro).ToArray()));
-
-            estado.Buscando = false;
-            estado.HayResultados = resultadosUsuarios.Count > 0;
-
-            IEnumerable resultados;
+        private (IEnumerable<PuntoNavegacion>, IEnumerable) AgruparOrdenar(IEnumerable<ResultadoUsuario> resultadosUsuarios)
+        {
             var puntosNavegacion = new List<PuntoNavegacion>();
 
-            ResultadoUsuario Obtener(Grupo g) =>
+            ResultadoUsuario ConvertirGrupo(Grupo g) =>
                 new ResultadoUsuario { Titulo = g.ToString(), Subtitulo = $"{g.Valores.Select(_ => _.Adeudo).Sum():C}" };
 
             if (Agrupador != null)
@@ -373,21 +425,17 @@ namespace AguaSB.Usuarios.ViewModels
                 }
 
                 if (Ordenamiento?.Direccion != null)
-                    resultados = resultadosAgrupados.SelectMany(g => Obtener(g).Concat(Ordenamiento.Ordenar(g.Valores).ToList()));
+                    return (puntosNavegacion, resultadosAgrupados.SelectMany(g => ConvertirGrupo(g).Concat(Ordenamiento.Ordenar(g.Valores).ToList())));
                 else
-                    resultados = resultadosAgrupados.SelectMany(g => Obtener(g).Concat(g.Valores));
+                    return (puntosNavegacion, resultadosAgrupados.SelectMany(g => ConvertirGrupo(g).Concat(g.Valores)));
             }
             else
             {
                 if (Ordenamiento?.Direccion != null)
-                    resultados = Ordenamiento.Ordenar(resultadosUsuarios).ToList();
+                    return (puntosNavegacion, Ordenamiento.Ordenar(resultadosUsuarios).ToList());
                 else
-                    resultados = resultadosUsuarios;
+                    return (puntosNavegacion, resultadosUsuarios);
             }
-
-            ResultadoAnterior = new ResultadoSolicitud { Conteo = resultadosUsuarios.Count, Resultados = resultados, PuntosNavegacion = puntosNavegacion };
-
-            return ResultadoAnterior;
-        });
+        }
     }
 }
