@@ -1,28 +1,42 @@
 ﻿using AguaSB.Datos;
 using AguaSB.Nucleo;
+using Mehdime.Entity;
+using System;
+using System.Linq;
 
 namespace AguaSB.Inicializadores
 {
     public class AgregarTiposContacto : IInicializador
     {
-        public AgregarTiposContacto(IRepositorio<TipoContacto> tiposContactoRepo) => Inicializar(tiposContactoRepo);
-
-        private async void Inicializar(IRepositorio<TipoContacto> tiposContactoRepo)
+        public AgregarTiposContacto(IDbContextScopeFactory ambito, IRepositorio<TipoContacto> tiposContactoRepo)
         {
-            var telefono = new TipoContacto
+            Console.WriteLine("Registrando tipos de contacto...");
+            using (var baseDeDatos = ambito.Create())
             {
-                Nombre = "Teléfono",
-                ExpresionRegular = @"^( *\d){10} *$"
-            };
+                if (tiposContactoRepo.Datos.Count() > 0)
+                {
+                    Console.WriteLine("No se requirió agregar algún tipo de contacto.");
+                    return;
+                }
 
-            var email = new TipoContacto
-            {
-                Nombre = "Email",
-                ExpresionRegular = ".*"
-            };
+                var telefono = new TipoContacto
+                {
+                    Nombre = "Teléfono",
+                    ExpresionRegular = @"^( *\d){10} *$"
+                };
 
-            foreach (var tipoContacto in new[] { telefono, email })
-                await tiposContactoRepo.Agregar(tipoContacto).ConfigureAwait(true);
+                var email = new TipoContacto
+                {
+                    Nombre = "Email",
+                    ExpresionRegular = ".*"
+                };
+
+                foreach (var tipoContacto in new[] { telefono, email })
+                    tiposContactoRepo.Agregar(tipoContacto);
+
+                baseDeDatos.SaveChanges();
+            }
+            Console.WriteLine("Listo.");
         }
     }
 }

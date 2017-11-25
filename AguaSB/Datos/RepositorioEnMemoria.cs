@@ -1,26 +1,31 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 
 using AguaSB.Nucleo;
 
 namespace AguaSB.Datos
 {
-    public class RepositorioEnMemoria<T> : IRepositorio<T> where T : IEntidad
+    public class RepositorioEnMemoria<T> : IRepositorio<T> where T : class, IEntidad
     {
         private readonly List<T> Entidades = new List<T>();
 
-        public IEnumerable<T> Datos => Entidades;
+        public IQueryable<T> Datos => Entidades.AsQueryable();
 
-        public Task<T> Agregar(T entidad)
+        public T Agregar(T entidad)
         {
             Entidades.Add(entidad);
 
             entidad.Id = Entidades.Count;
 
-            return Task.FromResult(entidad);
+            return entidad;
         }
 
-        public Task<T> Actualizar(T entidad) =>
-            Task.FromResult(entidad);
+        public T Actualizar(T entidad) => entidad;
+
+        public T Eliminar(T entidad)
+        {
+            Entidades.Remove(entidad);
+            return entidad;
+        }
     }
 }
