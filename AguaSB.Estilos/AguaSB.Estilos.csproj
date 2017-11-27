@@ -75,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Deslizar.cs" />
+    <Compile Include="Diccionarios.cs" />
     <Compile Include="Foco.cs" />
     <Compile Include="Icono.cs" />
     <Compile Include="IEnfocable.cs" />
