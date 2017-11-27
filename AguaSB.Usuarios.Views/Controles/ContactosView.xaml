@@ -18,7 +18,7 @@
                 <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Estilos.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
-            <Conversores:CallbackConverter x:Key="Iconos"/>
+            <Conversores:DictionaryConverter x:Key="Iconos" ThrowIfNotKeyFound="False"/>
         </ResourceDictionary>
     </UserControl.Resources>
 

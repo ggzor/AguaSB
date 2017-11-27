@@ -7,7 +7,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 
-using MahApps.Metro.IconPacks;
 using MoreLinq;
 
 using AguaSB.Estilos;
@@ -15,6 +14,7 @@ using AguaSB.Nucleo;
 using AguaSB.Views.Utilerias;
 using System.Waf.Applications;
 using System.Collections.Specialized;
+using System.Collections;
 
 namespace AguaSB.Usuarios.Views.Controles
 {
@@ -40,28 +40,29 @@ namespace AguaSB.Usuarios.Views.Controles
 
         private void BuscarYUnirRecursos()
         {
-            if (FindResource("Iconos") is CallbackConverter conversor)
+            if (FindResource("Iconos") is DictionaryConverter conversor && FindResource("IconoLateral") is Style estiloIcono)
             {
-                conversor.Callback = (arg, param) =>
+                object Procesar(object valor, object parametro, object posibleValor)
                 {
-                    FrameworkElement icono;
-                    if (arg is string clave && Iconos.ContainsKey(clave))
+                    if (posibleValor is Func<FrameworkElement> generador)
                     {
-                        icono = Iconos[clave]();
+                        var icono = generador();
+                        icono.Style = estiloIcono;
+
+                        if (parametro is "N")
+                            icono.Margin = new Thickness(16, 0, 0, 0);
+
+                        return icono;
                     }
                     else
                     {
-                        icono = Iconos["Default"]();
+                        return null;
                     }
+                }
 
-                    if (param is "N")
-                        icono.Margin = new Thickness(16, 0, 0, 0);
-
-                    return icono;
-                };
+                conversor.Dictionary = (IDictionary)Diccionarios.TiposContacto;
+                conversor.PostProcessCallback = Procesar;
             }
-
-            EstiloIcono = (Style)FindResource("IconoLateral");
         }
 
         private async void ContactosCambiados(object sender, NotifyCollectionChangedEventArgs e)
@@ -122,15 +123,6 @@ namespace AguaSB.Usuarios.Views.Controles
                 .Select(VisualTreeUtils.FindVisualChild<ContentPresenter>)
                 .Select(c => Lista.ItemTemplate.FindName("Box", c))
                 .Cast<TextBox>();
-
-        public static Style EstiloIcono { get; set; }
-
-        public Dictionary<string, Func<FrameworkElement>> Iconos { get; } = new Dictionary<string, Func<FrameworkElement>>
-        {
-            ["Default"] = () => new PackIconMaterial { Kind = PackIconMaterialKind.Contacts, Style = EstiloIcono },
-            ["Teléfono"] = () => new PackIconMaterial { Kind = PackIconMaterialKind.Phone, Style = EstiloIcono },
-            ["Email"] = () => new PackIconMaterial { Kind = PackIconMaterialKind.Email, Style = EstiloIcono }
-        };
 
         public IEnumerable<TipoContacto> TiposContacto
         {

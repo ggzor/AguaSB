@@ -201,7 +201,7 @@ namespace AguaSB.Usuarios.ViewModels
 
         private void Cancelar()
         {
-            var _ = Navegador.Navegar("Usuarios/Listado", Usuario?.NombreCompleto);
+            var _ = Navegador.Navegar("Usuarios/Listado", null);
 
             ReestablecerPersonaComando.Execute(null);
             ReestablecerNegocioComando.Execute(null);

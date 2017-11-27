@@ -23,7 +23,11 @@ namespace AguaSB.Usuarios.ViewModels
 
             valores = filtros.Aggregate(valores, (acc, f) => f(acc, solicitud));
 
-            var usuariosSinContratos = valores.Where(_ => !_.Contratos.Any());
+            var usuariosSinContratos = from Usuario in valores
+                                       where !Usuario.Contratos.Any()
+                                       let Contactos = from Contacto in Usuario.Contactos
+                                                       select new { Contacto.Informacion, Contacto.TipoContacto }
+                                       select new { Usuario, Contactos };
 
             var usuariosConContratos = from Usuario in valores
                                        where Usuario.Contratos.Any()
@@ -33,22 +37,43 @@ namespace AguaSB.Usuarios.ViewModels
                                        let Seccion = Calle.Seccion
                                        let UltimoPago = PrimerContrato.Pagos.OrderByDescending(_ => _.FechaRegistro).FirstOrDefault().FechaRegistro
                                        let DatosContratos = from Contrato in Usuario.Contratos
+                                                            let Numero = Contrato.Domicilio.Numero
+                                                            let Calle = Contrato.Domicilio.Calle
+                                                            let Seccion = Contrato.Domicilio.Calle.Seccion
                                                             let UltimoMesPagado = Contrato.Pagos.OrderByDescending(_ => _.FechaRegistro).FirstOrDefault().Hasta
-                                                            select new { Contrato, UltimoMesPagado, Contrato.TipoContrato }
-                                       select new { Usuario, Numero, Calle, Seccion, UltimoPago, DatosContratos };
+                                                            let UltimoPago = Contrato.Pagos.OrderByDescending(_ => _.FechaRegistro).FirstOrDefault().FechaRegistro
+                                                            select new { Contrato, Numero, Calle, Seccion, UltimoPago, UltimoMesPagado, Contrato.TipoContrato }
+                                       let Contactos = from Contacto in Usuario.Contactos
+                                                       select new { Contacto.Informacion, Contacto.TipoContacto }
+                                       select new { Usuario, Numero, Calle, Seccion, UltimoPago, DatosContratos, Contactos };
 
-            var resultadosSinContratos = usuariosSinContratos.Select(usuario => new ResultadoUsuario { Usuario = usuario }).ToArray();
+            var resultadosSinContratos = usuariosSinContratos.ToArray().Select(datosUsuario =>
+                new ResultadoUsuario
+                {
+                    Usuario = datosUsuario.Usuario,
+                    Contactos = datosUsuario.Contactos.Select(datosContacto =>
+                        new Contacto { Informacion = datosContacto.Informacion, TipoContacto = datosContacto.TipoContacto }).ToArray()
+                })
+            .ToArray();
 
             var resultadosConContratos = usuariosConContratos.ToArray().Select(datosUsuario =>
             {
                 var resultado = new ResultadoUsuario
                 {
-                    Contratos = datosUsuario.DatosContratos.ToArray().Select(datosContrato => new ResultadoContrato
-                    {
-                        Contrato = datosContrato.Contrato,
-                        UltimoMesPagado = datosContrato.UltimoMesPagado,
-                        Adeudo = calculadorAdeudos(datosContrato.UltimoMesPagado, datosContrato.TipoContrato.Multiplicador)
-                    }),
+                    Contactos = datosUsuario.Contactos.Select(datosContacto =>
+                        new Contacto { Informacion = datosContacto.Informacion, TipoContacto = datosContacto.TipoContacto }).ToArray(),
+                    Contratos = datosUsuario.DatosContratos.ToArray()
+                        .OrderBy(_ => _.Seccion.Orden)
+                        .ThenBy(_ => _.Calle.Nombre)
+                        .ThenBy(_ => _.Numero)
+                        .Select(datosContrato => new ResultadoContrato
+                        {
+                            Contrato = datosContrato.Contrato,
+                            Domicilio = new Domicilio { Numero = datosUsuario.Numero, Calle = new Calle { Nombre = datosUsuario.Calle.Nombre, Seccion = datosUsuario.Seccion } },
+                            UltimoMesPagado = datosContrato.UltimoMesPagado,
+                            UltimoPago = datosContrato.UltimoPago,
+                            Adeudo = calculadorAdeudos(datosContrato.UltimoMesPagado, datosContrato.TipoContrato.Multiplicador)
+                        }),
                     Domicilio = new Domicilio { Numero = datosUsuario.Numero, Calle = new Calle { Nombre = datosUsuario.Calle.Nombre, Seccion = datosUsuario.Seccion } },
                     UltimoMesPagado = Fecha.MesDe(datosUsuario.DatosContratos.OrderByDescending(_ => _.UltimoMesPagado).First().UltimoMesPagado),
                     UltimoPago = datosUsuario.UltimoPago,

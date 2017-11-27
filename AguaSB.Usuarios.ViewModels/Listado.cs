@@ -325,7 +325,7 @@ namespace AguaSB.Usuarios.ViewModels
 
             if (!string.IsNullOrWhiteSpace(TextoBusqueda))
             {
-                Filtros.NombreCompleto.Valor.Valor = TextoBusqueda;
+                Filtros.NombreCompleto.Valor.Valor = TextoBusqueda.Trim();
                 Filtros.NombreCompleto.Activo = true;
             }
             else

@@ -1,6 +1,7 @@
 ﻿using AguaSB.Nucleo;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AguaSB.Usuarios.ViewModels.Dtos
 {
@@ -8,9 +9,9 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
     {
         public Usuario Usuario { get; set; }
 
-        public bool EsPersona => Usuario?.GetType() == typeof(Persona) && NoEsTitulo;
+        public bool EsPersona => typeof(Persona).IsAssignableFrom(Usuario.GetType()) && NoEsTitulo;
 
-        public bool EsNegocio => Usuario?.GetType() == typeof(Negocio) && NoEsTitulo;
+        public bool EsNegocio => typeof(Negocio).IsAssignableFrom(Usuario.GetType()) && NoEsTitulo;
 
         public decimal Adeudo { get; set; }
 
@@ -26,6 +27,14 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
 
         public IEnumerable<ResultadoContrato> Contratos { get; set; }
 
+        public bool TieneContratos => Contratos?.Any() ?? false;
+
+        public bool TieneMasDeUnContrato => (Contratos?.Count() ?? 0) > 1;
+
+        public IEnumerable<Contacto> Contactos { get; set; }
+
+        public bool TieneContactos => Contactos?.Any() ?? false;
+
         public string Titulo { get; set; }
 
         public bool EsTitulo => !string.IsNullOrWhiteSpace(Titulo);
@@ -38,6 +47,10 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
     public class ResultadoContrato
     {
         public Contrato Contrato { get; set; }
+
+        public Domicilio Domicilio { get; set; }
+
+        public DateTime? UltimoPago { get; set; }
 
         public DateTime? UltimoMesPagado { get; set; }
 

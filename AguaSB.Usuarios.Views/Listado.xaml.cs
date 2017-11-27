@@ -12,6 +12,7 @@ using MoreLinq;
 using AguaSB.Views.Utilerias;
 using AguaSB.Usuarios.Views.Utilerias;
 using AguaSB.Usuarios.ViewModels.Dtos;
+using System.Windows.Controls.Primitives;
 
 namespace AguaSB.Usuarios.Views
 {
@@ -34,6 +35,28 @@ namespace AguaSB.Usuarios.Views
             if (FindResource("Iconos") is DictionaryConverter conversor)
             {
                 conversor.Dictionary = Iconos;
+            }
+
+            if (FindResource("TiposContacto") is DictionaryConverter conversorTiposContacto && FindResource("IconoLateral") is Style estiloIcono)
+            {
+                object Procesar(object value, object parametro, object posibleValor)
+                {
+                    if (posibleValor is Func<FrameworkElement> generador)
+                    {
+                        var icono = generador();
+
+                        icono.Style = estiloIcono;
+
+                        return icono;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+
+                conversorTiposContacto.Dictionary = (IDictionary)Estilos.Diccionarios.TiposContacto;
+                conversorTiposContacto.PostProcessCallback = Procesar;
             }
 
             ViewModel.Enfocar += (_, __) => Busqueda.Focus();
@@ -84,12 +107,10 @@ namespace AguaSB.Usuarios.Views
             {
                 switch (k)
                 {
-                    case Key.Up:
                     case Key.Left:
                         if (HayUsuarioAntesDelSeleccionado())
                             SeleccionarUsuarioAnterior();
                         break;
-                    case Key.Down:
                     case Key.Right:
                         if (HayUsuarioDespuesDelSeleccionado())
                             SeleccionarUsuarioSiguiente();
@@ -103,8 +124,8 @@ namespace AguaSB.Usuarios.Views
             DetallesUsuario.Loaded += (_, __) =>
             {
                 var t = DetallesUsuario.Template;
-                var popup = (IInputElement)t.FindName("PART_Popup", DetallesUsuario);
-                new ManejadorTeclas(popup, ManejarFlechas);
+                var p = (Popup)t.FindName("PART_Popup", DetallesUsuario);
+                new ManejadorTeclas(p, ManejarFlechas);
             };
         }
 
@@ -209,6 +230,10 @@ namespace AguaSB.Usuarios.Views
             var deslizador = VisualTreeUtils.FindVisualChild<ScrollViewer>(ListaResultados);
 
             deslizador.ScrollToVerticalOffset(indice);
+        }
+
+        private void AbriendoDetallesDeUsuario(object sender, MaterialDesignThemes.Wpf.DialogOpenedEventArgs eventArgs)
+        {
         }
 
         private void CerrandoDetallesDeUsuario(object sender, MaterialDesignThemes.Wpf.DialogClosingEventArgs eventArgs) => EnfocarElementoActual();
