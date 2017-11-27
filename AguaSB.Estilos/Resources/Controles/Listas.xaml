@@ -20,11 +20,23 @@
         </Setter>
     </Style>
 
+    <Style x:Key="PlainList" TargetType="{x:Type ListView}" BasedOn="{StaticResource {x:Type ListView}}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <ItemsPresenter/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="PlainItem" TargetType="ListViewItem">
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListViewItem">
-                    <ContentPresenter Margin="0 0 0 0" Focusable="False"/>
+                    <ContentPresenter Margin="0 0 0 0" Focusable="False" FocusVisualStyle="{x:Null}"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
