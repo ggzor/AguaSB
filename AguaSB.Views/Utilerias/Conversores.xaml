@@ -2,9 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:AguaSB.Views.Utilerias">
     <local:BoolOperation x:Key="BoolOp"/>
-    <local:IsNullConverter x:Key="IsNull"/>
-    <local:IsNotNullConverter x:Key="IsNotNull"/>
+    <local:EnumToIntConverter x:Key="EnumToInt"/>
     <local:EqualsToConverter x:Key="EqualsTo"/>
     <local:InvertBoolConverter x:Key="InvertBool"/>
-    <local:EnumToIntConverter x:Key="EnumToInt"/>
+    <local:IsNullConverter x:Key="IsNull"/>
+    <local:IsNotNullConverter x:Key="IsNotNull"/>
+    <local:ToStringConverter x:Key="ToString"/>
 </ResourceDictionary>

@@ -137,7 +137,6 @@
     <Compile Include="Extensiones\ExtensionView.xaml.cs">
       <DependentUpon>ExtensionView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Conversores\ToStringConverter.cs" />
     <Compile Include="Extensiones\ITransformadorExtensiones.cs" />
     <Compile Include="Extensiones\TransformadorExtensiones.cs" />
     <Compile Include="Inicializadores\AgregarTiposContacto.cs" />
@@ -157,7 +156,6 @@
       <DependentUpon>NotificacionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Notificaciones\PanelNotificaciones.cs" />
-    <Compile Include="Datos\RepositorioEnMemoria.cs" />
     <Compile Include="Notificaciones\TransformadorNotificaciones.cs" />
     <Compile Include="VentanaPrincipal.xaml.cs">
       <DependentUpon>VentanaPrincipal.xaml</DependentUpon>
@@ -269,8 +267,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controles\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

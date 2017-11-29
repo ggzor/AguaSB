@@ -8,7 +8,13 @@
              d:DesignHeight="400" d:DesignWidth="400"
              Name="This">
     <UserControl.Resources>
-        <TranslateTransform x:Key="Translate" Y="60"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/AguaSB.Views;component/Utilerias/Conversores.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <TranslateTransform x:Key="Translate" Y="60"/>
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <Grid DataContext="{Binding ElementName=This}">

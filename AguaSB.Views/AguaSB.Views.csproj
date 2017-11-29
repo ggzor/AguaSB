@@ -100,6 +100,7 @@
     <Compile Include="Utilerias\ManejadorTeclas.cs" />
     <Compile Include="Utilerias\NullConverters.cs" />
     <Compile Include="Utilerias\FuncValueConverter.cs" />
+    <Compile Include="Utilerias\ToStringConverter.cs" />
     <Compile Include="Utilerias\VisualTreeUtils.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

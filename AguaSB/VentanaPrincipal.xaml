@@ -15,7 +15,6 @@
         MinWidth="600" MinHeight="600"
         WindowState="Maximized"
         Width="1024" Height="768"
-        
         d:DataContext="{d:DesignInstance Type=local:VentanaPrincipalViewModel, IsDesignTimeCreatable=False}"
         Name="This">
     <Window.Resources>

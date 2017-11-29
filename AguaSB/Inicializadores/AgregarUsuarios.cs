@@ -11,34 +11,37 @@ using System.Linq;
 
 namespace AguaSB.Inicializadores
 {
+    public class UsuarioCSV
+    {
+        public int Id { get; set; }
+        public string Nombre { get; set; }
+        public string Paterno { get; set; }
+        public string Materno { get; set; }
+        public int Seccion { get; set; }
+        public string Calle { get; set; }
+        public string Numero { get; set; }
+        public string Contrato { get; set; }
+        public DateTime PagadoHasta { get; set; }
+        public DateTime UltimoPago { get; set; }
+    }
+
     public class AgregarUsuarios : IInicializador
     {
-        public class UsuarioCSV
-        {
-            public int Id { get; set; }
-            public string Nombre { get; set; }
-            public string Paterno { get; set; }
-            public string Materno { get; set; }
-            public int Seccion { get; set; }
-            public string Calle { get; set; }
-            public string Numero { get; set; }
-            public string Contrato { get; set; }
-            public DateTime PagadoHasta { get; set; }
-            public DateTime UltimoPago { get; set; }
-        }
+        private IList<UsuarioCSV> UsuariosLeidos { get; set; }
 
         public AgregarUsuarios(IDbContextScopeFactory ambito, IRepositorio<Usuario> usuariosRepo, IRepositorio<Contrato> contratosRepo, IRepositorio<TipoContrato> tiposContratoRepo, IRepositorio<Pago> pagosRepo,
             IRepositorio<Calle> callesRepo, IRepositorio<Seccion> seccionesRepo, IRepositorio<Domicilio> domiciliosRepo, IRepositorio<Ajustador> ajustadoresRepo)
         {
-            IList<UsuarioCSV> usuariosLeidos = null;
-
-            Console.WriteLine("Leyendo usuarios...");
-            using (var reader = File.OpenText("Nombres.csv"))
+            using (var baseDeDatos = ambito.CreateReadOnly())
             {
-                var csv = new CsvReader(reader);
-                usuariosLeidos = csv.GetRecords<UsuarioCSV>().ToList();
+                if (usuariosRepo.Datos.Count() > 0)
+                {
+                    Console.WriteLine("Ya se han registrado los usuarios");
+                    return;
+                }
             }
-            Console.WriteLine("Lectura terminada.");
+
+            LeerUsuarios();
 
             Console.WriteLine("Registrando secciones...");
             using (var baseDeDatos = ambito.Create())
@@ -60,7 +63,7 @@ namespace AguaSB.Inicializadores
             Console.WriteLine("Listo.");
 
             Console.WriteLine("Agregando calles...");
-            var callesAgrupadas = usuariosLeidos.Select(u => (u.Seccion, u.Calle))
+            var callesAgrupadas = UsuariosLeidos.Select(u => (u.Seccion, u.Calle))
                 .ToLookup(t => t.Seccion, t => t.Calle);
 
             using (var baseDeDatos = ambito.Create())
@@ -140,7 +143,7 @@ namespace AguaSB.Inicializadores
 
                 var nombres = new HashSet<string>();
 
-                foreach (var usuariocsv in usuariosLeidos)
+                foreach (var usuariocsv in UsuariosLeidos)
                 {
                     var usuario = new Persona
                     {
@@ -203,6 +206,17 @@ namespace AguaSB.Inicializadores
                 baseDeDatos.SaveChanges();
             }
             Console.WriteLine("Listo.");
+        }
+
+        private void LeerUsuarios()
+        {
+            Console.WriteLine("Leyendo usuarios...");
+            using (var reader = File.OpenText("Nombres.csv"))
+            {
+                var csv = new CsvReader(reader);
+                UsuariosLeidos = csv.GetRecords<UsuarioCSV>().ToList();
+            }
+            Console.WriteLine("Lectura terminada.");
         }
     }
 }
