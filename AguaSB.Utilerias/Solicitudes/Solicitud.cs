@@ -21,7 +21,7 @@ namespace AguaSB.Utilerias.Solicitudes
 
         public List<Ordenamiento> Ordenamientos { get; set; } = new List<Ordenamiento>();
 
-        public bool Filtro<T>(string propiedad, out T filtro) where T : Condicion
+        public bool ObtenerFiltro<T>(string propiedad, out T filtro) where T : Condicion
         {
             var posiblesFiltros = Filtros.OfType<T>().Where(_ => _?.Propiedad?.Nombre == propiedad);
 
@@ -29,7 +29,7 @@ namespace AguaSB.Utilerias.Solicitudes
             return filtro != null;
         }
 
-        public void Coercer()
+        public Solicitud Coercer()
         {
             bool EsPropiedadValida(Propiedad propiedad) => propiedad != null && !string.IsNullOrWhiteSpace(propiedad.Nombre);
 
@@ -40,6 +40,8 @@ namespace AguaSB.Utilerias.Solicitudes
             Filtros.ForEach(_ => _?.Coercer());
 
             Filtros = Filtros.Where(_ => _ != null && EsPropiedadValida(_.Propiedad)).ToList();
+
+            return this;
         }
 
         public override string ToString() => JsonConvert.SerializeObject(this, Configuracion);

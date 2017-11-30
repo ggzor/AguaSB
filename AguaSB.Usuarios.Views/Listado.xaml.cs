@@ -9,14 +9,20 @@ using System.Windows.Input;
 
 using MahApps.Metro.IconPacks;
 using MoreLinq;
+using LiveCharts;
+using LiveCharts.Configurations;
+using LiveCharts.Wpf;
+
 using AguaSB.Views.Utilerias;
 using AguaSB.Usuarios.Views.Utilerias;
 using AguaSB.Usuarios.ViewModels.Dtos;
 using System.Windows.Controls.Primitives;
+using AguaSB.Utilerias;
+using System.ComponentModel;
 
 namespace AguaSB.Usuarios.Views
 {
-    public partial class Listado : UserControl, AguaSB.Views.IView
+    public partial class Listado : UserControl, AguaSB.Views.IView, INotifyPropertyChanged
     {
         public ViewModels.Listado ViewModel { get; }
 
@@ -29,6 +35,7 @@ namespace AguaSB.Usuarios.Views
         public Listado(ViewModels.Listado viewModel)
         {
             DataContext = ViewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
+            ConfigurarGraficas();
 
             InitializeComponent();
 
@@ -59,6 +66,19 @@ namespace AguaSB.Usuarios.Views
                 conversorTiposContacto.PostProcessCallback = Procesar;
             }
 
+            if (FindResource("PuntosAdeudo") is CallbackConverter conversorPuntosAdeudo)
+            {
+                var vacio = new ChartValues<PuntoAdeudo>();
+
+                conversorPuntosAdeudo.Callback = (valores, _) =>
+                {
+                    if (valores is IEnumerable<PuntoAdeudo> puntos)
+                        return new ChartValues<PuntoAdeudo>(puntos);
+                    else
+                        return vacio;
+                };
+            }
+
             ViewModel.Enfocar += (_, __) => Busqueda.Focus();
 
             ManejadorOrdenamiento = new ManejadorOrdenamientoColumnas(ListaResultados);
@@ -66,6 +86,29 @@ namespace AguaSB.Usuarios.Views
 
             ConfigurarComandos();
             new ManejadorTeclas(PanelResultados, ManejarTeclas, ManejarTeclasConControl);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public Func<double, string> Formato { get; set; } = f => new DateTime((long)(f * TimeSpan.FromDays(1).Ticks * 30.44)).ToString("MMMM yyyy");
+        public Func<double, string> FormatoDinero { get; set; } = d => $"{d:C}";
+
+        private ChartValues<PuntoAdeudo> puntosAdeudo;
+
+        public ChartValues<PuntoAdeudo> PuntosAdeudo
+        {
+            get { return puntosAdeudo; }
+            set { puntosAdeudo = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PuntosAdeudo))); }
+        }
+
+
+        private void ConfigurarGraficas()
+        {
+            var config = Mappers.Xy<PuntoAdeudo>()
+                   .X(_ => _.Fecha.Ticks / (TimeSpan.FromDays(1).Ticks * 30.44))
+                   .Y(_ => (double)_.Adeudo);
+
+            Charting.For<PuntoAdeudo>(config);
         }
 
         private void ConfigurarComandos()
@@ -192,6 +235,9 @@ namespace AguaSB.Usuarios.Views
 
         private void SeleccionCambiada(object sender, SelectionChangedEventArgs e)
         {
+            if (ListaResultados.SelectedItem is ResultadoUsuario u && u.PuntosAdeudo?.Any() == true)
+                PuntosAdeudo = new ChartValues<PuntoAdeudo>(u.PuntosAdeudo);
+
             ActualizarEstadoDeBotonesDependientesDeSeleccion();
 
             new[] { UsuarioAnteriorComando, UsuarioSiguienteComando }.ForEach(_ => _.RaiseCanExecuteChanged());

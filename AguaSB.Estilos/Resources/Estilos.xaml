@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes">
+                    xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
+                    xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
@@ -16,6 +17,12 @@
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.DatePicker.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Expander.xaml" />
 
+        <!--LiveCharts-->
+        <ResourceDictionary Source="pack://application:,,,/LiveCharts.Wpf;component/Themes/Colors/material.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/LiveCharts.Wpf;component/Themes/Size/l.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/LiveCharts.Wpf;component/Themes/Weight/normal.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/LiveCharts.Wpf;component/Themes/base.xaml" />
+
         <ResourceDictionary Source="Animaciones.xaml"/>
         <ResourceDictionary Source="Textos.xaml"/>
         <ResourceDictionary Source="Iconos.xaml"/>
@@ -29,6 +36,10 @@
         <ResourceDictionary Source="Controles/Listas.xaml"/>
         <ResourceDictionary Source="Controles/Fechas.xaml"/>
     </ResourceDictionary.MergedDictionaries>
+    <Style TargetType="lvc:Axis" BasedOn="{StaticResource {x:Type lvc:Axis}}">
+        <Setter Property="FontSize" Value="14"></Setter>
+        <Setter Property="Foreground" Value="#878787"></Setter>
+    </Style>
 
     <Style TargetType="ToolTip" BasedOn="{StaticResource MaterialDesignToolTip}"/>
     <Style TargetType="material:PopupBox" BasedOn="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"/>

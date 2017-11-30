@@ -11,9 +11,18 @@ namespace AguaSB.Usuarios.ViewModels
 {
     public delegate decimal CalculadorAdeudos(DateTime ultimoMesPagado, decimal multiplicador);
 
-    public static class EjecutorSolicitud
+    public class EjecutorSolicitud
     {
-        public static IList<ResultadoUsuario> Ejecutar(IQueryable<Usuario> valores, Solicitud solicitud, CalculadorAdeudos calculadorAdeudos)
+        public Solicitud Solicitud { get; }
+        public CalculadorAdeudos CalculadorAdeudos { get; set; }
+
+        public EjecutorSolicitud(Solicitud solicitud, CalculadorAdeudos calculadorAdeudos)
+        {
+            Solicitud = solicitud ?? throw new ArgumentNullException(nameof(solicitud));
+            CalculadorAdeudos = calculadorAdeudos ?? throw new ArgumentNullException(nameof(calculadorAdeudos));
+        }
+
+        public IList<ResultadoUsuario> Ejecutar(IQueryable<Usuario> valores)
         {
             var filtros = new Func<IQueryable<Usuario>, Solicitud, IQueryable<Usuario>>[]
             {
@@ -21,14 +30,19 @@ namespace AguaSB.Usuarios.ViewModels
                 FiltrarPorSeccion, FiltrarPorTipoContrato, FiltrarPorUltimoPago
             };
 
-            valores = filtros.Aggregate(valores, (acc, f) => f(acc, solicitud));
+            valores = filtros.Aggregate(valores, (acc, f) => f(acc, Solicitud));
 
-            var usuariosSinContratos = from Usuario in valores
-                                       where !Usuario.Contratos.Any()
-                                       let Contactos = from Contacto in Usuario.Contactos
-                                                       select new { Contacto.Informacion, Contacto.TipoContacto }
-                                       select new { Usuario, Contactos };
+            return FiltrarPorAdeudo(Solicitud, ObtenerResultadosUsuario(valores));
+        }
 
+        private IEnumerable<ResultadoUsuario> ObtenerResultadosUsuario(IQueryable<Usuario> valores) =>
+            ObtenerUsuariosConContratos(valores)
+                .Concat(ExtraerUsuariosSinContratos(valores))
+                .OrderBy(_ => _.Usuario.Id);
+
+
+        private ResultadoUsuario[] ObtenerUsuariosConContratos(IQueryable<Usuario> valores)
+        {
             var usuariosConContratos = from Usuario in valores
                                        where Usuario.Contratos.Any()
                                        let PrimerContrato = Usuario.Contratos.OrderByDescending(_ => _.FechaRegistro).FirstOrDefault()
@@ -47,16 +61,9 @@ namespace AguaSB.Usuarios.ViewModels
                                                        select new { Contacto.Informacion, Contacto.TipoContacto }
                                        select new { Usuario, Numero, Calle, Seccion, UltimoPago, DatosContratos, Contactos };
 
-            var resultadosSinContratos = usuariosSinContratos.ToArray().Select(datosUsuario =>
-                new ResultadoUsuario
-                {
-                    Usuario = datosUsuario.Usuario,
-                    Contactos = datosUsuario.Contactos.Select(datosContacto =>
-                        new Contacto { Informacion = datosContacto.Informacion, TipoContacto = datosContacto.TipoContacto }).ToArray()
-                })
-            .ToArray();
+            var r = new Random();
 
-            var resultadosConContratos = usuariosConContratos.ToArray().Select(datosUsuario =>
+            return usuariosConContratos.ToArray().Select(datosUsuario =>
             {
                 var resultado = new ResultadoUsuario
                 {
@@ -72,27 +79,42 @@ namespace AguaSB.Usuarios.ViewModels
                             Domicilio = new Domicilio { Numero = datosUsuario.Numero, Calle = new Calle { Nombre = datosUsuario.Calle.Nombre, Seccion = datosUsuario.Seccion } },
                             UltimoMesPagado = datosContrato.UltimoMesPagado,
                             UltimoPago = datosContrato.UltimoPago,
-                            Adeudo = calculadorAdeudos(datosContrato.UltimoMesPagado, datosContrato.TipoContrato.Multiplicador)
+                            Adeudo = CalculadorAdeudos(datosContrato.UltimoMesPagado, datosContrato.TipoContrato.Multiplicador)
                         }),
                     Domicilio = new Domicilio { Numero = datosUsuario.Numero, Calle = new Calle { Nombre = datosUsuario.Calle.Nombre, Seccion = datosUsuario.Seccion } },
                     UltimoMesPagado = Fecha.MesDe(datosUsuario.DatosContratos.OrderByDescending(_ => _.UltimoMesPagado).First().UltimoMesPagado),
                     UltimoPago = datosUsuario.UltimoPago,
-                    Usuario = datosUsuario.Usuario
+                    Usuario = datosUsuario.Usuario,
+                    PuntosAdeudo = new[] { new PuntoAdeudo { Adeudo = r.Next(400), Fecha = Fecha.EsteMes.AddMonths(-1) }, new PuntoAdeudo { Adeudo = r.Next(200), Fecha = Fecha.EsteMes } }
                 };
 
                 resultado.Adeudo = resultado.Contratos.Select(_ => _.Adeudo).Sum();
 
                 return resultado;
             }).ToArray();
+        }
 
-            var resultados = resultadosConContratos.Concat(resultadosSinContratos).OrderBy(_ => _.Usuario.Id);
+        private ResultadoUsuario[] ExtraerUsuariosSinContratos(IQueryable<Usuario> valores)
+        {
+            var usuariosSinContratos = from Usuario in valores
+                                       where !Usuario.Contratos.Any()
+                                       let Contactos = from Contacto in Usuario.Contactos
+                                                       select new { Contacto.Informacion, Contacto.TipoContacto }
+                                       select new { Usuario, Contactos };
 
-            return FiltrarPorAdeudo(solicitud, resultados);
+            return usuariosSinContratos.ToArray().Select(datosUsuario =>
+                new ResultadoUsuario
+                {
+                    Usuario = datosUsuario.Usuario,
+                    Contactos = datosUsuario.Contactos.Select(datosContacto =>
+                        new Contacto { Informacion = datosContacto.Informacion, TipoContacto = datosContacto.TipoContacto }).ToArray()
+                })
+            .ToArray();
         }
 
         private static IQueryable<Usuario> FiltrarPorNombre(IQueryable<Usuario> valores, Solicitud solicitud)
         {
-            if (solicitud.Filtro<Igual<string>>(nameof(Usuario.NombreCompleto), out var nombre)
+            if (solicitud.ObtenerFiltro<Igual<string>>(nameof(Usuario.NombreCompleto), out var nombre)
                             && !string.IsNullOrWhiteSpace(nombre.Valor))
             {
                 var texto = Usuario.ConvertirATextoSolicitud(nombre.Valor);
@@ -107,7 +129,7 @@ namespace AguaSB.Usuarios.ViewModels
 
         private static IQueryable<Usuario> FiltrarPorSeccion(IQueryable<Usuario> valores, Solicitud solicitud)
         {
-            if (solicitud.Filtro<Igual<string>>(nameof(Calle.Seccion), out var seccion))
+            if (solicitud.ObtenerFiltro<Igual<string>>(nameof(Calle.Seccion), out var seccion))
             {
                 var nombreSeccion = seccion.Valor;
 
@@ -121,7 +143,7 @@ namespace AguaSB.Usuarios.ViewModels
 
         private static IQueryable<Usuario> FiltrarPorCalle(IQueryable<Usuario> valores, Solicitud solicitud)
         {
-            if (solicitud.Filtro<Igual<string>>(nameof(Domicilio.Calle), out var calle))
+            if (solicitud.ObtenerFiltro<Igual<string>>(nameof(Domicilio.Calle), out var calle))
             {
                 var nombreCalle = calle.Valor;
 
@@ -135,7 +157,7 @@ namespace AguaSB.Usuarios.ViewModels
 
         private static IQueryable<Usuario> FiltrarPorFechaRegistro(IQueryable<Usuario> valores, Solicitud solicitud)
         {
-            if (solicitud.Filtro<Rango<DateTime?>>(nameof(Usuario.FechaRegistro), out var registro))
+            if (solicitud.ObtenerFiltro<Rango<DateTime?>>(nameof(Usuario.FechaRegistro), out var registro))
             {
                 if (registro.TieneInicio)
                 {
@@ -174,7 +196,7 @@ namespace AguaSB.Usuarios.ViewModels
 
         private static IQueryable<Usuario> FiltrarPorClaseContrato(IQueryable<Usuario> valores, Solicitud solicitud)
         {
-            if (solicitud.Filtro<Igual<string>>(nameof(TipoContrato.ClaseContrato), out var claseContrato)
+            if (solicitud.ObtenerFiltro<Igual<string>>(nameof(TipoContrato.ClaseContrato), out var claseContrato)
                             && Enum.GetValues(typeof(ClaseContrato))
                                 .Cast<ClaseContrato?>().SingleOrDefault(_ => _.ToString() == claseContrato.Valor) is ClaseContrato valorClaseContrato)
             {
@@ -188,7 +210,7 @@ namespace AguaSB.Usuarios.ViewModels
 
         private static IQueryable<Usuario> FiltrarPorTipoContrato(IQueryable<Usuario> valores, Solicitud solicitud)
         {
-            if (solicitud.Filtro<Igual<string>>(nameof(Contrato.TipoContrato), out var tipoContrato))
+            if (solicitud.ObtenerFiltro<Igual<string>>(nameof(Contrato.TipoContrato), out var tipoContrato))
             {
                 var nombreTipoContrato = tipoContrato.Valor;
 
@@ -202,7 +224,7 @@ namespace AguaSB.Usuarios.ViewModels
 
         private static IQueryable<Usuario> FiltrarPorUltimoPago(IQueryable<Usuario> valores, Solicitud solicitud)
         {
-            if (solicitud.Filtro<Rango<DateTime?>>(nameof(ResultadoUsuario.UltimoPago), out var ultimoPago))
+            if (solicitud.ObtenerFiltro<Rango<DateTime?>>(nameof(ResultadoUsuario.UltimoPago), out var ultimoPago))
             {
                 if (ultimoPago.TieneInicio)
                 {
@@ -241,7 +263,7 @@ namespace AguaSB.Usuarios.ViewModels
 
         private static IQueryable<Usuario> FiltrarPorUltimoMesPagado(IQueryable<Usuario> valores, Solicitud solicitud)
         {
-            if (solicitud.Filtro<Rango<DateTime?>>(nameof(ResultadoUsuario.UltimoMesPagado), out var ultimoMesPagado))
+            if (solicitud.ObtenerFiltro<Rango<DateTime?>>(nameof(ResultadoUsuario.UltimoMesPagado), out var ultimoMesPagado))
             {
                 if (ultimoMesPagado.TieneInicio)
                 {
@@ -295,7 +317,7 @@ namespace AguaSB.Usuarios.ViewModels
 
         private static IList<ResultadoUsuario> FiltrarPorAdeudo(Solicitud solicitud, IEnumerable<ResultadoUsuario> resultados)
         {
-            if (solicitud.Filtro<Rango<decimal?>>(nameof(ResultadoUsuario.Adeudo), out var adeudo))
+            if (solicitud.ObtenerFiltro<Rango<decimal?>>(nameof(ResultadoUsuario.Adeudo), out var adeudo))
             {
                 if (adeudo.Desde is decimal desde)
                 {

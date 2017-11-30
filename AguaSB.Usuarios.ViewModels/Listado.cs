@@ -4,20 +4,21 @@ using AguaSB.Nucleo;
 using AguaSB.Nucleo.Datos;
 using AguaSB.Usuarios.ViewModels.Dtos;
 using AguaSB.Utilerias;
+using AguaSB.Utilerias.Solicitudes;
 using AguaSB.ViewModels;
-using GGUtils.MVVM.Async;
+
 using MoreLinq;
+using Mehdime.Entity;
+
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Waf.Applications;
 using System.Waf.Foundation;
-using AguaSB.Utilerias.Solicitudes;
-using System.Collections;
-using Mehdime.Entity;
-using System.Threading;
 
 namespace AguaSB.Usuarios.ViewModels
 {
@@ -200,7 +201,7 @@ namespace AguaSB.Usuarios.ViewModels
 
             var textoBusqueda = this.ToObservableProperties()
                 .Select(_ => _.Args.PropertyName)
-                .Where(_ => _ == nameof(TextoBusqueda) && !string.IsNullOrEmpty(TextoBusqueda));
+                .Where(_ => _ == nameof(TextoBusqueda) && !string.IsNullOrWhiteSpace(TextoBusqueda));
 
             new[] { filtros, textoBusqueda }.Merge().Throttle(TiempoEsperaBusqueda)
                 .Skip(1)
@@ -317,12 +318,60 @@ namespace AguaSB.Usuarios.ViewModels
 
         public Task Buscar(ModoBusqueda modoBusqueda = ModoBusqueda.Intentar) => Task.Run(() =>
         {
-            if (modoBusqueda == ModoBusqueda.PostOperaciones)
+            lock (token)
             {
-                AplicarPostOperaciones(Busqueda, Busqueda.Originales);
-                return;
+                // Seguridad extra
+                if (Busqueda != null && !(Busqueda.Buscando ?? true) && modoBusqueda == ModoBusqueda.PostOperaciones)
+                {
+                    AplicarPostOperaciones(Busqueda, Busqueda.Originales);
+                    return;
+                }
             }
 
+            SincronizarTextoBusquedaConFiltros();
+
+            Solicitud solicitudActual = ObtenerSolicitudActual();
+            var busquedaActual = new Busqueda { Buscando = true, Solicitud = solicitudActual.ToString() };
+
+            if (modoBusqueda == ModoBusqueda.Intentar && Busqueda?.Solicitud == busquedaActual.Solicitud)
+                return;
+
+            var id = Interlocked.Increment(ref IdBusqueda);
+
+            lock (token)
+            {
+                // Ya está por ejecutarse una búsqueda más reciente
+                if (Interlocked.Read(ref IdBusqueda) > id)
+                    return;
+
+                Busqueda = busquedaActual;
+            }
+
+            Console.WriteLine(solicitudActual);
+
+            try
+            {
+                var resultadosUsuarios = ObtenerUsuariosDesdeBaseDeDatos(solicitudActual);
+
+                // Ya hay una busqueda mas reciente en ejecucion.
+                if (Interlocked.Read(ref IdBusqueda) > id)
+                    return;
+
+                AplicarPostOperaciones(busquedaActual, resultadosUsuarios);
+
+                busquedaActual.Buscando = false;
+                busquedaActual.Conteo = resultadosUsuarios.Count;
+                busquedaActual.HayResultados = resultadosUsuarios.Count > 0;
+            }
+            catch (Exception ex)
+            {
+                busquedaActual.TieneErrores = true;
+                busquedaActual.Error = ex.Message;
+            }
+        });
+
+        private void SincronizarTextoBusquedaConFiltros()
+        {
             if (!string.IsNullOrWhiteSpace(TextoBusqueda))
             {
                 Filtros.NombreCompleto.Valor.Valor = TextoBusqueda.Trim();
@@ -333,80 +382,36 @@ namespace AguaSB.Usuarios.ViewModels
                 Filtros.NombreCompleto.Valor.Valor = "";
                 Filtros.NombreCompleto.Activo = false;
             }
-
-            Solicitud solicitud = ObtenerSolicitudActual();
-
-            var busqueda = new Busqueda { Buscando = true, Solicitud = solicitud.ToString() };
-
-            if (modoBusqueda == ModoBusqueda.Intentar && Busqueda?.Solicitud == busqueda.Solicitud)
-                return;
-
-            var id = Interlocked.Increment(ref IdBusqueda);
-
-            lock (token)
-            {
-                Busqueda = busqueda;
-            }
-
-            Console.WriteLine(solicitud);
-
-            try
-            {
-                var resultadosUsuarios = ObtenerUsuariosDesdeBaseDeDatos(solicitud);
-
-                // Ya hay una busqueda mas reciente en ejecucion.
-                if (Interlocked.Read(ref IdBusqueda) > id)
-                    return;
-
-                AplicarPostOperaciones(busqueda, resultadosUsuarios);
-
-                busqueda.Buscando = false;
-                busqueda.Conteo = resultadosUsuarios.Count;
-                busqueda.HayResultados = resultadosUsuarios.Count > 0;
-            }
-            catch (Exception ex)
-            {
-                busqueda.TieneErrores = true;
-                busqueda.Error = ex.Message;
-            }
-        });
-
-        private void AplicarPostOperaciones(Busqueda busqueda, IList<ResultadoUsuario> resultadosUsuarios)
-        {
-            var (puntosNavegacion, resultados) = AgruparOrdenar(resultadosUsuarios);
-            busqueda.PuntosNavegacion = puntosNavegacion;
-            busqueda.Resultados = resultados;
-            busqueda.Originales = resultadosUsuarios;
         }
 
-        private Solicitud ObtenerSolicitudActual()
+        private Solicitud ObtenerSolicitudActual() => new Solicitud
         {
-            var resultado = new Solicitud
-            {
-                Agrupadores = new List<Propiedad> { Agrupador?.Propiedad },
-                Columnas = Columnas.Todas.Where(_ => _.Activo).Select(_ => _.Nombre).Select(_ => (Propiedad)_).ToList(),
-                Filtros = Filtros.Todos.Where(_ => _.Activo).Select(_ => _.Valor).Cast<Condicion>().ToList(),
-                Ordenamientos = new List<Ordenamiento> { new Ordenamiento { Propiedad = Ordenamiento?.Propiedad, Direccion = Ordenamiento?.Direccion } }
-            };
-
-            resultado.Coercer();
-
-            return resultado;
-        }
+            Agrupadores = new List<Propiedad> { Agrupador?.Propiedad },
+            Columnas = Columnas.Todas.Where(_ => _.Activo).Select(_ => _.Nombre).Select(_ => (Propiedad)_).ToList(),
+            Filtros = Filtros.Todos.Where(_ => _.Activo).Select(_ => _.Valor).Cast<Condicion>().ToList(),
+            Ordenamientos = new List<Ordenamiento> { new Ordenamiento { Propiedad = Ordenamiento?.Propiedad, Direccion = Ordenamiento?.Direccion } }
+        }.Coercer();
 
         private IList<ResultadoUsuario> ObtenerUsuariosDesdeBaseDeDatos(Solicitud solicitud)
         {
             using (var baseDeDatos = Ambito.CreateReadOnly())
             {
                 var tarifas = TarifasRepo.Datos.OrderBy(_ => _.FechaRegistro).ToArray();
+                CalculadorAdeudos calculadorAdeudos = (pagadoHasta, multiplicador) => Adeudos.Calcular(pagadoHasta, multiplicador, tarifas);
 
-                return EjecutorSolicitud.Ejecutar(
-                    UsuariosRepo.Datos.AsQueryable(), solicitud,
-                    (pagadoHasta, multiplicador) => Adeudos.Calcular(pagadoHasta, multiplicador, tarifas));
+                return new EjecutorSolicitud(solicitud, calculadorAdeudos).Ejecutar(UsuariosRepo.Datos.AsQueryable());
             }
         }
 
-        private (IEnumerable<PuntoNavegacion>, IEnumerable) AgruparOrdenar(IEnumerable<ResultadoUsuario> resultadosUsuarios)
+        private void AplicarPostOperaciones(Busqueda busqueda, IList<ResultadoUsuario> resultadosUsuarios)
+        {
+            var (puntosNavegacion, resultados) = AgruparOrdenarResultados(resultadosUsuarios);
+            busqueda.PuntosNavegacion = puntosNavegacion;
+            busqueda.Resultados = resultados;
+            busqueda.Originales = resultadosUsuarios;
+        }
+
+        private (IEnumerable<PuntoNavegacion> PuntosNavegacion, IEnumerable Resultados) AgruparOrdenarResultados(IEnumerable<ResultadoUsuario> resultadosUsuarios)
         {
             var puntosNavegacion = new List<PuntoNavegacion>();
 

@@ -9,9 +9,9 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
     {
         public Usuario Usuario { get; set; }
 
-        public bool EsPersona => typeof(Persona).IsAssignableFrom(Usuario.GetType()) && NoEsTitulo;
+        public bool EsPersona => Usuario != null && typeof(Persona).IsAssignableFrom(Usuario.GetType()) && NoEsTitulo;
 
-        public bool EsNegocio => typeof(Negocio).IsAssignableFrom(Usuario.GetType()) && NoEsTitulo;
+        public bool EsNegocio => Usuario != null && typeof(Negocio).IsAssignableFrom(Usuario.GetType()) && NoEsTitulo;
 
         public decimal Adeudo { get; set; }
 
@@ -42,6 +42,8 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
         public bool NoEsTitulo => !EsTitulo;
 
         public string Subtitulo { get; set; }
+
+        public IEnumerable<PuntoAdeudo> PuntosAdeudo { get; set; }
     }
 
     public class ResultadoContrato

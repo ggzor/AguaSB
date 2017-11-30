@@ -74,6 +74,7 @@
     <Compile Include="Dtos\Columnas.cs" />
     <Compile Include="Dtos\Grupo.cs" />
     <Compile Include="Dtos\Ordenamientos.cs" />
+    <Compile Include="Dtos\PuntoAdeudo.cs" />
     <Compile Include="EjecutorSolicitud.cs" />
     <Compile Include="Dtos\Busqueda.cs" />
     <Compile Include="Dtos\Filtros.cs" />
