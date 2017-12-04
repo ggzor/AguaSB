@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d"  
+             Foreground="{DynamicResource AccentColorBrush}"
              Name="This"
              d:DesignWidth="200">
     <UserControl.Resources>
@@ -13,9 +14,9 @@
 
     <StackPanel Orientation="Horizontal" Tag="{Binding ElementName=This, Path=EsVisible}" 
                 Opacity="0" Style="{StaticResource FadeTag}">
-        <metro:ProgressRing Width="30" Height="30"/>
+        <metro:ProgressRing Width="30" Height="30" Foreground="{Binding ElementName=This, Path=Foreground}"/>
         <TextBlock Margin="10" Text="{Binding ElementName=This, Path=Texto}" 
-                   FontFamily="Segoe UI" FontSize="16"
+                   FontFamily="Segoe UI" FontSize="16" Foreground="Black"
                    VerticalAlignment="Center"/>
     </StackPanel>
 </UserControl>

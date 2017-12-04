@@ -71,8 +71,8 @@
     <Compile Include="Controles\ParBotones.xaml.cs">
       <DependentUpon>ParBotones.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controles\Progreso.xaml.cs">
-      <DependentUpon>Progreso.xaml</DependentUpon>
+    <Compile Include="Controles\AnilloProgreso.xaml.cs">
+      <DependentUpon>AnilloProgreso.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controles\SortAdorner.cs" />
     <Compile Include="IView.cs" />
@@ -91,9 +91,11 @@
     </Compile>
     <Compile Include="Utilerias\AjustadorTamanoObjetos.cs" />
     <Compile Include="Utilerias\BoolOperation.cs" />
+    <Compile Include="Utilerias\BoolToVisibility.cs" />
     <Compile Include="Utilerias\CallbackConverter.cs" />
     <Compile Include="Utilerias\Columnas.cs" />
     <Compile Include="Utilerias\DictionaryConverter.cs" />
+    <Compile Include="Utilerias\DivideConverter.cs" />
     <Compile Include="Utilerias\EnumToIntConverter.cs" />
     <Compile Include="Utilerias\EqualsToConverter.cs" />
     <Compile Include="Utilerias\InvertBoolConverter.cs" />
@@ -129,7 +131,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controles\Progreso.xaml">
+    <Page Include="Controles\AnilloProgreso.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
