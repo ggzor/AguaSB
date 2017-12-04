@@ -6,29 +6,6 @@
         <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Colores.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
-    <Style x:Key="CambiarColor" TargetType="Border">
-        <Style.Triggers>
-            <Trigger Property="Tag">
-                <Trigger.Value>
-                    <Nucleo:ClaseContrato>Doméstico</Nucleo:ClaseContrato>
-                </Trigger.Value>
-                <Setter Property="Background" Value="{StaticResource MaterialGreen}"/>
-            </Trigger>
-            <Trigger Property="Tag">
-                <Trigger.Value>
-                    <Nucleo:ClaseContrato>Industrial</Nucleo:ClaseContrato>
-                </Trigger.Value>
-                <Setter Property="Background" Value="{StaticResource MaterialLightBlue}"/>
-            </Trigger>
-            <Trigger Property="Tag">
-                <Trigger.Value>
-                    <Nucleo:ClaseContrato>Comercial</Nucleo:ClaseContrato>
-                </Trigger.Value>
-                <Setter Property="Background" Value="{StaticResource MaterialIndigo}"/>
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-
     <DataTemplate x:Key="PlantillaTipoContrato" DataType="{x:Type Nucleo:TipoContrato}">
         <Grid HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>
