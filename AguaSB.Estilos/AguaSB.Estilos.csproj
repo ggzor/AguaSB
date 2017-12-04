@@ -111,7 +111,12 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\AguaSB.Nucleo\AguaSB.Nucleo.csproj">
+      <Project>{10e1e718-ea42-4519-baa2-7cd3c21b442a}</Project>
+      <Name>AguaSB.Nucleo</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Resources\Animaciones.xaml">
       <SubType>Designer</SubType>
