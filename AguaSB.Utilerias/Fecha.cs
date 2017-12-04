@@ -21,5 +21,10 @@ namespace AguaSB.Utilerias
         public static DateTime DiaDe(DateTime fecha) => new DateTime(fecha.Year, fecha.Month, fecha.Day);
 
         public static DateTime MesDe(DateTime fecha) => new DateTime(fecha.Year, fecha.Month, 01);
+
+        public static long DiferenciaMeses(DateTime fecha1, DateTime fecha2) =>
+            MesAbsoluto(fecha1) - MesAbsoluto(fecha2);
+
+        private static long MesAbsoluto(DateTime fecha) => (fecha.Year * 12L) + fecha.Month;
     }
 }
