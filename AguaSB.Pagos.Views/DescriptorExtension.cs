@@ -12,13 +12,17 @@ namespace AguaSB.Pagos.Views
 {
     public class DescriptorExtension : IExtension
     {
+        public Agregar Agregar { get; }
+
         public IEnumerable<Operacion> Operaciones { get; }
 
         public IEnumerable<Operacion> OperacionesMenuPrincipal { get; }
 
-        public DescriptorExtension()
+        public DescriptorExtension(Agregar agregar)
         {
-            OperacionesMenuPrincipal = new Operacion[0];
+            Agregar = agregar ?? throw new ArgumentNullException(nameof(agregar));
+
+            OperacionesMenuPrincipal = new[] { new Operacion(this, "Hacer pago", Agregar, Agregar, Agregar.ViewModel) };
             Operaciones = OperacionesMenuPrincipal;
         }
 

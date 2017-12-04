@@ -35,6 +35,12 @@
     <Reference Include="ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net462\ControlzEx.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="MahApps.Metro, Version=1.6.0.184, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.6.0-alpha0184\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
@@ -48,7 +54,11 @@
       <HintPath>..\packages\MaterialDesignThemes.2.3.2-ci1003\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Reactive, Version=4.0.0.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reactive.4.0.0-preview00001\lib\net46\System.Reactive.dll</HintPath>
+    </Reference>
     <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.4.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
@@ -75,6 +85,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Agregar.xaml.cs">
+      <DependentUpon>Agregar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DescriptorExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -128,9 +141,17 @@
       <Project>{10e1e718-ea42-4519-baa2-7cd3c21b442a}</Project>
       <Name>AguaSB.Nucleo</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AguaSB.Pagos.ViewModels\AguaSB.Pagos.ViewModels.csproj">
+      <Project>{7cf5fc00-3477-4515-ab28-cec903806359}</Project>
+      <Name>AguaSB.Pagos.ViewModels</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AguaSB.Utilerias\AguaSB.Utilerias.csproj">
       <Project>{61188b63-728a-4c7b-b19d-11abd1f64f4f}</Project>
       <Name>AguaSB.Utilerias</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AguaSB.ViewModels\AguaSB.ViewModels.csproj">
+      <Project>{66436B98-0E59-4DF2-A29F-B14D157C1FA4}</Project>
+      <Name>AguaSB.ViewModels</Name>
     </ProjectReference>
     <ProjectReference Include="..\AguaSB.Views\AguaSB.Views.csproj">
       <Project>{2fb7cb7e-cab1-47cc-a509-8daa4408b580}</Project>
@@ -140,6 +161,12 @@
       <Project>{0b78e13e-f73b-4a97-8af4-133a111e4416}</Project>
       <Name>GGUtils.MVVM.Async</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Agregar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
