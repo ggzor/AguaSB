@@ -66,11 +66,10 @@
   <ItemGroup>
     <Compile Include="Agregar.cs" />
     <Compile Include="Dtos\ColumnaRangosPago.cs" />
-    <Compile Include="Dtos\ContratoSeleccionable.cs" />
     <Compile Include="Dtos\EncabezadoRangosPago.cs" />
-    <Compile Include="Dtos\InformacionPago.cs" />
+    <Compile Include="Dtos\InformacionPagoUsuario.cs" />
+    <Compile Include="Dtos\InformacionPagoContrato.cs" />
     <Compile Include="Dtos\RangoPago.cs" />
-    <Compile Include="Dtos\RangoPagoSeleccionable.cs" />
     <Compile Include="Dtos\ResultadosBusquedaUsuarios.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

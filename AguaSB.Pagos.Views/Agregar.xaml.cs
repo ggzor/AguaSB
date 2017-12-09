@@ -1,4 +1,5 @@
-﻿using AguaSB.Nucleo;
+﻿using AguaSB.Estilos;
+using AguaSB.Nucleo;
 using AguaSB.Views;
 using AguaSB.Views.Utilerias;
 using System;
@@ -21,7 +22,13 @@ namespace AguaSB.Pagos.Views
 
             InitializeComponent();
 
-            ViewModel.Enfocar += (_, __) => Busqueda.Focus();
+            ViewModel.Enfocar += (_, __) =>
+            {
+                Busqueda.Focus();
+                Deslizar.HastaArriba(Deslizador);
+            };
+
+            viewModel.UsuarioCambiado += (_, __) => Deslizar.HastaArriba(Deslizador);
         }
 
         private async void AbrirPanelResultados(object sender, RoutedEventArgs e)

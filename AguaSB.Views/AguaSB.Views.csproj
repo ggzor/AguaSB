@@ -89,6 +89,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Utilerias\ActivarBandera.cs" />
     <Compile Include="Utilerias\AjustadorTamanoObjetos.cs" />
     <Compile Include="Utilerias\BoolOperation.cs" />
     <Compile Include="Utilerias\BoolToVisibility.cs" />

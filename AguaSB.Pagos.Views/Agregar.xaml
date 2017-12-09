@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:Estilos="clr-namespace:AguaSB.Estilos;assembly=AguaSB.Estilos"
@@ -82,7 +84,10 @@
                                 <ListView Name="ListaResultados" ItemsSource="{Binding Busqueda.Resultados}" SelectionChanged="ListView_SelectionChanged" ItemContainerStyle="{StaticResource UnselectableItem}">
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
-                                            <TextBlock Margin="55 0 0 0" Text="{Binding NombreCompleto}" TextTrimming="CharacterEllipsis" Style="{StaticResource h4}"/>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Margin="0 0 0 0" Text="{Binding Id}" Opacity="0.6" Style="{StaticResource h4}" TextAlignment="Right" Width="50"/>
+                                                <TextBlock Margin="8 0 0 0" Text="{Binding NombreCompleto}" TextTrimming="CharacterEllipsis" Style="{StaticResource h4}"/>
+                                            </StackPanel>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
                                 </ListView>
@@ -96,169 +101,199 @@
             </StackPanel>
         </material:Card>
 
-        <Grid Margin="0 24 0 0" Grid.Row="2" Grid.ColumnSpan="3">
-            <ScrollViewer>
-                <StackPanel Name="ReferenciaAnchoContenedor" SizeChanged="MedidasReferenciaCambiadas" Margin="36 0 24 36">
-                    <Grid Name="Usuario" HorizontalAlignment="Center">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
+        <Grid Margin="0 8 0 0" Grid.Row="2" Grid.ColumnSpan="3">
+            <Grid>
+                <StackPanel Opacity="0.6" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <icons:PackIconMaterial Kind="Magnify" Width="100" Height="100" HorizontalAlignment="Center"/>
+                    <TextBlock Margin="0 8 0 0" Text="Comience buscando un usuario" HorizontalAlignment="Center" Style="{StaticResource h4}"/>
+                </StackPanel>
+            </Grid>
 
-                        <DockPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <icons:PackIconModern Margin="0 0 20 0" Kind="People" Style="{StaticResource IconoLateral}"/>
-                            <TextBlock Text="Usuario" Opacity="0.6" Style="{StaticResource h3}"/>
-                        </DockPanel>
+            <Grid Background="White" Opacity="0.0" Style="{StaticResource FadeTag}" Tag="{Binding BuscandoInformacionPago}">
+                <StackPanel Opacity="0.6" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <metro:ProgressRing Width="100" Height="100" HorizontalAlignment="Center"/>
+                    <TextBlock Margin="0 8 0 0" Text="Recopilando información de usuario" HorizontalAlignment="Center" Style="{StaticResource h4}"/>
+                </StackPanel>
+            </Grid>
 
-                        <DockPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" 
+            <Grid Background="White" Opacity="0.0" Style="{StaticResource FadeTag}" Tag="{Binding UsuarioSeleccionado}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <ScrollViewer Name="Deslizador">
+                    <StackPanel Name="ReferenciaAnchoContenedor" SizeChanged="MedidasReferenciaCambiadas" Margin="36 24 24 36">
+                        <Grid Name="Usuario" HorizontalAlignment="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <DockPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <icons:PackIconModern Margin="0 0 20 0" Kind="People" Style="{StaticResource IconoLateral}"/>
+                                <TextBlock Text="Usuario" Opacity="0.6" Style="{StaticResource h3}"/>
+                            </DockPanel>
+
+                            <DockPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" 
                                    Visibility="{Binding InformacionPago.TieneContratoUnico, Converter={StaticResource BoolToVisibility}}">
-                            <icons:PackIconModern Margin="0 0 20 0" Kind="AlignJustify" Style="{StaticResource IconoLateral}"/>
-                            <TextBlock Text="Contrato" Opacity="0.6" Style="{StaticResource h3}"/>
-                        </DockPanel>
+                                <icons:PackIconModern Margin="0 0 20 0" Kind="AlignJustify" Style="{StaticResource IconoLateral}"/>
+                                <TextBlock Text="Contrato" Opacity="0.6" Style="{StaticResource h3}"/>
+                            </DockPanel>
 
-                        <TextBlock Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding InformacionPago.Usuario.NombreCompleto}" Style="{StaticResource h1}"/>
+                            <TextBlock Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding InformacionPago.Usuario.NombreCompleto}" Style="{StaticResource h1}"/>
 
-                        <material:Card Name="ContratoUnico" Grid.Row="1" Grid.Column="1" Margin="24 8" HorizontalAlignment="Left" VerticalAlignment="Stretch"
-                                       MinWidth="300" Width="{Binding ElementName=ReferenciaAnchoMinimo, Path=ActualWidth}"
-                                       Visibility="{Binding InformacionPago.TieneContratoUnico, Converter={StaticResource BoolToVisibility}}">
-                            <StackPanel Margin="32 16 16 16">
-                                <TextBlock Text="{Binding InformacionPago.Contratos[0].Valor.Domicilio.Calle.Seccion.Nombre, StringFormat={}Sección {0}}" Style="{StaticResource h2}"/>
-                                <TextBlock Text="{Binding InformacionPago.Contratos[0].Valor.Domicilio.Calle.Nombre, StringFormat={}Calle {0}}" Style="{StaticResource h2}"/>
-                                <TextBlock Text="{Binding InformacionPago.Contratos[0].Valor.Domicilio.Numero, StringFormat={}Número {0}}" Style="{StaticResource h2}"/>
+                            <material:Card Name="ContratoUnico" Grid.Row="1" Grid.Column="1" Margin="24 8" HorizontalAlignment="Left" VerticalAlignment="Stretch"
+                                           Width="350" Visibility="{Binding InformacionPago.TieneContratoUnico, Converter={StaticResource BoolToVisibility}}">
+                                <StackPanel Margin="32 16 16 16">
+                                    <TextBlock Text="{Binding InformacionPago.Contratos[0].Contrato.Domicilio.Calle.Seccion.Nombre, StringFormat={}Sección {0}}" Style="{StaticResource h2}"/>
+                                    <TextBlock Text="{Binding InformacionPago.Contratos[0].Contrato.Domicilio.Calle.Nombre, StringFormat={}Calle {0}}" Style="{StaticResource h2}"/>
+                                    <TextBlock Text="{Binding InformacionPago.Contratos[0].Contrato.Domicilio.Numero, StringFormat={}Número {0}}" Style="{StaticResource h2}"/>
 
-                                <DockPanel Margin="0 8 0 0">
-                                    <TextBlock Text="{Binding InformacionPago.Contratos[0].Valor.TipoContrato.Nombre}" Style="{StaticResource h4}" VerticalAlignment="Center"/>
-                                    <Border Margin="10 0 0 0" Padding="5 2" Tag="{Binding InformacionPago.Contratos[0].Valor.TipoContrato.ClaseContrato}" Style="{StaticResource CambiarColor}" 
+                                    <DockPanel Margin="0 8 0 0">
+                                        <TextBlock Text="{Binding InformacionPago.Contratos[0].Contrato.TipoContrato.Nombre}" Style="{StaticResource h4}" VerticalAlignment="Center"/>
+                                        <Border Margin="10 0 0 0" Padding="5 2" Tag="{Binding InformacionPago.Contratos[0].Contrato.TipoContrato.ClaseContrato}" Style="{StaticResource CambiarColor}" 
                                                             HorizontalAlignment="Left" VerticalAlignment="Center">
-                                        <TextBlock Text="{Binding InformacionPago.Contratos[0].Valor.TipoContrato.ClaseContrato}" Foreground="White" TextWrapping="Wrap" FontFamily="Segoe UI" 
+                                            <TextBlock Text="{Binding InformacionPago.Contratos[0].Contrato.TipoContrato.ClaseContrato}" Foreground="White" TextWrapping="Wrap" FontFamily="Segoe UI" 
                                                                    FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource h6}"/>
-                                    </Border>
-                                </DockPanel>
-                            </StackPanel>
-                        </material:Card>
-                    </Grid>
+                                        </Border>
+                                    </DockPanel>
+                                </StackPanel>
+                            </material:Card>
+                        </Grid>
 
-                    <StackPanel Name="MultiplesContratos" Visibility="{Binding InformacionPago.TieneMultiplesContratos, Converter={StaticResource BoolToVisibility}}">
-                        <DockPanel HorizontalAlignment="Center" Margin="0 16 0 0">
-                            <icons:PackIconModern Margin="0 0 20 0" Kind="AlignJustify" Style="{StaticResource IconoLateral}"/>
-                            <TextBlock Text="Contrato" Opacity="0.6" Style="{StaticResource h3}"/>
-                        </DockPanel>
+                        <StackPanel Name="MultiplesContratos" Visibility="{Binding InformacionPago.TieneMultiplesContratos, Converter={StaticResource BoolToVisibility}}">
+                            <DockPanel HorizontalAlignment="Center" Margin="0 16 0 0">
+                                <icons:PackIconModern Margin="0 0 20 0" Kind="AlignJustify" Style="{StaticResource IconoLateral}"/>
+                                <TextBlock Text="Contrato" Opacity="0.6" Style="{StaticResource h3}"/>
+                            </DockPanel>
 
-                        <ListView Margin="0 16 0 16" ItemContainerStyle="{StaticResource PlainItem}" HorizontalAlignment="Center"
+                            <ListView Margin="0 16 0 16" ItemContainerStyle="{StaticResource PlainItem}" HorizontalAlignment="Center"
                                   ItemsSource="{Binding InformacionPago.Contratos}">
-                            <ListView.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <WrapPanel/>
-                                </ItemsPanelTemplate>
-                            </ListView.ItemsPanel>
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel/>
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
 
-                            <ListView.ItemTemplate>
-                                <DataTemplate DataType="{x:Type Dtos:ContratoSeleccionable}">
-                                    <material:Card Margin="0 0 8 8" Width="{Binding RelativeSource={RelativeSource AncestorType=local:Agregar}, Path=Ajustador.AnchoObjeto}" VerticalAlignment="Stretch">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate DataType="{x:Type Dtos:InformacionPagoContrato}">
+                                        <material:Card Margin="0 0 8 8" Width="{Binding RelativeSource={RelativeSource AncestorType=local:Agregar}, Path=Ajustador.AnchoObjeto}" VerticalAlignment="Stretch"
+                                                       Util:ActivarBandera.ManejarEventos="True" Util:ActivarBandera.Bandera="{Binding Activo, Mode=OneWayToSource}">
+                                            <DockPanel>
+                                                <RadioButton IsChecked="{Binding Activo, Mode=TwoWay}" Margin="16" GroupName="Contrato" VerticalAlignment="Top"/>
+                                                <StackPanel Margin="16">
+                                                    <TextBlock Text="{Binding Contrato.Domicilio.Calle.Seccion.Nombre, StringFormat={}Sección {0}}" Style="{StaticResource h2}"/>
+                                                    <TextBlock Text="{Binding Contrato.Domicilio.Calle.Nombre, StringFormat={}Calle {0}}" Style="{StaticResource h2}"/>
+                                                    <TextBlock Text="{Binding Contrato.Domicilio.Numero, StringFormat={}Número {0}}" Style="{StaticResource h2}"/>
+
+                                                    <DockPanel Margin="0 8 0 0">
+                                                        <TextBlock Text="{Binding Contrato.TipoContrato.Nombre}" Style="{StaticResource h4}" VerticalAlignment="Center"/>
+                                                        <Border Margin="10 0 0 0" Padding="5 2" Tag="{Binding Contrato.TipoContrato.ClaseContrato}" Style="{StaticResource CambiarColor}" 
+                                                                HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                            <TextBlock Text="{Binding Contrato.TipoContrato.ClaseContrato}" Foreground="White" TextWrapping="Wrap" FontFamily="Segoe UI" 
+                                                                       FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource h6}"/>
+                                                        </Border>
+                                                    </DockPanel>
+                                                </StackPanel>
+                                            </DockPanel>
+                                        </material:Card>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackPanel>
+
+                        <StackPanel Margin="0 16 0 0" Name="CantidadAPagar">
+                            <StackPanel.Resources>
+                                <DataTemplate x:Key="PlantillaRangoPago" DataType="{x:Type Dtos:RangoPago}">
+                                    <Border Margin="0 5" BorderBrush="#33000000" BorderThickness="1">
                                         <DockPanel>
-                                            <RadioButton IsChecked="{Binding Activo, Mode=TwoWay}" Margin="16" GroupName="Contrato" VerticalAlignment="Top"/>
-                                            <StackPanel Margin="16">
-                                                <TextBlock Text="{Binding Valor.Domicilio.Calle.Seccion.Nombre, StringFormat={}Sección {0}}" Style="{StaticResource h2}"/>
-                                                <TextBlock Text="{Binding Valor.Domicilio.Calle.Nombre, StringFormat={}Calle {0}}" Style="{StaticResource h2}"/>
-                                                <TextBlock Text="{Binding Valor.Domicilio.Numero, StringFormat={}Número {0}}" Style="{StaticResource h2}"/>
-
-                                                <DockPanel Margin="0 8 0 0">
-                                                    <TextBlock Text="{Binding Valor.TipoContrato.Nombre}" Style="{StaticResource h4}" VerticalAlignment="Center"/>
-                                                    <Border Margin="10 0 0 0" Padding="5 2" Tag="{Binding Valor.TipoContrato.ClaseContrato}" Style="{StaticResource CambiarColor}" 
-                                                            HorizontalAlignment="Left" VerticalAlignment="Center">
-                                                        <TextBlock Text="{Binding Valor.TipoContrato.ClaseContrato}" Foreground="White" TextWrapping="Wrap" FontFamily="Segoe UI" 
-                                                                   FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource h6}"/>
-                                                    </Border>
-                                                </DockPanel>
+                                            <RadioButton IsChecked="{Binding Activo, Mode=TwoWay}" Margin="16" GroupName="Pago" VerticalAlignment="Top"/>
+                                            <StackPanel Margin="16 8 16 16">
+                                                <TextBlock Text="{Binding Monto, StringFormat={}Pagar {0:C}}" Foreground="{StaticResource ModernVerde}" Style="{StaticResource h3}"/>
+                                                <TextBlock Text="{Binding Hasta, StringFormat={}Cubre hasta: {0:MMMM yyyy}, ConverterCulture=es-MX}" Style="{StaticResource h4}"/>
+                                                <TextBlock Text="{Binding AdeudoRestante, StringFormat={}Restan: {0:C}}" Opacity="0.8" Style="{StaticResource h4}"/>
                                             </StackPanel>
                                         </DockPanel>
-                                    </material:Card>
+                                    </Border>
                                 </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </StackPanel>
+                            </StackPanel.Resources>
 
-                    <StackPanel Margin="0 16 0 0" Name="CantidadAPagar">
-                        <StackPanel.Resources>
-                            <DataTemplate x:Key="PlantillaRangoPago" DataType="{x:Type Dtos:RangoPagoSeleccionable}">
-                                <Border Margin="0 5" BorderBrush="#33000000" BorderThickness="1">
-                                    <DockPanel>
-                                        <RadioButton IsChecked="{Binding Activo, Mode=TwoWay}" Margin="16" GroupName="Pago" VerticalAlignment="Top"/>
-                                        <StackPanel Margin="16 8 16 16">
-                                            <TextBlock Text="{Binding Valor.Monto, StringFormat={}Pagar {0:C}}" Foreground="{StaticResource ModernVerde}" Style="{StaticResource h2}"/>
-                                            <TextBlock Text="{Binding Valor.Hasta, StringFormat={}Cubre hasta: {0:MMMM yyyy}, ConverterCulture=es-MX}" Style="{StaticResource h3}"/>
-                                            <TextBlock Text="{Binding Valor.AdeudoRestante, StringFormat={}Restan: {0:C}}" Opacity="0.8" Style="{StaticResource h3}"/>
-                                        </StackPanel>
-                                    </DockPanel>
-                                </Border>
-                            </DataTemplate>
-                        </StackPanel.Resources>
+                            <DockPanel Margin="0 8 0 0" HorizontalAlignment="Center">
+                                <icons:PackIconModern Margin="0 0 20 0" Kind="CurrencyDollar" Style="{StaticResource IconoLateral}"/>
 
-                        <DockPanel Margin="0 8 0 0" HorizontalAlignment="Center">
-                            <icons:PackIconModern Margin="0 0 20 0" Kind="CurrencyDollar" Style="{StaticResource IconoLateral}"/>
+                                <TextBlock Text="Cantidad" Opacity="0.6" Style="{StaticResource h3}"/>
+                            </DockPanel>
 
-                            <TextBlock Text="Cantidad" Opacity="0.6" Style="{StaticResource h3}"/>
-                        </DockPanel>
-
-                        <ListView Margin="0 24 0 0" ItemsSource="{Binding InformacionPago.RangosPago}">
-                            <ListView.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Horizontal"/>
-                                </ItemsPanelTemplate>
-                            </ListView.ItemsPanel>
-                            <ListView.ItemTemplate>
-                                <DataTemplate DataType="{x:Type Dtos:ColumnaRangosPago}">
-                                    <StackPanel>
-                                        <TextBlock Style="{StaticResource h4}">
+                            <ListView Margin="0 24 0 0" ItemsSource="{Binding InformacionPago.ContratoSeleccionado.Columnas}">
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate DataType="{x:Type Dtos:ColumnaRangosPago}">
+                                        <StackPanel>
+                                            <TextBlock Style="{StaticResource h4}">
                                             <Run Text="{Binding Encabezado.ConteoInicio}"/> - 
                                             <Run Text="{Binding Encabezado.ConteoFin}"/>
-                                            meses
-                                        </TextBlock>
+                                                meses
+                                            </TextBlock>
 
-                                        <TextBlock Opacity="0.6" Style="{StaticResource h5}">
-                                            <Run Text="{Binding Encabezado.AdeudoInicio, StringFormat=C}"/> - 
-                                            <Run Text="{Binding Encabezado.AdeudoFin, StringFormat=C}"/>
-                                        </TextBlock>
+                                            <TextBlock Opacity="0.6" Style="{StaticResource h5}">
+                                            <Run Text="{Binding Encabezado.MontoInicio, StringFormat=C}"/> - 
+                                            <Run Text="{Binding Encabezado.MontoFin, StringFormat=C}"/>
+                                            </TextBlock>
 
-                                        <TextBlock Opacity="0.6" Style="{StaticResource h5}">
+                                            <TextBlock Opacity="0.6" Style="{StaticResource h5}">
                                             <Run Text="{Binding Encabezado.MesInicio, StringFormat=MMMM yyyy, ConverterCulture=es-MX}"/>
-                                            - 
+                                                - 
                                             <Run Text="{Binding Encabezado.MesFin, StringFormat=MMMM yyyy, ConverterCulture=es-MX}"/>
-                                        </TextBlock>
+                                            </TextBlock>
 
-                                        <Separator/>
-                                        <ListView Margin="0 4 0 0" ItemContainerStyle="{StaticResource PlainItem}" ItemTemplate="{StaticResource PlantillaRangoPago}"
-                                                  ItemsSource="{Binding RangosPago}"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                            <ListView.ItemContainerStyle>
-                                <Style TargetType="ListViewItem">
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="ListViewItem">
-                                                <Border Background="{TemplateBinding Background}" Padding="24 0"
-                                                         Width="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=ActualWidth, Converter={StaticResource Divide}, ConverterParameter=3}">
-                                                    <ContentPresenter/>
-                                                </Border>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="#0D000000"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </ListView.ItemContainerStyle>
-                        </ListView>
+                                            <Separator/>
+                                            <ListView Margin="0 4 0 0" ItemContainerStyle="{StaticResource PlainItem}" ItemTemplate="{StaticResource PlantillaRangoPago}"
+                                                      ItemsSource="{Binding RangosPago}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ListViewItem">
+                                                    <Border Background="{TemplateBinding Background}" Padding="24 0"
+                                                            Width="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=ActualWidth, Converter={StaticResource Divide}, ConverterParameter=3}">
+                                                        <ContentPresenter/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#0D000000"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                            </ListView>
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
-            </ScrollViewer>
+                </ScrollViewer>
+
+                <Border Grid.Row="1" BorderBrush="#33000000" BorderThickness="2">
+                    <Button Margin="8" Foreground="White" HorizontalAlignment="Center" Style="{StaticResource HighlightButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <icons:PackIconModern Kind="Money" Width="20" Height="20"/>
+                            <TextBlock Margin="8 0 0 0" Text="Pagar"/>
+                        </StackPanel>
+                    </Button>
+                </Border>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>

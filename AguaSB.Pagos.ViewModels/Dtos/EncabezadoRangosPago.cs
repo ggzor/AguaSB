@@ -4,8 +4,8 @@ namespace AguaSB.Pagos.ViewModels.Dtos
 {
     public class EncabezadoRangosPago
     {
-        public decimal AdeudoInicio { get; set; }
-        public decimal AdeudoFin { get; set; }
+        public decimal MontoInicio { get; set; }
+        public decimal MontoFin { get; set; }
 
         public DateTime MesInicio { get; set; }
         public DateTime MesFin { get; set; }
