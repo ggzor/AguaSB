@@ -110,24 +110,33 @@ namespace AguaSB.Pagos.ViewModels
         #region Servicios
         private IDbContextScopeFactory Ambito { get; }
         private IRepositorio<Usuario> UsuariosRepo { get; }
+        private IRepositorio<Contrato> ContratosRepo { get; }
         private INavegador Navegador { get; }
         #endregion
 
         public event EventHandler Enfocar;
+        public event EventHandler EncontradoUsuarioUnico;
         public event EventHandler UsuarioCambiado;
 
         public INodo Nodo { get; }
 
-        public Agregar(IDbContextScopeFactory ambito, IRepositorio<Usuario> usuariosRepo, INavegador navegador)
+        public Agregar(IDbContextScopeFactory ambito, IRepositorio<Usuario> usuariosRepo, IRepositorio<Contrato> contratosRepo,
+            INavegador navegador)
         {
             Ambito = ambito ?? throw new ArgumentNullException(nameof(ambito));
             UsuariosRepo = usuariosRepo ?? throw new ArgumentNullException(nameof(usuariosRepo));
+            ContratosRepo = contratosRepo ?? throw new ArgumentNullException(nameof(contratosRepo));
             Navegador = navegador ?? throw new ArgumentNullException(nameof(navegador));
 
             Nodo = new Nodo { Entrada = Entrar };
 
             BuscarEnListadoComando = new DelegateCommand(() => Navegador.Navegar("Usuarios/Listado", TextoBusqueda));
 
+            ActivarEscuchaCambioTexto();
+        }
+
+        private void ActivarEscuchaCambioTexto()
+        {
             this.ToObservableProperties()
                 .Where(p => p.Args.PropertyName == nameof(TextoBusqueda))
                 .Throttle(TiempoEsperaBusqueda)
@@ -142,6 +151,7 @@ namespace AguaSB.Pagos.ViewModels
         {
             Busqueda = new ResultadosBusquedaUsuarios(CantidadOpciones);
             TextoBusqueda = string.Empty;
+
             UsuarioSeleccionado = false;
             InvocarEnfocar();
 
@@ -181,7 +191,6 @@ namespace AguaSB.Pagos.ViewModels
 
             try
             {
-                await Task.Delay(3000).ConfigureAwait(true);
                 await BuscarOpciones.ConfigureAwait(true);
             }
             catch (Exception ex)
@@ -192,18 +201,54 @@ namespace AguaSB.Pagos.ViewModels
 
             if (Busqueda.TotalResultados == 1)
             {
-                // Usuario unico
+                EncontradoUsuarioUnico?.Invoke(this, EventArgs.Empty);
+                await SeleccionarUsuario(Busqueda.Resultados.Single()).ConfigureAwait(false);
             }
 
             Buscando = false;
         }
 
-        public async void SeleccionarUsuario(Usuario usuario)
+        private static readonly Sincronizador ObtencionInformacionPagos = new Sincronizador();
+
+        public async Task SeleccionarUsuario(Usuario usuario)
         {
+            Task<InformacionPagoUsuario> ObtenerInformacion() => Task.Run(() =>
+            {
+                using (var baseDeDatos = Ambito.CreateReadOnly())
+                {
+                    var contratos = from Contrato in ContratosRepo.Datos
+                                    where Contrato.Usuario.Id == usuario.Id
+                                    let Tipo = Contrato.TipoContrato
+                                    let ComponentesContrato = new { Contrato, Tipo }
+                                    let Domicilio = Contrato.Domicilio
+                                    let ComponentesDomicilio = new { Domicilio, Domicilio.Calle, Domicilio.Calle.Seccion }
+                                    let Pagos = Contrato.Pagos
+                                    select new { ComponentesContrato, ComponentesDomicilio, Pagos };
+
+                    var contratosMaterializados = contratos.ToArray().Select(datos =>
+                    {
+                        var contrato = datos.ComponentesContrato.Contrato;
+                        contrato.TipoContrato = datos.ComponentesContrato.Tipo;
+
+                        var r = new Random();
+                        var columnas = GenerarListas(r.Next(600, 1200) / 200 * 200).ToArray();
+
+                        return new InformacionPagoContrato(contrato, columnas);
+                    }).ToArray();
+
+                    return new InformacionPagoUsuario(usuario, contratosMaterializados);
+                }
+            });
+
+            var id = ObtencionInformacionPagos.ObtenerId();
+
             UsuarioSeleccionado = false;
             BuscandoInformacionPago = true;
-            await Task.Delay(3000);
-            Console.WriteLine("Seleccionado: " + usuario.NombreCompleto);
+
+            var informacion = await ObtenerInformacion().ConfigureAwait(true);
+
+            ObtencionInformacionPagos.Intentar(id, () => InformacionPago = informacion);
+
             BuscandoInformacionPago = false;
             UsuarioSeleccionado = true;
 

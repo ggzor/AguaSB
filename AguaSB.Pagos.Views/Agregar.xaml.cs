@@ -29,6 +29,7 @@ namespace AguaSB.Pagos.Views
             };
 
             viewModel.UsuarioCambiado += (_, __) => Deslizar.HastaArriba(Deslizador);
+            viewModel.EncontradoUsuarioUnico += (src, args) => Resultados.IsOpen = false;
         }
 
         private async void AbrirPanelResultados(object sender, RoutedEventArgs e)

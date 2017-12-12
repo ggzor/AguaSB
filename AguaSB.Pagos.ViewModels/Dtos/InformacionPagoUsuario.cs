@@ -1,5 +1,6 @@
 ﻿using AguaSB.Nucleo;
 using AguaSB.Utilerias;
+using MoreLinq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,15 +31,27 @@ namespace AguaSB.Pagos.ViewModels.Dtos
 
             Contratos.Select(c => c.ToObservableProperties())
                 .Merge()
-                .ObserveOnDispatcher()
                 .Subscribe(e =>
                 {
                     N.Change(nameof(ContratoSeleccionado));
-                    ContratoSeleccionado.Columnas[0].RangosPago[0].Activo = true;
                 });
         }
 
-        public InformacionPagoContrato ContratoSeleccionado => Contratos.Single(c => c.Activo);
+        public InformacionPagoContrato ContratoSeleccionado
+        {
+            get
+            {
+                var seleccionado = Contratos.SingleOrDefault(c => c.Activo) ?? Contratos[0];
+
+                Contratos.SelectMany(c => c.Columnas.SelectMany(col => col.RangosPago))
+                    .ForEach(r => r.Activo = false);
+
+                seleccionado.Activo = true;
+                seleccionado.Columnas[0].RangosPago[0].Activo = true;
+
+                return seleccionado;
+            }
+        }
 
         public RangoPago RangoPagoSeleccionado =>
             ContratoSeleccionado.Columnas

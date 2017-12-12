@@ -31,13 +31,23 @@ namespace AguaSB.Pagos.ViewModels.Dtos
         {
             nombre = Usuario.ConvertirATextoSolicitud(nombre);
 
-            var solicitud = from usuario in usuarios
-                            where usuario.NombreSolicitud.Contains(nombre)
-                            orderby usuario.NombreSolicitud
-                            select usuario;
+            if (int.TryParse(nombre, out var id))
+            {
+                Resultados = usuarios.Where(u => u.Id == id).ToArray();
 
-            Resultados = solicitud.Take(CantidadOpciones).ToList();
-            TotalResultados = solicitud.Count();
+                TotalResultados = Resultados.Count();
+            }
+            else
+            {
+
+                var solicitud = from usuario in usuarios
+                                where usuario.NombreSolicitud.Contains(nombre)
+                                orderby usuario.NombreSolicitud
+                                select usuario;
+
+                Resultados = solicitud.Take(CantidadOpciones).ToArray();
+                TotalResultados = solicitud.Count();
+            }
         }
     }
 }
