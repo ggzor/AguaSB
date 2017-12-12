@@ -58,6 +58,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Datos.Entity", "Agua
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Pagos.ViewModels", "AguaSB.Pagos.ViewModels\AguaSB.Pagos.ViewModels.csproj", "{7CF5FC00-3477-4515-AB28-CEC903806359}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Reportes", "AguaSB.Reportes\AguaSB.Reportes.csproj", "{4203900D-0213-4EDC-9BE3-380D722D0F73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Reportes.Excel", "AguaSB.Reportes.Excel\AguaSB.Reportes.Excel.csproj", "{1EAC395F-D490-4410-9BB2-ED8883BFA324}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -152,6 +156,14 @@ Global
 		{7CF5FC00-3477-4515-AB28-CEC903806359}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CF5FC00-3477-4515-AB28-CEC903806359}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CF5FC00-3477-4515-AB28-CEC903806359}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4203900D-0213-4EDC-9BE3-380D722D0F73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4203900D-0213-4EDC-9BE3-380D722D0F73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4203900D-0213-4EDC-9BE3-380D722D0F73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4203900D-0213-4EDC-9BE3-380D722D0F73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EAC395F-D490-4410-9BB2-ED8883BFA324}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EAC395F-D490-4410-9BB2-ED8883BFA324}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EAC395F-D490-4410-9BB2-ED8883BFA324}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EAC395F-D490-4410-9BB2-ED8883BFA324}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

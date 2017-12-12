@@ -19,6 +19,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Waf.Applications;
 using System.Waf.Foundation;
+using AguaSB.Reportes;
+using AguaSB.Notificaciones;
 
 namespace AguaSB.Usuarios.ViewModels
 {
@@ -43,6 +45,8 @@ namespace AguaSB.Usuarios.ViewModels
         private string textoBusqueda;
 
         private Busqueda busqueda;
+        private bool mostrarCubierta;
+        private string textoCubierta;
         #endregion
 
         #region Propiedades
@@ -117,6 +121,18 @@ namespace AguaSB.Usuarios.ViewModels
             get { return busqueda; }
             set { SetProperty(ref busqueda, value); }
         }
+
+        public bool MostrarCubierta
+        {
+            get { return mostrarCubierta; }
+            set { SetProperty(ref mostrarCubierta, value); }
+        }
+
+        public string TextoCubierta
+        {
+            get { return textoCubierta; }
+            set { SetProperty(ref textoCubierta, value); }
+        }
         #endregion
 
         #region Comandos
@@ -125,6 +141,7 @@ namespace AguaSB.Usuarios.ViewModels
 
         public DelegateCommand AgregarContratoComando { get; }
         public DelegateCommand EditarUsuarioComando { get; }
+        public DelegateCommand ExportarComando { get; }
         #endregion
 
         #region Eventos
@@ -141,12 +158,14 @@ namespace AguaSB.Usuarios.ViewModels
         public IRepositorio<Tarifa> TarifasRepo { get; }
 
         private INavegador Navegador { get; }
+        private IGeneradorTablas GeneradorTablas { get; }
+        private IAdministradorNotificaciones AdministradorNotificaciones { get; }
         #endregion
 
         public INodo Nodo { get; }
 
         public Listado(IDbContextScopeFactory ambito, IRepositorio<Usuario> usuariosRepo, IRepositorio<Seccion> seccionesRepo, IRepositorio<TipoContrato> tiposContratoRepo,
-            IRepositorio<Tarifa> tarifasRepo, INavegador navegador)
+            IRepositorio<Tarifa> tarifasRepo, INavegador navegador, IGeneradorTablas generadorTablas, IAdministradorNotificaciones administradorNotificaciones)
         {
             Ambito = ambito ?? throw new ArgumentNullException(nameof(ambito));
             UsuariosRepo = usuariosRepo ?? throw new ArgumentNullException(nameof(usuariosRepo));
@@ -154,6 +173,8 @@ namespace AguaSB.Usuarios.ViewModels
             TiposContratoRepo = tiposContratoRepo ?? throw new ArgumentNullException(nameof(tiposContratoRepo));
             TarifasRepo = tarifasRepo ?? throw new ArgumentNullException(nameof(tarifasRepo));
             Navegador = navegador ?? throw new ArgumentNullException(nameof(navegador));
+            GeneradorTablas = generadorTablas ?? throw new ArgumentNullException(nameof(generadorTablas));
+            AdministradorNotificaciones = administradorNotificaciones ?? throw new ArgumentNullException(nameof(administradorNotificaciones));
 
             Nodo = new Nodo { PrimeraEntrada = Inicializar, Entrada = Entrar };
 
@@ -162,6 +183,7 @@ namespace AguaSB.Usuarios.ViewModels
 
             AgregarContratoComando = new DelegateCommand(AgregarContrato);
             EditarUsuarioComando = new DelegateCommand(EditarUsuario);
+            ExportarComando = new DelegateCommand(Exportar);
 
             Columnas = new Columnas();
 
@@ -224,6 +246,87 @@ namespace AguaSB.Usuarios.ViewModels
             if (o is ResultadoUsuario u)
                 Navegador.Navegar("Usuarios/Editar", u.Usuario.Id);
         }
+
+        private async void Exportar(object o)
+        {
+            MostrarCubierta = true;
+            TextoCubierta = "Generando archivo...";
+
+            if (Busqueda != null)
+                await GenerarArchivo(Busqueda.Resultados);
+
+            MostrarCubierta = false;
+        }
+
+        private static readonly string[] encabezado = { "Id", "Nombre", "Pagado Hasta", "Adeudo", "Sección", "Calle", "Número", "Tipo de contrato", "Último pago" };
+
+        private Task GenerarArchivo(IEnumerable resultados) => Task.Run(() =>
+        {
+            try
+            {
+                if (resultados == null || !resultados.OfType<object>().Any())
+                    throw new Exception("No hay resultados para exportar.");
+
+                if (Busqueda.Buscando == true)
+                    throw new Exception("Espere a que finalice la búsqueda.");
+
+                var nombre = $"{Fecha.Ahora.ToString("yyyy-MM-dd hh.mm.ss")} - Listado de Usuarios";
+                var libro = GeneradorTablas.CrearLibro(nombre);
+
+                if (resultados.OfType<ResultadoUsuario>().FirstOrDefault()?.NoEsTitulo == true)
+                {
+                    var tabla = libro.CrearNueva("Usuarios");
+                    var escritor = tabla.Escritor;
+
+                    escritor.ColorEncabezado = new RGB(0x11, 0x9E, 0xDA);
+                    escritor.ColorTextoEncabezado = new RGB(255, 255, 255);
+                    escritor.EscribirEncabezado(encabezado);
+
+                    int i = 2;
+                    foreach (var usuario in resultados.OfType<ResultadoUsuario>().Where(u => u.Domicilio != null))
+                    {
+                        tabla[1, i] = usuario.Usuario.Id;
+                        tabla[2, i] = usuario.Usuario.NombreCompleto;
+
+                        tabla.Formato[3, i] = "mmmm yyyy";
+                        tabla[3, i] = usuario.UltimoMesPagado;
+
+                        tabla.Formato[4, i] = "$0.00";
+                        tabla[4, i] = usuario.Adeudo;
+
+                        tabla[5, i] = usuario.Domicilio.Calle.Seccion.Nombre;
+                        tabla[6, i] = usuario.Domicilio.Calle.Nombre;
+
+                        if (int.TryParse(usuario.Domicilio.Numero, out int numero))
+                            tabla[7, i] = numero;
+                        else
+                            tabla[7, i] = usuario.Domicilio.Numero;
+
+                        tabla[8, i] = usuario.Contratos.Select(r => r.Contrato.TipoContrato.Nombre).ToDelimitedString(", ");
+
+                        tabla.Formato[9, i] = "dd/mm/yyyy";
+                        tabla[9, i] = usuario.UltimoPago;
+
+                        i++;
+                    }
+                }
+                else
+                {
+
+                }
+
+
+                libro.Generar();
+
+                AdministradorNotificaciones.Lanzar(new ArchivoGenerado(nombre));
+            }
+            catch (Exception ex)
+            {
+                AdministradorNotificaciones.Lanzar(new NotificacionError { Descripcion = ex.Message, Titulo = "Error" });
+                //TODO: Log
+                Console.WriteLine(ex.Message);
+            }
+        });
 
         #region Inicializacion
         private IDictionary<Seccion, IList<Calle>> CallesAgrupadas;
@@ -289,6 +392,9 @@ namespace AguaSB.Usuarios.ViewModels
                     }
                     else
                     {
+                        DesactivarFiltros();
+                        Ordenamiento = null;
+                        Agrupador = null;
                         TextoBusqueda = texto;
                     }
                 }
@@ -311,6 +417,7 @@ namespace AguaSB.Usuarios.ViewModels
             Enfocar?.Invoke(this, EventArgs.Empty);
         }
 
+        #region Busqueda
         private static long IdBusqueda;
         private static readonly object token = new object();
 
@@ -442,5 +549,6 @@ namespace AguaSB.Usuarios.ViewModels
                     return (puntosNavegacion, resultadosUsuarios);
             }
         }
+        #endregion
     }
 }

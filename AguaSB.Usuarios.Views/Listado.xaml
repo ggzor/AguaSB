@@ -47,7 +47,7 @@
         <Controles:BarraSuperior Grid.ColumnSpan="3" Titulo="Listado de usuarios" Foreground="White" 
                                  Icono="{icons:PackIconModern Kind=PeopleProfile, Width=20, Height=20}"/>
 
-        <material:DialogHost Name="DetallesUsuario" Grid.Row="1" DialogContent="{Binding ElementName=ListaResultados, Path=SelectedItem}" CloseOnClickAway="True"
+        <material:DialogHost x:Name="DetallesUsuario" Grid.Row="1" DialogContent="{Binding ElementName=ListaResultados, Path=SelectedItem}" CloseOnClickAway="True"
                              DialogClosing="CerrandoDetallesDeUsuario" DialogOpened="AbriendoDetallesDeUsuario">
             <material:DialogHost.DialogContentTemplate>
                 <DataTemplate DataType="{x:Type Dtos:ResultadoUsuario}">
@@ -81,9 +81,9 @@
 
                                         <StackPanel VerticalAlignment="Center">
                                             <TextBlock Text="{Binding Adeudo, StringFormat={}{0:C}}" Foreground="{StaticResource MaterialRed}" FontSize="64" 
-                                                   Visibility="{Binding TieneAdeudo, Converter={StaticResource BoolToVisibility}}" Opacity="0.8"/>
+                                                       Visibility="{Binding TieneAdeudo, Converter={StaticResource BoolToVisibility}}" Opacity="0.8"/>
                                             <TextBlock Text="Al corriente" Foreground="{StaticResource MaterialLightBlue}" FontSize="64"
-                                                   Visibility="{Binding NoTieneAdeudo, Converter={StaticResource BoolToVisibility}}" Opacity="0.8"/>
+                                                       Visibility="{Binding NoTieneAdeudo, Converter={StaticResource BoolToVisibility}}" Opacity="0.8"/>
                                         </StackPanel>
                                     </DockPanel>
                                 </StackPanel>
@@ -369,6 +369,8 @@
                     <StackPanel Grid.Column="2" Margin="0 0 16 0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
                         <Button Name="Actualizar" Margin="0 0 10 0" ToolTip="Actualizar (F5)" Foreground="White" Style="{StaticResource UtilityButton}"
                                 Content="{icons:PackIconMaterial Kind=Refresh, Width=20, Height=20}" Click="Actualizar_Click"/>
+                        <Button Name="Exportar" Margin="0 0 10 0" ToolTip="Exportar a Excel" Foreground="White" Style="{StaticResource UtilityButton}"
+                                Content="{icons:PackIconModern Kind=OfficeExcel, Width=20, Height=20}" Click="Exportar_Click"/>
                         <Button Name="FiltrosColumnasBoton" ToolTip="Configuración" Click="MostrarFiltrosColumnas" Foreground="White" Style="{StaticResource UtilityButton}" 
                                 Content="{icons:PackIconMaterial Kind=Settings, Width=20, Height=20}"/>
 
@@ -841,6 +843,8 @@
                         </Grid>
                     </Grid>
                 </Grid>
+
+                <Controles:CoverProgreso Grid.RowSpan="3" Texto="{Binding TextoCubierta}" Visible="{Binding MostrarCubierta}"/>
             </Grid>
         </material:DialogHost>
     </Grid>

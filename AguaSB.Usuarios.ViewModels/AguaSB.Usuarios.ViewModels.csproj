@@ -71,6 +71,7 @@
     <Compile Include="Agregar.cs" />
     <Compile Include="Dtos\Agrupador.cs" />
     <Compile Include="Dtos\Agrupadores.cs" />
+    <Compile Include="Dtos\ArchivoGenerado.cs" />
     <Compile Include="Dtos\Columnas.cs" />
     <Compile Include="Dtos\Grupo.cs" />
     <Compile Include="Dtos\Ordenamientos.cs" />
@@ -109,6 +110,10 @@
     <ProjectReference Include="..\AguaSB.Operaciones\AguaSB.Operaciones.csproj">
       <Project>{ee89ae19-8f49-4f82-beab-6a8a75d1f907}</Project>
       <Name>AguaSB.Operaciones</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AguaSB.Reportes\AguaSB.Reportes.csproj">
+      <Project>{4203900D-0213-4EDC-9BE3-380D722D0F73}</Project>
+      <Name>AguaSB.Reportes</Name>
     </ProjectReference>
     <ProjectReference Include="..\AguaSB.Utilerias\AguaSB.Utilerias.csproj">
       <Project>{61188b63-728a-4c7b-b19d-11abd1f64f4f}</Project>

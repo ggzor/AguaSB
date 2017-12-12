@@ -257,6 +257,8 @@ namespace AguaSB.Usuarios.Views
 
         private void EditarUsuario_Click(object sender, RoutedEventArgs e) => EjecutarEditarUsuario();
 
+        private void Exportar_Click(object sender, RoutedEventArgs e) => ViewModel.ExportarComando.Execute(null);
+
         private void EjecutarAgregarContrato() => ViewModel.AgregarContratoComando.Execute(ListaResultados.SelectedItem);
         private void EjecutarEditarUsuario() => ViewModel.EditarUsuarioComando.Execute(ListaResultados.SelectedItem);
 
