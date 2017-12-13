@@ -30,6 +30,7 @@ namespace AguaSB.Pagos.Views
 
             viewModel.UsuarioCambiado += (_, __) => Deslizar.HastaArriba(Deslizador);
             viewModel.EncontradoUsuarioUnico += (src, args) => Resultados.IsOpen = false;
+            viewModel.IniciandoBusqueda += (src, args) => Resultados.IsOpen = true;
         }
 
         private async void AbrirPanelResultados(object sender, RoutedEventArgs e)
@@ -42,7 +43,7 @@ namespace AguaSB.Pagos.Views
         {
             if (ListaResultados.SelectedItem is Usuario usuario)
             {
-                ViewModel.SeleccionarUsuario(usuario);
+                var _ = ViewModel.SeleccionarUsuario(usuario);
                 Resultados.IsOpen = false;
                 ListaResultados.SelectedItem = null;
             }

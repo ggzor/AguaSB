@@ -43,7 +43,8 @@ namespace AguaSB.Pagos.ViewModels
                 //new Contrato { Domicilio = new Domicilio { Numero = "33", Calle = new Calle { Nombre = "Dominguez", Seccion = new Seccion { Nombre = "Segunda" } } }, TipoContrato = new TipoContrato { Nombre ="Tienda", ClaseContrato = ClaseContrato.Comercial } }
             };
 
-            return contratos.Select(c => new InformacionPagoContrato(c, GenerarListas(r.Next(400, 1000))));
+            int adeudo = r.Next(400, 1000);
+            return contratos.Select(c => new InformacionPagoContrato(c, adeudo, GenerarListas(adeudo)));
         }
 
         private static IEnumerable<ColumnaRangosPago> GenerarListas(decimal adeudoBase)
@@ -111,9 +112,11 @@ namespace AguaSB.Pagos.ViewModels
         private IDbContextScopeFactory Ambito { get; }
         private IRepositorio<Usuario> UsuariosRepo { get; }
         private IRepositorio<Contrato> ContratosRepo { get; }
+        private IRepositorio<Tarifa> TarifasRepo { get; set; }
         private INavegador Navegador { get; }
         #endregion
 
+        public event EventHandler IniciandoBusqueda;
         public event EventHandler Enfocar;
         public event EventHandler EncontradoUsuarioUnico;
         public event EventHandler UsuarioCambiado;
@@ -121,11 +124,12 @@ namespace AguaSB.Pagos.ViewModels
         public INodo Nodo { get; }
 
         public Agregar(IDbContextScopeFactory ambito, IRepositorio<Usuario> usuariosRepo, IRepositorio<Contrato> contratosRepo,
-            INavegador navegador)
+            IRepositorio<Tarifa> tarifasRepo, INavegador navegador)
         {
             Ambito = ambito ?? throw new ArgumentNullException(nameof(ambito));
             UsuariosRepo = usuariosRepo ?? throw new ArgumentNullException(nameof(usuariosRepo));
             ContratosRepo = contratosRepo ?? throw new ArgumentNullException(nameof(contratosRepo));
+            TarifasRepo = tarifasRepo ?? throw new ArgumentNullException(nameof(tarifasRepo));
             Navegador = navegador ?? throw new ArgumentNullException(nameof(navegador));
 
             Nodo = new Nodo { Entrada = Entrar };
@@ -140,9 +144,9 @@ namespace AguaSB.Pagos.ViewModels
             this.ToObservableProperties()
                 .Where(p => p.Args.PropertyName == nameof(TextoBusqueda))
                 .Throttle(TiempoEsperaBusqueda)
-                .Where(_ => !string.IsNullOrWhiteSpace(TextoBusqueda))
                 .Select(_ => TextoBusqueda.Trim())
                 .DistinctUntilChanged()
+                .Where(_ => !string.IsNullOrWhiteSpace(TextoBusqueda))
                 .ObserveOnDispatcher()
                 .Subscribe(async texto => await ObtenerOpciones(texto).ConfigureAwait(true));
         }
@@ -188,6 +192,7 @@ namespace AguaSB.Pagos.ViewModels
             });
 
             Buscando = true;
+            IniciandoBusqueda?.Invoke(this, EventArgs.Empty);
 
             try
             {
@@ -216,6 +221,8 @@ namespace AguaSB.Pagos.ViewModels
             {
                 using (var baseDeDatos = Ambito.CreateReadOnly())
                 {
+                    var tarifas = TarifasRepo.Datos.OrderBy(t => t.FechaRegistro).ToArray();
+
                     var contratos = from Contrato in ContratosRepo.Datos
                                     where Contrato.Usuario.Id == usuario.Id
                                     let Tipo = Contrato.TipoContrato
@@ -230,10 +237,7 @@ namespace AguaSB.Pagos.ViewModels
                         var contrato = datos.ComponentesContrato.Contrato;
                         contrato.TipoContrato = datos.ComponentesContrato.Tipo;
 
-                        var r = new Random();
-                        var columnas = GenerarListas(r.Next(600, 1200) / 200 * 200).ToArray();
-
-                        return new InformacionPagoContrato(contrato, columnas);
+                        return GenerarInformacionPagoContrato(contrato, tarifas);
                     }).ToArray();
 
                     return new InformacionPagoUsuario(usuario, contratosMaterializados);
@@ -252,7 +256,40 @@ namespace AguaSB.Pagos.ViewModels
             BuscandoInformacionPago = false;
             UsuarioSeleccionado = true;
 
+            // Invocar usuario cambiado
+            await Task.Delay(200).ConfigureAwait(true);
             UsuarioCambiado?.Invoke(this, EventArgs.Empty);
         }
+
+        private InformacionPagoContrato GenerarInformacionPagoContrato(Contrato contrato, Tarifa[] tarifas)
+        {
+            var pagos = contrato.Pagos.OrderBy(p => p.FechaRegistro).ToArray();
+            var ultimoMesPagado = Fecha.MesDe(pagos.Last().Hasta);
+            var adeudo = Adeudos.Calcular(ultimoMesPagado, contrato.TipoContrato.Multiplicador, tarifas);
+
+            IEnumerable<RangoPago> GenerarRangosPago()
+            {
+                var tarifaActual = tarifas.Last();
+
+                return Enumerable.Range(1, 12).Select(i =>
+                {
+                    var hasta = ultimoMesPagado.AddMonths(i);
+                    var monto = tarifaActual.Monto * i;
+                    var restante = Math.Max(adeudo - monto, 0);
+
+                    return new RangoPago { Hasta = hasta, Monto = monto, AdeudoRestante = restante };
+                });
+            }
+
+            var columnas = from b in GenerarRangosPago().ToArray().Batch(4).Index()
+                           let indice = b.Key
+                           let conteoInicio = (indice * 4) + 1
+                           let conteoFin = (indice + 1) * 4
+                           let rangos = b.Value
+                           select new ColumnaRangosPago(conteoInicio, conteoFin, rangos.ToArray());
+
+            return new InformacionPagoContrato(contrato, adeudo, columnas.ToArray());
+        }
+
     }
 }

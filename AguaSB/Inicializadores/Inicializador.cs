@@ -7,6 +7,8 @@ namespace AguaSB.Inicializadores
     /// </summary>
     public class Inicializador : IInicializador
     {
-        public Inicializador(IEnumerable<IInicializador> inicializadores) { }
+        public Inicializador(IEnumerable<IInicializador> inicializadores)
+        {
+        }
     }
 }

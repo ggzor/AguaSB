@@ -69,12 +69,18 @@
                                 </DockPanel>
                             </DockPanel>
 
-                            <DockPanel Background="White" Visibility="{Binding Busqueda.NoHayResultados, Converter={StaticResource BoolToVisibility}}">
+                            <StackPanel Background="White" Visibility="{Binding Busqueda.NoHayResultados, Converter={StaticResource BoolToVisibility}}">
                                 <DockPanel Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <icons:PackIconModern Margin="0 0 20 0" Kind="Close" Style="{StaticResource IconoLateral}"/>
                                     <TextBlock Text="No hay resultados" Opacity="0.6" Style="{StaticResource h3}"/>
-                                </DockPanel>
-                            </DockPanel>
+                                </DockPanel>                                
+                                <TextBlock Margin="10" HorizontalAlignment="Center" Style="{StaticResource h4}" 
+                                           Visibility="{Binding Busqueda.HayMasOpciones, Converter={StaticResource BoolToVisibility}}">
+                                    <Hyperlink TextDecorations="" Command="{Binding BuscarEnListadoComando}">
+                                        <Run Text="{Binding Busqueda.CantidadOpcionesAdicionales, Mode=OneWay, StringFormat={}Ver {0} resultados adicionales, FallbackValue=No hay mas resultados}"/>
+                                    </Hyperlink>
+                                </TextBlock>
+                            </StackPanel>
 
                             <DockPanel Background="White" Tag="{Binding Buscando}" Opacity="0" Style="{StaticResource FadeTag}">
                                 <Views:AnilloProgreso EsVisible="True" Texto="Buscando" Foreground="{StaticResource ModernVerde}" HorizontalAlignment="Center"/>
@@ -153,6 +159,15 @@
                                     <TextBlock Text="{Binding InformacionPago.Contratos[0].Contrato.Domicilio.Calle.Seccion.Nombre, StringFormat={}Sección {0}}" Style="{StaticResource h2}"/>
                                     <TextBlock Text="{Binding InformacionPago.Contratos[0].Contrato.Domicilio.Calle.Nombre, StringFormat={}Calle {0}}" Style="{StaticResource h2}"/>
                                     <TextBlock Text="{Binding InformacionPago.Contratos[0].Contrato.Domicilio.Numero, StringFormat={}Número {0}}" Style="{StaticResource h2}"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Margin="0 0 8 0" Text="Adeudo:" Opacity="0.6" Style="{StaticResource h4}"/>
+                                        <TextBlock Text="{Binding InformacionPago.Contratos[0].Adeudo, StringFormat={}{0:C}}" FontFamily="Segoe UI" Style="{StaticResource h4}" 
+                                                   Foreground="{StaticResource MaterialRed}" FontWeight="DemiBold" Opacity="0.9"
+                                                   Visibility="{Binding InformacionPago.Contratos[0].TieneAdeudo, Converter={StaticResource BoolToVisibility}}"/>
+                                        <TextBlock Text="Al corriente" FontFamily="Segoe UI" Style="{StaticResource h4}" 
+                                                   Foreground="{StaticResource MaterialBlue}" FontWeight="DemiBold" Opacity="0.9"
+                                                   Visibility="{Binding InformacionPago.Contratos[0].NoTieneAdeudo, Converter={StaticResource BoolToVisibility}}"/>
+                                    </StackPanel>
 
                                     <DockPanel Margin="0 8 0 0">
                                         <TextBlock Text="{Binding InformacionPago.Contratos[0].Contrato.TipoContrato.Nombre}" Style="{StaticResource h4}" VerticalAlignment="Center"/>
@@ -190,6 +205,15 @@
                                                     <TextBlock Text="{Binding Contrato.Domicilio.Calle.Seccion.Nombre, StringFormat={}Sección {0}}" Style="{StaticResource h2}"/>
                                                     <TextBlock Text="{Binding Contrato.Domicilio.Calle.Nombre, StringFormat={}Calle {0}}" Style="{StaticResource h2}"/>
                                                     <TextBlock Text="{Binding Contrato.Domicilio.Numero, StringFormat={}Número {0}}" Style="{StaticResource h2}"/>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Margin="0 0 8 0" Text="Adeudo:" Opacity="0.6" Style="{StaticResource h4}"/>
+                                                        <TextBlock Text="{Binding Adeudo, StringFormat={}{0:C}}" FontFamily="Segoe UI" Style="{StaticResource h4}" 
+                                                                   Foreground="{StaticResource MaterialRed}" FontWeight="DemiBold" Opacity="0.9"
+                                                                   Visibility="{Binding TieneAdeudo, Converter={StaticResource BoolToVisibility}}"/>
+                                                        <TextBlock Text="Al corriente" FontFamily="Segoe UI" Style="{StaticResource h4}" 
+                                                                   Foreground="{StaticResource MaterialBlue}" FontWeight="DemiBold" Opacity="0.9"
+                                                                   Visibility="{Binding NoTieneAdeudo, Converter={StaticResource BoolToVisibility}}"/>
+                                                    </StackPanel>
 
                                                     <DockPanel Margin="0 8 0 0">
                                                         <TextBlock Text="{Binding Contrato.TipoContrato.Nombre}" Style="{StaticResource h4}" VerticalAlignment="Center"/>
@@ -210,7 +234,7 @@
                         <StackPanel Margin="0 16 0 0" Name="CantidadAPagar">
                             <StackPanel.Resources>
                                 <DataTemplate x:Key="PlantillaRangoPago" DataType="{x:Type Dtos:RangoPago}">
-                                    <Border Margin="0 5" BorderBrush="#33000000" BorderThickness="1">
+                                    <Border Margin="0 5" BorderBrush="#33000000" BorderThickness="1" Util:ActivarBandera.ManejarEventos="True" Util:ActivarBandera.Bandera="{Binding Activo, Mode=OneWayToSource}">
                                         <DockPanel>
                                             <RadioButton IsChecked="{Binding Activo, Mode=TwoWay}" Margin="16" GroupName="Pago" VerticalAlignment="Top"/>
                                             <StackPanel Margin="16 8 16 16">
@@ -286,12 +310,16 @@
                 </ScrollViewer>
 
                 <Border Grid.Row="1" BorderBrush="#33000000" BorderThickness="2">
-                    <Button Margin="8" Foreground="White" HorizontalAlignment="Center" Style="{StaticResource HighlightButton}">
-                        <StackPanel Orientation="Horizontal">
-                            <icons:PackIconModern Kind="Money" Width="20" Height="20"/>
-                            <TextBlock Margin="8 0 0 0" Text="Pagar"/>
-                        </StackPanel>
-                    </Button>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Margin="8" Foreground="White" Style="{StaticResource HighlightButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <icons:PackIconModern Kind="Money" Width="20" Height="20"/>
+                                <TextBlock Margin="8 0 0 0" Text="Pagar"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Margin="8" Foreground="{StaticResource MaterialGreen}" Content="Otra cantidad" 
+                                Style="{StaticResource DialogButton}"/>
+                    </StackPanel>
                 </Border>
             </Grid>
         </Grid>

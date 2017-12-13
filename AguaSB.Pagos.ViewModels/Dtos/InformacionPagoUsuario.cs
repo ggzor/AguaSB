@@ -41,7 +41,7 @@ namespace AguaSB.Pagos.ViewModels.Dtos
         {
             get
             {
-                var seleccionado = Contratos.SingleOrDefault(c => c.Activo) ?? Contratos[0];
+                var seleccionado = Contratos.Where(c => c.Activo).FirstOrDefault() ?? Contratos[0];
 
                 Contratos.SelectMany(c => c.Columnas.SelectMany(col => col.RangosPago))
                     .ForEach(r => r.Activo = false);
