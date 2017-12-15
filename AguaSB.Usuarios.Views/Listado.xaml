@@ -203,7 +203,7 @@
                                 <Button Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:Listado}}, Path=UsuarioAnteriorComando}" 
                                         ToolTip="Anterior" Content="{icons:PackIconMaterial Kind=ArrowLeft, Width=20, Height=20}" Style="{StaticResource UtilityButton}"/>
 
-                                <Button Margin="10 0 0 0" Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:Listado}}, Path=UsuarioSiguienteComando}" 
+                                <Button Margin="8 0 0 0" Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:Listado}}, Path=UsuarioSiguienteComando}" 
                                         ToolTip="Siguiente" Content="{icons:PackIconMaterial Kind=ArrowRight, Width=20, Height=20}" Style="{StaticResource UtilityButton}"/>
                             </StackPanel>
                         </DockPanel>
