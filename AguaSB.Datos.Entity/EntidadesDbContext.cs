@@ -1,4 +1,5 @@
-﻿using AguaSB.Nucleo;
+﻿using AguaSB.Datos.Entity.Migrations;
+using AguaSB.Nucleo;
 using System.Data.Entity;
 
 namespace AguaSB.Datos.Entity
@@ -7,7 +8,7 @@ namespace AguaSB.Datos.Entity
     {
         public EntidadesDbContext()
         {
-            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<EntidadesDbContext>());
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<EntidadesDbContext, Configuration>());
         }
 
         public virtual DbSet<Usuario> Usuarios { get; set; }
