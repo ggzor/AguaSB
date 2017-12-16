@@ -15,12 +15,19 @@ namespace AguaSB.Nucleo
 
         public DateTime FechaRegistro { get; set; }
 
+        private DateTime fechaPago;
         private DateTime desde;
         private DateTime hasta;
         private Contrato contrato;
         private decimal monto;
         private decimal montoParcial;
         private Ajustador ajustador;
+
+        public DateTime FechaPago
+        {
+            get { return fechaPago; }
+            set { N.Set(ref fechaPago, value); }
+        }
 
         public DateTime Desde
         {
@@ -41,19 +48,19 @@ namespace AguaSB.Nucleo
         }
 
         [Range(typeof(decimal), "0", "1000000")]
-        public decimal Monto
+        public decimal CantidadPagada
         {
             get { return monto; }
             set { N.Validate(ref monto, value); }
         }
 
         [Range(typeof(decimal), "0", "1000000")]
-        public decimal MontoParcial
+        public decimal Monto
         {
             get { return montoParcial; }
             set { N.Validate(ref montoParcial, value); }
         }
-        
+
         [Required(ErrorMessage = "Todos los pagos deben tener ajustador. En caso de no ser una promoción deben llevar el ajustador por defecto.")]
         public Ajustador Ajustador
         {
@@ -90,9 +97,9 @@ namespace AguaSB.Nucleo
         private void CalcularMontoFinal()
         {
             if (Ajustador != null)
-                Monto = MontoParcial * Ajustador.Multiplicador;
+                CantidadPagada = Monto * Ajustador.Multiplicador;
             else
-                Monto = MontoParcial;
+                CantidadPagada = Monto;
         }
     }
 }

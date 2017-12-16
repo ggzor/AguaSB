@@ -7,92 +7,83 @@ namespace AguaSB.Nucleo
 {
     public static class Adeudos
     {
-        /// <summary>
-        /// Calcula los adeudos por cada mes desde el mes de inicio especificado, considerando los pagos especificados.
-        /// </summary>
-        /// <param name="inicio">Mes de inicio (Inclusivo)</param>
-        /// <param name="multiplicador">El multiplicador a aplicar por cada monto de las tarifas.</param>
-        /// <param name="tarifasOrdenadas">Las tarifas ordenadas ascendentemente por fecha de registro.</param>
-        /// <param name="pagosOrdenados">Los pagos ordenados ascendentemente por fecha de registro.</param>
-        /// <returns></returns>
-        /*public static IEnumerable<(DateTime Mes, decimal Adeudo)> CalcularConPagos(DateTime inicio, decimal multiplicador, Tarifa[] tarifasOrdenadas, Pago[] pagosOrdenados)
+        public static decimal Calcular(DateTime ultimoMesPagado, TipoContrato tipoContrato, Tarifa[] tarifasOrdenadas)
         {
-            if (inicio > Fecha.EsteMes)
-                throw new ArgumentOutOfRangeException("La fecha de inicio debe ser menor que este mes.");
-
-            var conteoPagos = pagosOrdenados.Length;
-            int indicePagoActual = -1;
-
-            foreach (var (mes, adeudo) in CalcularAdeudosAcumulados(inicio, Fecha.EsteMes, tarifasOrdenadas))
-            {
-
-            }
-        }*/
-
-        /// <summary>
-        /// IMPORTANTE: El arreglo tarifas debe estar ordenado desde la más antigua hasta la menos antigua. De lo contrario se calculara incorrectamente el adeudo.
-        /// </summary>
-        public static decimal Calcular(DateTime ultimoMesPagado, decimal multiplicador, Tarifa[] tarifasOrdenadas)
-        {
-            var primerMesAdeudo = ultimoMesPagado.AddMonths(1);
+            var primerMesAdeudo = Fecha.MesDe(ultimoMesPagado).AddMonths(1);
             var esteMes = Fecha.MesDe(Fecha.Ahora);
 
-            if (primerMesAdeudo <= esteMes)
-                return CalcularAdeudosAcumulados(primerMesAdeudo, esteMes, tarifasOrdenadas).Select(_ => _.Adeudo).Sum() * multiplicador;
-            else
+            if (primerMesAdeudo > esteMes)
                 return 0.0m;
+            else
+                return CalcularMonto(primerMesAdeudo, esteMes, tipoContrato, tarifasOrdenadas);
         }
 
-        /// <summary>
-        /// Calcula el adeudo entre dos fechas de acuerdo a las tarifas especificadas.
-        /// </summary>
-        /// <param name="mesInicio">El primer mes a considerar</param>
-        /// <param name="mesFin">El último mes a considerar (Inclusivo)</param>
-        /// <param name="tarifasOrdenadas">Las tarifas a considerar para el calculo de adeudos. Debe estar en orden ascendente por fecha de registro.</param>
-        /// <returns>Un arreglo de parejas que representa cada mes y su adeudo.</returns>
-        private static IEnumerable<(DateTime Mes, decimal Adeudo)> CalcularAdeudosAcumulados(DateTime mesInicio, DateTime mesFin, Tarifa[] tarifasOrdenadas)
+        public static decimal CalcularMonto(DateTime desde, DateTime hasta, TipoContrato tipoContrato, Tarifa[] tarifasOrdenadas)
         {
-            mesInicio = Fecha.MesDe(mesInicio);
-            mesFin = Fecha.MesDe(mesFin);
+            desde = Fecha.MesDe(desde);
+            hasta = Fecha.MesDe(hasta);
 
-            if (mesInicio > mesFin)
-                throw new ArgumentOutOfRangeException("El mes de inicio debe ser menor o igual que el mes final.");
+            if (desde > hasta)
+                throw new ArgumentException("La fecha de inicio debe ser menor o igual a la fecha de fin.");
 
-            var conteoTarifas = tarifasOrdenadas.Length;
+            return CalcularMontosAcumuladosPorMes(desde, hasta, tipoContrato, tarifasOrdenadas).Last().Monto;
+        }
 
-            if (conteoTarifas == 0)
-                throw new ArgumentException("Debe haber al menos una tarifa", nameof(tarifasOrdenadas));
+        public static IEnumerable<(DateTime Mes, decimal Monto)> CalcularMontosAcumuladosPorMes(DateTime desde, DateTime hasta, TipoContrato tipoContrato, Tarifa[] tarifasOrdenadas)
+        {
+            var montoActual = 0m;
 
-            var indiceTarifaActual = BuscarTarifaParaMes(mesInicio, tarifasOrdenadas);
+            foreach (var (mes, monto) in CalcularMontosPorMes(desde, hasta, tipoContrato, tarifasOrdenadas))
+            {
+                montoActual += monto;
+
+                yield return (mes, montoActual);
+            }
+        }
+
+        public static IEnumerable<(DateTime Mes, decimal Monto)> CalcularMontosPorMes(DateTime desde, DateTime hasta, TipoContrato tipoContrato, Tarifa[] tarifasOrdenadas)
+        {
+            if (tarifasOrdenadas == null)
+                throw new ArgumentNullException(nameof(tarifasOrdenadas));
+
+            if (tipoContrato == null)
+                throw new ArgumentNullException(nameof(tipoContrato));
+
+            if (tarifasOrdenadas.Count() == 0)
+                throw new ArgumentException("Debe haber al menos una tarifa.", nameof(tarifasOrdenadas));
+
+            desde = Fecha.MesDe(desde);
+            hasta = Fecha.MesDe(hasta);
+
+            var indiceTarifaActual = BuscarIndiceTarifaParaMes(desde, tarifasOrdenadas);
             var tarifaActual = tarifasOrdenadas[indiceTarifaActual];
 
-            var mesActual = mesInicio;
-
-            while (mesActual <= mesFin)
+            var actual = desde;
+            while (actual <= hasta)
             {
-                // Intentar tomar la tarifa siguiente si: Hay otra y el mes actual está durante el periodo de esta tarifa.
+                // Intentar tomar la tarifa siguiente si: Hay otra y el mes actual está durante el periodo de la siguiente tarifa.
                 var indiceTarifaSiguiente = indiceTarifaActual + 1;
-                if (indiceTarifaSiguiente < conteoTarifas)
+                if (indiceTarifaSiguiente < tarifasOrdenadas.Length)
                 {
                     var tarifaSiguiente = tarifasOrdenadas[indiceTarifaSiguiente];
 
-                    if (mesActual >= tarifaSiguiente.FechaRegistro)
+                    if (actual >= tarifaSiguiente.FechaRegistro)
                     {
                         indiceTarifaActual = indiceTarifaSiguiente;
                         tarifaActual = tarifaSiguiente;
                     }
                 }
 
-                mesActual = mesActual.AddMonths(1);
+                yield return (actual, tarifaActual.Monto * tipoContrato.Multiplicador);
 
-                yield return (mesActual, tarifaActual.Monto);
+                actual = actual.AddMonths(1);
             }
         }
 
         /// <summary>
         /// Busca la tarifa más antigua que se haya registrado antes o durante el mes especificado.
         /// </summary>
-        private static int BuscarTarifaParaMes(DateTime mes, Tarifa[] tarifasOrdenadas)
+        private static int BuscarIndiceTarifaParaMes(DateTime mes, Tarifa[] tarifasOrdenadas)
         {
             int indiceTarifa = tarifasOrdenadas.Length - 1;
 
