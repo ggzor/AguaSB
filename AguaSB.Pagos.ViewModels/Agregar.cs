@@ -8,12 +8,13 @@ using AguaSB.Nucleo;
 using AguaSB.Pagos.ViewModels.Dtos;
 using AguaSB.Utilerias;
 using System.Reactive.Linq;
-using System.Threading;
 using Mehdime.Entity;
 using AguaSB.Datos;
 using System.Waf.Applications;
-using System.Collections.Generic;
 using MoreLinq;
+using System.ComponentModel;
+using AguaSB.Notificaciones;
+using AguaSB.Pagos.ViewModels.Notificaciones;
 
 namespace AguaSB.Pagos.ViewModels
 {
@@ -29,41 +30,8 @@ namespace AguaSB.Pagos.ViewModels
         private bool buscandoInformacionPago;
         private ResultadosBusquedaUsuarios busqueda;
         private string textoBusqueda;
-        private InformacionPagoUsuario informacionPago =
-            new InformacionPagoUsuario(new Persona { Nombre = "Axel", ApellidoPaterno = "Suárez", ApellidoMaterno = "Polo" }, GenerarContratos());
+        private OpcionesPago opcionesPago;
         private bool usuarioSeleccionado;
-
-        private static readonly Random r = new Random();
-
-        private static IEnumerable<InformacionPagoContrato> GenerarContratos()
-        {
-            var contratos = new[]
-            {
-                new Contrato { Domicilio = new Domicilio { Numero = "34", Calle = new Calle { Nombre = "Dolores", Seccion = new Seccion { Nombre = "Primera" } } }, TipoContrato = new TipoContrato { Nombre ="Convencional", ClaseContrato = ClaseContrato.Doméstico } },
-                //new Contrato { Domicilio = new Domicilio { Numero = "33", Calle = new Calle { Nombre = "Dominguez", Seccion = new Seccion { Nombre = "Segunda" } } }, TipoContrato = new TipoContrato { Nombre ="Tienda", ClaseContrato = ClaseContrato.Comercial } }
-            };
-
-            int adeudo = r.Next(400, 1000);
-            return contratos.Select(c => new InformacionPagoContrato(c, adeudo, GenerarListas(adeudo)));
-        }
-
-        private static IEnumerable<ColumnaRangosPago> GenerarListas(decimal adeudoBase)
-        {
-            var inicio = new DateTime(2018, 01, 01);
-
-            return from b in Enumerable.Range(0, 12).Batch(4)
-                   let conteoInicio = b.First() + 1
-                   let conteoFinal = b.Last() + 1
-                   select new ColumnaRangosPago(conteoInicio, conteoFinal,
-                        from d in b
-                        let mes = inicio.AddMonths(d)
-                        select new RangoPago
-                        {
-                            AdeudoRestante = adeudoBase - (d * 60),
-                            Hasta = mes,
-                            Monto = d * 60
-                        });
-        }
         #endregion
 
         #region Propiedades
@@ -91,10 +59,10 @@ namespace AguaSB.Pagos.ViewModels
             set { SetProperty(ref textoBusqueda, value); }
         }
 
-        public InformacionPagoUsuario InformacionPago
+        public OpcionesPago OpcionesPago
         {
-            get { return informacionPago; }
-            set { SetProperty(ref informacionPago, value); }
+            get { return opcionesPago; }
+            set { SetProperty(ref opcionesPago, value); }
         }
 
         public bool UsuarioSeleccionado
@@ -102,41 +70,67 @@ namespace AguaSB.Pagos.ViewModels
             get { return usuarioSeleccionado; }
             set { SetProperty(ref usuarioSeleccionado, value); }
         }
+
+        public ControladorCubierta ControladorCubierta { get; } = new ControladorCubierta();
         #endregion
 
         #region Comandos
         public DelegateCommand BuscarEnListadoComando { get; set; }
+        public DelegateCommand PagarSeleccionComando { get; }
+        public DelegateCommand PagarOtraCantidadComando { get; }
         #endregion
 
         #region Servicios
         private IDbContextScopeFactory Ambito { get; }
+
         private IRepositorio<Usuario> UsuariosRepo { get; }
         private IRepositorio<Contrato> ContratosRepo { get; }
         private IRepositorio<Tarifa> TarifasRepo { get; set; }
+        private IRepositorio<Pago> PagosRepo { get; set; }
+
         private INavegador Navegador { get; }
+        private IAdministradorNotificaciones Notificaciones { get; }
         #endregion
 
+        #region Eventos
         public event EventHandler IniciandoBusqueda;
         public event EventHandler Enfocar;
         public event EventHandler EncontradoUsuarioUnico;
         public event EventHandler UsuarioCambiado;
+        #endregion
 
         public INodo Nodo { get; }
 
-        public Agregar(IDbContextScopeFactory ambito, IRepositorio<Usuario> usuariosRepo, IRepositorio<Contrato> contratosRepo,
-            IRepositorio<Tarifa> tarifasRepo, INavegador navegador)
+        public Agregar(IDbContextScopeFactory ambito, IRepositorio<Usuario> usuariosRepo, IRepositorio<Contrato> contratosRepo, IRepositorio<Pago> pagosRepo,
+            IRepositorio<Tarifa> tarifasRepo, INavegador navegador, IAdministradorNotificaciones notificaciones)
         {
             Ambito = ambito ?? throw new ArgumentNullException(nameof(ambito));
+
             UsuariosRepo = usuariosRepo ?? throw new ArgumentNullException(nameof(usuariosRepo));
             ContratosRepo = contratosRepo ?? throw new ArgumentNullException(nameof(contratosRepo));
+            PagosRepo = pagosRepo ?? throw new ArgumentNullException(nameof(pagosRepo));
             TarifasRepo = tarifasRepo ?? throw new ArgumentNullException(nameof(tarifasRepo));
+
             Navegador = navegador ?? throw new ArgumentNullException(nameof(navegador));
+            Notificaciones = notificaciones ?? throw new ArgumentNullException(nameof(notificaciones));
 
             Nodo = new Nodo { Entrada = Entrar };
 
             BuscarEnListadoComando = new DelegateCommand(() => Navegador.Navegar("Usuarios/Listado", TextoBusqueda));
+            PagarSeleccionComando = new DelegateCommand(PagarSeleccion, PuedePagarSeleccion);
+            PagarOtraCantidadComando = new DelegateCommand(PagarOtraCantidad, TieneContratoSeleccionado);
 
             ActivarEscuchaCambioTexto();
+
+            var verificador = new VerificadorPropiedades(this,
+                () => new INotifyDataErrorInfo[] { OpcionesPago?.PagoPorPropiedades }
+                      .Where(o => o != null),
+                () => new INotifyPropertyChanged[] { OpcionesPago?.PagoPorRangos }
+                      .Concat(OpcionesPago?.PagoPorRangos?.PagosContratos ?? Enumerable.Empty<INotifyPropertyChanged>())
+                      .Where(obs => obs != null),
+                () => new[] { PagarSeleccionComando, PagarOtraCantidadComando });
+
+            UsuarioSeleccionado = false;
         }
 
         private void ActivarEscuchaCambioTexto()
@@ -168,35 +162,38 @@ namespace AguaSB.Pagos.ViewModels
             Enfocar?.Invoke(this, EventArgs.Empty);
         }
 
-        private readonly object Token = new object();
-        private int IdTareaActual;
+        private readonly Sincronizador ObtencionOpcionesUsuario = new Sincronizador();
 
         private async Task ObtenerOpciones(string nombreUsuario)
         {
-            Task BuscarOpciones = Task.Run(() =>
+            Task<ResultadosBusquedaUsuarios> BuscarOpciones = Task.Run(() =>
             {
-                var id = Interlocked.Increment(ref IdTareaActual);
-
                 var busqueda = new ResultadosBusquedaUsuarios(CantidadOpciones);
 
                 using (var baseDatos = Ambito.CreateReadOnly())
                     busqueda.Buscar(UsuariosRepo.Datos, nombreUsuario);
 
-                if (IdTareaActual == id)
-                {
-                    lock (Token)
-                    {
-                        Busqueda = busqueda;
-                    }
-                }
+                return busqueda;
             });
+
+            var id = ObtencionOpcionesUsuario.ObtenerId();
 
             Buscando = true;
             IniciandoBusqueda?.Invoke(this, EventArgs.Empty);
 
             try
             {
-                await BuscarOpciones.ConfigureAwait(true);
+                var resultadoBusqueda = await BuscarOpciones.ConfigureAwait(true);
+
+                ObtencionOpcionesUsuario.Intentar(id,
+                    () => Busqueda = resultadoBusqueda);
+
+
+                if (Busqueda.TotalResultados == 1)
+                {
+                    EncontradoUsuarioUnico?.Invoke(this, EventArgs.Empty);
+                    await SeleccionarUsuario(Busqueda.Resultados.Single()).ConfigureAwait(false);
+                }
             }
             catch (Exception ex)
             {
@@ -204,43 +201,20 @@ namespace AguaSB.Pagos.ViewModels
                 Console.WriteLine("Excepcion: " + ex.Message);
             }
 
-            if (Busqueda.TotalResultados == 1)
-            {
-                EncontradoUsuarioUnico?.Invoke(this, EventArgs.Empty);
-                await SeleccionarUsuario(Busqueda.Resultados.Single()).ConfigureAwait(false);
-            }
-
             Buscando = false;
         }
 
-        private static readonly Sincronizador ObtencionInformacionPagos = new Sincronizador();
+        private readonly Sincronizador ObtencionInformacionPagos = new Sincronizador();
 
         public async Task SeleccionarUsuario(Usuario usuario)
         {
-            Task<InformacionPagoUsuario> ObtenerInformacion() => Task.Run(() =>
+            Task<OpcionesPago> ObtenerInformacion() => Task.Run(() =>
             {
                 using (var baseDeDatos = Ambito.CreateReadOnly())
                 {
                     var tarifas = TarifasRepo.Datos.OrderBy(t => t.FechaRegistro).ToArray();
 
-                    var contratos = from Contrato in ContratosRepo.Datos
-                                    where Contrato.Usuario.Id == usuario.Id
-                                    let Tipo = Contrato.TipoContrato
-                                    let ComponentesContrato = new { Contrato, Tipo }
-                                    let Domicilio = Contrato.Domicilio
-                                    let ComponentesDomicilio = new { Domicilio, Domicilio.Calle, Domicilio.Calle.Seccion }
-                                    let Pagos = Contrato.Pagos
-                                    select new { ComponentesContrato, ComponentesDomicilio, Pagos };
-
-                    var contratosMaterializados = contratos.ToArray().Select(datos =>
-                    {
-                        var contrato = datos.ComponentesContrato.Contrato;
-                        contrato.TipoContrato = datos.ComponentesContrato.Tipo;
-
-                        return GenerarInformacionPagoContrato(contrato, tarifas);
-                    }).ToArray();
-
-                    return new InformacionPagoUsuario(usuario, contratosMaterializados);
+                    return OpcionesPago.Para(UsuariosRepo.Datos.Single(u => u.Id == usuario.Id), tarifas);
                 }
             });
 
@@ -251,7 +225,8 @@ namespace AguaSB.Pagos.ViewModels
 
             var informacion = await ObtenerInformacion().ConfigureAwait(true);
 
-            ObtencionInformacionPagos.Intentar(id, () => InformacionPago = informacion);
+            ObtencionInformacionPagos.Intentar(id,
+                () => OpcionesPago = informacion);
 
             BuscandoInformacionPago = false;
             UsuarioSeleccionado = true;
@@ -261,35 +236,47 @@ namespace AguaSB.Pagos.ViewModels
             UsuarioCambiado?.Invoke(this, EventArgs.Empty);
         }
 
-        private InformacionPagoContrato GenerarInformacionPagoContrato(Contrato contrato, Tarifa[] tarifas)
+        private bool TieneContratoSeleccionado() => UsuarioSeleccionado && OpcionesPago?.PagoPorRangos.PagoContratoSeleccionado != null;
+        private bool PuedePagarSeleccion() => TieneContratoSeleccionado() && OpcionesPago?.PagoPorRangos.PagoContratoSeleccionado?.RangoPagoSeleccionado != null;
+
+        private void PagarOtraCantidad()
         {
-            var pagos = contrato.Pagos.OrderBy(p => p.FechaRegistro).ToArray();
-            var ultimoMesPagado = Fecha.MesDe(pagos.Last().Hasta);
-            var adeudo = Adeudos.Calcular(ultimoMesPagado, contrato.TipoContrato.Multiplicador, tarifas);
 
-            IEnumerable<RangoPago> GenerarRangosPago()
-            {
-                var tarifaActual = tarifas.Last();
-
-                return Enumerable.Range(1, 12).Select(i =>
-                {
-                    var hasta = ultimoMesPagado.AddMonths(i);
-                    var monto = tarifaActual.Monto * i;
-                    var restante = Math.Max(adeudo - monto, 0);
-
-                    return new RangoPago { Hasta = hasta, Monto = monto, AdeudoRestante = restante };
-                });
-            }
-
-            var columnas = from b in GenerarRangosPago().ToArray().Batch(4).Index()
-                           let indice = b.Key
-                           let conteoInicio = (indice * 4) + 1
-                           let conteoFin = (indice + 1) * 4
-                           let rangos = b.Value
-                           select new ColumnaRangosPago(conteoInicio, conteoFin, rangos.ToArray());
-
-            return new InformacionPagoContrato(contrato, adeudo, columnas.ToArray());
         }
 
+        private async void PagarSeleccion()
+        {
+            try
+            {
+                await HacerPago(OpcionesPago.PagoPorRangos);
+            }
+            catch (Exception ex)
+            {
+                Notificaciones.Lanzar(new NotificacionError { Titulo = "Error", Descripcion = ex.Message, Clase = "Pagos" });
+                //TODO: Log
+            }
+        }
+
+        private Task HacerPago(OpcionPago opcionPago) => Task.Run(() =>
+        {
+            using (var cubierta = ControladorCubierta.Mostrar("Realizando pago"))
+            {
+                var pago = opcionPago.GenerarPago();
+                string domicilioContrato;
+
+                using (var baseDeDatos = Ambito.Create())
+                {
+                    pago.Contrato = ContratosRepo.Datos.Single(c => c.Id == pago.Contrato.Id);
+
+                    domicilioContrato = pago.Contrato.ToString();
+
+                    PagosRepo.Agregar(pago);
+
+                    baseDeDatos.SaveChanges();
+                }
+
+                Notificaciones.Lanzar(new PagoRealizado(pago, domicilioContrato));
+            }
+        });
     }
 }

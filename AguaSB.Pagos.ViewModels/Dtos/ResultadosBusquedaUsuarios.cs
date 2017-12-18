@@ -27,6 +27,9 @@ namespace AguaSB.Pagos.ViewModels.Dtos
         public int CantidadOpcionesAdicionales => Math.Max(0, TotalResultados - CantidadOpciones);
         public bool? HayMasOpciones => Resultados == null ? (bool?)null : CantidadOpcionesAdicionales > 0;
 
+        public int CoincidentesSinContrato { get; set; }
+        public bool HayCoincidentesSinContrato => CoincidentesSinContrato > 0 && !(HayMasOpciones == true);
+
         public void Buscar(IQueryable<Usuario> usuarios, string nombre)
         {
             nombre = Usuario.ConvertirATextoSolicitud(nombre);
@@ -40,13 +43,17 @@ namespace AguaSB.Pagos.ViewModels.Dtos
             else
             {
 
-                var solicitud = from usuario in usuarios
-                                where usuario.NombreSolicitud.Contains(nombre)
-                                orderby usuario.NombreSolicitud
-                                select usuario;
+                var coincidentes = from usuario in usuarios
+                                   where usuario.NombreSolicitud.Contains(nombre)
+                                   orderby usuario.NombreSolicitud
+                                   select usuario;
 
-                Resultados = solicitud.Take(CantidadOpciones).ToArray();
-                TotalResultados = solicitud.Count();
+                CoincidentesSinContrato = coincidentes.Count(u => !u.Contratos.Any());
+
+                var coincidentesConContrato = coincidentes.Where(u => u.Contratos.Any());
+
+                Resultados = coincidentesConContrato.Take(CantidadOpciones).ToArray();
+                TotalResultados = coincidentesConContrato.Count();
             }
         }
     }
