@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:AguaSB.Views.Controles"
              xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" Name="This"
+             Foreground="{DynamicResource AccentColorBrush}"
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -18,7 +19,7 @@
     <local:Cover Grid.Row="1" Grid.ColumnSpan="3" Visible="{Binding ElementName=This, Path=Visible}">
         <local:Cover.Contenido>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <metro:ProgressRing VerticalAlignment="Center"/>
+                <metro:ProgressRing Foreground="{Binding ElementName=This, Path=Foreground}" VerticalAlignment="Center"/>
                 <TextBlock Margin="20" Text="{Binding RelativeSource={RelativeSource AncestorType=local:CoverProgreso}, Path=Texto}" Foreground="White"
                            FontFamily="Segoe UI" TextWrapping="WrapWithOverflow" TextAlignment="Center" VerticalAlignment="Center" Style="{StaticResource h2}"/>
             </StackPanel>
