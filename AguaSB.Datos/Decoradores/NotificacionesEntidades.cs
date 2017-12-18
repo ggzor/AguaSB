@@ -14,7 +14,7 @@ namespace AguaSB.Datos.Decoradores
         }
     }
 
-    public sealed class EntidadAgregada<T> : NotificacionEntidad<T> where T : IEntidad
+    public class EntidadAgregada<T> : NotificacionEntidad<T> where T : IEntidad
     {
         public EntidadAgregada(T entidad) : base(entidad)
         {
@@ -23,7 +23,7 @@ namespace AguaSB.Datos.Decoradores
         }
     }
 
-    public sealed class EntidadActualizada<T> : NotificacionEntidad<T> where T : IEntidad
+    public class EntidadActualizada<T> : NotificacionEntidad<T> where T : IEntidad
     {
         public EntidadActualizada(T entidad) : base(entidad)
         {
@@ -32,7 +32,7 @@ namespace AguaSB.Datos.Decoradores
         }
     }
 
-    public sealed class EntidadEliminada<T> : NotificacionEntidad<T> where T : IEntidad
+    public class EntidadEliminada<T> : NotificacionEntidad<T> where T : IEntidad
     {
         public EntidadEliminada(T entidad) : base(entidad)
         {

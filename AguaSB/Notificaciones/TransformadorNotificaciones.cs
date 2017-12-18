@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -35,6 +36,7 @@ namespace AguaSB.Notificaciones
             [typeof(EntidadActualizada<Usuario>)] = (IconoMaterial(PackIconMaterialKind.AccountCheck), Temas.Azul.BrochaSolidaWPF),
             [typeof(EntidadAgregada<Contrato>)] = (IconoModern(PackIconModernKind.AlignJustify), Temas.Naranja.BrochaSolidaWPF),
             [typeof(EntidadActualizada<Contrato>)] = (IconoMaterial(PackIconMaterialKind.AccountCardDetails), Temas.Naranja.BrochaSolidaWPF),
+            [typeof(EntidadAgregada<Pago>)] = (IconoModern(PackIconModernKind.Money), Temas.Verde.BrochaSolidaWPF),
             [typeof(NotificacionError)] = (IconoModern(PackIconModernKind.Close), Temas.Rojo.BrochaSolidaWPF)
         };
 
@@ -55,8 +57,12 @@ namespace AguaSB.Notificaciones
 
         private static (Func<FrameworkElement> Icono, Brush Fondo) ObtenerConfiguracion(Notificacion notificacion)
         {
-            var tipo = notificacion.GetType();
-            if (Diccionario.ContainsKey(tipo))
+            var tipoNotificacion = notificacion.GetType();
+
+            var resultado = Diccionario.Keys
+                .FirstOrDefault(t => t.IsAssignableFrom(tipoNotificacion));
+
+            if (resultado is Type tipo)
                 return Diccionario[tipo];
             else
                 return (IconoModern(PackIconModernKind.NotificationMultiple), Temas.Azul.BrochaSolidaWPF);
