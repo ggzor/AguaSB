@@ -68,8 +68,6 @@
             </Grid>
         </ScrollViewer>
 
-        <Views:CoverProgreso Grid.Row="1" Texto="{Binding TextoProgreso}" Visible="{Binding MostrarProgreso}"/>
-
         <material:PopupBox Margin="32" Grid.Row="1" StaysOpen="False" Panel.ZIndex="1"
                            HorizontalAlignment="Right" VerticalAlignment="Bottom">
             <StackPanel>
@@ -90,5 +88,7 @@
                 </Button>
             </StackPanel>
         </material:PopupBox>
+        
+        <Views:CoverProgreso Grid.Row="1" Texto="{Binding TextoProgreso}" Visible="{Binding MostrarProgreso}"/>
     </Grid>
 </UserControl>
