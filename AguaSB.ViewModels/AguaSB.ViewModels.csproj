@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activable.cs" />
+    <Compile Include="ControladorCubierta.cs" />
     <Compile Include="FuncComparer.cs" />
     <Compile Include="IViewModel.cs" />
     <Compile Include="ObjetoActivable.cs" />
