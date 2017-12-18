@@ -21,7 +21,6 @@ namespace AguaSB.Nucleo
         private Contrato contrato;
         private decimal monto;
         private decimal montoParcial;
-        private Ajustador ajustador;
 
         public DateTime FechaPago
         {
@@ -61,13 +60,6 @@ namespace AguaSB.Nucleo
             set { N.Validate(ref montoParcial, value); }
         }
 
-        [Required(ErrorMessage = "Todos los pagos deben tener ajustador. En caso de no ser una promoción deben llevar el ajustador por defecto.")]
-        public Ajustador Ajustador
-        {
-            get { return ajustador; }
-            set { N.Set(ref ajustador, value); }
-        }
-
         public Pago()
         {
             notificador = new Lazy<Notificador>(() =>
@@ -91,15 +83,7 @@ namespace AguaSB.Nucleo
 
         public void Coercer()
         {
-            CalcularMontoFinal();
-        }
 
-        private void CalcularMontoFinal()
-        {
-            if (Ajustador != null)
-                CantidadPagada = Monto * Ajustador.Multiplicador;
-            else
-                CantidadPagada = Monto;
         }
     }
 }

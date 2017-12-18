@@ -30,7 +30,7 @@ namespace AguaSB.Inicializadores
         private IList<UsuarioCSV> UsuariosLeidos { get; set; }
 
         public AgregarUsuarios(IDbContextScopeFactory ambito, IRepositorio<Usuario> usuariosRepo, IRepositorio<Contrato> contratosRepo, IRepositorio<TipoContrato> tiposContratoRepo, IRepositorio<Pago> pagosRepo,
-            IRepositorio<Calle> callesRepo, IRepositorio<Seccion> seccionesRepo, IRepositorio<Domicilio> domiciliosRepo, IRepositorio<Ajustador> ajustadoresRepo)
+            IRepositorio<Calle> callesRepo, IRepositorio<Seccion> seccionesRepo, IRepositorio<Domicilio> domiciliosRepo)
         {
             using (var baseDeDatos = ambito.CreateReadOnly())
             {
@@ -105,20 +105,6 @@ namespace AguaSB.Inicializadores
             }
             Console.WriteLine("Listo.");
 
-            Console.WriteLine("Registrando ajustador de registro...");
-            using (var baseDeDatos = ambito.Create())
-            {
-                var ajustadorRegistro = new Ajustador
-                {
-                    Nombre = "Registro",
-                    Multiplicador = 1
-                };
-
-                ajustadoresRepo.Agregar(ajustadorRegistro);
-                baseDeDatos.SaveChanges();
-            }
-            Console.WriteLine("Listo.");
-
             var r = new Random();
 
             Console.WriteLine("Registrando usuarios...");
@@ -127,7 +113,6 @@ namespace AguaSB.Inicializadores
                 var contexto = baseDeDatos.DbContexts.Get<EntidadesDbContext>();
 
                 var calles = contexto.Calles.Include(nameof(Calle.Seccion)).ToArray();
-                var ajustadorRegistro = contexto.Ajustadores.Single(_ => _.Nombre == "Registro");
 
                 var mapeos = new Dictionary<string, string>
                 {
@@ -192,7 +177,6 @@ namespace AguaSB.Inicializadores
                         Contrato = contrato,
                         Desde = usuariocsv.PagadoHasta,
                         Hasta = usuariocsv.PagadoHasta,
-                        Ajustador = ajustadorRegistro,
                         FechaRegistro = contrato.FechaRegistro,
                         Monto = 0m,
                         FechaPago = contrato.FechaRegistro

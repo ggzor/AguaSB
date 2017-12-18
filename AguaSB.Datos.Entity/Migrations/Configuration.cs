@@ -1,19 +1,17 @@
 namespace AguaSB.Datos.Entity.Migrations
 {
-    using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<AguaSB.Datos.Entity.EntidadesDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<EntidadesDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
             ContextKey = "AguaSB.Datos.Entity.EntidadesDbContext";
         }
 
-        protected override void Seed(AguaSB.Datos.Entity.EntidadesDbContext context)
+        protected override void Seed(EntidadesDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

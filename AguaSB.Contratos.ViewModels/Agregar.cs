@@ -21,16 +21,14 @@ namespace AguaSB.Contratos.ViewModels
         #endregion
 
         #region Dependencias
-        private IRepositorio<Ajustador> AjustadoresRepo { get; }
         private IRepositorio<Tarifa> TarifasRepo { get; }
         #endregion
 
         public Agregar(IDbContextScopeFactory ambito,
             IRepositorio<Usuario> usuariosRepo, IRepositorio<Contrato> contratosRepo, IRepositorio<TipoContrato> tiposContratoRepo,
-            IRepositorio<Seccion> seccionesRepo, IRepositorio<Calle> callesRepo, IRepositorio<Ajustador> ajustadoresRepo, IRepositorio<Tarifa> tarifasRepo,
+            IRepositorio<Seccion> seccionesRepo, IRepositorio<Calle> callesRepo, IRepositorio<Tarifa> tarifasRepo,
             IAdministradorNotificaciones notificaciones, INavegador navegador) : base(ambito, usuariosRepo, contratosRepo, tiposContratoRepo, seccionesRepo, callesRepo, notificaciones, navegador)
         {
-            AjustadoresRepo = ajustadoresRepo ?? throw new ArgumentNullException(nameof(ajustadoresRepo));
             TarifasRepo = tarifasRepo ?? throw new ArgumentNullException(nameof(tarifasRepo));
 
             AgregarContratoComando = new AsyncDelegateCommand<int>(AgregarContrato, TodosCamposValidos);
@@ -82,14 +80,8 @@ namespace AguaSB.Contratos.ViewModels
             {
                 progreso.Report((20.0, "Registrando pago inicial..."));
 
-                var ajustadorRegistro = AjustadoresRepo.Datos.SingleOrDefault(a => a.Nombre == "Registro");
-
-                if (ajustadorRegistro == null)
-                    throw new Exception("No se ha establecido el ajustador para el registro inicial. Registre en la sección \"Editar ajustadores\" un ajustador con el nombre \"Registro\"");
-
                 var pago = new Pago
                 {
-                    Ajustador = ajustadorRegistro,
                     Contrato = Contrato,
                     Desde = Fecha.MesDe(PagadoHasta),
                     Hasta = Fecha.MesDe(PagadoHasta),
