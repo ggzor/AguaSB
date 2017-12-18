@@ -194,7 +194,8 @@ namespace AguaSB.Inicializadores
                         Hasta = usuariocsv.PagadoHasta,
                         Ajustador = ajustadorRegistro,
                         FechaRegistro = contrato.FechaRegistro,
-                        MontoParcial = 0m
+                        Monto = 0m,
+                        FechaPago = contrato.FechaRegistro
                     };
 
                     pago.Coercer();

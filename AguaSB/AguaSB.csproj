@@ -143,7 +143,7 @@
     <Compile Include="Inicializadores\AgregarUsuarios.cs" />
     <Compile Include="Inicializadores\IInicializador.cs" />
     <Compile Include="Inicializadores\Inicializador.cs" />
-    <Compile Include="Inicializadores\Tarifas.cs" />
+    <Compile Include="Inicializadores\AgregarTarifas.cs" />
     <Compile Include="Instaladores\BaseDeDatos.cs" />
     <Compile Include="Instaladores\Extensiones.cs" />
     <Compile Include="Instaladores\Inicializadores.cs" />
