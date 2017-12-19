@@ -91,21 +91,21 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
         {
             Nombre = "Sección",
             Propiedad = nameof(Nucleo.Calle.Seccion),
-            SelectorOrden = _ => _.Domicilio.Calle.Seccion.Orden
+            SelectorOrden = _ => _.Domicilio?.Calle.Seccion.Orden ?? 0
         };
 
         public Ordenamiento<string> Calle { get; } = new Ordenamiento<string>
         {
             Nombre = nameof(Calle),
             Propiedad = nameof(Nucleo.Calle.Nombre),
-            SelectorOrden = _ => _.Domicilio.Calle.Nombre
+            SelectorOrden = _ => _.Domicilio?.Calle.Nombre
         };
 
         public Ordenamiento<string> Numero { get; } = new Ordenamiento<string>
         {
             Nombre = "Número",
             Propiedad = nameof(Domicilio.Numero),
-            SelectorOrden = _ => _.Domicilio.Numero
+            SelectorOrden = _ => _.Domicilio?.Numero
         };
 
         public Ordenamiento<DateTime?> UltimoPago { get; } = new Ordenamiento<DateTime?>
