@@ -228,6 +228,10 @@ namespace AguaSB.Usuarios.Views
                     if (EstaSeleccionadoUnUsuario())
                         EjecutarEditarUsuario();
                     break;
+                case Key.P:
+                    if (EstaSeleccionadoUnUsuario())
+                        EjecutarPagarUsuario();
+                    break;
             }
         }
 
@@ -245,7 +249,7 @@ namespace AguaSB.Usuarios.Views
 
         private void ActualizarEstadoDeBotonesDependientesDeSeleccion()
         {
-            (new[] { AgregarContrato, EditarUsuario, VerDetalles })
+            (new[] { AgregarContrato, EditarUsuario, PagarUsuario, VerDetalles })
                     .ForEach(_ => _.IsEnabled = EstaSeleccionadoUnUsuario());
         }
 
@@ -259,8 +263,11 @@ namespace AguaSB.Usuarios.Views
 
         private void Exportar_Click(object sender, RoutedEventArgs e) => ViewModel.ExportarComando.Execute(null);
 
+        private void PagarUsuario_Click(object sender, RoutedEventArgs e) => EjecutarPagarUsuario();
+
         private void EjecutarAgregarContrato() => ViewModel.AgregarContratoComando.Execute(ListaResultados.SelectedItem);
         private void EjecutarEditarUsuario() => ViewModel.EditarUsuarioComando.Execute(ListaResultados.SelectedItem);
+        private void EjecutarPagarUsuario() => ViewModel.PagarUsuarioComando.Execute(ListaResultados.SelectedItem);
 
         private void NavegadorResultados_SeleccionCambiada(object sender, SelectionChangedEventArgs e)
         {

@@ -65,10 +65,21 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <StackPanel>
-                            <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding Usuario.NombreCompleto}" Style="{StaticResource h2}"/>
-                            <TextBlock Margin="0 8 0 16" Text="{Binding Usuario.FechaRegistro, StringFormat={}Registrado: {0:d}}"/>
-                        </StackPanel>
+                        <DockPanel>
+                            <Button DockPanel.Dock="Right" Margin="0 0 24 0" Foreground="{StaticResource ModernVerde}" Style="{StaticResource DialogButton}"
+                                    Command="{Binding RelativeSource={RelativeSource AncestorType=local:Listado}, Path=ViewModel.PagarUsuarioComando}" 
+                                    CommandParameter="{Binding}" VerticalAlignment="Top">
+                                <StackPanel Orientation="Horizontal">
+                                    <icons:PackIconModern Kind="Money" Width="25" Height="25" VerticalAlignment="Center"/>
+                                    <TextBlock Margin="8 0 0 0" Text="Pagar" Style="{StaticResource h4}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            
+                            <StackPanel>
+                                <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding Usuario.NombreCompleto}" Style="{StaticResource h2}"/>
+                                <TextBlock Margin="0 8 0 16" Text="{Binding Usuario.FechaRegistro, StringFormat={}Registrado: {0:d}}"/>
+                            </StackPanel>
+                        </DockPanel>
 
                         <ScrollViewer Padding="0 0 24 0" Focusable="True" FocusVisualStyle="{x:Null}" Grid.Row="1">
                             <StackPanel>
@@ -391,6 +402,12 @@
                                     <DockPanel>
                                         <TextBlock Margin="10 0 0 0" Text="Ctrl + E" DockPanel.Dock="Right" Opacity="0.6"/>
                                         <TextBlock Text="Editar usuario"/>
+                                    </DockPanel>
+                                </Button>
+                                <Button Name="PagarUsuario" Click="PagarUsuario_Click" IsEnabled="False" HorizontalContentAlignment="Stretch">
+                                    <DockPanel>
+                                        <TextBlock Margin="10 0 0 0" Text="Ctrl + E" DockPanel.Dock="Right" Opacity="0.6"/>
+                                        <TextBlock Text="Pagar"/>
                                     </DockPanel>
                                 </Button>
                                 <Button Name="VerDetalles" Command="{x:Static material:DialogHost.OpenDialogCommand}" IsEnabled="False" HorizontalContentAlignment="Stretch">

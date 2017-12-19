@@ -142,6 +142,8 @@ namespace AguaSB.Usuarios.ViewModels
         public DelegateCommand AgregarContratoComando { get; }
         public DelegateCommand EditarUsuarioComando { get; }
         public DelegateCommand ExportarComando { get; }
+
+        public DelegateCommand PagarUsuarioComando { get; }
         #endregion
 
         #region Eventos
@@ -184,6 +186,8 @@ namespace AguaSB.Usuarios.ViewModels
             AgregarContratoComando = new DelegateCommand(AgregarContrato);
             EditarUsuarioComando = new DelegateCommand(EditarUsuario);
             ExportarComando = new DelegateCommand(Exportar);
+
+            PagarUsuarioComando = new DelegateCommand(PagarUsuario);
 
             Columnas = new Columnas();
 
@@ -256,6 +260,12 @@ namespace AguaSB.Usuarios.ViewModels
                 await GenerarArchivo(Busqueda.Resultados);
 
             MostrarCubierta = false;
+        }
+
+        private void PagarUsuario(object o)
+        {
+            if (o is ResultadoUsuario u)
+                Navegador.Navegar("Pagos/Agregar", u.Usuario.NombreCompleto);
         }
 
         private static readonly string[] encabezado = { "Id", "Nombre", "Pagado Hasta", "Adeudo", "Sección", "Calle", "Número", "Tipo de contrato", "Último pago" };

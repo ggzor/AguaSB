@@ -148,7 +148,7 @@ namespace AguaSB.Pagos.ViewModels
         private Task Entrar(object arg)
         {
             Busqueda = new ResultadosBusquedaUsuarios(CantidadOpciones);
-            TextoBusqueda = string.Empty;
+            TextoBusqueda = arg?.ToString() ?? string.Empty;
 
             UsuarioSeleccionado = false;
             InvocarEnfocar();
