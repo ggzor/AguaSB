@@ -38,7 +38,7 @@
 
         <Views:BarraSuperior Grid.ColumnSpan="3" Titulo="Hacer pago" Icono="{icons:PackIconModern Kind=Money, Width=20, Height=20}" Foreground="White"/>
 
-        <material:DialogHost Grid.Row="1" DialogContent="{Binding OpcionesPago.PagoPorPropiedades}">
+        <material:DialogHost Name="Dialogo" Grid.Row="1" DialogContent="{Binding OpcionesPago.PagoPorPropiedades}">
             <material:DialogHost.DialogContentTemplate>
                 <DataTemplate DataType="{x:Type Dtos:PagoPorPropiedades}">
                     <Grid Name="ContenidoDetalles" Margin="24 16 10 16" Width="500" Style="{StaticResource CorrectTextRendering}">
@@ -75,7 +75,7 @@
                                                           Tag="{Binding ElementName=PagarHasta}"
                                                           Estilos:Icono.Enfocado="{Binding ElementName=PagarHasta, Path=IsKeyboardFocusWithin}"/>
                                     <DatePicker Name="PagarHasta" Margin="0 20 0 30" Tag="Pagar hasta" 
-                                                Text="{Binding PagarHasta, Mode=TwoWay, ConverterCulture=es-MX, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                                                Text="{Binding PagarHasta, StringFormat=MMMM yyyy, Mode=TwoWay, ConverterCulture=es-MX, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
                                                 Estilos:Foco.SiguienteFoco="{Binding ElementName=Cantidad}" Estilos:Foco.EnterAvanzaFoco="True"/>
                                 </DockPanel>
 
@@ -83,6 +83,13 @@
                                     <StackPanel Margin="0 16 0 30" Orientation="Horizontal" ToolTip="Determinado por el número de meses a pagar">
                                         <TextBlock Margin="0 0 8 0" Text="Monto:" Opacity="0.6" Style="{StaticResource h4}"/>
                                         <TextBlock Text="{Binding Monto, StringFormat=C}" Style="{StaticResource h4}"/>
+                                    </StackPanel>
+                                </DockPanel>
+
+                                <DockPanel Margin="45 -30 0 0">
+                                    <StackPanel Margin="0 16 0 30" Orientation="Horizontal">
+                                        <TextBlock Margin="0 0 8 0" Text="Restante:" Opacity="0.6" Style="{StaticResource h4}"/>
+                                        <TextBlock Text="{Binding AdeudoRestante, StringFormat=C}" Style="{StaticResource h4}"/>
                                     </StackPanel>
                                 </DockPanel>
 
@@ -112,7 +119,7 @@
                                 <Button Name="BotonCerrarDetalles" Content="Cancelar" Command="{x:Static material:DialogHost.CloseDialogCommand}" 
                                         Style="{StaticResource DialogButton}"/>
                                 <Button Margin="8 0 0 0" Foreground="White" Style="{StaticResource HighlightButton}"
-                                        Command="{Binding PagarSeleccionComando}">
+                                        Command="{Binding RelativeSource={RelativeSource AncestorType=local:Agregar}, Path=ViewModel.PagarOtraCantidadComando}">
                                     <StackPanel Orientation="Horizontal">
                                         <icons:PackIconModern Kind="Money" Width="20" Height="20"/>
                                         <TextBlock Margin="8 0 0 0" Text="Pagar"/>
@@ -254,6 +261,7 @@
                                             <TextBlock Text="{Binding OpcionesPago.PagoPorRangos.PagoContratoSeleccionado.Contrato.Contrato.Domicilio.Calle.Seccion.Nombre, StringFormat={}Sección {0}}" Style="{StaticResource h2}"/>
                                             <TextBlock Text="{Binding OpcionesPago.PagoPorRangos.PagoContratoSeleccionado.Contrato.Contrato.Domicilio.Calle.Nombre, StringFormat={}Calle {0}}" Style="{StaticResource h2}"/>
                                             <TextBlock Text="{Binding OpcionesPago.PagoPorRangos.PagoContratoSeleccionado.Contrato.Contrato.Domicilio.Numero, StringFormat={}Número {0}}" Style="{StaticResource h2}"/>
+
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock Margin="0 0 8 0" Text="Adeudo:" Opacity="0.6" Style="{StaticResource h4}"/>
                                                 <TextBlock Text="{Binding OpcionesPago.PagoPorRangos.PagoContratoSeleccionado.Contrato.Adeudo, StringFormat={}{0:C}}" FontFamily="Segoe UI" Style="{StaticResource h4}" 
@@ -262,6 +270,12 @@
                                                 <TextBlock Text="Al corriente" FontFamily="Segoe UI" Style="{StaticResource h4}" 
                                                    Foreground="{StaticResource MaterialBlue}" FontWeight="DemiBold" Opacity="0.9"
                                                    Visibility="{Binding OpcionesPago.PagoPorRangos.PagoContratoSeleccionado.Contrato.NoTieneAdeudo, Converter={StaticResource BoolToVisibility}}"/>
+                                            </StackPanel>
+
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Margin="0 0 8 0" Text="Pagado hasta:" Opacity="0.6" Style="{StaticResource h4}"/>
+                                                <TextBlock Text="{Binding OpcionesPago.PagoPorRangos.PagoContratoSeleccionado.Contrato.UltimoPago.Hasta, StringFormat=MMMM yyyy, ConverterCulture=es-MX}" 
+                                                           Style="{StaticResource h4}"/>
                                             </StackPanel>
 
                                             <DockPanel Margin="0 8 0 0">
@@ -335,7 +349,14 @@
                                                     <StackPanel Margin="16 8 16 16">
                                                         <TextBlock Text="{Binding Monto, StringFormat={}Pagar {0:C}}" Foreground="{StaticResource ModernVerde}" Style="{StaticResource h3}"/>
                                                         <TextBlock Text="{Binding Hasta, StringFormat={}Cubre hasta: {0:MMMM yyyy}, ConverterCulture=es-MX}" Style="{StaticResource h4}"/>
-                                                        <TextBlock Text="{Binding AdeudoRestante, StringFormat={}Restan: {0:C}}" Opacity="0.8" Style="{StaticResource h4}"/>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="{Binding AdeudoRestante, StringFormat={}Restan: {0:C}}" Opacity="0.8" Style="{StaticResource h4}"
+                                                                       Visibility="{Binding NoEsPrimeroConRestanteCero, Converter={StaticResource BoolToVisibility}}"/>
+
+                                                            <TextBlock Text="{Binding AdeudoRestante, StringFormat={}Restan: {0:C}}" Opacity="0.8" Style="{StaticResource h4}"
+                                                                       FontFamily="Segoe UI" FontWeight="DemiBold"
+                                                                       Visibility="{Binding EsPrimeroConRestanteCero, Converter={StaticResource BoolToVisibility}}"/>
+                                                        </StackPanel>
                                                     </StackPanel>
                                                 </DockPanel>
                                             </Border>

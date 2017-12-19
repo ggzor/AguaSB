@@ -1,8 +1,11 @@
 ﻿using AguaSB.Estilos;
 using AguaSB.Nucleo;
+using AguaSB.Utilerias;
 using AguaSB.Views;
 using AguaSB.Views.Utilerias;
 using System;
+using System.Reactive;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -31,6 +34,13 @@ namespace AguaSB.Pagos.Views
             viewModel.UsuarioCambiado += (_, __) => Deslizar.HastaArriba(Deslizador);
             viewModel.EncontradoUsuarioUnico += (src, args) => Resultados.IsOpen = false;
             viewModel.IniciandoBusqueda += (src, args) => Resultados.IsOpen = true;
+
+            var usuarioSeleccionadoEventos = from evento in ViewModel.ToObservableProperties()
+                                             where evento.Args.PropertyName == nameof(ViewModel.UsuarioSeleccionado)
+                                             where !ViewModel.UsuarioSeleccionado
+                                             select Unit.Default;
+
+            usuarioSeleccionadoEventos.Subscribe(u => Dialogo.IsOpen = false);
         }
 
         private async void AbrirPanelResultados(object sender, RoutedEventArgs e)

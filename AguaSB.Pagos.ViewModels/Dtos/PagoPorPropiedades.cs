@@ -34,10 +34,10 @@ namespace AguaSB.Pagos.ViewModels.Dtos
         public decimal Monto
         {
             get { return monto; }
-            set { N.Set(ref monto, value); }
+            set { N.Set(ref monto, value); N.Change(nameof(AdeudoRestante)); }
         }
 
-
+        public decimal AdeudoRestante => Math.Max(0, (Contrato?.Adeudo ?? 0) - Monto);
 
         [Range(typeof(decimal), "0", "1000000", ErrorMessage = "La cantidad pagada debe ser mayor o igual a $0.00")]
         public decimal CantidadPagada
@@ -50,7 +50,7 @@ namespace AguaSB.Pagos.ViewModels.Dtos
         public DateTime FechaPago
         {
             get { return fechaPago; }
-            set { N.Validate(ref fechaPago, value); }
+            set { N.Validate(ref fechaPago, EstablecerHoraActual(value)); }
         }
         #endregion
 
@@ -64,7 +64,6 @@ namespace AguaSB.Pagos.ViewModels.Dtos
         {
             if (Contrato != null)
             {
-
                 PagarHasta = MesDe(Contrato.UltimoPago.Hasta).AddMonths(1);
                 FechaPago = Ahora;
 
@@ -89,7 +88,7 @@ namespace AguaSB.Pagos.ViewModels.Dtos
             Contrato = Contrato.Contrato,
             Desde = MesDe(Contrato.UltimoPago.Hasta.AddMonths(1)),
             Hasta = MesDe(PagarHasta),
-            FechaPago = MesDe(FechaPago),
+            FechaPago = FechaPago,
             Monto = Monto,
             CantidadPagada = CantidadPagada
         };

@@ -8,5 +8,8 @@ namespace AguaSB.Pagos.ViewModels.Dtos
         public DateTime Hasta { get; set; }
         public decimal Monto { get; set; }
         public decimal AdeudoRestante { get; set; }
+
+        public bool EsPrimeroConRestanteCero { get; set; }
+        public bool NoEsPrimeroConRestanteCero => !EsPrimeroConRestanteCero;
     }
 }

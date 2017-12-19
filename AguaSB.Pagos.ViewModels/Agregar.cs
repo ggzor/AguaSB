@@ -118,14 +118,14 @@ namespace AguaSB.Pagos.ViewModels
 
             BuscarEnListadoComando = new DelegateCommand(() => Navegador.Navegar("Usuarios/Listado", TextoBusqueda));
             PagarSeleccionComando = new DelegateCommand(PagarSeleccion, PuedePagarSeleccion);
-            PagarOtraCantidadComando = new DelegateCommand(PagarOtraCantidad, TieneContratoSeleccionado);
+            PagarOtraCantidadComando = new DelegateCommand(PagarOtraCantidad, PuedePagarPorPropiedades);
 
             ActivarEscuchaCambioTexto();
 
             var verificador = new VerificadorPropiedades(this,
                 () => new INotifyDataErrorInfo[] { OpcionesPago?.PagoPorPropiedades }
                       .Where(o => o != null),
-                () => new INotifyPropertyChanged[] { OpcionesPago?.PagoPorRangos }
+                () => new INotifyPropertyChanged[] { OpcionesPago?.PagoPorRangos, OpcionesPago?.PagoPorPropiedades }
                       .Concat(OpcionesPago?.PagoPorRangos?.PagosContratos ?? Enumerable.Empty<INotifyPropertyChanged>())
                       .Where(obs => obs != null),
                 () => new[] { PagarSeleccionComando, PagarOtraCantidadComando });
@@ -239,16 +239,25 @@ namespace AguaSB.Pagos.ViewModels
         private bool TieneContratoSeleccionado() => UsuarioSeleccionado && OpcionesPago?.PagoPorRangos.PagoContratoSeleccionado != null;
         private bool PuedePagarSeleccion() => TieneContratoSeleccionado() && OpcionesPago?.PagoPorRangos.PagoContratoSeleccionado?.RangoPagoSeleccionado != null;
 
-        private void PagarOtraCantidad()
-        {
+        private bool PuedePagarPorPropiedades() => TieneContratoSeleccionado() && OpcionesPago.PagoPorPropiedades != null && !OpcionesPago.PagoPorPropiedades.HasErrors;
 
-        }
+        private void PagarOtraCantidad() => ManejarPago(OpcionesPago.PagoPorPropiedades);
 
-        private async void PagarSeleccion()
+        private void PagarSeleccion() => ManejarPago(OpcionesPago.PagoPorRangos);
+
+        private async void ManejarPago(OpcionPago opcionPago)
         {
             try
             {
-                await HacerPago(OpcionesPago.PagoPorRangos);
+                using (var cubierta = ControladorCubierta.Mostrar("Realizando pago..."))
+                {
+                    var (pago, domicilio) = await HacerPago(opcionPago);
+
+                    Notificaciones.Lanzar(new PagoRealizado(pago, domicilio));
+                }
+
+                UsuarioSeleccionado = false;
+                InvocarEnfocar();
             }
             catch (Exception ex)
             {
@@ -257,25 +266,21 @@ namespace AguaSB.Pagos.ViewModels
             }
         }
 
-        private Task HacerPago(OpcionPago opcionPago) => Task.Run(() =>
+        private Task<(Pago Pago, string Domicilio)> HacerPago(OpcionPago opcionPago) => Task.Run(() =>
         {
-            using (var cubierta = ControladorCubierta.Mostrar("Realizando pago"))
+            var pago = opcionPago.GenerarPago();
+
+            using (var baseDeDatos = Ambito.Create())
             {
-                var pago = opcionPago.GenerarPago();
-                string domicilioContrato;
+                pago.Contrato = ContratosRepo.Datos.Single(c => c.Id == pago.Contrato.Id);
 
-                using (var baseDeDatos = Ambito.Create())
-                {
-                    pago.Contrato = ContratosRepo.Datos.Single(c => c.Id == pago.Contrato.Id);
+                var domicilioContrato = pago.Contrato.ToString();
 
-                    domicilioContrato = pago.Contrato.ToString();
+                PagosRepo.Agregar(pago);
 
-                    PagosRepo.Agregar(pago);
+                baseDeDatos.SaveChanges();
 
-                    baseDeDatos.SaveChanges();
-                }
-
-                Notificaciones.Lanzar(new PagoRealizado(pago, domicilioContrato));
+                return (pago, domicilioContrato);
             }
         });
     }

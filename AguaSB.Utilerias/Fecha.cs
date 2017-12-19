@@ -18,6 +18,9 @@ namespace AguaSB.Utilerias
 
         public static void EstablecerAhora(DateTime ahora) => Ahora = ahora;
 
+        public static DateTime EstablecerHoraActual(DateTime fecha) =>
+            new DateTime(fecha.Year, fecha.Month, fecha.Day, Ahora.Hour, Ahora.Minute, Ahora.Second, Ahora.Millisecond);
+
         public static DateTime DiaDe(DateTime fecha) => new DateTime(fecha.Year, fecha.Month, fecha.Day);
 
         public static DateTime MesDe(DateTime fecha) => new DateTime(fecha.Year, fecha.Month, 01);
@@ -26,5 +29,6 @@ namespace AguaSB.Utilerias
             MesAbsoluto(fecha1) - MesAbsoluto(fecha2);
 
         private static long MesAbsoluto(DateTime fecha) => (fecha.Year * 12L) + fecha.Month;
+
     }
 }

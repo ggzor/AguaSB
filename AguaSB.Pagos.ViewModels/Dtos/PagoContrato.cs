@@ -60,6 +60,15 @@ namespace AguaSB.Pagos.ViewModels.Dtos
                     Monto = m.Monto,
                     AdeudoRestante = Math.Max(0, Contrato.Adeudo - m.Monto)
                 }).ToArray();
+
+            DecorarPrimerRangoPagoConRestanteCero();
+        }
+
+        private void DecorarPrimerRangoPagoConRestanteCero()
+        {
+            if (RangosPago.First().AdeudoRestante != 0
+                            && RangosPago.FirstOrDefault(r => r.AdeudoRestante == 0) is RangoPago primeroConRestanteCero)
+                primeroConRestanteCero.EsPrimeroConRestanteCero = true;
         }
 
         private const int cantidadColumnas = 3;

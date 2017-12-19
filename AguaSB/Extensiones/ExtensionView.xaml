@@ -39,7 +39,7 @@
                         <DataTemplate>
                             <TextBlock Margin="5" HorizontalAlignment="Center" Style="{StaticResource h5}">
                                 <Hyperlink Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:ExtensionView}}, Path=Command}" 
-                                           CommandParameter="{Binding}"
+                                           CommandParameter="{Binding}" Focusable="False"
                                            Style="{StaticResource Enlace}">
                                     <Run Text="{Binding Path=., Converter={StaticResource ToString}}"/>
                                 </Hyperlink>
