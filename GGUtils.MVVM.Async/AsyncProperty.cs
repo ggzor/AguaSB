@@ -46,29 +46,28 @@ namespace GGUtils.MVVM.Async
             }
             catch { }
 
-            if (PropertyChanged != null)
+            var changingProperties = Enumerable.Empty<string>();
+
+            if (task.IsCanceled)
             {
-                var changingProperties = Enumerable.Empty<string>();
-
-                if (task.IsCanceled)
-                {
-                    changingProperties = OnCanceledChangingProperties;
-                }
-                else if (task.IsFaulted)
-                {
-                    IsFaulted = true;
-                    changingProperties = OnFaultedChangingProperties;
-                }
-                else
-                {
-                    changingProperties = OnSuccessChangingProperties;
-                }
-
-                changingProperties = changingProperties.Concat(OnCompletionChangingProperties);
-
-                foreach (var propertyChangedName in changingProperties)
-                    Raise(propertyChangedName);
+                IsFaulted = false;
+                changingProperties = OnCanceledChangingProperties;
             }
+            else if (task.IsFaulted)
+            {
+                IsFaulted = true;
+                changingProperties = OnFaultedChangingProperties;
+            }
+            else
+            {
+                IsFaulted = false;
+                changingProperties = OnSuccessChangingProperties;
+            }
+
+            changingProperties = changingProperties.Concat(OnCompletionChangingProperties);
+
+            foreach (var propertyChangedName in changingProperties)
+                Raise(propertyChangedName);
         }
 
         private void Raise([CallerMemberName]string propertyChangedName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyChangedName));
