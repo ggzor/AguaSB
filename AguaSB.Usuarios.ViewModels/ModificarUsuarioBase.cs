@@ -223,23 +223,24 @@ namespace AguaSB.Usuarios.ViewModels
                     Console.WriteLine($"Ocurrió un error al leer los archivos de sugerencias: {ex.Message}");
                 }
 
-                SugerenciasNombres = nombresArchivo.OrderBy(_ => _).Distinct().ToList();
-                SugerenciasApellidos = apellidosArchivo.OrderBy(_ => _).Distinct().ToList();
+                Func<string, IEnumerable<string>> SeleccionarSubNombres = n => n.Split(' ');
+                Func<string, bool> DiferentesVacio = n => !string.IsNullOrWhiteSpace(n);
+
+                IEnumerable<string> OrdenarFiltrar(IEnumerable<string> listadoNombres) => listadoNombres
+                    .SelectMany(SeleccionarSubNombres)
+                    .Where(DiferentesVacio)
+                    .OrderBy(n => n)
+                    .Distinct();
+
+                SugerenciasNombres = OrdenarFiltrar(nombresArchivo);
+                SugerenciasApellidos = OrdenarFiltrar(apellidosArchivo);
 
                 using (var baseDeDatos = Ambito.CreateReadOnly())
                 {
                     IEnumerable<Persona> personas = UsuariosRepo.Datos.OfType<Persona>();
 
-                    var nombresBaseDeDatos = personas.Select(_ => _.Nombre)
-                        .OrderBy(_ => _)
-                        .Distinct()
-                        .ToList();
-
-                    var apellidosBaseDeDatos = personas.Select(_ => _.ApellidoPaterno)
-                        .Concat(personas.Select(_ => _.ApellidoMaterno))
-                        .OrderBy(_ => _)
-                        .Distinct()
-                        .ToList();
+                    var nombresBaseDeDatos = OrdenarFiltrar(personas.Select(_ => _.Nombre));
+                    var apellidosBaseDeDatos = OrdenarFiltrar(personas.Select(_ => _.ApellidoPaterno).Concat(personas.Select(_ => _.ApellidoMaterno)));
 
                     SugerenciasNombres = SugerenciasNombres.OrderedMerge(nombresBaseDeDatos).ToList();
                     SugerenciasApellidos = SugerenciasApellidos.OrderedMerge(apellidosBaseDeDatos).ToList();
