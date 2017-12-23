@@ -14,15 +14,23 @@ namespace AguaSB.Pagos.Views
     {
         public Agregar Agregar { get; }
 
+        public Listado Listado { get; }
+
         public IEnumerable<Operacion> Operaciones { get; }
 
         public IEnumerable<Operacion> OperacionesMenuPrincipal { get; }
 
-        public DescriptorExtension(Agregar agregar)
+        public DescriptorExtension(Agregar agregar, Listado listado)
         {
             Agregar = agregar ?? throw new ArgumentNullException(nameof(agregar));
+            Listado = listado ?? throw new ArgumentNullException(nameof(listado));
 
-            OperacionesMenuPrincipal = new[] { new Operacion(this, "Hacer pago", Agregar, Agregar, Agregar.ViewModel) };
+            OperacionesMenuPrincipal = new[]
+            {
+                new Operacion(this, "Hacer pago", Agregar, Agregar, Agregar.ViewModel),
+                new Operacion(this, "Listado de pagos", Listado, Listado, Listado.ViewModel)
+            };
+
             Operaciones = OperacionesMenuPrincipal;
         }
 

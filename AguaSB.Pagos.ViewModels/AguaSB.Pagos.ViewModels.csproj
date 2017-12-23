@@ -74,6 +74,7 @@
     <Compile Include="Dtos\PagoPorRangos.cs" />
     <Compile Include="Dtos\RangoPago.cs" />
     <Compile Include="Dtos\ResultadosBusquedaUsuarios.cs" />
+    <Compile Include="Listado.cs" />
     <Compile Include="Notificaciones\PagoRealizado.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

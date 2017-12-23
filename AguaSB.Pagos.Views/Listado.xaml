@@ -1,0 +1,156 @@
+﻿<UserControl x:Class="AguaSB.Pagos.Views.Listado"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:Estilos="clr-namespace:AguaSB.Estilos;assembly=AguaSB.Estilos"
+             xmlns:Dtos="clr-namespace:AguaSB.Pagos.ViewModels.Dtos;assembly=AguaSB.Pagos.ViewModels"
+             xmlns:Util="clr-namespace:AguaSB.Views.Utilerias;assembly=AguaSB.Views"
+             xmlns:Views="clr-namespace:AguaSB.Views.Controles;assembly=AguaSB.Views"
+             xmlns:ViewModels="clr-namespace:AguaSB.Pagos.ViewModels;assembly=AguaSB.Pagos.ViewModels"
+             xmlns:local="clr-namespace:AguaSB.Pagos.Views"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type={x:Type ViewModels:Listado}, IsDesignTimeCreatable=False}"
+             Background="White"
+             d:DesignHeight="768" d:DesignWidth="1024"
+             Name="This">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Estilos.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Green.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.LightGreen.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Green.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/AguaSB.Views;component/Utilerias/Conversores.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Calendar.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Style="{StaticResource CorrectTextRendering}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Views:BarraSuperior Grid.ColumnSpan="3" Titulo="Listado de pagos" Icono="{icons:PackIconModern Kind=Money, Width=20, Height=20}" Foreground="White"/>
+
+        <material:DialogHost Name="Dialogo" Grid.Row="1" DialogContent="{Binding OpcionesPago.PagoPorPropiedades}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="64"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition MinWidth="350" Width="*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.ColumnSpan="2" Background="{StaticResource ModernVerde}">
+                    <StackPanel.Effect>
+                        <DropShadowEffect Opacity="0.5"/>
+                    </StackPanel.Effect>
+                </StackPanel>
+
+                <material:Card Grid.RowSpan="2" Margin="4" VerticalAlignment="Stretch">
+                    <Grid Margin="16 16 0 16">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <DockPanel HorizontalAlignment="Center">
+                            <icons:PackIconMaterial Margin="0" Kind="Filter" Style="{StaticResource IconoLateral}"/>
+                            <TextBlock Margin="20 0 0 0" Text="Filtros" Opacity="0.6" Style="{StaticResource h3}"/>
+                        </DockPanel>
+
+                        <ScrollViewer Grid.Row="1" Padding="0 0 20 0">
+                            <StackPanel>
+                                <StackPanel>
+                                    <DockPanel>
+                                        <icons:PackIconMaterial Kind="CalendarClock" Style="{StaticResource IconoLateral}"/>
+                                        <TextBlock Margin="0 20 0 30" Text="Fecha" Opacity="0.6" Style="{StaticResource h3}"/>
+                                    </DockPanel>
+                                    <StackPanel Margin="45 -20 0 0">
+                                        <StackPanel.Resources>
+                                            <Style TargetType="TextBlock" BasedOn="{StaticResource h4}">
+                                                <Setter Property="Opacity" Value="0.8"/>
+                                                <Setter Property="Margin" Value="8 0 0 0"/>
+                                            </Style>
+                                            <Style TargetType="RadioButton" BasedOn="{StaticResource {x:Type RadioButton}}">
+                                                <Setter Property="Margin" Value="0 4 0 0"/>
+                                            </Style>
+                                        </StackPanel.Resources>
+
+                                        <StackPanel Background="White">
+                                            <RadioButton IsChecked="True">
+                                                <TextBlock Text="Hoy"/>
+                                            </RadioButton>
+
+                                            <RadioButton>
+                                                <TextBlock Text="Esta semana"/>
+                                            </RadioButton>
+
+                                            <RadioButton>
+                                                <TextBlock Text="Este mes"/>
+                                            </RadioButton>
+
+                                            <RadioButton Name="OtraFecha">
+                                                <TextBlock Text="Otra"/>
+                                            </RadioButton>
+                                        </StackPanel>
+
+                                        <Expander Margin="0 -28 0 0" Panel.ZIndex="-1" IsExpanded="{Binding ElementName=OtraFecha, Path=IsChecked}">
+                                            <StackPanel Margin="0 12 0 0">
+                                                <DatePicker Tag="Desde"/>
+                                                <DatePicker Tag="Hasta"/>
+                                            </StackPanel>
+                                        </Expander>
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <StackPanel Margin="0 -10 0 0">
+                                    <DockPanel>
+                                        <icons:PackIconMaterial Kind="ViewGrid" Style="{StaticResource IconoLateral}"/>
+                                        <TextBlock Margin="0 20 0 30" Text="Sección" Opacity="0.6" Style="{StaticResource h3}"/>
+                                    </DockPanel>
+
+                                    <ComboBox Margin="45 -20 0 30" Tag="Cualquiera" material:HintAssist.IsFloating="False"/>
+                                </StackPanel>
+
+                                <StackPanel Margin="0 -10 0 0">
+                                    <DockPanel>
+                                        <icons:PackIconModern Kind="Money" Style="{StaticResource IconoLateral}"/>
+                                        <TextBlock Margin="0 20 0 30" Text="Cantidad pagada" Opacity="0.6" Style="{StaticResource h3}"/>
+                                    </DockPanel>
+
+                                    <Grid Margin="45 -20 0 0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Grid.Resources>
+                                            <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                                                <Setter Property="material:HintAssist.IsFloating" Value="False"/>
+                                                <Setter Property="Margin" Value="0"/>
+                                            </Style>
+                                        </Grid.Resources>
+                                        
+                                        <TextBox Tag="Mínimo" HorizontalContentAlignment="Center"/>
+                                        <TextBlock Grid.Column="1" Text=" - " Style="{StaticResource h4}"/>
+                                        <TextBox Grid.Column="2" Tag="Máximo" HorizontalContentAlignment="Center"/>
+                                    </Grid>
+                                </StackPanel>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Grid>
+                </material:Card>
+            </Grid>
+        </material:DialogHost>
+    </Grid>
+</UserControl>
