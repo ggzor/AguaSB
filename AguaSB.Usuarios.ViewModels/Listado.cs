@@ -513,7 +513,7 @@ namespace AguaSB.Usuarios.ViewModels
         {
             using (var baseDeDatos = Ambito.CreateReadOnly())
             {
-                var tarifas = TarifasRepo.Datos.OrderBy(_ => _.FechaRegistro).ToArray();
+                var tarifas = Tarifas.Obtener(TarifasRepo);
                 CalculadorAdeudos calculadorAdeudos = (pagadoHasta, multiplicador) => Adeudos.Calcular(pagadoHasta, multiplicador, tarifas);
 
                 return new EjecutorSolicitud(solicitud, calculadorAdeudos).Ejecutar(UsuariosRepo.Datos.AsQueryable());

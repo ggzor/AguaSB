@@ -67,7 +67,7 @@ namespace AguaSB.Nucleo
                 {
                     var tarifaSiguiente = tarifasOrdenadas[indiceTarifaSiguiente];
 
-                    if (actual >= tarifaSiguiente.FechaRegistro)
+                    if (actual >= tarifaSiguiente.Inicio)
                     {
                         indiceTarifaActual = indiceTarifaSiguiente;
                         tarifaActual = tarifaSiguiente;
@@ -87,7 +87,7 @@ namespace AguaSB.Nucleo
         {
             int indiceTarifa = tarifasOrdenadas.Length - 1;
 
-            while (indiceTarifa > 0 && mes < tarifasOrdenadas[indiceTarifa].FechaRegistro)
+            while (indiceTarifa > 0 && mes < tarifasOrdenadas[indiceTarifa].Inicio)
                 indiceTarifa--;
 
             return indiceTarifa;

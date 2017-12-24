@@ -12,17 +12,25 @@ namespace AguaSB.Nucleo
     public class Tarifa : IEntidad, IAuditable, INotifyPropertyChanged, INotifyDataErrorInfo
     {
         public int Id { get; set; }
-
         public DateTime FechaRegistro { get; set; }
 
         private decimal monto;
+        private DateTime inicio;
 
+        #region Propiedades
         [Range(typeof(decimal), "0", "1000000")]
         public decimal Monto
         {
             get { return monto; }
             set { N.Set(ref monto, value); }
         }
+
+        public DateTime Inicio
+        {
+            get { return inicio; }
+            set { inicio = value; }
+        }
+        #endregion
 
         public Tarifa()
         {
