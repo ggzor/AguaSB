@@ -26,5 +26,9 @@ namespace AguaSB.Datos.Entity
         public virtual DbSet<Pago> Pagos { get; set; }
 
         public virtual DbSet<Tarifa> Tarifas { get; set; }
+
+        public virtual DbSet<TipoNota> TiposNota { get; set; }
+        public virtual DbSet<Nota> Notas { get; set; }
+        public virtual DbSet<DesactivacionNota> DesactivacionesNotas { get; set; }
     }
 }
