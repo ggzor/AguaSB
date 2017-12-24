@@ -144,10 +144,12 @@
     <Compile Include="Inicializadores\Inicializador.cs" />
     <Compile Include="Inicializadores\AgregarTarifas.cs" />
     <Compile Include="Instaladores\BaseDeDatos.cs" />
+    <Compile Include="Instaladores\ConfiguracionLegado.cs" />
     <Compile Include="Instaladores\Extensiones.cs" />
     <Compile Include="Instaladores\Inicializadores.cs" />
     <Compile Include="Instaladores\Interfaz.cs" />
     <Compile Include="Instaladores\Repositorios.cs" />
+    <Compile Include="Instaladores\ServiciosImpresionPagos.cs" />
     <Compile Include="Instaladores\ServiciosNoFuncionales.cs" />
     <Compile Include="Instaladores\Tablas.cs" />
     <Compile Include="IVentanaPrincipal.cs" />
@@ -234,6 +236,10 @@
       <Project>{e912e081-7f7f-4b93-83ac-35f8fbf07dbe}</Project>
       <Name>AguaSB.Extensiones</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AguaSB.Legado\AguaSB.Legado.csproj">
+      <Project>{619e1631-6648-4d9a-b453-fc1b3321238d}</Project>
+      <Name>AguaSB.Legado</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AguaSB.Navegacion\AguaSB.Navegacion.csproj">
       <Project>{b51b553c-10d5-47ea-93bb-deced914d5f6}</Project>
       <Name>AguaSB.Navegacion</Name>
@@ -253,6 +259,14 @@
     <ProjectReference Include="..\AguaSB.Reportes\AguaSB.Reportes.csproj">
       <Project>{4203900d-0213-4edc-9be3-380d722d0f73}</Project>
       <Name>AguaSB.Reportes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AguaSB.Servicios.Office\AguaSB.Servicios.Office.csproj">
+      <Project>{37dcf552-6474-4a19-a060-d5623ec7ecb3}</Project>
+      <Name>AguaSB.Servicios.Office</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AguaSB.Servicios\AguaSB.Servicios.csproj">
+      <Project>{751fb5a3-96cc-4b7b-b187-43f5647ba73c}</Project>
+      <Name>AguaSB.Servicios</Name>
     </ProjectReference>
     <ProjectReference Include="..\AguaSB.Utilerias\AguaSB.Utilerias.csproj">
       <Project>{61188b63-728a-4c7b-b19d-11abd1f64f4f}</Project>

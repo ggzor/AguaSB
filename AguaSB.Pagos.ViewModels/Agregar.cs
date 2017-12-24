@@ -15,6 +15,8 @@ using MoreLinq;
 using System.ComponentModel;
 using AguaSB.Notificaciones;
 using AguaSB.Pagos.ViewModels.Notificaciones;
+using AguaSB.Servicios;
+using AguaSB.Nucleo.Datos;
 
 namespace AguaSB.Pagos.ViewModels
 {
@@ -90,6 +92,7 @@ namespace AguaSB.Pagos.ViewModels
 
         private INavegador Navegador { get; }
         private IAdministradorNotificaciones Notificaciones { get; }
+        private IInformador<Pago> Informador { get; }
         #endregion
 
         #region Eventos
@@ -102,7 +105,7 @@ namespace AguaSB.Pagos.ViewModels
         public INodo Nodo { get; }
 
         public Agregar(IDbContextScopeFactory ambito, IRepositorio<Usuario> usuariosRepo, IRepositorio<Contrato> contratosRepo, IRepositorio<Pago> pagosRepo,
-            IRepositorio<Tarifa> tarifasRepo, INavegador navegador, IAdministradorNotificaciones notificaciones)
+            IRepositorio<Tarifa> tarifasRepo, INavegador navegador, IAdministradorNotificaciones notificaciones, IInformador<Pago> informador)
         {
             Ambito = ambito ?? throw new ArgumentNullException(nameof(ambito));
 
@@ -113,6 +116,8 @@ namespace AguaSB.Pagos.ViewModels
 
             Navegador = navegador ?? throw new ArgumentNullException(nameof(navegador));
             Notificaciones = notificaciones ?? throw new ArgumentNullException(nameof(notificaciones));
+
+            Informador = informador ?? throw new ArgumentNullException(nameof(informador));
 
             Nodo = new Nodo { Entrada = Entrar };
 
@@ -212,7 +217,7 @@ namespace AguaSB.Pagos.ViewModels
             {
                 using (var baseDeDatos = Ambito.CreateReadOnly())
                 {
-                    var tarifas = TarifasRepo.Datos.OrderBy(t => t.FechaRegistro).ToArray();
+                    var tarifas = Tarifas.Obtener(TarifasRepo);
 
                     return OpcionesPago.Para(UsuariosRepo.Datos.Single(u => u.Id == usuario.Id), tarifas);
                 }
@@ -272,13 +277,20 @@ namespace AguaSB.Pagos.ViewModels
 
             using (var baseDeDatos = Ambito.Create())
             {
-                pago.Contrato = ContratosRepo.Datos.Single(c => c.Id == pago.Contrato.Id);
+                var datos = (from Contrato in ContratosRepo.Datos
+                             where Contrato.Id == pago.Contrato.Id
+                             select new { Contrato, Contrato.Usuario }).Single();
+
+                pago.Contrato = datos.Contrato;
+                pago.Contrato.Usuario = datos.Usuario;
 
                 var domicilioContrato = pago.Contrato.ToString();
 
                 PagosRepo.Agregar(pago);
 
                 baseDeDatos.SaveChanges();
+
+                Informador.Informar(pago);
 
                 return (pago, domicilioContrato);
             }

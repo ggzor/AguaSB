@@ -68,6 +68,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Servicios", "AguaSB.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Servicios.Office", "AguaSB.Servicios.Office\AguaSB.Servicios.Office.csproj", "{37DCF552-6474-4A19-A060-D5623EC7ECB3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Legado", "AguaSB.Legado\AguaSB.Legado.csproj", "{619E1631-6648-4D9A-B453-FC1B3321238D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -182,6 +184,10 @@ Global
 		{37DCF552-6474-4A19-A060-D5623EC7ECB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37DCF552-6474-4A19-A060-D5623EC7ECB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37DCF552-6474-4A19-A060-D5623EC7ECB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{619E1631-6648-4D9A-B453-FC1B3321238D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{619E1631-6648-4D9A-B453-FC1B3321238D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{619E1631-6648-4D9A-B453-FC1B3321238D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{619E1631-6648-4D9A-B453-FC1B3321238D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
