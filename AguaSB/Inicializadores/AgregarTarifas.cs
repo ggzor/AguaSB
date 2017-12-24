@@ -22,8 +22,8 @@ namespace AguaSB.Inicializadores
 
                 var tarifas = new[]
                 {
-                    new Tarifa { Monto = 50, FechaRegistro = new DateTime(2016, 06, 01) },
-                    new Tarifa { Monto = 60, FechaRegistro = new DateTime(2017, 01, 01) }
+                    new Tarifa { Monto = 50, Inicio = new DateTime(2015, 01, 01), FechaRegistro = DateTime.Today },
+                    new Tarifa { Monto = 60, Inicio = new DateTime(2016, 07, 01), FechaRegistro = DateTime.Today }
                 };
 
                 foreach (var tarifa in tarifas)
