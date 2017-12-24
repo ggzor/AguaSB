@@ -58,7 +58,9 @@
   <ItemGroup>
     <Compile Include="Adeudos.cs" />
     <Compile Include="Calle.cs" />
+    <Compile Include="DesactivacionNota.cs" />
     <Compile Include="ICoercible.cs" />
+    <Compile Include="Nota.cs" />
     <Compile Include="Tarifa.cs" />
     <Compile Include="Contacto.cs" />
     <Compile Include="Contrato.cs" />
@@ -72,6 +74,7 @@
     <Compile Include="Seccion.cs" />
     <Compile Include="TipoContacto.cs" />
     <Compile Include="TipoContrato.cs" />
+    <Compile Include="TipoNota.cs" />
     <Compile Include="Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilerias\CantidadALetra.cs" />
