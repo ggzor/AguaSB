@@ -14,7 +14,8 @@ namespace AguaSB.Inicializadores
     {
         public AgregarUsuarios(IDbContextScopeFactory ambito, IRepositorio<Usuario> usuariosRepo, IRepositorio<TipoContrato> tiposContratoRepo, IRepositorio<Nota> notasRepo)
         {
-            var parejasNotas = new LinkedList<(Contrato Contrato, int Fila)>();
+            var notasFilaContrato = new LinkedList<(Contrato Contrato, int Fila)>();
+            var notasNumeroUsuario = new LinkedList<(Usuario Usuario, int NumeroUsuario)>();
 
             using (var baseDeDatos = ambito.Create())
             {
@@ -65,7 +66,7 @@ namespace AguaSB.Inicializadores
                                 Calle = calles.Single(calle => calle.Seccion.Orden == c.Domicilio.Calle.Seccion.Orden && calle.Nombre == c.Domicilio.Calle.Nombre),
                             },
                             FechaRegistro = Fecha.Ahora,
-                            MedidaToma = c.MedidaToma,
+                            MedidaToma = "1/2",
                         };
 
                         var p = c.Pagos.Single();
@@ -83,7 +84,8 @@ namespace AguaSB.Inicializadores
                         contrato.Pagos.Add(pago);
                         usuario.Contratos.Add(contrato);
 
-                        parejasNotas.AddLast((contrato, c.Domicilio.Id));
+                        notasFilaContrato.AddLast((contrato, c.Domicilio.Id));
+                        notasNumeroUsuario.AddLast((usuario, int.Parse(c.MedidaToma)));
                     }
                     usuariosRepo.Agregar(usuario);
                 }
@@ -91,20 +93,29 @@ namespace AguaSB.Inicializadores
                 Console.WriteLine("Listo.");
             }
 
-            if (parejasNotas.Any())
+            if (notasFilaContrato.Any())
             {
                 using (var baseDeDatos = ambito.Create())
                 {
                     Console.WriteLine("Registrando notas de referencias...");
 
-                    var tipoNota = new TipoNota { FechaRegistro = Fecha.Ahora, Nombre = "_Contrato_Fila" };
+                    var tipoNotaFilaContrato = new TipoNota { FechaRegistro = Fecha.Ahora, Nombre = "_Contrato_Fila" };
+                    var tipoNotaNumeroUsuario = new TipoNota { FechaRegistro = Fecha.Ahora, Nombre = "_Usuario_NumeroUsuario" };
 
-                    parejasNotas.Select(p => new Nota
+                    notasFilaContrato.Select(p => new Nota
                     {
                         FechaRegistro = Fecha.Ahora,
                         Informacion = p.Fila.ToString(),
                         Referencia = p.Contrato.Id,
-                        Tipo = tipoNota
+                        Tipo = tipoNotaFilaContrato
+                    }).ForEach(n => notasRepo.Agregar(n));
+
+                    notasNumeroUsuario.Select(p => new Nota
+                    {
+                        FechaRegistro = Fecha.Ahora,
+                        Informacion = p.NumeroUsuario.ToString(),
+                        Referencia = p.Usuario.Id,
+                        Tipo = tipoNotaNumeroUsuario
                     }).ForEach(n => notasRepo.Agregar(n));
 
                     baseDeDatos.SaveChanges();
