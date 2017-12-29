@@ -9,7 +9,7 @@ namespace AguaSB.Nucleo.Mensajes
     {
         public const string CampoRequerido = "Este campo no puede estar vacío.";
 
-        private const string PatronUnSoloNombrePersona = @"[A-ZÑÁÉÍÓÚÜ][a-zñáéíóúü]{2,}";
+        private const string PatronUnSoloNombrePersona = @"[A-ZÑÁÉÍÓÚÜ][a-zñáéíóúü\.]*";
 
         /// <summary>
         /// Coincidirá con cualquier cantidad de nombres separados por espacio.
