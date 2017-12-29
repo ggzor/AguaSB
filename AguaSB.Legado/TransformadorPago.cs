@@ -22,18 +22,18 @@ namespace AguaSB.Legado
 
         public void Informar(AguaSB.Nucleo.Pago informacion)
         {
-            int idUsuario = informacion.Contrato.Usuario.Id;
+            int idContrato = informacion.Contrato.Id;
             var nota = (from tipoNota in TiposNotaRepo.Datos
-                        where tipoNota.Nombre == "_Usuarios_Fila"
+                        where tipoNota.Nombre == "_Contrato_Fila"
                         from n in tipoNota.Notas
-                        where n.Referencia == idUsuario
+                        where n.Referencia == idContrato
                         select n)
                         .SingleOrDefault();
 
             if (nota == null)
             {
                 //TODO: Log
-                Console.WriteLine($"No se encontró la nota para el usuario {idUsuario}");
+                Console.WriteLine($"No se encontró la nota para el contrato {idContrato}");
                 return;
             }
 
