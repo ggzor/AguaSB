@@ -35,7 +35,6 @@ namespace AguaSB.Nucleo
             set { N.Validate(ref apellidoPaterno, value); NombreCompletoModificado(); }
         }
 
-        [Required(ErrorMessage = Validacion.CampoRequerido)]
         [RegularExpression(Validacion.PatronNombrePersona, ErrorMessage = Validacion.ApellidoInvalido)]
         [MaxLength(100)]
         [Index(IndiceNombreUnico, IsUnique = true, Order = 2)]
@@ -46,10 +45,10 @@ namespace AguaSB.Nucleo
         }
 
         [NotMapped]
-        public bool TieneCamposRequeridosVacios => new[] { Nombre, ApellidoPaterno, apellidoMaterno }.Any(string.IsNullOrWhiteSpace);
+        public bool TieneCamposRequeridosVacios => new[] { Nombre, ApellidoPaterno }.Any(string.IsNullOrWhiteSpace);
 
         [NotMapped]
-        public override string NombreCompleto => $"{Nombre} {ApellidoPaterno} {ApellidoMaterno}";
+        public override string NombreCompleto => $"{Nombre} {ApellidoPaterno} {ApellidoMaterno}".Trim();
 
         private void NombreCompletoModificado()
         {
