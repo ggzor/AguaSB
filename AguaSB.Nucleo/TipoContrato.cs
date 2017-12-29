@@ -14,28 +14,43 @@ namespace AguaSB.Nucleo
     [Table("TiposContrato")]
     public class TipoContrato : IEntidad, INotifyPropertyChanged, INotifyDataErrorInfo
     {
+        private const string IndiceNombreClaseUnico = "NombreClaseUnica";
+
         private decimal multiplicador;
         private string nombre;
         private ClaseContrato claseContrato;
 
         public int Id { get; set; }
 
+        private string clave;
+
+        [Required(ErrorMessage = Validacion.CampoRequerido)]
+        [MaxLength(8)]
+        [Index(IsUnique = true, Order = 1)]
+        public string Clave
+        {
+            get { return clave; }
+            set { clave = value; }
+        }
+
+
         [Required(ErrorMessage = Validacion.CampoRequerido)]
         [MaxLength(100)]
-        [Index(IsUnique = true)]
+        [Index(IndiceNombreClaseUnico, IsUnique = true, Order = 3)]
         public string Nombre
         {
             get { return nombre; }
             set { N.Validate(ref nombre, value); }
         }
 
-        [Range(typeof(decimal), "0.01", "100")]
+        [Range(typeof(decimal), "0.00", "100")]
         public decimal Multiplicador
         {
             get { return multiplicador; }
             set { N.Validate(ref multiplicador, value); }
         }
 
+        [Index(IndiceNombreClaseUnico, IsUnique = true, Order = 2)]
         public ClaseContrato ClaseContrato
         {
             get { return claseContrato; }
