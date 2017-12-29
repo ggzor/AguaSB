@@ -87,8 +87,9 @@ namespace AguaSB.Pagos.ViewModels
 
         private IRepositorio<Usuario> UsuariosRepo { get; }
         private IRepositorio<Contrato> ContratosRepo { get; }
-        private IRepositorio<Tarifa> TarifasRepo { get; set; }
-        private IRepositorio<Pago> PagosRepo { get; set; }
+        private IRepositorio<Tarifa> TarifasRepo { get; }
+        private IRepositorio<Pago> PagosRepo { get; }
+        private IRepositorio<TipoNota> TiposNotaRepo { get; }
 
         private INavegador Navegador { get; }
         private IAdministradorNotificaciones Notificaciones { get; }
@@ -105,7 +106,8 @@ namespace AguaSB.Pagos.ViewModels
         public INodo Nodo { get; }
 
         public Agregar(IDbContextScopeFactory ambito, IRepositorio<Usuario> usuariosRepo, IRepositorio<Contrato> contratosRepo, IRepositorio<Pago> pagosRepo,
-            IRepositorio<Tarifa> tarifasRepo, INavegador navegador, IAdministradorNotificaciones notificaciones, IInformador<Pago> informador)
+            IRepositorio<Tarifa> tarifasRepo, IRepositorio<TipoNota> tiposNotaRepo, INavegador navegador,
+            IAdministradorNotificaciones notificaciones, IInformador<Pago> informador)
         {
             Ambito = ambito ?? throw new ArgumentNullException(nameof(ambito));
 
@@ -113,6 +115,7 @@ namespace AguaSB.Pagos.ViewModels
             ContratosRepo = contratosRepo ?? throw new ArgumentNullException(nameof(contratosRepo));
             PagosRepo = pagosRepo ?? throw new ArgumentNullException(nameof(pagosRepo));
             TarifasRepo = tarifasRepo ?? throw new ArgumentNullException(nameof(tarifasRepo));
+            TiposNotaRepo = tiposNotaRepo ?? throw new ArgumentNullException(nameof(tiposNotaRepo));
 
             Navegador = navegador ?? throw new ArgumentNullException(nameof(navegador));
             Notificaciones = notificaciones ?? throw new ArgumentNullException(nameof(notificaciones));
@@ -176,7 +179,7 @@ namespace AguaSB.Pagos.ViewModels
                 var busqueda = new ResultadosBusquedaUsuarios(CantidadOpciones);
 
                 using (var baseDatos = Ambito.CreateReadOnly())
-                    busqueda.Buscar(UsuariosRepo.Datos, nombreUsuario);
+                    busqueda.Buscar(UsuariosRepo.Datos, nombreUsuario, TiposNotaRepo);
 
                 return busqueda;
             });

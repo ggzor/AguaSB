@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using AguaSB.Nucleo;
+using AguaSB.Datos;
 
 namespace AguaSB.Pagos.ViewModels.Dtos
 {
@@ -30,13 +31,27 @@ namespace AguaSB.Pagos.ViewModels.Dtos
         public int CoincidentesSinContrato { get; set; }
         public bool HayCoincidentesSinContrato => CoincidentesSinContrato > 0 && !(HayMasOpciones == true);
 
-        public void Buscar(IQueryable<Usuario> usuarios, string nombre)
+        public void Buscar(IQueryable<Usuario> usuarios, string nombre, IRepositorio<TipoNota> tiposNota)
         {
             nombre = Usuario.ConvertirATextoSolicitud(nombre);
 
             if (int.TryParse(nombre, out var id))
             {
-                Resultados = usuarios.Where(u => u.Id == id).ToArray();
+                var idCadena = id.ToString();
+                var notaFila = (from tipoNota in tiposNota.Datos
+                                where tipoNota.Nombre == "_Usuario_NumeroUsuario"
+                                from nota in tipoNota.Notas
+                                where nota.Informacion == idCadena
+                                select nota).SingleOrDefault();
+
+                if (notaFila?.Referencia is int idUsuario)
+                {
+                    Resultados = usuarios.Where(u => u.Id == idUsuario).ToArray();
+                }
+                else
+                {
+                    Resultados = Enumerable.Empty<Usuario>();
+                }
 
                 TotalResultados = Resultados.Count();
             }
