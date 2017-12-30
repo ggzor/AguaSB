@@ -65,22 +65,25 @@ namespace AguaSB.Usuarios.ViewModels
 
             return usuariosConContratos.ToArray().Select(datosUsuario =>
             {
+                var contratos = datosUsuario.DatosContratos.ToArray()
+                    .OrderBy(_ => _.Seccion.Orden)
+                    .ThenBy(_ => _.Calle.Nombre)
+                    .ThenBy(_ => _.Numero)
+                    .Select(datosContrato => new ResultadoContrato
+                    {
+                        Contrato = datosContrato.Contrato,
+                        Domicilio = new Domicilio { Numero = datosContrato.Numero, Calle = new Calle { Nombre = datosContrato.Calle.Nombre, Seccion = datosContrato.Seccion } },
+                        UltimoMesPagado = datosContrato.UltimoMesPagado,
+                        UltimoPago = datosContrato.UltimoPago,
+                        Adeudo = CalculadorAdeudos(datosContrato.UltimoMesPagado, datosContrato.TipoContrato)
+                    })
+                    .ToList();
+
                 var resultado = new ResultadoUsuario
                 {
                     Contactos = datosUsuario.Contactos.Select(datosContacto =>
                         new Contacto { Informacion = datosContacto.Informacion, TipoContacto = datosContacto.TipoContacto }).ToArray(),
-                    Contratos = datosUsuario.DatosContratos.ToArray()
-                        .OrderBy(_ => _.Seccion.Orden)
-                        .ThenBy(_ => _.Calle.Nombre)
-                        .ThenBy(_ => _.Numero)
-                        .Select(datosContrato => new ResultadoContrato
-                        {
-                            Contrato = datosContrato.Contrato,
-                            Domicilio = new Domicilio { Numero = datosUsuario.Numero, Calle = new Calle { Nombre = datosUsuario.Calle.Nombre, Seccion = datosUsuario.Seccion } },
-                            UltimoMesPagado = datosContrato.UltimoMesPagado,
-                            UltimoPago = datosContrato.UltimoPago,
-                            Adeudo = CalculadorAdeudos(datosContrato.UltimoMesPagado, datosContrato.TipoContrato)
-                        }),
+                    Contratos = contratos,
                     Domicilio = new Domicilio { Numero = datosUsuario.Numero, Calle = new Calle { Nombre = datosUsuario.Calle.Nombre, Seccion = datosUsuario.Seccion } },
                     UltimoMesPagado = Fecha.MesDe(datosUsuario.DatosContratos.OrderByDescending(_ => _.UltimoMesPagado).First().UltimoMesPagado),
                     UltimoPago = datosUsuario.UltimoPago,
