@@ -74,7 +74,7 @@
                                     <TextBlock Margin="8 0 0 0" Text="Pagar" Style="{StaticResource h4}" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </Button>
-                            
+
                             <StackPanel>
                                 <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding Usuario.NombreCompleto}" Style="{StaticResource h2}"/>
                                 <TextBlock Margin="0 8 0 16" Text="{Binding Usuario.FechaRegistro, StringFormat={}Registrado: {0:d}}"/>
@@ -618,18 +618,22 @@
                         <TextBlock Margin="10 0 0 0" Text="{Binding Busqueda.Conteo, StringFormat={}Resultados ({0}), FallbackValue=Resultados}" 
                                    FontSize="{StaticResource TamanoH3}" FontWeight="DemiBold" Style="{StaticResource FadeTag}"
                                    VerticalAlignment="Center"/>
+                        <TextBlock Margin="24 0 0 0" Text="{Binding Busqueda.AdeudoTotal, StringFormat={}Adeudo total: {0:C}}" Style="{StaticResource h3}"
+                                   VerticalAlignment="Center" Opacity="0.9"/>
                     </StackPanel>
 
-                    <StackPanel Name="Navegacion" Grid.Row="0" Margin="22 0" Orientation="Horizontal" HorizontalAlignment="Center" Visibility="{Binding Busqueda.HayResultados, Converter={StaticResource BoolToVisibility}}">
-                        <ComboBox Name="NavegadorResultados" Margin="20 0 0 0" Width="300" Tag="Ir a..." VerticalAlignment="Center" ItemsSource="{Binding Busqueda.PuntosNavegacion}"
+                    <StackPanel Grid.Row="0" Margin="22 0" HorizontalAlignment="Right" Orientation="Horizontal" Visibility="{Binding Busqueda.HayResultados, Converter={StaticResource BoolToVisibility}}">
+                        <StackPanel Name="Navegacion" Orientation="Horizontal">
+                            <ComboBox Name="NavegadorResultados" Margin="20 0 0 0" MinWidth="200" Tag="Ir a..." VerticalAlignment="Center" ItemsSource="{Binding Busqueda.PuntosNavegacion}"
                                   SelectionChanged="NavegadorResultados_SeleccionCambiada" Estilos:Foco.SiguienteFoco="{Binding ElementName=Busqueda}"/>
-                    </StackPanel>
+                        </StackPanel>
 
-                    <StackPanel Name="Agrupacion" Grid.Row="0" Margin="22 0" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding Busqueda.HayResultados, Converter={StaticResource BoolToVisibility}}">
-                        <icons:PackIconModern Kind="BoxLayered" Margin="0 0 0 5" Width="20" Height="20" VerticalAlignment="Bottom" Style="{StaticResource IconoLateral}"
+                        <StackPanel Margin="16 0 0 0" Name="Agrupacion" Orientation="Horizontal">
+                            <icons:PackIconModern Kind="BoxLayered" Margin="0 0 0 5" Width="20" Height="20" VerticalAlignment="Bottom" Style="{StaticResource IconoLateral}"
                                               Estilos:Icono.Enfocado="{Binding ElementName=AgruparPor, Path=IsKeyboardFocusWithin}"/>
-                        <ComboBox Name="AgruparPor" Margin="20 0 0 0" Tag="Agrupar por...      " ItemsSource="{Binding Agrupadores}"
+                            <ComboBox Name="AgruparPor" Margin="20 0 0 0" Tag="Agrupar por...      " ItemsSource="{Binding Agrupadores}"
                                   SelectedItem="{Binding Agrupador, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Estilos:Foco.SiguienteFoco="{Binding ElementName=NavegadorResultados}"/>
+                        </StackPanel>
                     </StackPanel>
 
                     <Separator Grid.Row="1" Opacity="0.5" Margin="5" Visibility="{Binding Busqueda.HayResultados, Converter={StaticResource BoolToVisibility}}"/>

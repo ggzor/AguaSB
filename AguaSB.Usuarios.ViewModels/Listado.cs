@@ -478,6 +478,7 @@ namespace AguaSB.Usuarios.ViewModels
 
                 busquedaActual.Buscando = false;
                 busquedaActual.Conteo = resultadosUsuarios.Count;
+                busquedaActual.AdeudoTotal = resultadosUsuarios.Select(u => u.Adeudo).Sum();
                 busquedaActual.HayResultados = resultadosUsuarios.Count > 0;
             }
             catch (Exception ex)

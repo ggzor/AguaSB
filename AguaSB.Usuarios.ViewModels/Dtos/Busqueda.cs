@@ -9,6 +9,7 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
         private bool? hayResultados;
         private bool? buscando;
         private long? conteo;
+        private decimal adeudoTotal;
         private bool? tieneErrores;
         private string error;
         private IEnumerable resultados;
@@ -34,7 +35,13 @@ namespace AguaSB.Usuarios.ViewModels.Dtos
             get { return conteo; }
             set { N.Set(ref conteo, value); }
         }
-
+        
+        public decimal AdeudoTotal
+        {
+            get { return adeudoTotal; }
+            set { N.Set(ref adeudoTotal, value); }
+        }
+        
         public bool? TieneErrores
         {
             get { return tieneErrores; }
