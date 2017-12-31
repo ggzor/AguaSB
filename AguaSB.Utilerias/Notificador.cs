@@ -6,6 +6,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
+using MoreLinq;
+
 namespace AguaSB.Utilerias
 {
     public sealed class Notificador
@@ -33,9 +35,9 @@ namespace AguaSB.Utilerias
                 return null;
         }
 
-        public void Change(string propiedad) => PropiedadCambiada?.Invoke(Objeto, new PropertyChangedEventArgs(propiedad));
+        public void Change(params string[] propiedades) => propiedades.ForEach(p => PropiedadCambiada?.Invoke(Objeto, new PropertyChangedEventArgs(p)));
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference", MessageId = "0#", 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference", MessageId = "0#",
             Justification = "Permite que el patrón del Notify sea implementado con facilidad.")]
         public void Set<T>(ref T campo, T value, [CallerMemberName] string propiedad = null)
         {
