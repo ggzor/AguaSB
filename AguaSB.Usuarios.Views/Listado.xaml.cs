@@ -88,6 +88,20 @@ namespace AguaSB.Usuarios.Views
             new ManejadorTeclas(PanelResultados, ManejarTeclas, ManejarTeclasConControl);
         }
 
+        public IDictionary Iconos { get; } = new Dictionary<string, UIElement>
+        {
+            ["Id"] = new PackIconEntypo { Kind = PackIconEntypoKind.Fingerprint },
+            ["Nombre"] = new PackIconMaterial { Kind = PackIconMaterialKind.Account },
+            ["Adeudo"] = new PackIconModern { Kind = PackIconModernKind.CurrencyDollar },
+            ["Fecha de registro"] = new PackIconMaterial { Kind = PackIconMaterialKind.CalendarPlus },
+            ["Contratos"] = new PackIconModern { Kind = PackIconModernKind.AlignJustify },
+            ["Último pago"] = new PackIconModern { Kind = PackIconModernKind.CalendarDollar },
+            ["Pagado hasta"] = new PackIconMaterial { Kind = PackIconMaterialKind.CalendarClock },
+            ["Sección"] = new PackIconMaterial { Kind = PackIconMaterialKind.ViewGrid },
+            ["Calle"] = new PackIconEntypo { Kind = PackIconEntypoKind.Address },
+            ["Número"] = new PackIconFontAwesome { Kind = PackIconFontAwesomeKind.Hashtag }
+        };
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public Func<double, string> Formato { get; set; } = f => new DateTime((long)(f * TimeSpan.FromDays(1).Ticks * 30.44)).ToString("MMMM yyyy");
@@ -174,20 +188,6 @@ namespace AguaSB.Usuarios.Views
 
         private void EnfocarElementoActual() =>
             ListaResultados.ScrollIntoView(ListaResultados.SelectedItem);
-
-        public IDictionary Iconos { get; } = new Dictionary<string, UIElement>
-        {
-            ["Id"] = new PackIconEntypo { Kind = PackIconEntypoKind.Fingerprint },
-            ["Nombre"] = new PackIconMaterial { Kind = PackIconMaterialKind.Account },
-            ["Adeudo"] = new PackIconModern { Kind = PackIconModernKind.CurrencyDollar },
-            ["Fecha de registro"] = new PackIconMaterial { Kind = PackIconMaterialKind.CalendarPlus },
-            ["Contratos"] = new PackIconModern { Kind = PackIconModernKind.AlignJustify },
-            ["Último pago"] = new PackIconModern { Kind = PackIconModernKind.CalendarDollar },
-            ["Pagado hasta"] = new PackIconMaterial { Kind = PackIconMaterialKind.CalendarClock },
-            ["Sección"] = new PackIconMaterial { Kind = PackIconMaterialKind.ViewGrid },
-            ["Calle"] = new PackIconEntypo { Kind = PackIconEntypoKind.Address },
-            ["Número"] = new PackIconFontAwesome { Kind = PackIconFontAwesomeKind.Hashtag }
-        };
 
         private void Columna_Seleccionada(object sender, RoutedEventArgs e)
         {
