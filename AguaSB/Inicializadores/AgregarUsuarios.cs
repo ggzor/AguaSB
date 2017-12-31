@@ -44,9 +44,12 @@ namespace AguaSB.Inicializadores
                              .ToArray();
 
                 usuarios = NormalizarDuplicados(usuarios);
-
+                var i = 0;
                 foreach (Persona persona in usuarios)
                 {
+                    if(i % 50 == 0)
+                        Console.WriteLine($"Procesando {i}/{usuarios.Count}");
+
                     var usuario = new Persona
                     {
                         Nombre = persona.Nombre,
@@ -88,12 +91,14 @@ namespace AguaSB.Inicializadores
                         notasNumeroUsuario.AddLast((usuario, int.Parse(c.MedidaToma)));
                     }
                     usuariosRepo.Agregar(usuario);
+                    i++;
                 }
+                Console.WriteLine("Guardando cambios...");
                 baseDeDatos.SaveChanges();
                 Console.WriteLine("Listo.");
             }
 
-            if (notasFilaContrato.Any())
+            if (notasFilaContrato.Count > 0)
             {
                 using (var baseDeDatos = ambito.Create())
                 {
@@ -130,7 +135,7 @@ namespace AguaSB.Inicializadores
 
             var contratoUnico = agrupados.Where(g => g.Count() == 1).Select(g => g.Single());
 
-            var contratoMultiple = agrupados.Where(g => g.Count() > 1).Select(g => g.ToArray()).Select(g =>
+            var contratoMultiple = agrupados.Where(g => g.Skip(1).Any()).Select(g => g.ToArray()).Select(g =>
             {
                 var primero = g[0];
 
@@ -149,6 +154,5 @@ namespace AguaSB.Inicializadores
             using (var flujo = new StreamReader(archivo.OpenRead()))
                 return Newtonsoft.Json.JsonConvert.DeserializeObject<List<Persona>>(flujo.ReadToEnd());
         }
-
     }
 }
