@@ -16,13 +16,12 @@ namespace AguaSB.Nucleo
     {
         private const string IndiceNombreClaseUnico = "NombreClaseUnica";
 
-        private decimal multiplicador;
+        private string clave;
         private string nombre;
+        private decimal multiplicador;
         private ClaseContrato claseContrato;
 
         public int Id { get; set; }
-
-        private string clave;
 
         [Required(ErrorMessage = Validacion.CampoRequerido)]
         [MaxLength(8)]
@@ -30,9 +29,8 @@ namespace AguaSB.Nucleo
         public string Clave
         {
             get { return clave; }
-            set { clave = value; }
+            set { N.Validate(ref clave, value); }
         }
-
 
         [Required(ErrorMessage = Validacion.CampoRequerido)]
         [MaxLength(100)]
