@@ -11,6 +11,8 @@ namespace AguaSB.Views.Controles
             InitializeComponent();
         }
 
+        public event EventHandler VisibleCambiado;
+
         public string Texto
         {
             get { return (string)GetValue(TextoProperty); }
@@ -27,6 +29,12 @@ namespace AguaSB.Views.Controles
             DependencyProperty.Register(nameof(Texto), typeof(string), typeof(CoverProgreso), new PropertyMetadata("Cargando..."));
 
         public static readonly DependencyProperty VisibleProperty =
-            DependencyProperty.Register(nameof(Visible), typeof(bool), typeof(CoverProgreso), new PropertyMetadata(false));
+            DependencyProperty.Register(nameof(Visible), typeof(bool), typeof(CoverProgreso), new PropertyMetadata(false, EnVisibleCambiado));
+
+        private static void EnVisibleCambiado(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is CoverProgreso c)
+                c.VisibleCambiado?.Invoke(c, EventArgs.Empty);
+        }
     }
 }

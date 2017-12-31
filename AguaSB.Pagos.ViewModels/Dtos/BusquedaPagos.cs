@@ -9,7 +9,6 @@ namespace AguaSB.Pagos.ViewModels.Dtos
     public class BusquedaPagos : Notificante
     {
         private bool buscando;
-        private bool tieneErrores;
         private string error;
 
         public bool Buscando
@@ -47,7 +46,7 @@ namespace AguaSB.Pagos.ViewModels.Dtos
 
         private IEnumerable<Pago> Buscar(IQueryable<Pago> datos)
         {
-            var esteMes = (Fecha.EsteMes.Month - 1) * 12 + Fecha.EsteMes.Year;
+            var esteMes = ((Fecha.EsteMes.Month - 1) * 12) + Fecha.EsteMes.Year;
             var solicitud = from pago in datos
                             let fechaPago = pago.FechaPago
                             where ((fechaPago.Month - 1) * 12) + fechaPago.Year == esteMes

@@ -446,7 +446,7 @@
         </material:DialogHost>
 
 
-        <Views:CoverProgreso Foreground="{StaticResource ModernVerde}" Grid.Row="1" 
+        <Views:CoverProgreso Name="Cubierta" Foreground="{StaticResource ModernVerde}" Grid.Row="1" 
                              Visible="{Binding ControladorCubierta.MostrarCubierta}" Texto="{Binding ControladorCubierta.TextoCubierta}"/>
     </Grid>
 </UserControl>

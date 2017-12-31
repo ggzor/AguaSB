@@ -41,6 +41,11 @@ namespace AguaSB.Pagos.Views
                                              select Unit.Default;
 
             usuarioSeleccionadoEventos.Subscribe(u => Dialogo.IsOpen = false);
+            Cubierta.VisibleCambiado += (src, args) =>
+            {
+                if (Dialogo.IsOpen && Cubierta.Visible == true)
+                    Dialogo.IsOpen = false;
+            };
         }
 
         private async void AbrirPanelResultados(object sender, RoutedEventArgs e)
