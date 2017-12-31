@@ -43,7 +43,7 @@
 
         <Views:BarraSuperior Grid.ColumnSpan="3" Titulo="Listado de pagos" Icono="{icons:PackIconModern Kind=Money, Width=20, Height=20}" Foreground="White"/>
 
-        <material:DialogHost Name="Dialogo" Grid.Row="1" DialogContent="{Binding OpcionesPago.PagoPorPropiedades}">
+        <material:DialogHost Name="Dialogo" Grid.Row="1">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="64"/>
@@ -190,7 +190,7 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <StackPanel Grid.Row="0" Margin="22 0" Opacity="0.6" Orientation="Horizontal" Visibility="{Binding Busqueda.HayResultados, Converter={StaticResource BoolToVisibility}}"
+                        <StackPanel Grid.Row="0" Margin="22 0" Opacity="0.6" Orientation="Horizontal" Visibility="{Binding Resultados.HayResultados, Converter={StaticResource BoolToVisibility}}"
                                 VerticalAlignment="Bottom">
                             <icons:PackIconModern Kind="Money" Width="20" Height="20" VerticalAlignment="Center"/>
                             <TextBlock Margin="10 0 0 0" Text="{Binding Resultados.Total, StringFormat={}Total:   {0:C}}" 
