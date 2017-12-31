@@ -50,6 +50,7 @@ namespace AguaSB.Pagos.ViewModels.Dtos
             var solicitud = from pago in datos
                             let fechaPago = pago.FechaPago
                             where ((fechaPago.Month - 1) * 12) + fechaPago.Year == esteMes
+                            where pago.Monto > 0
                             orderby fechaPago descending
                             select pago;
 
