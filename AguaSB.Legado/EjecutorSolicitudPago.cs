@@ -15,7 +15,7 @@ namespace AguaSB.Legado
             Archivo = archivo ?? throw new ArgumentNullException(nameof(archivo));
 
         private const string NombreHojaUsuarios = "CONCENTRADO";
-        private const string NombreHojaPagos = "DETALLE C";
+        private const string NombreHojaPagos = "PAGOS 2018";
 
         public Pago Ejecutar(SolicitudPago solicitudPago)
         {
@@ -53,8 +53,8 @@ namespace AguaSB.Legado
             resultado.Meses = solicitudPago.Meses;
         }
 
-        private const int InicioPagos = 1800;
-        private const int ConteoPagos = 2000;
+        private const int InicioPagos = 2;
+        private const int ConteoPagos = 3000;
 
         private void ProcesarHojaPagos(SolicitudPago solicitudPago, Pago resultado, ExcelWorksheet hojaPagos)
         {
@@ -66,6 +66,8 @@ namespace AguaSB.Legado
             var filaPagos = new EditorFilaExcel(hojaPagos, ObtenerSiguienteFilaPagos());
 
             resultado.Folio = filaPagos.Obtener<int>(1);
+            filaPagos.Establecer(1, filaPagos.Fila - 1);
+            filaPagos.Establecer(2, filaPagos.Fila - 1);
             filaPagos.Establecer(3, solicitudPago.FechaPago);
             filaPagos.Establecer(4, resultado.NumeroUsuario);
             filaPagos.Establecer(10, resultado.Meses);

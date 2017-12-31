@@ -19,7 +19,7 @@ namespace AguaSB.Legado.Nucleo
             if (inicio == fin)
                 return MesAño(inicio).ToUpper();
             else if (inicio.Year == fin.Year)
-                return $"{inicio.ToString("MMMM")} - {MesAño(fin)}".ToUpper();
+                return $"{MesAño(inicio)} - {MesAño(fin)}".ToUpper();
             else
                 return $"{MesAño(inicio)} - {MesAño(fin)}".ToUpper();
         }
