@@ -9,6 +9,7 @@
              xmlns:Estilos="clr-namespace:AguaSB.Estilos;assembly=AguaSB.Estilos"
              xmlns:Dtos="clr-namespace:AguaSB.Pagos.ViewModels.Dtos;assembly=AguaSB.Pagos.ViewModels"
              xmlns:Util="clr-namespace:AguaSB.Views.Utilerias;assembly=AguaSB.Views"
+             xmlns:Nucleo="clr-namespace:AguaSB.Nucleo;assembly=AguaSB.Nucleo"
              xmlns:Views="clr-namespace:AguaSB.Views.Controles;assembly=AguaSB.Views"
              xmlns:ViewModels="clr-namespace:AguaSB.Pagos.ViewModels;assembly=AguaSB.Pagos.ViewModels"
              xmlns:local="clr-namespace:AguaSB.Pagos.Views"
@@ -26,7 +27,11 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Green.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/AguaSB.Views;component/Utilerias/Conversores.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Calendar.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ListView.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="ListView" BasedOn="{StaticResource MaterialDesignListView}"/>
+            <Util:DictionaryConverter x:Key="Iconos" ThrowIfNotKeyFound="False"/>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -45,8 +50,8 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition MinWidth="350" Width="*"/>
-                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition MinWidth="300" Width="*"/>
+                    <ColumnDefinition Width="4*"/>
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Grid.ColumnSpan="2" Background="{StaticResource ModernVerde}">
@@ -140,7 +145,7 @@
                                                 <Setter Property="Margin" Value="0"/>
                                             </Style>
                                         </Grid.Resources>
-                                        
+
                                         <TextBox Tag="Mínimo" HorizontalContentAlignment="Center"/>
                                         <TextBlock Grid.Column="1" Text=" - " Style="{StaticResource h4}"/>
                                         <TextBox Grid.Column="2" Tag="Máximo" HorizontalContentAlignment="Center"/>
@@ -150,6 +155,169 @@
                         </ScrollViewer>
                     </Grid>
                 </material:Card>
+
+                <DockPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <icons:PackIconMaterial Margin="0 0 16 0" Kind="Apps" Foreground="White" Style="{StaticResource IconoLateral}"/>
+                    <TextBlock Text="{Binding Resultados.Conteo, StringFormat={}Resultados ({0}), FallbackValue=Resultados}" Foreground="White" FontFamily="Segoe UI" FontWeight="DemiBold" Style="{StaticResource h3}"/>
+                </DockPanel>
+
+                <Grid Grid.Row="1" Grid.Column="1" Margin="0 8 0 0">
+                    <Grid Name="Buscando" Background="White" Opacity="0" Tag="{Binding Busqueda.Buscando}" Style="{StaticResource FadeTag}">
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <metro:ProgressRing Width="100" Height="100" HorizontalAlignment="Center"/>
+                            <TextBlock Margin="20" Text="Buscando..." Style="{StaticResource h3}"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Name="NoResultados" Background="White" Opacity="0" Tag="{Binding Resultados.NoHayResultados}" Style="{StaticResource FadeTag}">
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <icons:PackIconModern Kind="MagnifyMinus" Width="100" Height="100" Opacity="0.6" HorizontalAlignment="Center"/>
+                            <TextBlock Margin="20" Text="No hay resultados" Opacity="0.6" Style="{StaticResource h3}"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Name="Error" Background="White" Opacity="0" Tag="{Binding Busqueda.TieneErrores}" Style="{StaticResource FadeTag}">
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <icons:PackIconModern Kind="Close" Width="100" Height="100" Opacity="0.6" HorizontalAlignment="Center"/>
+                            <TextBlock Margin="20" Text="Ocurrio un error" Opacity="0.6" Style="{StaticResource h3}"
+                                           HorizontalAlignment="Center"/>
+                            <TextBlock MaxWidth="400" Text="{Binding Busqueda.Error}" 
+                                           Opacity="0.5" Style="{StaticResource h4}" TextAlignment="Center" TextWrapping="WrapWithOverflow"/>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Tag="{Binding Resultados.HayResultados}" Style="{StaticResource FadeTag}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Margin="22 0" Opacity="0.6" Orientation="Horizontal" Visibility="{Binding Busqueda.HayResultados, Converter={StaticResource BoolToVisibility}}"
+                                VerticalAlignment="Bottom">
+                            <icons:PackIconModern Kind="Money" Width="20" Height="20" VerticalAlignment="Center"/>
+                            <TextBlock Margin="10 0 0 0" Text="{Binding Resultados.Total, StringFormat={}Total:   {0:C}}" 
+                                   FontSize="{StaticResource TamanoH3}" FontWeight="DemiBold" Style="{StaticResource FadeTag}"
+                                   VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <ListView Grid.Row="1" Name="ListaResultados" ItemsSource="{Binding Resultados.Resultados}"
+                                  VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+                                  material:ListViewAssist.ListViewItemPadding="8 4.5">
+                            <ListView.View>
+                                <GridView AllowsColumnReorder="False">
+                                    <GridView.ColumnHeaderTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Margin="5 0" Orientation="Horizontal">
+                                                <ContentControl Content="{Binding Converter={StaticResource Iconos}}" VerticalAlignment="Center"/>
+                                                <TextBlock FontFamily="Segoe UI" FontWeight="Normal" Text="{Binding}" Style="{StaticResource h4}"
+                                                       Margin="10 0 0 0" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridView.ColumnHeaderTemplate>
+
+                                    <GridViewColumn>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="5 0" Width="50">
+                                                    <TextBlock HorizontalAlignment="Right" Text="{Binding Id}" Style="{StaticResource h5}"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                        <GridViewColumnHeader Tag="{Binding Ordenamientos.Id}" Click="Columna_Seleccionada">Id</GridViewColumnHeader>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn Width="250">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Margin="5 0" Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding Contrato.Usuario.NombreCompleto}" TextWrapping="WrapWithOverflow" Style="{StaticResource h5}"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                        <GridViewColumnHeader Tag="{Binding Ordenamientos.Usuario}" Click="Columna_Seleccionada">Nombre</GridViewColumnHeader>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn Util:Columnas.EsVisible="{Binding Columnas.Numero.Activo, Mode=TwoWay}">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="5 0" Width="90">
+                                                    <TextBlock HorizontalAlignment="Right" Text="{Binding CantidadPagada, StringFormat=C}" Style="{StaticResource h5}"
+                                                           FontFamily="Segoe UI" FontWeight="Bold"
+                                                           Foreground="{StaticResource ModernVerde}"/>
+                                                    <Grid.RenderTransform>
+                                                        <TranslateTransform X="10"/>
+                                                    </Grid.RenderTransform>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                        <GridViewColumnHeader Tag="{Binding Ordenamientos.Numero}" Click="Columna_Seleccionada">Cantidad</GridViewColumnHeader>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="5 0">
+                                                    <TextBlock Text="{Binding FechaPago, StringFormat=g, ConverterCulture=es-MX}" Style="{StaticResource h5}"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                        <GridViewColumnHeader Tag="{Binding Ordenamientos.UltimoPago}" Click="Columna_Seleccionada">Fecha</GridViewColumnHeader>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn Util:Columnas.EsVisible="{Binding Columnas.Seccion.Activo, Mode=TwoWay}">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Margin="5 0" Text="{Binding Contrato.Domicilio.Calle.Seccion.Nombre}" Style="{StaticResource h5}"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                        <GridViewColumnHeader Tag="{Binding Ordenamientos.Seccion}" Click="Columna_Seleccionada">Sección</GridViewColumnHeader>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn Util:Columnas.EsVisible="{Binding Columnas.Calle.Activo, Mode=TwoWay}">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Margin="5 0" Text="{Binding Contrato.Domicilio.Calle.Nombre}" Style="{StaticResource h5}"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                        <GridViewColumnHeader Tag="{Binding Ordenamientos.Calle}" Click="Columna_Seleccionada">Calle</GridViewColumnHeader>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn Util:Columnas.EsVisible="{Binding Columnas.Numero.Activo, Mode=TwoWay}">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="5 0" Width="90">
+                                                    <TextBlock HorizontalAlignment="Right" Text="{Binding Contrato.Domicilio.Numero}" Style="{StaticResource h5}"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                        <GridViewColumnHeader Tag="{Binding Ordenamientos.Numero}" Click="Columna_Seleccionada">Número</GridViewColumnHeader>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn Header="Contrato" Util:Columnas.EsVisible="{Binding Columnas.Contratos.Activo, Mode=TwoWay}">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Border Margin="5 0 0 0" Padding="5 2" Tag="{Binding Contrato.TipoContrato.ClaseContrato}" Style="{StaticResource CambiarColor}"
+                                                    HorizontalAlignment="Center">
+                                                    <TextBlock Text="{Binding Contrato.TipoContrato.Nombre}" Foreground="White" TextWrapping="Wrap" FontFamily="Segoe UI" 
+                                                           FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource h6}"/>
+                                                    <Border.ToolTip>
+                                                        <Border>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBlock Text="{Binding Contrato.TipoContrato.Nombre}" FontSize="{StaticResource TamanoH4}" VerticalAlignment="Center"/>
+                                                                <Border Margin="10 0 0 0" CornerRadius="8" Padding="5 2" Tag="{Binding Contrato.TipoContrato.ClaseContrato}" Style="{StaticResource CambiarColor}">
+                                                                    <TextBlock Text="{Binding Contrato.TipoContrato.ClaseContrato}" Foreground="White" TextWrapping="Wrap" FontFamily="Segoe UI" 
+                                                                           FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource h6}"/>
+                                                                </Border>
+                                                            </StackPanel>
+                                                        </Border>
+                                                    </Border.ToolTip>
+                                                </Border>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
+                </Grid>
             </Grid>
         </material:DialogHost>
     </Grid>
