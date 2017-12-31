@@ -619,7 +619,7 @@
                                    FontSize="{StaticResource TamanoH3}" FontWeight="DemiBold" Style="{StaticResource FadeTag}"
                                    VerticalAlignment="Center"/>
                         <TextBlock Margin="24 0 0 0" Text="{Binding Busqueda.AdeudoTotal, StringFormat={}Adeudo total: {0:C}}" Style="{StaticResource h3}"
-                                   VerticalAlignment="Center" Opacity="0.9"/>
+                                   FontFamily="Segoe UI" VerticalAlignment="Center" Opacity="0.9"/>
                     </StackPanel>
 
                     <StackPanel Grid.Row="0" Margin="22 0" HorizontalAlignment="Right" Orientation="Horizontal" Visibility="{Binding Busqueda.HayResultados, Converter={StaticResource BoolToVisibility}}">
