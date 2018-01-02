@@ -10,4 +10,5 @@
     <local:IsNullConverter x:Key="IsNull"/>
     <local:IsNotNullConverter x:Key="IsNotNull"/>
     <local:ToStringConverter x:Key="ToString"/>
+    <local:TypedTemplateSelector x:Key="TypedTS"/>
 </ResourceDictionary>
