@@ -19,7 +19,7 @@ namespace AguaSB.Nucleo.Pagos
             TarifaMensual = tarifaMensual;
         }
 
-        public long CantidadMeses => Fecha.DiferenciaMeses(Fin, Inicio);
+        public long CantidadMeses => Fecha.DiferenciaMeses(Fin, Inicio) + 1;
         public decimal Monto => CantidadMeses * TarifaMensual;
         public string Meses
         {
