@@ -1,5 +1,7 @@
-﻿using AguaSB.ViewModels;
+﻿using AguaSB.Nucleo.Pagos;
+using AguaSB.ViewModels;
 using System;
+using System.Collections.Generic;
 
 namespace AguaSB.Pagos.ViewModels.Dtos
 {
@@ -11,5 +13,7 @@ namespace AguaSB.Pagos.ViewModels.Dtos
 
         public bool EsPrimeroConRestanteCero { get; set; }
         public bool NoEsPrimeroConRestanteCero => !EsPrimeroConRestanteCero;
+
+        public IEnumerable<IDetallePago> Detalles { get; set; }
     }
 }

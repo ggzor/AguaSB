@@ -8,6 +8,7 @@ using MoreLinq;
 using AguaSB.Nucleo;
 using AguaSB.Utilerias;
 using AguaSB.ViewModels;
+using AguaSB.Nucleo.Pagos;
 
 namespace AguaSB.Pagos.ViewModels.Dtos
 {
@@ -58,7 +59,8 @@ namespace AguaSB.Pagos.ViewModels.Dtos
                 {
                     Hasta = m.Mes,
                     Monto = m.Monto,
-                    AdeudoRestante = Math.Max(0, Contrato.Adeudo - m.Monto)
+                    AdeudoRestante = Math.Max(0, Contrato.Adeudo - m.Monto),
+                    Detalles = DetallesPago.Obtener(primerMes, m.Mes, Contrato.Contrato.TipoContrato, Tarifas).ToArray()
                 }).ToArray();
 
             DecorarPrimerRangoPagoConRestanteCero();
