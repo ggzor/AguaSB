@@ -36,7 +36,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListViewItem">
-                    <ContentPresenter Margin="0 0 0 0" Focusable="False" FocusVisualStyle="{x:Null}"/>
+                    <ContentPresenter HorizontalAlignment="Stretch" Margin="0 0 0 0" Focusable="False" FocusVisualStyle="{x:Null}"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
