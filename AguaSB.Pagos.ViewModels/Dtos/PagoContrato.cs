@@ -88,8 +88,5 @@ namespace AguaSB.Pagos.ViewModels.Dtos
         }
 
         public bool EsUnico => Padre.Contratos.Count == 1;
-        public bool TieneAdeudo => Contrato.Adeudo > 0;
-        public bool NoTieneAdeudo => !TieneAdeudo;
-
     }
 }

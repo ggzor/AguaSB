@@ -1,4 +1,5 @@
 ﻿using AguaSB.Nucleo;
+using AguaSB.Nucleo.Pagos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,7 +47,8 @@ namespace AguaSB.Pagos.ViewModels.Dtos
                 {
                     Contrato = contrato,
                     Adeudo = Adeudos.Calcular(contrato.Pagos.Last().Hasta, contrato.TipoContrato, tarifas),
-                    UltimoPago = contrato.Pagos.Last()
+                    UltimoPago = contrato.Pagos.Last(),
+                    DetallesAdeudo = DetallesPago.ObtenerDeAdeudo(contrato.Pagos.Last().Hasta, contrato.TipoContrato, tarifas)
                 };
             }).ToArray();
 

@@ -24,15 +24,21 @@
                     <TextBlock Text="{Binding Contrato.Contrato.Domicilio.Numero, StringFormat={}Número {0}}" TextWrapping="Wrap" Style="{StaticResource h2}"/>
 
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="0 0 8 0" Text="Adeudo:" Opacity="0.6" Style="{StaticResource h4}"/>
+                        <TextBlock Margin="0 0 8 0" Text="Adeudo:" Opacity="0.6" Style="{StaticResource h4}"
+                                   VerticalAlignment="Center"/>
 
                         <TextBlock Text="{Binding Contrato.Adeudo, StringFormat={}{0:C}}" Style="{StaticResource wh4}" 
                                    Foreground="{StaticResource MaterialRed}" FontWeight="DemiBold" Opacity="0.9"
-                                   Visibility="{Binding Contrato.TieneAdeudo, Converter={StaticResource BoolToVisibility}}"/>
+                                   Visibility="{Binding Contrato.TieneAdeudo, Converter={StaticResource BoolToVisibility}}"
+                                   VerticalAlignment="Center"/>
 
                         <TextBlock Text="Al corriente" Style="{StaticResource wh4}" 
                                    Foreground="{StaticResource MaterialBlue}" FontWeight="DemiBold" Opacity="0.9"
-                                   Visibility="{Binding Contrato.NoTieneAdeudo, Converter={StaticResource BoolToVisibility}}"/>
+                                   Visibility="{Binding Contrato.NoTieneAdeudo, Converter={StaticResource BoolToVisibility}}"
+                                   VerticalAlignment="Center"/>
+
+                        <ViewsNucleo:DetallesPagoView Margin="8 0 0 0" DetallesPago="{Binding Contrato.DetallesAdeudo}" VerticalAlignment="Center"
+                                                      Visibility="{Binding Contrato.TieneAdeudo, Converter={StaticResource BoolToVisibility}}"/>
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal">

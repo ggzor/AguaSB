@@ -1,4 +1,5 @@
-﻿using MoreLinq;
+﻿using AguaSB.Utilerias;
+using MoreLinq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,12 @@ namespace AguaSB.Nucleo.Pagos
     {
         public static IEnumerable<IDetallePago> Obtener(DateTime desde, DateTime hasta, TipoContrato tipoContrato, Tarifa[] tarifas)
         {
+            IEnumerable<IDetallePago> AgruparPorAño(IGrouping<decimal, (DateTime Mes, decimal Monto)> grupoPorTarifa) =>
+                from grupoAño in grupoPorTarifa.GroupAdjacent(p => p.Mes.Year)
+                let primero = grupoAño.First()
+                let ultimo = grupoAño.Last()
+                select new MesesPago(primero.Mes, ultimo.Mes, grupoPorTarifa.Key);
+
             var gruposPorTarifa = Adeudos.CalcularMontosPorMes(desde, hasta, tipoContrato, tarifas).GroupAdjacent(p => p.Monto);
 
             if (gruposPorTarifa.AtLeast(2))
@@ -44,10 +51,17 @@ namespace AguaSB.Nucleo.Pagos
             }
         }
 
-        private static IEnumerable<IDetallePago> AgruparPorAño(IGrouping<decimal, (DateTime Mes, decimal Monto)> grupoPorTarifa) =>
-            from grupoAño in grupoPorTarifa.GroupAdjacent(p => p.Mes.Year)
-            let primero = grupoAño.First()
-            let ultimo = grupoAño.Last()
-            select new MesesPago(primero.Mes, ultimo.Mes, grupoPorTarifa.Key);
+
+        public static IEnumerable<IDetallePago> ObtenerDeAdeudo(DateTime ultimoMesPagado, TipoContrato tipoContrato, Tarifa[] tarifas)
+        {
+
+            var primerMesAdeudo = Fecha.MesDe(ultimoMesPagado).AddMonths(1);
+            var esteMes = Fecha.MesDe(Fecha.Ahora);
+
+            if (primerMesAdeudo > esteMes)
+                return Enumerable.Empty<IDetallePago>();
+            else
+                return Obtener(primerMesAdeudo, esteMes, tipoContrato, tarifas);
+        }
     }
 }

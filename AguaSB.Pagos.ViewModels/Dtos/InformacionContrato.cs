@@ -1,4 +1,6 @@
 ﻿using AguaSB.Nucleo;
+using AguaSB.Nucleo.Pagos;
+using System.Collections.Generic;
 
 namespace AguaSB.Pagos.ViewModels.Dtos
 {
@@ -10,6 +12,8 @@ namespace AguaSB.Pagos.ViewModels.Dtos
 
         public bool TieneAdeudo => Adeudo > 0;
         public bool NoTieneAdeudo => !TieneAdeudo;
+
+        public IEnumerable<IDetallePago> DetallesAdeudo { get; set; }
 
         public override string ToString() => Contrato.ToString();
     }
