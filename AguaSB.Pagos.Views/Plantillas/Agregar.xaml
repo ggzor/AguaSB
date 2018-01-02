@@ -38,6 +38,7 @@
                                    VerticalAlignment="Center"/>
 
                         <ViewsNucleo:DetallesPagoView Margin="8 0 0 0" DetallesPago="{Binding Contrato.DetallesAdeudo}" VerticalAlignment="Center"
+                                                      ColorMontos="{StaticResource MaterialRed}"
                                                       Visibility="{Binding Contrato.TieneAdeudo, Converter={StaticResource BoolToVisibility}}"/>
                     </StackPanel>
 
