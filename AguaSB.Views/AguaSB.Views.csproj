@@ -103,6 +103,7 @@
     <Compile Include="Utilerias\ManejadorTeclas.cs" />
     <Compile Include="Utilerias\NullConverters.cs" />
     <Compile Include="Utilerias\FuncValueConverter.cs" />
+    <Compile Include="Utilerias\NullToVisibilityConverters.cs" />
     <Compile Include="Utilerias\ToStringConverter.cs" />
     <Compile Include="Utilerias\TypedTemplateSelector.cs" />
     <Compile Include="Utilerias\VisualTreeUtils.cs" />

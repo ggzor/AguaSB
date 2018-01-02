@@ -9,6 +9,8 @@
     <local:InvertBoolConverter x:Key="InvertBool"/>
     <local:IsNullConverter x:Key="IsNull"/>
     <local:IsNotNullConverter x:Key="IsNotNull"/>
+    <local:IsNullToVisibilityConverter x:Key="IsNullToVisibility"/>
+    <local:IsNotNullToVisibilityConverter x:Key="IsNotNullToVisibility"/>
     <local:ToStringConverter x:Key="ToString"/>
     <local:TypedTemplateSelector x:Key="TypedTS"/>
 </ResourceDictionary>
