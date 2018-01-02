@@ -156,6 +156,10 @@
       <Project>{66436B98-0E59-4DF2-A29F-B14D157C1FA4}</Project>
       <Name>AguaSB.ViewModels</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AguaSB.Views.Nucleo\AguaSB.Views.Nucleo.csproj">
+      <Project>{dec797a6-bef8-476c-a469-2d828e1550cd}</Project>
+      <Name>AguaSB.Views.Nucleo</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AguaSB.Views\AguaSB.Views.csproj">
       <Project>{2fb7cb7e-cab1-47cc-a509-8daa4408b580}</Project>
       <Name>AguaSB.Views</Name>

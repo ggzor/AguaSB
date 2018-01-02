@@ -12,6 +12,7 @@
              xmlns:Views="clr-namespace:AguaSB.Views.Controles;assembly=AguaSB.Views"
              xmlns:ViewModels="clr-namespace:AguaSB.Pagos.ViewModels;assembly=AguaSB.Pagos.ViewModels"
              xmlns:local="clr-namespace:AguaSB.Pagos.Views"
+             xmlns:ViewsNucleo="clr-namespace:AguaSB.Views.Nucleo;assembly=AguaSB.Views.Nucleo"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type={x:Type ViewModels:Agregar}, IsDesignTimeCreatable=False}"
              Background="White"
@@ -370,31 +371,8 @@
                                                             </StackPanel>
                                                         </StackPanel>
                                                     </DockPanel>
-                                                    <ToggleButton Name="Boton" HorizontalAlignment="Right" VerticalAlignment="Top"
-                                                                  Width="Auto" Height="Auto" Margin="16" 
-                                                                  Style="{StaticResource MaterialDesignFlatToggleButton}"
-                                                                  Visibility="{Binding ElementName=Borde, Path=IsMouseOver, Converter={StaticResource BoolToVisibility}}">
-                                                        <icons:PackIconMaterial Opacity="0.8" Kind="HelpCircle"/>
-                                                    </ToggleButton>
-                                                    <Popup PlacementTarget="{Binding ElementName=Boton}" AllowsTransparency="True" PopupAnimation="Fade" StaysOpen="False"
-                                                           IsOpen="{Binding ElementName=Boton, Path=IsMouseOver, Mode=OneWay}">
-                                                        <Border Margin="0 5" Background="White" BorderBrush="#33000000" BorderThickness="1">
-                                                            <Grid Margin="8">
-                                                                <Grid.RowDefinitions>
-                                                                    <RowDefinition Height="Auto"/>
-                                                                    <RowDefinition Height="*"/>
-                                                                </Grid.RowDefinitions>
-
-                                                                <TextBlock Text="Detalles:" Opacity="0.6" Style="{StaticResource h5}"/>
-                                                                <ListView Grid.Row="1" ItemsSource="{Binding Detalles}" Margin="0 8 0 0"
-                                                                          ItemContainerStyle="{StaticResource PlainItem}"
-                                                                          ItemTemplateSelector="{StaticResource TypedTS}"
-                                                                          HorizontalContentAlignment="Stretch">
-
-                                                                </ListView>
-                                                            </Grid>
-                                                        </Border>
-                                                    </Popup>
+                                                    <ViewsNucleo:DetallesPagoView DetallesPago="{Binding Detalles}" Margin="8" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                                                                  Visibility="{Binding ElementName=Borde, Path=IsMouseOver, Converter={StaticResource BoolToVisibility}}"/>
                                                 </Grid>
                                             </Border>
                                         </DataTemplate>

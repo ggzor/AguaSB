@@ -70,6 +70,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Servicios.Office", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Legado", "AguaSB.Legado\AguaSB.Legado.csproj", "{619E1631-6648-4D9A-B453-FC1B3321238D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaSB.Views.Nucleo", "AguaSB.Views.Nucleo\AguaSB.Views.Nucleo.csproj", "{DEC797A6-BEF8-476C-A469-2D828E1550CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -188,6 +190,10 @@ Global
 		{619E1631-6648-4D9A-B453-FC1B3321238D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{619E1631-6648-4D9A-B453-FC1B3321238D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{619E1631-6648-4D9A-B453-FC1B3321238D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEC797A6-BEF8-476C-A469-2D828E1550CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEC797A6-BEF8-476C-A469-2D828E1550CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEC797A6-BEF8-476C-A469-2D828E1550CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEC797A6-BEF8-476C-A469-2D828E1550CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

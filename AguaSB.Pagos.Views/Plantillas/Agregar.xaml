@@ -1,47 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Pagos="clr-namespace:AguaSB.Nucleo.Pagos;assembly=AguaSB.Nucleo">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Estilos.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
-    <DataTemplate x:Key="{x:Type Pagos:MesesPago}" DataType="{x:Type Pagos:MesesPago}">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition SharedSizeGroup="DetallePagoColumna1" Width="*"/>
-                <ColumnDefinition SharedSizeGroup="DetallePagoColumna2" Width="30"/>
-                <ColumnDefinition SharedSizeGroup="DetallePagoColumna3" Width="Auto"/>
-                <ColumnDefinition SharedSizeGroup="DetallePagoColumna4" Width="Auto"/>
-            </Grid.ColumnDefinitions>
-
-            <TextBlock Text="{Binding Meses}" Style="{StaticResource wh5}"/>
-
-            <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                <TextBlock Text="{Binding CantidadMeses}" Opacity="0.6" Style="{StaticResource h5}"/>
-                <TextBlock Text=" x " Opacity="0.6" Style="{StaticResource h5}"/>
-                <TextBlock Text="{Binding TarifaMensual, StringFormat=C}" Opacity="0.6" Style="{StaticResource h5}"/>
-                <TextBlock Text=" = " Opacity="0.6" Style="{StaticResource h5}"/>
-            </StackPanel>
-
-            <TextBlock Grid.Column="3" Text="{Binding Monto, StringFormat=C}" Foreground="{StaticResource MaterialGreen}" Style="{StaticResource wh5}"/>
-        </Grid>
-    </DataTemplate>
-
-    <DataTemplate x:Key="{x:Type Pagos:CambioTarifa}" DataType="{x:Type Pagos:CambioTarifa}">
-        <Grid Margin="0 2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition SharedSizeGroup="DetallePagoColumna1"/>
-            </Grid.ColumnDefinitions>
-
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Mes, StringFormat=MMMM yyyy, ConverterCulture=es-MX}" Opacity="0.7" Style="{StaticResource h5}" VerticalAlignment="Center"/>
-
-                <StackPanel Margin="12 0 0 0" Orientation="Horizontal" HorizontalAlignment="Right">
-                    <TextBlock Text="{Binding Anterior, StringFormat=C}" Foreground="{StaticResource MaterialGreen}" Opacity="0.8" Style="{StaticResource wh5}" VerticalAlignment="Center"/>
-                    <TextBlock Text=" → " Style="{StaticResource wh3}" Opacity="0.8" VerticalAlignment="Center"/>
-                    <TextBlock Text="{Binding Nueva, StringFormat=C}" Foreground="{StaticResource MaterialGreen}" Style="{StaticResource wh5}" VerticalAlignment="Center"/>
-                </StackPanel>
-            </StackPanel>
-        </Grid>
-    </DataTemplate>
 </ResourceDictionary>
