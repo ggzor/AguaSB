@@ -3,6 +3,7 @@
                     xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
                     xmlns:Dtos="clr-namespace:AguaSB.Pagos.ViewModels.Dtos;assembly=AguaSB.Pagos.ViewModels"
                     xmlns:Util="clr-namespace:AguaSB.Views.Utilerias;assembly=AguaSB.Views"
+                    xmlns:ViewsNucleo="clr-namespace:AguaSB.Views.Nucleo;assembly=AguaSB.Views.Nucleo"
                     xmlns:local="clr-namespace:AguaSB.Pagos.Views">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Estilos.xaml"/>
@@ -50,5 +51,49 @@
                 </StackPanel>
             </DockPanel>
         </material:Card>
+    </DataTemplate>
+
+    <DataTemplate x:Key="PlantillaRangoPago" DataType="{x:Type Dtos:RangoPago}">
+        <Border Name="Borde" Margin="0 5" BorderBrush="#33000000" BorderThickness="1" Background="#01FFFFFF"
+                Util:ActivarBandera.ManejarEventos="True" Util:ActivarBandera.Bandera="{Binding Activo, Mode=OneWayToSource}">
+            <Grid>
+                <DockPanel>
+                    <RadioButton IsChecked="{Binding Activo, Mode=TwoWay}" Margin="16" GroupName="Pago" VerticalAlignment="Top"/>
+                    <StackPanel Margin="16 8 16 16">
+                        <TextBlock Text="{Binding Monto, StringFormat={}Pagar {0:C}, Mode=OneTime}" Foreground="{StaticResource ModernVerde}" FontFamily="Segoe UI" Style="{StaticResource h3}"/>
+                        <TextBlock Text="{Binding Hasta, StringFormat={}Cubre hasta: {0:MMMM yyyy}, Mode=OneWay, ConverterCulture=es-MX}" Style="{StaticResource h4}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding AdeudoRestante, StringFormat={}Restan: {0:C}, Mode=OneWay}" Opacity="0.8" Style="{StaticResource h4}"
+                                       Visibility="{Binding NoEsPrimeroConRestanteCero, Converter={StaticResource BoolToVisibility}}"/>
+
+                            <TextBlock Text="{Binding AdeudoRestante, StringFormat={}Restan: {0:C}}" Opacity="0.8" Style="{StaticResource h4}"
+                                       FontFamily="Segoe UI" FontWeight="DemiBold" Visibility="{Binding EsPrimeroConRestanteCero, Converter={StaticResource BoolToVisibility}}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </DockPanel>
+                <ViewsNucleo:DetallesPagoView DetallesPago="{Binding Detalles}" Margin="8" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                              Visibility="{Binding ElementName=Borde, Path=IsMouseOver, Converter={StaticResource BoolToVisibility}}"/>
+            </Grid>
+        </Border>
+    </DataTemplate>
+
+    <DataTemplate x:Key="PlantillaColumnaRangosPago" DataType="{x:Type Dtos:ColumnaRangosPago}">
+        <StackPanel>
+            <TextBlock Style="{StaticResource h4}">
+                <Run Text="{Binding ConteoInicio, Mode=OneWay}"/> - <Run Text="{Binding ConteoFin, Mode=OneWay}"/> meses
+            </TextBlock>
+
+            <TextBlock Opacity="0.9" Foreground="{StaticResource ModernVerde}" FontFamily="Segoe UI" Style="{StaticResource h4}">
+                <Run Text="{Binding Inicio.Monto, StringFormat=C}"/> - <Run Text="{Binding Fin.Monto, StringFormat=C}"/>
+            </TextBlock>
+
+            <TextBlock Opacity="0.9" Style="{StaticResource h5}">
+                <Run Text="{Binding Inicio.Hasta, StringFormat=MMMM yyyy, ConverterCulture=es-MX}"/> - <Run Text="{Binding Fin.Hasta, StringFormat=MMMM yyyy, ConverterCulture=es-MX}"/>
+            </TextBlock>
+
+            <Separator/>
+
+            <ListView Margin="0 4 0 0" ItemContainerStyle="{StaticResource PlainItem}" ItemTemplate="{StaticResource PlantillaRangoPago}" ItemsSource="{Binding RangosPago}"/>
+        </StackPanel>
     </DataTemplate>
 </ResourceDictionary>
