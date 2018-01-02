@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Pagos\DetallesPagoTests.cs" />
+    <Compile Include="Pagos\MesesPagoTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilerias\CantidadALetraTests.cs" />
   </ItemGroup>
