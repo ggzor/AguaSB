@@ -20,12 +20,14 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Plantillas/Agregar.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Estilos.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Green.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.LightGreen.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Green.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/AguaSB.Views;component/Utilerias/Conversores.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Calendar.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -275,7 +277,7 @@
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock Margin="0 0 8 0" Text="Pagado hasta:" Opacity="0.6" Style="{StaticResource h4}"/>
                                                 <TextBlock Text="{Binding OpcionesPago.PagoPorRangos.PagoContratoSeleccionado.Contrato.UltimoPago.Hasta, StringFormat=MMMM yyyy, ConverterCulture=es-MX}" 
-                                                           Style="{StaticResource h4}"/>
+                                                           FontFamily="Segoe UI" Style="{StaticResource h4}"/>
                                             </StackPanel>
 
                                             <DockPanel Margin="0 8 0 0">
@@ -314,6 +316,7 @@
                                                             <TextBlock Text="{Binding Contrato.Contrato.Domicilio.Calle.Seccion.Nombre, StringFormat={}Sección {0}}" Style="{StaticResource h2}"/>
                                                             <TextBlock Text="{Binding Contrato.Contrato.Domicilio.Calle.Nombre, StringFormat={}Calle {0}}" Style="{StaticResource h2}"/>
                                                             <TextBlock Text="{Binding Contrato.Contrato.Domicilio.Numero, StringFormat={}Número {0}}" Style="{StaticResource h2}"/>
+
                                                             <StackPanel Orientation="Horizontal">
                                                                 <TextBlock Margin="0 0 8 0" Text="Adeudo:" Opacity="0.6" Style="{StaticResource h4}"/>
                                                                 <TextBlock Text="{Binding Contrato.Adeudo, StringFormat={}{0:C}}" FontFamily="Segoe UI" Style="{StaticResource h4}" 
@@ -322,6 +325,12 @@
                                                                 <TextBlock Text="Al corriente" FontFamily="Segoe UI" Style="{StaticResource h4}" 
                                                                    Foreground="{StaticResource MaterialBlue}" FontWeight="DemiBold" Opacity="0.9"
                                                                    Visibility="{Binding Contrato.NoTieneAdeudo, Converter={StaticResource BoolToVisibility}}"/>
+                                                            </StackPanel>
+
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBlock Margin="0 0 8 0" Text="Pagado hasta:" Opacity="0.6" Style="{StaticResource h4}"/>
+                                                                <TextBlock Text="{Binding Contrato.UltimoPago.Hasta, StringFormat=MMMM yyyy, ConverterCulture=es-MX}" 
+                                                                           FontFamily="Segoe UI" Style="{StaticResource h4}"/>
                                                             </StackPanel>
 
                                                             <DockPanel Margin="0 8 0 0">
@@ -343,22 +352,50 @@
                                 <StackPanel Margin="0 16 0 0" Name="CantidadAPagar" Opacity="0.0" Tag="{Binding OpcionesPago.PagoPorRangos.PagoContratoSeleccionado, Converter={StaticResource IsNotNull}}" Style="{StaticResource FadeTag}">
                                     <StackPanel.Resources>
                                         <DataTemplate x:Key="PlantillaRangoPago" DataType="{x:Type Dtos:RangoPago}">
-                                            <Border Margin="0 5" BorderBrush="#33000000" BorderThickness="1" Util:ActivarBandera.ManejarEventos="True" Util:ActivarBandera.Bandera="{Binding Activo, Mode=OneWayToSource}">
-                                                <DockPanel>
-                                                    <RadioButton IsChecked="{Binding Activo, Mode=TwoWay}" Margin="16" GroupName="Pago" VerticalAlignment="Top"/>
-                                                    <StackPanel Margin="16 8 16 16">
-                                                        <TextBlock Text="{Binding Monto, StringFormat={}Pagar {0:C}}" Foreground="{StaticResource ModernVerde}" Style="{StaticResource h3}"/>
-                                                        <TextBlock Text="{Binding Hasta, StringFormat={}Cubre hasta: {0:MMMM yyyy}, ConverterCulture=es-MX}" Style="{StaticResource h4}"/>
-                                                        <StackPanel Orientation="Horizontal">
-                                                            <TextBlock Text="{Binding AdeudoRestante, StringFormat={}Restan: {0:C}}" Opacity="0.8" Style="{StaticResource h4}"
+                                            <Border Name="Borde" Margin="0 5" BorderBrush="#33000000" BorderThickness="1" Util:ActivarBandera.ManejarEventos="True" Util:ActivarBandera.Bandera="{Binding Activo, Mode=OneWayToSource}"
+                                                    Background="#01FFFFFF">
+                                                <Grid>
+                                                    <DockPanel>
+                                                        <RadioButton IsChecked="{Binding Activo, Mode=TwoWay}" Margin="16" GroupName="Pago" VerticalAlignment="Top"/>
+                                                        <StackPanel Margin="16 8 16 16">
+                                                            <TextBlock Text="{Binding Monto, StringFormat={}Pagar {0:C}}" Foreground="{StaticResource ModernVerde}" FontFamily="Segoe UI" Style="{StaticResource h3}"/>
+                                                            <TextBlock Text="{Binding Hasta, StringFormat={}Cubre hasta: {0:MMMM yyyy}, ConverterCulture=es-MX}" Style="{StaticResource h4}"/>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBlock Text="{Binding AdeudoRestante, StringFormat={}Restan: {0:C}}" Opacity="0.8" Style="{StaticResource h4}"
                                                                        Visibility="{Binding NoEsPrimeroConRestanteCero, Converter={StaticResource BoolToVisibility}}"/>
 
-                                                            <TextBlock Text="{Binding AdeudoRestante, StringFormat={}Restan: {0:C}}" Opacity="0.8" Style="{StaticResource h4}"
+                                                                <TextBlock Text="{Binding AdeudoRestante, StringFormat={}Restan: {0:C}}" Opacity="0.8" Style="{StaticResource h4}"
                                                                        FontFamily="Segoe UI" FontWeight="DemiBold"
                                                                        Visibility="{Binding EsPrimeroConRestanteCero, Converter={StaticResource BoolToVisibility}}"/>
+                                                            </StackPanel>
                                                         </StackPanel>
-                                                    </StackPanel>
-                                                </DockPanel>
+                                                    </DockPanel>
+                                                    <ToggleButton Name="Boton" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                                                  Width="Auto" Height="Auto" Margin="16" 
+                                                                  Style="{StaticResource MaterialDesignFlatToggleButton}"
+                                                                  Visibility="{Binding ElementName=Borde, Path=IsMouseOver, Converter={StaticResource BoolToVisibility}}">
+                                                        <icons:PackIconMaterial Opacity="0.8" Kind="HelpCircle"/>
+                                                    </ToggleButton>
+                                                    <Popup PlacementTarget="{Binding ElementName=Boton}" AllowsTransparency="True" PopupAnimation="Fade" StaysOpen="False"
+                                                           IsOpen="{Binding ElementName=Boton, Path=IsMouseOver, Mode=OneWay}">
+                                                        <Border Margin="0 5" Background="White" BorderBrush="#33000000" BorderThickness="1">
+                                                            <Grid Margin="8">
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="Auto"/>
+                                                                    <RowDefinition Height="*"/>
+                                                                </Grid.RowDefinitions>
+
+                                                                <TextBlock Text="Detalles:" Opacity="0.6" Style="{StaticResource h5}"/>
+                                                                <ListView Grid.Row="1" ItemsSource="{Binding Detalles}" Margin="0 8 0 0"
+                                                                          ItemContainerStyle="{StaticResource PlainItem}"
+                                                                          ItemTemplateSelector="{StaticResource TypedTS}"
+                                                                          HorizontalContentAlignment="Stretch">
+
+                                                                </ListView>
+                                                            </Grid>
+                                                        </Border>
+                                                    </Popup>
+                                                </Grid>
                                             </Border>
                                         </DataTemplate>
                                     </StackPanel.Resources>
@@ -384,12 +421,13 @@
                                                             meses
                                                     </TextBlock>
 
-                                                    <TextBlock Opacity="0.6" Style="{StaticResource h5}">
+                                                    <TextBlock Opacity="0.9" Foreground="{StaticResource ModernVerde}" FontFamily="Segoe UI" 
+                                                               Style="{StaticResource h4}">
                                                         <Run Text="{Binding Inicio.Monto, StringFormat=C}"/> - 
                                                         <Run Text="{Binding Fin.Monto, StringFormat=C}"/>
                                                     </TextBlock>
 
-                                                    <TextBlock Opacity="0.6" Style="{StaticResource h5}">
+                                                    <TextBlock Opacity="0.9" Style="{StaticResource h5}">
                                                         <Run Text="{Binding Inicio.Hasta, StringFormat=MMMM yyyy, ConverterCulture=es-MX}"/>
                                                             - 
                                                         <Run Text="{Binding Fin.Hasta, StringFormat=MMMM yyyy, ConverterCulture=es-MX}"/>
