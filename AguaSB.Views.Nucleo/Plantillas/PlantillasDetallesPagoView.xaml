@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Pagos="clr-namespace:AguaSB.Nucleo.Pagos;assembly=AguaSB.Nucleo">
+                    xmlns:Pagos="clr-namespace:AguaSB.Nucleo.Pagos;assembly=AguaSB.Nucleo"
+                    xmlns:Views="clr-namespace:AguaSB.Views.Nucleo">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Estilos.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/AguaSB.Views;component/Utilerias/Conversores.xaml"/>
@@ -24,7 +25,8 @@
                 <TextBlock Text=" = " Opacity="0.6" Style="{StaticResource h5}"/>
             </StackPanel>
 
-            <TextBlock Grid.Column="3" Text="{Binding Monto, StringFormat=C}" Foreground="{StaticResource MaterialGreen}" Style="{StaticResource wh5}"/>
+            <TextBlock Grid.Column="3" Text="{Binding Monto, StringFormat=C}" Foreground="{Binding RelativeSource={RelativeSource AncestorType=Views:DetallesPagoView}, Path=ColorMontos}" 
+                       Style="{StaticResource wh5}"/>
         </Grid>
     </DataTemplate>
 
