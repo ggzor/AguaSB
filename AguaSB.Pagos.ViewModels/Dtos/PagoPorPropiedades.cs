@@ -5,6 +5,7 @@ using System.Linq;
 
 using AguaSB.Nucleo;
 using static AguaSB.Utilerias.Fecha;
+using AguaSB.Nucleo.Pagos;
 
 namespace AguaSB.Pagos.ViewModels.Dtos
 {
@@ -34,8 +35,10 @@ namespace AguaSB.Pagos.ViewModels.Dtos
         public decimal Monto
         {
             get { return monto; }
-            set { N.Set(ref monto, value); N.Change(nameof(AdeudoRestante)); }
+            set { N.Set(ref monto, value); N.Change(nameof(AdeudoRestante), nameof(DetallesMonto)); }
         }
+
+        public IEnumerable<IDetallePago> DetallesMonto { get; set; }
 
         public decimal AdeudoRestante => Math.Max(0, (Contrato?.Adeudo ?? 0) - Monto);
 
@@ -76,9 +79,15 @@ namespace AguaSB.Pagos.ViewModels.Dtos
             var primerMes = MesDe(Contrato.UltimoPago.Hasta).AddMonths(1);
 
             if (primerMes <= PagarHasta)
+            {
+                DetallesMonto = DetallesPago.Obtener(primerMes, PagarHasta, Contrato.Contrato.TipoContrato, Tarifas);
                 Monto = Adeudos.CalcularMonto(primerMes, PagarHasta, Contrato.Contrato.TipoContrato, Tarifas);
+            }
             else
+            {
+                DetallesMonto = null;
                 Monto = 0;
+            }
 
             CantidadPagada = Monto;
         }

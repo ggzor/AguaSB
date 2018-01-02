@@ -44,7 +44,8 @@
         <material:DialogHost Name="Dialogo" Grid.Row="1" DialogContent="{Binding OpcionesPago.PagoPorPropiedades}">
             <material:DialogHost.DialogContentTemplate>
                 <DataTemplate DataType="{x:Type Dtos:PagoPorPropiedades}">
-                    <Grid Name="ContenidoDetalles" Margin="24 16 10 16" Width="500" Style="{StaticResource CorrectTextRendering}">
+                    <Grid Name="ContenidoDetalles" Margin="24 16 10 16" Width="500" Style="{StaticResource CorrectTextRendering}"
+                          Height="{Binding RelativeSource={RelativeSource AncestorType=material:DialogHost}, Path=ActualHeight}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
@@ -66,14 +67,34 @@
                                 </DockPanel>
 
                                 <DockPanel Margin="45 -30 0 0">
-                                    <StackPanel Margin="0 16 0 30" Orientation="Horizontal" VerticalAlignment="Center">
+                                    <StackPanel Margin="0 16 0 0" Orientation="Horizontal" VerticalAlignment="Center">
                                         <TextBlock Text="Último mes pagado:" Opacity="0.6" Style="{StaticResource h4}"/>
                                         <TextBlock Margin="8 0 0 0" FontFamily="Segoe UI" Style="{StaticResource h4}"
                                                    Text="{Binding Contrato.UltimoPago.Hasta, StringFormat=MMMM yyyy, ConverterCulture=es-MX}"/>
                                     </StackPanel>
                                 </DockPanel>
 
-                                <DockPanel>
+                                <DockPanel Margin="45 8 0 0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Adeudo:" Opacity="0.6" Style="{StaticResource h4}"
+                                                   VerticalAlignment="Center"/>
+
+                                        <TextBlock Text="{Binding Contrato.Adeudo, StringFormat={}{0:C}}" Style="{StaticResource wh4}" Margin="8 0 0 0"
+                                                   Foreground="{StaticResource MaterialRed}" FontWeight="DemiBold" Opacity="0.9"
+                                                   Visibility="{Binding Contrato.TieneAdeudo, Converter={StaticResource BoolToVisibility}}"
+                                                   VerticalAlignment="Center"/>
+
+                                        <TextBlock Text="Al corriente" Style="{StaticResource wh4}" 
+                                                   Foreground="{StaticResource MaterialBlue}" FontWeight="DemiBold" Opacity="0.9"
+                                                   Visibility="{Binding Contrato.NoTieneAdeudo, Converter={StaticResource BoolToVisibility}}"
+                                                   VerticalAlignment="Center"/>
+
+                                        <ViewsNucleo:DetallesPagoView Margin="8 0 0 0" DetallesPago="{Binding Contrato.DetallesAdeudo}" VerticalAlignment="Center"
+                                                                      Visibility="{Binding Contrato.TieneAdeudo, Converter={StaticResource BoolToVisibility}}"/>
+                                    </StackPanel>
+                                </DockPanel>
+
+                                <DockPanel Margin="0 20 0 0">
                                     <icons:PackIconModern Kind="CalendarDollar" Style="{StaticResource IconoLateral}"
                                                           Tag="{Binding ElementName=PagarHasta}"
                                                           Estilos:Icono.Enfocado="{Binding ElementName=PagarHasta, Path=IsKeyboardFocusWithin}"/>
@@ -83,14 +104,17 @@
                                 </DockPanel>
 
                                 <DockPanel Margin="45 -30 0 0">
-                                    <StackPanel Margin="0 16 0 30" Orientation="Horizontal" ToolTip="Determinado por el número de meses a pagar">
-                                        <TextBlock Margin="0 0 8 0" Text="Monto:" Opacity="0.6" Style="{StaticResource h4}"/>
-                                        <TextBlock Text="{Binding Monto, StringFormat=C}" Style="{StaticResource h4}"/>
+                                    <StackPanel Margin="0 16 0 0" Orientation="Horizontal">
+                                        <TextBlock Margin="0 0 8 0" Text="Monto:" Opacity="0.6" Style="{StaticResource h4}" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding Monto, StringFormat=C}" Style="{StaticResource wh4}" VerticalAlignment="Center"
+                                                   Foreground="{StaticResource MaterialGreen}"/>
+                                        <ViewsNucleo:DetallesPagoView Margin="8 0 0 0" DetallesPago="{Binding DetallesMonto}" VerticalAlignment="Center"
+                                                                      Visibility="{Binding DetallesMonto, Converter={StaticResource IsNotNullToVisibility}}"/>
                                     </StackPanel>
                                 </DockPanel>
 
-                                <DockPanel Margin="45 -30 0 0">
-                                    <StackPanel Margin="0 16 0 30" Orientation="Horizontal">
+                                <DockPanel Margin="45 0 0 0">
+                                    <StackPanel Margin="0 8 0 30" Orientation="Horizontal">
                                         <TextBlock Margin="0 0 8 0" Text="Restante:" Opacity="0.6" Style="{StaticResource h4}"/>
                                         <TextBlock Text="{Binding AdeudoRestante, StringFormat=C}" Style="{StaticResource h4}"/>
                                     </StackPanel>
