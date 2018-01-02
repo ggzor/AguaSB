@@ -62,14 +62,8 @@ namespace AguaSB.Pagos.ViewModels.Dtos
             var meses = Adeudos.CalcularMontosAcumuladosPorMes(primerMes, ultimoMes, Contrato.Contrato.TipoContrato, Tarifas);
 
             RangosPago = meses
-                .Select(m => new RangoPago
-                {
-                    Padre = this,
-                    Hasta = m.Mes,
-                    Monto = m.Monto,
-                    AdeudoRestante = Math.Max(0, Contrato.Adeudo - m.Monto),
-                    Detalles = DetallesPago.Obtener(primerMes, m.Mes, Contrato.Contrato.TipoContrato, Tarifas).ToArray()
-                }).ToArray();
+                .Select(m => new RangoPago(this, m.Mes, m.Monto, DetallesPago.Obtener(primerMes, m.Mes, Contrato.Contrato.TipoContrato, Tarifas).ToArray()))
+                .ToArray();
 
             DecorarPrimerRangoPagoConRestanteCero();
         }
