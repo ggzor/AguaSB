@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
-
-using MoreLinq;
 
 using AguaSB.Nucleo;
 using AguaSB.Utilerias;
@@ -19,34 +16,16 @@ namespace AguaSB.Pagos.ViewModels.Dtos
         public PagoPorRangos(Usuario usuario, IReadOnlyCollection<InformacionContrato> contratos, Tarifa[] tarifas)
             : base(usuario, contratos, tarifas)
         {
-            PagosContratos = contratos.Select(c => new PagoContrato(c, tarifas)).ToArray();
+            PagosContratos = contratos.Select(c => new PagoContrato(this, c, tarifas)).ToArray();
 
             if (contratos.Count == 1)
                 PagoContratoSeleccionado = PagosContratos.First();
-
-            var nuevosActivos = from evento in PagosContratos.Select(p => p.ToObservableProperties()).Merge()
-                                where evento.Args.PropertyName == nameof(PagoContrato.Activo)
-                                let pagoContrato = (PagoContrato)evento.Source
-                                where pagoContrato.Activo
-                                select pagoContrato;
-
-            nuevosActivos.Subscribe(n => PagoContratoSeleccionado = n);
         }
 
         public PagoContrato PagoContratoSeleccionado
         {
             get { return pagoContratoSeleccionado; }
-            set { N.Set(ref pagoContratoSeleccionado, value); SeleccionarContrato(value); }
-        }
-
-        private void SeleccionarContrato(PagoContrato nuevo)
-        {
-            if (nuevo != pagoContratoSeleccionado)
-            {
-                PagosContratos.ForEach(c => c.Activo = false);
-
-                nuevo.Activo = true;
-            }
+            set { N.Set(ref pagoContratoSeleccionado, value); }
         }
 
         public bool TieneContratoUnico => Contratos.Count == 1;

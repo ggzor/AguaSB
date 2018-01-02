@@ -1,49 +1,56 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Linq;
 
 using MoreLinq;
 
 using AguaSB.Nucleo;
 using AguaSB.Utilerias;
-using AguaSB.ViewModels;
 using AguaSB.Nucleo.Pagos;
 
 namespace AguaSB.Pagos.ViewModels.Dtos
 {
-    public class PagoContrato : Activable
+    public class PagoContrato : Notificante
     {
+        public PagoPorRangos Padre { get; }
         public InformacionContrato Contrato { get; }
         public Tarifa[] Tarifas { get; }
+
         public IReadOnlyCollection<ColumnaRangosPago> Columnas { get; private set; }
         public IReadOnlyCollection<RangoPago> RangosPago { get; private set; }
 
         private RangoPago rangoPagoSeleccionado;
 
         #region Propiedades
+        public bool Activo
+        {
+            get { return Padre.PagoContratoSeleccionado == this; }
+            set { if (value) Padre.PagoContratoSeleccionado = this; }
+        }
+
         public RangoPago RangoPagoSeleccionado
         {
             get { return rangoPagoSeleccionado; }
-            set { N.Set(ref rangoPagoSeleccionado, value); SeleccionarRangoPago(value); }
+            set { N.Set(ref rangoPagoSeleccionado, value); }
         }
         #endregion
 
-        public PagoContrato(InformacionContrato contrato, Tarifa[] tarifas)
+        public PagoContrato(PagoPorRangos padre, InformacionContrato contrato, Tarifa[] tarifas)
         {
+            Padre = padre ?? throw new ArgumentNullException(nameof(padre));
             Contrato = contrato ?? throw new ArgumentNullException(nameof(contrato));
             Tarifas = tarifas;
 
             GenerarRangosPago();
             GenerarColumnas();
 
-            var nuevosRangosPago = from evento in RangosPago.Select(r => r.ToObservableProperties()).Merge()
-                                   where evento.Args.PropertyName == nameof(RangoPago.Activo)
-                                   let rangoPago = (RangoPago)evento.Source
-                                   where rangoPago.Activo
-                                   select rangoPago;
+            var cambioSeleccionado = from e in padre.ToObservableProperties()
+                                     where e.Args.PropertyName == nameof(Padre.PagoContratoSeleccionado)
+                                     select Unit.Default;
 
-            nuevosRangosPago.Subscribe(r => RangoPagoSeleccionado = r);
+            cambioSeleccionado.Subscribe(u => N.Change(nameof(Activo)));
         }
 
         private const int cantidadMeses = 12;
@@ -57,6 +64,7 @@ namespace AguaSB.Pagos.ViewModels.Dtos
             RangosPago = meses
                 .Select(m => new RangoPago
                 {
+                    Padre = this,
                     Hasta = m.Mes,
                     Monto = m.Monto,
                     AdeudoRestante = Math.Max(0, Contrato.Adeudo - m.Monto),
@@ -85,16 +93,7 @@ namespace AguaSB.Pagos.ViewModels.Dtos
                        .ToArray();
         }
 
-        private void SeleccionarRangoPago(RangoPago nuevo)
-        {
-            if (nuevo != rangoPagoSeleccionado)
-            {
-                RangosPago.ForEach(r => r.Activo = false);
-
-                nuevo.Activo = true;
-            }
-        }
-
+        public bool EsUnico => Padre.Contratos.Count == 1;
         public bool TieneAdeudo => Contrato.Adeudo > 0;
         public bool NoTieneAdeudo => !TieneAdeudo;
 
