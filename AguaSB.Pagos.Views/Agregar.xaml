@@ -258,39 +258,9 @@
 
                                     <TextBlock Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding OpcionesPago.PagoPorRangos.Usuario.NombreCompleto}" Style="{StaticResource h1}"/>
 
-                                    <material:Card Name="ContratoUnico" Grid.Row="1" Grid.Column="1" Margin="24 8" HorizontalAlignment="Left" VerticalAlignment="Stretch"
-                                           Width="350" Visibility="{Binding OpcionesPago.PagoPorRangos.TieneContratoUnico, Converter={StaticResource BoolToVisibility}}">
-                                        <StackPanel Margin="32 16 16 16">
-                                            <TextBlock Text="{Binding OpcionesPago.PagoPorRangos.PagoContratoSeleccionado.Contrato.Contrato.Domicilio.Calle.Seccion.Nombre, StringFormat={}Sección {0}}" Style="{StaticResource h2}"/>
-                                            <TextBlock Text="{Binding OpcionesPago.PagoPorRangos.PagoContratoSeleccionado.Contrato.Contrato.Domicilio.Calle.Nombre, StringFormat={}Calle {0}}" Style="{StaticResource h2}"/>
-                                            <TextBlock Text="{Binding OpcionesPago.PagoPorRangos.PagoContratoSeleccionado.Contrato.Contrato.Domicilio.Numero, StringFormat={}Número {0}}" Style="{StaticResource h2}"/>
-
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Margin="0 0 8 0" Text="Adeudo:" Opacity="0.6" Style="{StaticResource h4}"/>
-                                                <TextBlock Text="{Binding OpcionesPago.PagoPorRangos.PagoContratoSeleccionado.Contrato.Adeudo, StringFormat={}{0:C}}" FontFamily="Segoe UI" Style="{StaticResource h4}" 
-                                                   Foreground="{StaticResource MaterialRed}" FontWeight="DemiBold" Opacity="0.9"
-                                                   Visibility="{Binding OpcionesPago.PagoPorRangos.PagoContratoSeleccionado.Contrato.TieneAdeudo, Converter={StaticResource BoolToVisibility}}"/>
-                                                <TextBlock Text="Al corriente" FontFamily="Segoe UI" Style="{StaticResource h4}" 
-                                                   Foreground="{StaticResource MaterialBlue}" FontWeight="DemiBold" Opacity="0.9"
-                                                   Visibility="{Binding OpcionesPago.PagoPorRangos.PagoContratoSeleccionado.Contrato.NoTieneAdeudo, Converter={StaticResource BoolToVisibility}}"/>
-                                            </StackPanel>
-
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Margin="0 0 8 0" Text="Pagado hasta:" Opacity="0.6" Style="{StaticResource h4}"/>
-                                                <TextBlock Text="{Binding OpcionesPago.PagoPorRangos.PagoContratoSeleccionado.Contrato.UltimoPago.Hasta, StringFormat=MMMM yyyy, ConverterCulture=es-MX}" 
-                                                           FontFamily="Segoe UI" Style="{StaticResource h4}"/>
-                                            </StackPanel>
-
-                                            <DockPanel Margin="0 8 0 0">
-                                                <TextBlock Text="{Binding OpcionesPago.PagoPorRangos.PagoContratoSeleccionado.Contrato.Contrato.TipoContrato.Nombre}" Style="{StaticResource h4}" VerticalAlignment="Center"/>
-                                                <Border Margin="10 0 0 0" Padding="5 2" Tag="{Binding OpcionesPago.PagoPorRangos.PagoContratoSeleccionado.Contrato.Contrato.TipoContrato.ClaseContrato}" Style="{StaticResource CambiarColor}" 
-                                                            HorizontalAlignment="Left" VerticalAlignment="Center">
-                                                    <TextBlock Text="{Binding OpcionesPago.PagoPorRangos.PagoContratoSeleccionado.Contrato.Contrato.TipoContrato.ClaseContrato}" Foreground="White" TextWrapping="Wrap" FontFamily="Segoe UI" 
-                                                                   FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource h6}"/>
-                                                </Border>
-                                            </DockPanel>
-                                        </StackPanel>
-                                    </material:Card>
+                                    <ContentControl Content="{Binding OpcionesPago.PagoPorRangos.PagoContratoSeleccionado}" ContentTemplate="{StaticResource PlantillaPagoContrato}"
+                                                    Grid.Row="1" Grid.Column="1" Margin="24 8" HorizontalAlignment="Left" VerticalAlignment="Stretch"
+                                                    Visibility="{Binding OpcionesPago.PagoPorRangos.TieneContratoUnico, Converter={StaticResource BoolToVisibility}}"/>
                                 </Grid>
 
                                 <StackPanel Name="MultiplesContratos" Visibility="{Binding OpcionesPago.PagoPorRangos.TieneMultiplesContratos, Converter={StaticResource BoolToVisibility}}">
@@ -300,53 +270,13 @@
                                     </DockPanel>
 
                                     <ListView Margin="0 16 0 16" ItemContainerStyle="{StaticResource PlainItem}" HorizontalAlignment="Center"
-                                              ItemsSource="{Binding OpcionesPago.PagoPorRangos.PagosContratos}">
+                                              ItemsSource="{Binding OpcionesPago.PagoPorRangos.PagosContratos}"
+                                              ItemTemplate="{StaticResource PlantillaPagoContrato}">
                                         <ListView.ItemsPanel>
                                             <ItemsPanelTemplate>
                                                 <WrapPanel/>
                                             </ItemsPanelTemplate>
                                         </ListView.ItemsPanel>
-
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate DataType="{x:Type Dtos:PagoContrato}">
-                                                <material:Card Margin="0 0 8 8" Width="{Binding RelativeSource={RelativeSource AncestorType=local:Agregar}, Path=Ajustador.AnchoObjeto}" VerticalAlignment="Stretch"
-                                                               Util:ActivarBandera.ManejarEventos="True" Util:ActivarBandera.Bandera="{Binding Activo, Mode=OneWayToSource}">
-                                                    <DockPanel>
-                                                        <RadioButton IsChecked="{Binding Activo, Mode=TwoWay}" Margin="16" GroupName="Contrato" VerticalAlignment="Top"/>
-                                                        <StackPanel Margin="16">
-                                                            <TextBlock Text="{Binding Contrato.Contrato.Domicilio.Calle.Seccion.Nombre, StringFormat={}Sección {0}}" Style="{StaticResource h2}"/>
-                                                            <TextBlock Text="{Binding Contrato.Contrato.Domicilio.Calle.Nombre, StringFormat={}Calle {0}}" Style="{StaticResource h2}"/>
-                                                            <TextBlock Text="{Binding Contrato.Contrato.Domicilio.Numero, StringFormat={}Número {0}}" Style="{StaticResource h2}"/>
-
-                                                            <StackPanel Orientation="Horizontal">
-                                                                <TextBlock Margin="0 0 8 0" Text="Adeudo:" Opacity="0.6" Style="{StaticResource h4}"/>
-                                                                <TextBlock Text="{Binding Contrato.Adeudo, StringFormat={}{0:C}}" FontFamily="Segoe UI" Style="{StaticResource h4}" 
-                                                                   Foreground="{StaticResource MaterialRed}" FontWeight="DemiBold" Opacity="0.9"
-                                                                   Visibility="{Binding Contrato.TieneAdeudo, Converter={StaticResource BoolToVisibility}}"/>
-                                                                <TextBlock Text="Al corriente" FontFamily="Segoe UI" Style="{StaticResource h4}" 
-                                                                   Foreground="{StaticResource MaterialBlue}" FontWeight="DemiBold" Opacity="0.9"
-                                                                   Visibility="{Binding Contrato.NoTieneAdeudo, Converter={StaticResource BoolToVisibility}}"/>
-                                                            </StackPanel>
-
-                                                            <StackPanel Orientation="Horizontal">
-                                                                <TextBlock Margin="0 0 8 0" Text="Pagado hasta:" Opacity="0.6" Style="{StaticResource h4}"/>
-                                                                <TextBlock Text="{Binding Contrato.UltimoPago.Hasta, StringFormat=MMMM yyyy, ConverterCulture=es-MX}" 
-                                                                           FontFamily="Segoe UI" Style="{StaticResource h4}"/>
-                                                            </StackPanel>
-
-                                                            <DockPanel Margin="0 8 0 0">
-                                                                <TextBlock Text="{Binding Contrato.Contrato.TipoContrato.Nombre}" Style="{StaticResource h4}" VerticalAlignment="Center"/>
-                                                                <Border Margin="10 0 0 0" Padding="5 2" Tag="{Binding Contrato.Contrato.TipoContrato.ClaseContrato}" Style="{StaticResource CambiarColor}" 
-                                                                HorizontalAlignment="Left" VerticalAlignment="Center">
-                                                                    <TextBlock Text="{Binding Contrato.Contrato.TipoContrato.ClaseContrato}" Foreground="White" TextWrapping="Wrap" FontFamily="Segoe UI" 
-                                                                       FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource h6}"/>
-                                                                </Border>
-                                                            </DockPanel>
-                                                        </StackPanel>
-                                                    </DockPanel>
-                                                </material:Card>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
                                     </ListView>
                                 </StackPanel>
 
@@ -359,10 +289,10 @@
                                                     <DockPanel>
                                                         <RadioButton IsChecked="{Binding Activo, Mode=TwoWay}" Margin="16" GroupName="Pago" VerticalAlignment="Top"/>
                                                         <StackPanel Margin="16 8 16 16">
-                                                            <TextBlock Text="{Binding Monto, StringFormat={}Pagar {0:C}}" Foreground="{StaticResource ModernVerde}" FontFamily="Segoe UI" Style="{StaticResource h3}"/>
-                                                            <TextBlock Text="{Binding Hasta, StringFormat={}Cubre hasta: {0:MMMM yyyy}, ConverterCulture=es-MX}" Style="{StaticResource h4}"/>
+                                                            <TextBlock Text="{Binding Monto, StringFormat={}Pagar {0:C}, Mode=OneTime}" Foreground="{StaticResource ModernVerde}" FontFamily="Segoe UI" Style="{StaticResource h3}"/>
+                                                            <TextBlock Text="{Binding Hasta, StringFormat={}Cubre hasta: {0:MMMM yyyy}, Mode=OneWay, ConverterCulture=es-MX}" Style="{StaticResource h4}"/>
                                                             <StackPanel Orientation="Horizontal">
-                                                                <TextBlock Text="{Binding AdeudoRestante, StringFormat={}Restan: {0:C}}" Opacity="0.8" Style="{StaticResource h4}"
+                                                                <TextBlock Text="{Binding AdeudoRestante, StringFormat={}Restan: {0:C}, Mode=OneWay}" Opacity="0.8" Style="{StaticResource h4}"
                                                                        Visibility="{Binding NoEsPrimeroConRestanteCero, Converter={StaticResource BoolToVisibility}}"/>
 
                                                                 <TextBlock Text="{Binding AdeudoRestante, StringFormat={}Restan: {0:C}}" Opacity="0.8" Style="{StaticResource h4}"
