@@ -13,7 +13,7 @@ namespace AguaSB.Nucleo
     {
         public int Id { get; set; }
 
-        public DateTime FechaRegistro { get; set; }
+        public DateTime FechaRegistro { get; set; } = Fecha.Ahora;
 
         private DateTime fechaPago;
         private DateTime desde;
