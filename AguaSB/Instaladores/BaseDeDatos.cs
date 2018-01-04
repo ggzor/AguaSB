@@ -1,4 +1,6 @@
-﻿using Castle.MicroKernel.Registration;
+﻿using AguaSB.Operaciones;
+using AguaSB.Operaciones.Entity.Ambitos;
+using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using Mehdime.Entity;
@@ -11,6 +13,7 @@ namespace AguaSB.Instaladores
         {
             container.Register(Component.For<IAmbientDbContextLocator>().ImplementedBy<AmbientDbContextLocator>());
             container.Register(Component.For<IDbContextScopeFactory>().ImplementedBy<DbContextScopeFactory>());
+            container.Register(Component.For<IProveedorAmbito>().ImplementedBy<ProveedorAmbito>());
         }
     }
 }
