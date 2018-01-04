@@ -99,6 +99,7 @@
     <Compile Include="Utilerias\DivideConverter.cs" />
     <Compile Include="Utilerias\EnumToIntConverter.cs" />
     <Compile Include="Utilerias\EqualsToConverter.cs" />
+    <Compile Include="Utilerias\Fade.cs" />
     <Compile Include="Utilerias\InvertBoolConverter.cs" />
     <Compile Include="Utilerias\ManejadorTeclas.cs" />
     <Compile Include="Utilerias\NullConverters.cs" />
