@@ -41,6 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Datos\IOperacionesPagos.cs" />
+    <Compile Include="IAmbito.cs" />
+    <Compile Include="IAmbitoDependiente.cs" />
+    <Compile Include="IAmbitoSoloLectura.cs" />
+    <Compile Include="IProveedorAmbito.cs" />
     <Compile Include="OperacionesUsuarios.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
