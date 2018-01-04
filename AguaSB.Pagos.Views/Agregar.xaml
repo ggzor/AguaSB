@@ -359,6 +359,40 @@
                         </Border>
                     </Grid>
                 </Grid>
+
+                <Button Name="PagoAnterior" Grid.Row="1" Grid.ColumnSpan="2" Margin="8 16 0 0" Padding="8" HorizontalAlignment="Left" VerticalAlignment="Top" Height="Auto" Width="420"
+                        Command="{Binding DeshacerPagoAnteriorComando}" Focusable="False" Visibility="Hidden" HorizontalContentAlignment="Stretch">
+                    <Util:Fade.HideAndShow>
+                        <MultiBinding Converter="{StaticResource BoolOp}" ConverterParameter="&amp;" Delay="5000">
+                            <Binding Path="PagoAnterior" Converter="{StaticResource IsNotNull}"/>
+                            <Binding Path="UsuarioSeleccionado" Converter="{StaticResource InvertBool}"/>
+                        </MultiBinding>
+                    </Util:Fade.HideAndShow>
+                    <DockPanel>
+                        <icons:PackIconMaterial Margin="8 8 16 0" Kind="Update" Width="40" Height="40" VerticalAlignment="Top" Style="{StaticResource IconoLateral}"
+                                                Estilos:Icono.Enfocado="{Binding ElementName=PagoAnterior, Path=IsMouseOver}"/>
+                        <TextBlock DockPanel.Dock="Bottom" Text="{Binding PagoAnterior.FechaRegistro, StringFormat={}Realizado a las {0:t} }" HorizontalAlignment="Right" Opacity="0.6" Style="{StaticResource h6}"/>
+                        <StackPanel>
+                            <TextBlock Text="Deshacer pago anterior" Opacity="0.8" Style="{StaticResource h3}"/>
+                            
+                            <DockPanel>
+                                <TextBlock Text="Domicilio:" Opacity="0.6" Style="{StaticResource h5}"/>
+                                <TextBlock Margin="8 0 0 0" Text="{Binding PagoAnterior.Contrato.Domicilio}" TextTrimming="CharacterEllipsis" Style="{StaticResource h5}"/>
+                            </DockPanel>
+
+                            <DockPanel>
+                                <TextBlock Text="Usuario:" Opacity="0.6" Style="{StaticResource h5}"/>
+                                <TextBlock Margin="8 0 0 0" Text="{Binding PagoAnterior.Contrato.Usuario}" TextTrimming="CharacterEllipsis" Style="{StaticResource h5}"/>
+                            </DockPanel>
+                            
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Monto:" Opacity="0.6" Style="{StaticResource h5}"/>
+                                <TextBlock Margin="8 0 0 0" Text="{Binding PagoAnterior.CantidadPagada, StringFormat=C}" Foreground="{StaticResource MaterialGreen}" 
+                                           FontWeight="DemiBold" Style="{StaticResource wh5}"/>
+                            </StackPanel>                            
+                        </StackPanel>
+                    </DockPanel>
+                </Button>
             </Grid>
         </material:DialogHost>
 

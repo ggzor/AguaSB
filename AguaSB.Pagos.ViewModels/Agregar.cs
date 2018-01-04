@@ -34,6 +34,7 @@ namespace AguaSB.Pagos.ViewModels
         private string textoBusqueda;
         private OpcionesPago opcionesPago;
         private bool usuarioSeleccionado;
+        private Pago pagoAnterior;
         #endregion
 
         #region Propiedades
@@ -74,12 +75,19 @@ namespace AguaSB.Pagos.ViewModels
         }
 
         public ControladorCubierta ControladorCubierta { get; } = new ControladorCubierta();
+
+        public Pago PagoAnterior
+        {
+            get { return pagoAnterior; }
+            set { SetProperty(ref pagoAnterior, value); DeshacerPagoAnteriorComando.RaiseCanExecuteChanged(); }
+        }
         #endregion
 
         #region Comandos
         public DelegateCommand BuscarEnListadoComando { get; set; }
         public DelegateCommand PagarSeleccionComando { get; }
         public DelegateCommand PagarOtraCantidadComando { get; }
+        public DelegateCommand DeshacerPagoAnteriorComando { get; }
         #endregion
 
         #region Servicios
@@ -127,6 +135,7 @@ namespace AguaSB.Pagos.ViewModels
             BuscarEnListadoComando = new DelegateCommand(() => Navegador.Navegar("Usuarios/Listado", TextoBusqueda));
             PagarSeleccionComando = new DelegateCommand(PagarSeleccion, PuedePagarSeleccion);
             PagarOtraCantidadComando = new DelegateCommand(PagarOtraCantidad, PuedePagarPorPropiedades);
+            DeshacerPagoAnteriorComando = new DelegateCommand(DeshacerPagoAnterior, () => PagoAnterior != null);
 
             ActivarEscuchaCambioTexto();
 
@@ -262,8 +271,10 @@ namespace AguaSB.Pagos.ViewModels
                     var (pago, domicilio) = await HacerPago(opcionPago);
 
                     Notificaciones.Lanzar(new PagoRealizado(pago, domicilio));
+                    PagoAnterior = pago;
                 }
 
+                OpcionesPago = null;
                 UsuarioSeleccionado = false;
                 InvocarEnfocar();
             }
@@ -290,13 +301,42 @@ namespace AguaSB.Pagos.ViewModels
                 var domicilioContrato = pago.Contrato.ToString();
 
                 PagosRepo.Agregar(pago);
+                Informador.Informar(pago);
 
                 baseDeDatos.SaveChanges();
-
-                Informador.Informar(pago);
 
                 return (pago, domicilioContrato);
             }
         });
+
+        private async void DeshacerPagoAnterior()
+        {
+            try
+            {
+                await Task.Run(() =>
+                {
+                    using (ControladorCubierta.Mostrar("Deshaciendo pago..."))
+                    using (var baseDeDatos = Ambito.Create())
+                    {
+                        var pago = PagosRepo.Datos.Where(p => p.Id == PagoAnterior.Id).Single();
+                        PagosRepo.Eliminar(pago);
+
+                        baseDeDatos.SaveChanges();
+                    }
+                }).ConfigureAwait(true);
+
+                await SeleccionarUsuario(PagoAnterior.Contrato.Usuario).ConfigureAwait(true);
+                PagoAnterior = null;
+            }
+            catch (Exception ex)
+            {
+                Notificaciones.Lanzar(new NotificacionError
+                {
+                    Clase = "Pagos",
+                    Descripcion = $"No se pudo deshacer el pago: {ex.Message}",
+                    Titulo = "Error"
+                });
+            }
+        }
     }
 }
