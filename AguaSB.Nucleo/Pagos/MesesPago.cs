@@ -27,6 +27,8 @@ namespace AguaSB.Nucleo.Pagos
             {
                 if (Inicio == Fin)
                     return $"{Inicio:MMMM yyyy}";
+                else if (Inicio.Year == Fin.Year && Inicio.Month == 1 && Fin.Month == 12)
+                    return $"Todo {Inicio:yyyy}";
                 else
                     return $"{Inicio:MMMM} - {Fin:MMMM yyyy}";
             }
