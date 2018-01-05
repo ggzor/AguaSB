@@ -2,7 +2,7 @@
 using AguaSB.Operaciones.Entity.Migrations;
 using System.Data.Entity;
 
-namespace AguaSB.Operaciones.Datos.Entity
+namespace AguaSB.Operaciones.Entity
 {
     public class EntidadesDbContext : DbContext
     {

@@ -1,7 +1,7 @@
 ﻿using AguaSB.Nucleo;
 using System.Linq;
 
-namespace AguaSB.Operaciones.Datos
+namespace AguaSB.Operaciones.Pagos
 {
     public interface IOperacionesPagos : IAmbitoDependiente
     {

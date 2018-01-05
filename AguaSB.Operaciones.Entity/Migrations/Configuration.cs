@@ -1,4 +1,3 @@
-using AguaSB.Operaciones.Datos.Entity;
 using System.Data.Entity.Migrations;
 
 namespace AguaSB.Operaciones.Entity.Migrations

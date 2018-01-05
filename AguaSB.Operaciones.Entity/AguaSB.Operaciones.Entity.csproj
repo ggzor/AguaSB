@@ -62,13 +62,25 @@
   <ItemGroup>
     <Compile Include="Ambitos\Ambito.cs" />
     <Compile Include="Ambitos\AmbitoSoloLectura.cs" />
-    <Compile Include="Datos\EntidadesDbContext.cs" />
-    <Compile Include="Datos\OperacionesPagos.cs" />
+    <Compile Include="EntidadesDbContext.cs" />
+    <Compile Include="Notas\LocalizadorNotas.cs" />
+    <Compile Include="OperacionesEntity.cs" />
+    <Compile Include="OperacionesUsuarios.cs" />
+    <Compile Include="Pagos\OperacionesPagos.cs" />
     <Compile Include="Ambitos\ProveedorAmbito.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Usuarios\LocalizadorUsuarios.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AguaSB.Datos.Entity\AguaSB.Datos.Entity.csproj">
+      <Project>{7ea7de19-8c59-489b-8105-ff74bd6a07cb}</Project>
+      <Name>AguaSB.Datos.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AguaSB.Datos\AguaSB.Datos.csproj">
+      <Project>{965235B6-229E-4AEE-A759-F16DD1EE58F1}</Project>
+      <Name>AguaSB.Datos</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AguaSB.Nucleo\AguaSB.Nucleo.csproj">
       <Project>{10E1E718-EA42-4519-BAA2-7CD3C21B442A}</Project>
       <Name>AguaSB.Nucleo</Name>
@@ -81,5 +93,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
