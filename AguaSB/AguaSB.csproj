@@ -153,6 +153,7 @@
     <Compile Include="Instaladores\Inicializadores.cs" />
     <Compile Include="Instaladores\Interfaz.cs" />
     <Compile Include="Instaladores\Operaciones.cs" />
+    <Compile Include="Instaladores\OperacionesUsuarios.cs" />
     <Compile Include="Instaladores\Repositorios.cs" />
     <Compile Include="Instaladores\ServiciosImpresionPagos.cs" />
     <Compile Include="Instaladores\ServiciosNoFuncionales.cs" />
@@ -260,6 +261,18 @@
     <ProjectReference Include="..\AguaSB.Operaciones.Entity\AguaSB.Operaciones.Entity.csproj">
       <Project>{044e53cb-f81c-4597-ab81-370e52e1620e}</Project>
       <Name>AguaSB.Operaciones.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AguaSB.Operaciones.Implementacion\AguaSB.Operaciones.Implementacion.csproj">
+      <Project>{31f81f12-1faa-4a82-8d36-5e1998c50421}</Project>
+      <Name>AguaSB.Operaciones.Implementacion</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AguaSB.Operaciones.Legado\AguaSB.Operaciones.Legado.csproj">
+      <Project>{6b1ce6af-c895-445d-8d3a-2afbf1a950ce}</Project>
+      <Name>AguaSB.Operaciones.Legado</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AguaSB.Operaciones.Utilerias\AguaSB.Operaciones.Utilerias.csproj">
+      <Project>{080db4c5-94a4-4e82-9120-aa3fa0c17fad}</Project>
+      <Name>AguaSB.Operaciones.Utilerias</Name>
     </ProjectReference>
     <ProjectReference Include="..\AguaSB.Operaciones\AguaSB.Operaciones.csproj">
       <Project>{ee89ae19-8f49-4f82-beab-6a8a75d1f907}</Project>

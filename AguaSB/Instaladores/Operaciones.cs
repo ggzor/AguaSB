@@ -1,8 +1,8 @@
 ﻿using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
-using AguaSB.Operaciones.Datos;
-using AguaSB.Operaciones.Datos.Entity;
+using AguaSB.Operaciones.Pagos;
+using AguaSB.Operaciones.Pagos.Entity;
 
 namespace AguaSB.Instaladores
 {
