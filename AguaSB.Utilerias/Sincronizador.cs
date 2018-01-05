@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace AguaSB.Utilerias
 {
@@ -20,8 +21,29 @@ namespace AguaSB.Utilerias
             if (idActual == id)
             {
                 lock (token)
-                    accion();
+                {
+                    if (idActual == id)
+                    {
+                        accion();
+                    }
+                }
             }
+        }
+
+        public Task IntentarAsync(int id, Func<Task> tarea)
+        {
+            if (idActual == id)
+            {
+                lock (token)
+                {
+                    if (idActual == id)
+                    {
+                        return tarea();
+                    }
+                }
+            }
+
+            return Task.CompletedTask;
         }
     }
 }
