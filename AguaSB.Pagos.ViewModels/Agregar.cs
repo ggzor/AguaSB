@@ -17,6 +17,10 @@ using AguaSB.Notificaciones;
 using AguaSB.Pagos.ViewModels.Notificaciones;
 using AguaSB.Servicios;
 using AguaSB.Nucleo.Datos;
+using AguaSB.Operaciones;
+using AguaSB.Operaciones.Pagos;
+using AguaSB.Operaciones.Usuarios;
+using System.Collections.Generic;
 
 namespace AguaSB.Pagos.ViewModels
 {
@@ -24,13 +28,12 @@ namespace AguaSB.Pagos.ViewModels
     {
         #region Configuración
         private static readonly TimeSpan TiempoEsperaBusqueda = TimeSpan.FromSeconds(1.5);
-        private const int CantidadOpciones = 12;
+        private const int CantidadOpciones = 15;
         #endregion
 
         #region Campos
-        private bool buscando;
-        private bool buscandoInformacionPago;
-        private ResultadosBusquedaUsuarios busqueda;
+        private Busqueda<ResultadoBusquedaUsuariosConContrato> busquedaOpcionesUsuarios;
+
         private string textoBusqueda;
         private OpcionesPago opcionesPago;
         private bool usuarioSeleccionado;
@@ -38,22 +41,10 @@ namespace AguaSB.Pagos.ViewModels
         #endregion
 
         #region Propiedades
-        public bool Buscando
+        public Busqueda<ResultadoBusquedaUsuariosConContrato> BusquedaOpcionesUsuarios
         {
-            get { return buscando; }
-            set { SetProperty(ref buscando, value); }
-        }
-
-        public bool BuscandoInformacionPago
-        {
-            get { return buscandoInformacionPago; }
-            set { SetProperty(ref buscandoInformacionPago, value); }
-        }
-
-        public ResultadosBusquedaUsuarios Busqueda
-        {
-            get { return busqueda; }
-            set { SetProperty(ref busqueda, value); }
+            get { return busquedaOpcionesUsuarios; }
+            set { SetProperty(ref busquedaOpcionesUsuarios, value); }
         }
 
         public string TextoBusqueda
@@ -91,6 +82,11 @@ namespace AguaSB.Pagos.ViewModels
         #endregion
 
         #region Servicios
+        private IProveedorAmbito Proveedor { get; }
+
+        private IProveedorSugerenciasUsuarios SugerenciasUsuarios { get; }
+        private IOperacionesPagos Pagos { get; }
+
         private IDbContextScopeFactory Ambito { get; }
 
         private IRepositorio<Usuario> UsuariosRepo { get; }
@@ -105,18 +101,20 @@ namespace AguaSB.Pagos.ViewModels
         #endregion
 
         #region Eventos
-        public event EventHandler IniciandoBusqueda;
         public event EventHandler Enfocar;
-        public event EventHandler EncontradoUsuarioUnico;
         public event EventHandler UsuarioCambiado;
         #endregion
 
         public INodo Nodo { get; }
 
-        public Agregar(IDbContextScopeFactory ambito, IRepositorio<Usuario> usuariosRepo, IRepositorio<Contrato> contratosRepo, IRepositorio<Pago> pagosRepo,
+        public Agregar(IProveedorAmbito proveedor, IProveedorSugerenciasUsuarios sugerenciasUsuarios, IOperacionesPagos pagos, IDbContextScopeFactory ambito, IRepositorio<Usuario> usuariosRepo, IRepositorio<Contrato> contratosRepo, IRepositorio<Pago> pagosRepo,
             IRepositorio<Tarifa> tarifasRepo, IRepositorio<TipoNota> tiposNotaRepo, INavegador navegador,
             IAdministradorNotificaciones notificaciones, IInformador<Pago> informador)
         {
+            Proveedor = proveedor ?? throw new ArgumentNullException(nameof(proveedor));
+            SugerenciasUsuarios = sugerenciasUsuarios ?? throw new ArgumentNullException(nameof(sugerenciasUsuarios));
+            Pagos = pagos ?? throw new ArgumentNullException(nameof(pagos));
+
             Ambito = ambito ?? throw new ArgumentNullException(nameof(ambito));
 
             UsuariosRepo = usuariosRepo ?? throw new ArgumentNullException(nameof(usuariosRepo));
@@ -159,12 +157,12 @@ namespace AguaSB.Pagos.ViewModels
                 .DistinctUntilChanged()
                 .Where(_ => !string.IsNullOrWhiteSpace(TextoBusqueda))
                 .ObserveOnDispatcher()
-                .Subscribe(async texto => await ObtenerOpciones(texto).ConfigureAwait(true));
+                .Subscribe(async texto => await ObtenerOpcionesUsuarios(texto).ConfigureAwait(true));
         }
 
         private Task Entrar(object arg)
         {
-            Busqueda = new ResultadosBusquedaUsuarios(CantidadOpciones);
+            BusquedaOpcionesUsuarios = Busquedas.Nueva(ResultadoBusquedaUsuariosConContrato.Vacio);
             TextoBusqueda = arg?.ToString() ?? string.Empty;
 
             UsuarioSeleccionado = false;
@@ -179,46 +177,31 @@ namespace AguaSB.Pagos.ViewModels
             Enfocar?.Invoke(this, EventArgs.Empty);
         }
 
-        private readonly Sincronizador ObtencionOpcionesUsuario = new Sincronizador();
+        private readonly Sincronizador ObtencionOpcionesUsuarios = new Sincronizador();
 
-        private async Task ObtenerOpciones(string nombreUsuario)
+        private async Task ObtenerOpcionesUsuarios(string nombreUsuario)
         {
-            Task<ResultadosBusquedaUsuarios> BuscarOpciones = Task.Run(() =>
+            var id = ObtencionOpcionesUsuarios.ObtenerId();
+
+            var busqueda = Busquedas.Nueva(ResultadoBusquedaUsuariosConContrato.Vacio);
+
+            ObtencionOpcionesUsuarios.Intentar(id,
+                () => BusquedaOpcionesUsuarios = busqueda);
+
+            await ObtencionOpcionesUsuarios.IntentarAsync(id, () => busqueda.BuscarAsync(() =>
             {
-                var busqueda = new ResultadosBusquedaUsuarios(CantidadOpciones);
+                using (Proveedor.CrearSoloLectura())
+                    return new ResultadoBusquedaUsuariosConContrato(SugerenciasUsuarios.Obtener(nombreUsuario), 15);
+            }));
 
-                using (var baseDatos = Ambito.CreateReadOnly())
-                    busqueda.Buscar(UsuariosRepo.Datos, nombreUsuario, TiposNotaRepo);
-
-                return busqueda;
+            await ObtencionOpcionesUsuarios.IntentarAsync(id, () =>
+            {
+                var resultados = busqueda.Resultado.Resultados;
+                if (resultados.Count == 1)
+                    return SeleccionarUsuario(resultados.Single());
+                else
+                    return Task.CompletedTask;
             });
-
-            var id = ObtencionOpcionesUsuario.ObtenerId();
-
-            Buscando = true;
-            IniciandoBusqueda?.Invoke(this, EventArgs.Empty);
-
-            try
-            {
-                var resultadoBusqueda = await BuscarOpciones.ConfigureAwait(true);
-
-                ObtencionOpcionesUsuario.Intentar(id,
-                    () => Busqueda = resultadoBusqueda);
-
-
-                if (Busqueda.TotalResultados == 1)
-                {
-                    EncontradoUsuarioUnico?.Invoke(this, EventArgs.Empty);
-                    await SeleccionarUsuario(Busqueda.Resultados.Single()).ConfigureAwait(false);
-                }
-            }
-            catch (Exception ex)
-            {
-                //TODO: Log
-                Console.WriteLine("Excepcion: " + ex.Message);
-            }
-
-            Buscando = false;
         }
 
         private readonly Sincronizador ObtencionInformacionPagos = new Sincronizador();
@@ -238,14 +221,16 @@ namespace AguaSB.Pagos.ViewModels
             var id = ObtencionInformacionPagos.ObtenerId();
 
             UsuarioSeleccionado = false;
-            BuscandoInformacionPago = true;
 
-            var informacion = await ObtenerInformacion().ConfigureAwait(true);
+            using (ControladorCubierta.Mostrar("Obteniendo información de usuario..."))
+            {
+                var informacion = await ObtenerInformacion().ConfigureAwait(true);
 
-            ObtencionInformacionPagos.Intentar(id,
-                () => OpcionesPago = informacion);
+                ObtencionInformacionPagos.Intentar(id,
+                    () => OpcionesPago = informacion);
 
-            BuscandoInformacionPago = false;
+            }
+
             UsuarioSeleccionado = true;
 
             // Invocar usuario cambiado
@@ -268,7 +253,15 @@ namespace AguaSB.Pagos.ViewModels
             {
                 using (var cubierta = ControladorCubierta.Mostrar("Realizando pago..."))
                 {
-                    var (pago, domicilio) = await HacerPago(opcionPago);
+                    var pagoARealizar = opcionPago.GenerarPago();
+
+                    using (var baseDeDatos = Proveedor.Crear())
+                    {
+                        Pagos.Hacer(pagoARealizar);
+                        baseDeDatos.GuardarCambios();
+                    }
+
+                    var (pago, domicilio) = await HacerPago(pagoARealizar);
 
                     Notificaciones.Lanzar(new PagoRealizado(pago, domicilio));
                     PagoAnterior = pago;
@@ -285,10 +278,8 @@ namespace AguaSB.Pagos.ViewModels
             }
         }
 
-        private Task<(Pago Pago, string Domicilio)> HacerPago(OpcionPago opcionPago) => Task.Run(() =>
+        private Task<(Pago Pago, string Domicilio)> HacerPago(Pago pago) => Task.Run(() =>
         {
-            var pago = opcionPago.GenerarPago();
-
             using (var baseDeDatos = Ambito.Create())
             {
                 var datos = (from Contrato in ContratosRepo.Datos

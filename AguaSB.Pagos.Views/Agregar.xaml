@@ -179,7 +179,7 @@
                     <StackPanel>
                         <DockPanel Name="Tarjeta" LastChildFill="True" Margin="0 8" Background="White">
                             <icons:PackIconMaterial Margin="20 8 20 0" Kind="Magnify" Estilos:Icono.Enfocado="{Binding ElementName=Busqueda, Path=IsKeyboardFocusWithin}" VerticalAlignment="Center" 
-                                                Style="{StaticResource IconoLateral}"/>
+                                                    Style="{StaticResource IconoLateral}"/>
                             <TextBox Name="Busqueda" Margin="0 0 20 0" Tag="Buscar usuario..." Background="White" material:HintAssist.IsFloating="False"
                                  Text="{Binding TextoBusqueda, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" GotKeyboardFocus="AbrirPanelResultados" PreviewMouseDown="AbrirPanelResultados"/>
                         </DockPanel>
@@ -192,20 +192,21 @@
                                             <TextBlock Text="Ingrese el usuario a buscar" Opacity="0.6" Style="{StaticResource h3}"/>
                                         </DockPanel>
 
-                                        <DockPanel Background="White" Visibility="{Binding Busqueda.NoHayResultados, Converter={StaticResource BoolToVisibility}}">
+                                        <DockPanel Background="White" Tag="{Binding BusquedaOpcionesUsuarios.Resultado.NoHayResultados}" 
+                                                   Opacity="0.0" Style="{StaticResource FadeTag}">
                                             <DockPanel Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center">
                                                 <icons:PackIconModern Margin="0 0 20 0" Kind="Close" Style="{StaticResource IconoLateral}"/>
                                                 <TextBlock Text="No hay resultados" Opacity="0.6" Style="{StaticResource h3}"/>
                                             </DockPanel>
                                         </DockPanel>
 
-                                        <DockPanel Background="White" Tag="{Binding Buscando}" Opacity="0" Style="{StaticResource FadeTag}">
+                                        <DockPanel Background="White" Tag="{Binding BusquedaOpcionesUsuarios.Buscando}" Opacity="0" Style="{StaticResource FadeTag}">
                                             <Views:AnilloProgreso EsVisible="True" Texto="Buscando" Foreground="{StaticResource ModernVerde}" 
                                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </DockPanel>
 
-                                        <DockPanel Background="White" Tag="{Binding Busqueda.HayResultados}" Opacity="0" Style="{StaticResource FadeTag}">
-                                            <ListView Name="ListaResultados" ItemsSource="{Binding Busqueda.Resultados}" SelectionChanged="ListView_SelectionChanged" ItemContainerStyle="{StaticResource UnselectableItem}">
+                                        <DockPanel Background="White" Tag="{Binding BusquedaOpcionesUsuarios.Resultado.HayResultados}" Opacity="0" Style="{StaticResource FadeTag}">
+                                            <ListView Name="ListaResultados" ItemsSource="{Binding BusquedaOpcionesUsuarios.Resultado.Resultados}" SelectionChanged="ListView_SelectionChanged" ItemContainerStyle="{StaticResource UnselectableItem}">
                                                 <ListView.ItemTemplate>
                                                     <DataTemplate>
                                                         <StackPanel Orientation="Horizontal">
@@ -219,16 +220,16 @@
                                     </Grid>
 
                                     <TextBlock Margin="10" HorizontalAlignment="Center" Style="{StaticResource h4}" 
-                                           Visibility="{Binding Busqueda.HayMasOpciones, Converter={StaticResource BoolToVisibility}}">
+                                           Visibility="{Binding BusquedaOpcionesUsuarios.Resultado.HayMasOpciones, Converter={StaticResource BoolToVisibility}}">
                                     <Hyperlink TextDecorations="" Command="{Binding BuscarEnListadoComando}">
-                                        <Run Text="{Binding Busqueda.CantidadOpcionesAdicionales, Mode=OneWay, StringFormat={}Ver {0} resultados adicionales, FallbackValue=No hay mas resultados}"/>
+                                        <Run Text="{Binding BusquedaOpcionesUsuarios.Resultado.CantidadOpcionesAdicionales, Mode=OneWay, StringFormat={}Ver {0} resultados adicionales, FallbackValue=No hay mas resultados}"/>
                                     </Hyperlink>
                                     </TextBlock>
 
                                     <TextBlock Margin="10" HorizontalAlignment="Center" Style="{StaticResource h4}"
-                                           Visibility="{Binding Busqueda.HayCoincidentesSinContrato, Converter={StaticResource BoolToVisibility}}">
+                                           Visibility="{Binding BusquedaOpcionesUsuarios.Resultado.HayCoincidentesSinContrato, Converter={StaticResource BoolToVisibility}}">
                                     <Hyperlink TextDecorations="" Command="{Binding BuscarEnListadoComando}">
-                                        <Run Text="{Binding Busqueda.CoincidentesSinContrato, Mode=OneWay, StringFormat={}Ver resultados adicionales (Sin contrato: {0}), FallbackValue=No hay mas resultados}"/>
+                                        <Run Text="{Binding BusquedaOpcionesUsuarios.Resultado.CoincidentesSinContrato, Mode=OneWay, StringFormat={}Ver resultados adicionales (Sin contrato: {0}), FallbackValue=No hay mas resultados}"/>
                                     </Hyperlink>
                                     </TextBlock>
                                 </StackPanel>
@@ -242,13 +243,6 @@
                         <StackPanel Opacity="0.6" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <icons:PackIconMaterial Kind="Magnify" Width="100" Height="100" HorizontalAlignment="Center"/>
                             <TextBlock Margin="0 8 0 0" Text="Comience buscando un usuario" HorizontalAlignment="Center" Style="{StaticResource h4}"/>
-                        </StackPanel>
-                    </Grid>
-
-                    <Grid Background="White" Opacity="0.0" Style="{StaticResource FadeTag}" Tag="{Binding BuscandoInformacionPago}">
-                        <StackPanel Opacity="0.6" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <metro:ProgressRing Width="100" Height="100" HorizontalAlignment="Center"/>
-                            <TextBlock Margin="0 8 0 0" Text="Recopilando información de usuario" HorizontalAlignment="Center" Style="{StaticResource h4}"/>
                         </StackPanel>
                     </Grid>
 
@@ -374,7 +368,7 @@
                         <TextBlock DockPanel.Dock="Bottom" Text="{Binding PagoAnterior.FechaRegistro, StringFormat={}Realizado a las {0:t} }" HorizontalAlignment="Right" Opacity="0.6" Style="{StaticResource h6}"/>
                         <StackPanel>
                             <TextBlock Text="Deshacer pago anterior" Opacity="0.8" Style="{StaticResource h3}"/>
-                            
+
                             <DockPanel>
                                 <TextBlock Text="Domicilio:" Opacity="0.6" Style="{StaticResource h5}"/>
                                 <TextBlock Margin="8 0 0 0" Text="{Binding PagoAnterior.Contrato.Domicilio}" TextTrimming="CharacterEllipsis" Style="{StaticResource h5}"/>
@@ -384,12 +378,12 @@
                                 <TextBlock Text="Usuario:" Opacity="0.6" Style="{StaticResource h5}"/>
                                 <TextBlock Margin="8 0 0 0" Text="{Binding PagoAnterior.Contrato.Usuario}" TextTrimming="CharacterEllipsis" Style="{StaticResource h5}"/>
                             </DockPanel>
-                            
+
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Monto:" Opacity="0.6" Style="{StaticResource h5}"/>
                                 <TextBlock Margin="8 0 0 0" Text="{Binding PagoAnterior.CantidadPagada, StringFormat=C}" Foreground="{StaticResource MaterialGreen}" 
                                            FontWeight="DemiBold" Style="{StaticResource wh5}"/>
-                            </StackPanel>                            
+                            </StackPanel>
                         </StackPanel>
                     </DockPanel>
                 </Button>
