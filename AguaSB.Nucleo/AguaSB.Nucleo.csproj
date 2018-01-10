@@ -56,15 +56,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Adeudos.cs" />
     <Compile Include="Calle.cs" />
     <Compile Include="DesactivacionNota.cs" />
     <Compile Include="ICoercible.cs" />
     <Compile Include="Nota.cs" />
-    <Compile Include="Pagos\CambioTarifa.cs" />
-    <Compile Include="Pagos\IDetallePago.cs" />
-    <Compile Include="Pagos\MesesPago.cs" />
-    <Compile Include="Pagos\DetallesPago.cs" />
     <Compile Include="Tarifa.cs" />
     <Compile Include="Contacto.cs" />
     <Compile Include="Contrato.cs" />
