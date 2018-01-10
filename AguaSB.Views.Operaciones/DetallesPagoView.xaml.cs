@@ -1,11 +1,12 @@
-﻿using AguaSB.Nucleo.Pagos;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace AguaSB.Views.Nucleo
+using AguaSB.Operaciones.Montos;
+
+namespace AguaSB.Views.Operaciones
 {
     public partial class DetallesPagoView : UserControl
     {
@@ -14,14 +15,14 @@ namespace AguaSB.Views.Nucleo
             InitializeComponent();
         }
 
-        public IEnumerable<IDetallePago> DetallesPago
+        public IEnumerable<IDetalleMonto> DetallesPago
         {
-            get { return (IEnumerable<IDetallePago>)GetValue(DetallesPagoProperty); }
+            get { return (IEnumerable<IDetalleMonto>)GetValue(DetallesPagoProperty); }
             set { SetValue(DetallesPagoProperty, value); }
         }
 
         public static readonly DependencyProperty DetallesPagoProperty =
-            DependencyProperty.Register(nameof(DetallesPago), typeof(IEnumerable<IDetallePago>), typeof(DetallesPagoView), new PropertyMetadata(Enumerable.Empty<IDetallePago>()));
+            DependencyProperty.Register(nameof(DetallesPago), typeof(IEnumerable<IDetalleMonto>), typeof(DetallesPagoView), new PropertyMetadata(Enumerable.Empty<IDetalleMonto>()));
 
         public Brush ColorMontos
         {
