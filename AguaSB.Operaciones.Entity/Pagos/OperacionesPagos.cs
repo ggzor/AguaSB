@@ -17,12 +17,12 @@ namespace AguaSB.Operaciones.Pagos.Entity
 
         public void Hacer(Pago pago)
         {
-
+            //TODO: Implementar
         }
 
         public void Deshacer(Pago pago)
         {
-
+            // TODO: Implementar
         }
     }
 }

@@ -62,14 +62,17 @@
   <ItemGroup>
     <Compile Include="Ambitos\Ambito.cs" />
     <Compile Include="Ambitos\AmbitoSoloLectura.cs" />
+    <Compile Include="Contratos\LocalizadorContratos.cs" />
     <Compile Include="EntidadesDbContext.cs" />
     <Compile Include="Notas\LocalizadorNotas.cs" />
     <Compile Include="OperacionesEntity.cs" />
     <Compile Include="OperacionesUsuarios.cs" />
+    <Compile Include="Pagos\LocalizadorPagos.cs" />
     <Compile Include="Pagos\OperacionesPagos.cs" />
     <Compile Include="Ambitos\ProveedorAmbito.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tarifas\LocalizadorTarifas.cs" />
     <Compile Include="Usuarios\LocalizadorUsuarios.cs" />
   </ItemGroup>
   <ItemGroup>
