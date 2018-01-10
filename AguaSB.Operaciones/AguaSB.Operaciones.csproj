@@ -41,7 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Montos\CambioTarifa.cs" />
+    <Compile Include="Adeudos\ICalculadorAdeudos.cs" />
+    <Compile Include="Adeudos\Adeudo.cs" />
+    <Compile Include="Montos\Monto.cs" />
+    <Compile Include="Montos\ICalculadorMontos.cs" />
+    <Compile Include="Montos\IDetalleMonto.cs" />
+    <Compile Include="Contratos\ILocalizadorContratos.cs" />
+    <Compile Include="Montos\MesesMonto.cs" />
     <Compile Include="Notas\ILocalizadorNotas.cs" />
+    <Compile Include="Pagos\ILocalizadorPagos.cs" />
     <Compile Include="Pagos\IOperacionesPagos.cs" />
     <Compile Include="IAmbito.cs" />
     <Compile Include="IAmbitoDependiente.cs" />
@@ -49,6 +58,7 @@
     <Compile Include="IProveedorAmbito.cs" />
     <Compile Include="OperacionesUsuarios.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tarifas\ILocalizadorTarifas.cs" />
     <Compile Include="Usuarios\ILocalizadorUsuarios.cs" />
     <Compile Include="Usuarios\IProveedorSugerenciasUsuarios.cs" />
   </ItemGroup>
@@ -60,6 +70,10 @@
     <ProjectReference Include="..\AguaSB.Nucleo\AguaSB.Nucleo.csproj">
       <Project>{10E1E718-EA42-4519-BAA2-7CD3C21B442A}</Project>
       <Name>AguaSB.Nucleo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AguaSB.Utilerias\AguaSB.Utilerias.csproj">
+      <Project>{61188B63-728A-4C7B-B19D-11ABD1F64F4F}</Project>
+      <Name>AguaSB.Utilerias</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
