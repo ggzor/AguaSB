@@ -20,7 +20,7 @@ namespace AguaSB
             // Instalar notificaciones con la startable facility
 
             // TODO: Remover en release
-            contenedor.Resolve<IInicializador>();
+            //contenedor.Resolve<IInicializador>();
 
             var ventanaPrincipal = contenedor.Resolve<IVentanaPrincipal>();
             ventanaPrincipal.Mostrar();

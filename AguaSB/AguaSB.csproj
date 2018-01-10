@@ -148,12 +148,13 @@
     <Compile Include="Inicializadores\Inicializador.cs" />
     <Compile Include="Inicializadores\AgregarTarifas.cs" />
     <Compile Include="Instaladores\BaseDeDatos.cs" />
+    <Compile Include="Instaladores\Calculadores.cs" />
     <Compile Include="Instaladores\ConfiguracionLegado.cs" />
     <Compile Include="Instaladores\Extensiones.cs" />
     <Compile Include="Instaladores\Inicializadores.cs" />
     <Compile Include="Instaladores\Interfaz.cs" />
-    <Compile Include="Instaladores\Operaciones.cs" />
-    <Compile Include="Instaladores\OperacionesUsuarios.cs" />
+    <Compile Include="Instaladores\OperacionesEntity.cs" />
+    <Compile Include="Instaladores\Operaciones\OperacionesUsuarios.cs" />
     <Compile Include="Instaladores\Repositorios.cs" />
     <Compile Include="Instaladores\ServiciosImpresionPagos.cs" />
     <Compile Include="Instaladores\ServiciosNoFuncionales.cs" />
