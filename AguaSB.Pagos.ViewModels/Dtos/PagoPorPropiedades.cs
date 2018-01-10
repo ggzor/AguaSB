@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-using AguaSB.Nucleo;
 using static AguaSB.Utilerias.Fecha;
-using AguaSB.Nucleo.Pagos;
+using AguaSB.Nucleo;
+using AguaSB.Operaciones.Adeudos;
+using AguaSB.Operaciones.Montos;
 
 namespace AguaSB.Pagos.ViewModels.Dtos
 {
     public class PagoPorPropiedades : OpcionPago
     {
-        private InformacionContrato contrato;
+        private Adeudo? contrato;
         private DateTime pagarHasta;
         private decimal monto;
         private decimal cantidadPagada;
@@ -19,7 +20,7 @@ namespace AguaSB.Pagos.ViewModels.Dtos
 
         #region Propiedades
         [Required(ErrorMessage = "Debe especificar un contrato")]
-        public InformacionContrato Contrato
+        public Adeudo? Contrato
         {
             get { return contrato; }
             set { N.Validate(ref contrato, value); ActualizarInformacionContrato(); }
@@ -38,9 +39,9 @@ namespace AguaSB.Pagos.ViewModels.Dtos
             set { N.Set(ref monto, value); N.Change(nameof(AdeudoRestante), nameof(DetallesMonto)); }
         }
 
-        public IEnumerable<IDetallePago> DetallesMonto { get; set; }
+        public IEnumerable<IDetalleMonto> DetallesMonto { get; private set; }
 
-        public decimal AdeudoRestante => Math.Max(0, (Contrato?.Adeudo ?? 0) - Monto);
+        public decimal AdeudoRestante => Math.Max(0, (Contrato?.Cantidad ?? 0) - Monto);
 
         [Range(typeof(decimal), "0", "1000000", ErrorMessage = "La cantidad pagada debe ser mayor o igual a $0.00")]
         public decimal CantidadPagada
@@ -57,8 +58,8 @@ namespace AguaSB.Pagos.ViewModels.Dtos
         }
         #endregion
 
-        public PagoPorPropiedades(Usuario usuario, IReadOnlyCollection<InformacionContrato> contratos, Tarifa[] tarifas)
-            : base(usuario, contratos, tarifas)
+        public PagoPorPropiedades(Usuario usuario, IReadOnlyCollection<Adeudo> contratos, ICalculadorMontos montos)
+            : base(usuario, contratos, montos)
         {
             Contrato = contratos.First();
         }
@@ -67,7 +68,7 @@ namespace AguaSB.Pagos.ViewModels.Dtos
         {
             if (Contrato != null)
             {
-                PagarHasta = MesDe(Contrato.UltimoPago.Hasta).AddMonths(1);
+                PagarHasta = MesDe((DateTime)Contrato?.UltimoPago.Hasta).AddMonths(1);
                 FechaPago = Ahora;
 
                 ActualizarInformacionPago();
@@ -76,12 +77,13 @@ namespace AguaSB.Pagos.ViewModels.Dtos
 
         private void ActualizarInformacionPago()
         {
-            var primerMes = MesDe(Contrato.UltimoPago.Hasta).AddMonths(1);
+            var primerMes = MesDe((DateTime)Contrato?.UltimoPago.Hasta).AddMonths(1);
 
             if (primerMes <= PagarHasta)
             {
-                DetallesMonto = DetallesPago.Obtener(primerMes, PagarHasta, Contrato.Contrato.TipoContrato, Tarifas);
-                Monto = Adeudos.CalcularMonto(primerMes, PagarHasta, Contrato.Contrato.TipoContrato, Tarifas);
+                var monto = Montos.CalcularPara(Contrato?.Contrato, primerMes, PagarHasta);
+                DetallesMonto = monto.Detalles;
+                Monto = monto.Cantidad;
             }
             else
             {
@@ -94,8 +96,8 @@ namespace AguaSB.Pagos.ViewModels.Dtos
 
         public override Pago GenerarPago() => new Pago
         {
-            Contrato = Contrato.Contrato,
-            Desde = MesDe(Contrato.UltimoPago.Hasta.AddMonths(1)),
+            Contrato = Contrato?.Contrato,
+            Desde = MesDe((DateTime)Contrato?.UltimoPago.Hasta.AddMonths(1)),
             Hasta = MesDe(PagarHasta),
             FechaPago = FechaPago,
             Monto = Monto,

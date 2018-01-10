@@ -3,7 +3,9 @@ using System.Linq;
 using System.Reactive.Linq;
 
 using AguaSB.Nucleo;
+using AguaSB.Operaciones.Adeudos;
 using AguaSB.Utilerias;
+using AguaSB.Operaciones.Montos;
 
 namespace AguaSB.Pagos.ViewModels.Dtos
 {
@@ -13,12 +15,12 @@ namespace AguaSB.Pagos.ViewModels.Dtos
 
         private PagoContrato pagoContratoSeleccionado;
 
-        public PagoPorRangos(Usuario usuario, IReadOnlyCollection<InformacionContrato> contratos, Tarifa[] tarifas)
-            : base(usuario, contratos, tarifas)
+        public PagoPorRangos(Usuario usuario, IReadOnlyCollection<Adeudo> adeudosContratos, ICalculadorMontos montos)
+            : base(usuario, adeudosContratos, montos)
         {
-            PagosContratos = contratos.Select(c => new PagoContrato(this, c, tarifas)).ToArray();
+            PagosContratos = adeudosContratos.Select(a => new PagoContrato(this, a, montos)).ToArray();
 
-            if (contratos.Count == 1)
+            if (adeudosContratos.Count == 1)
                 PagoContratoSeleccionado = PagosContratos.First();
         }
 
@@ -28,9 +30,8 @@ namespace AguaSB.Pagos.ViewModels.Dtos
             set { N.Set(ref pagoContratoSeleccionado, value); }
         }
 
-        public bool TieneContratoUnico => Contratos.Count == 1;
-
-        public bool TieneMultiplesContratos => Contratos.Count > 1;
+        public bool TieneContratoUnico => AdeudosContratos.Count == 1;
+        public bool TieneMultiplesContratos => AdeudosContratos.Count > 1;
 
         public override Pago GenerarPago() => new Pago
         {

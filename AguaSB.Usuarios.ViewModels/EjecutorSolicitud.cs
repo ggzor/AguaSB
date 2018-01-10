@@ -7,6 +7,8 @@ using AguaSB.Usuarios.ViewModels.Dtos;
 using AguaSB.Utilerias.Solicitudes;
 using AguaSB.Utilerias;
 
+using AguaSB.Operaciones.Adeudos;
+
 namespace AguaSB.Usuarios.ViewModels
 {
     public delegate decimal CalculadorAdeudos(DateTime ultimoMesPagado, TipoContrato tipoContrato);
@@ -14,9 +16,9 @@ namespace AguaSB.Usuarios.ViewModels
     public class EjecutorSolicitud
     {
         public Solicitud Solicitud { get; }
-        public CalculadorAdeudos CalculadorAdeudos { get; set; }
+        public ICalculadorAdeudos CalculadorAdeudos { get; set; }
 
-        public EjecutorSolicitud(Solicitud solicitud, CalculadorAdeudos calculadorAdeudos)
+        public EjecutorSolicitud(Solicitud solicitud, ICalculadorAdeudos calculadorAdeudos)
         {
             Solicitud = solicitud ?? throw new ArgumentNullException(nameof(solicitud));
             CalculadorAdeudos = calculadorAdeudos ?? throw new ArgumentNullException(nameof(calculadorAdeudos));
@@ -75,7 +77,7 @@ namespace AguaSB.Usuarios.ViewModels
                         Domicilio = new Domicilio { Numero = datosContrato.Numero, Calle = new Calle { Nombre = datosContrato.Calle.Nombre, Seccion = datosContrato.Seccion } },
                         UltimoMesPagado = datosContrato.UltimoMesPagado,
                         UltimoPago = datosContrato.UltimoPago,
-                        Adeudo = CalculadorAdeudos(datosContrato.UltimoMesPagado, datosContrato.TipoContrato)
+                        Adeudo = CalculadorAdeudos.ObtenerAdeudo(datosContrato.Contrato).Cantidad
                     })
                     .ToList();
 

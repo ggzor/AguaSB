@@ -68,7 +68,6 @@
     <Compile Include="Dtos\BusquedaPagos.cs" />
     <Compile Include="Dtos\Busqueda.cs" />
     <Compile Include="Dtos\ColumnaRangosPago.cs" />
-    <Compile Include="Dtos\InformacionContrato.cs" />
     <Compile Include="Dtos\OpcionPago.cs" />
     <Compile Include="Dtos\OpcionesPago.cs" />
     <Compile Include="Dtos\PagoContrato.cs" />
@@ -77,7 +76,6 @@
     <Compile Include="Dtos\RangoPago.cs" />
     <Compile Include="Dtos\ResultadoBusquedaPagos.cs" />
     <Compile Include="Dtos\ResultadoBusquedaUsuariosConContrato.cs" />
-    <Compile Include="Dtos\ResultadosBusquedaUsuarios.cs" />
     <Compile Include="Listado.cs" />
     <Compile Include="Notificaciones\PagoRealizado.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

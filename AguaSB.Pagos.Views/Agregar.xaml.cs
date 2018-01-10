@@ -32,10 +32,8 @@ namespace AguaSB.Pagos.Views
                 Deslizar.HastaArriba(Deslizador);
             };
 
-            viewModel.UsuarioCambiado += (_, __) => Deslizar.HastaArriba(Deslizador);
-
+            viewModel.ObservableProperty(vm => vm.OpcionesPago).Where(o => o != null).Subscribe(o => Deslizar.HastaArriba(Deslizador));
             viewModel.ObservableProperty(vm => vm.BusquedaOpcionesUsuarios).Subscribe(ObservarBuscador);
-
             viewModel.ObservableProperty(vm => vm.UsuarioSeleccionado).Subscribe(seleccionado =>
             {
                 if (seleccionado)

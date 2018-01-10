@@ -1,56 +1,58 @@
-﻿using AguaSB.ViewModels;
-using System;
+﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
-using AguaSB.Navegacion;
-using System.Waf.Foundation;
-using AguaSB.Nucleo;
-using AguaSB.Pagos.ViewModels.Dtos;
-using AguaSB.Utilerias;
 using System.Reactive.Linq;
-using Mehdime.Entity;
-using AguaSB.Datos;
+
 using System.Waf.Applications;
+using System.Waf.Foundation;
 using MoreLinq;
-using System.ComponentModel;
+
+using AguaSB.Navegacion;
 using AguaSB.Notificaciones;
-using AguaSB.Pagos.ViewModels.Notificaciones;
-using AguaSB.Servicios;
-using AguaSB.Nucleo.Datos;
+using AguaSB.Nucleo;
+using AguaSB.Utilerias;
+using AguaSB.ViewModels;
+
 using AguaSB.Operaciones;
+using AguaSB.Operaciones.Adeudos;
+using AguaSB.Operaciones.Contratos;
+using AguaSB.Operaciones.Montos;
 using AguaSB.Operaciones.Pagos;
 using AguaSB.Operaciones.Usuarios;
-using System.Collections.Generic;
+
+using AguaSB.Pagos.ViewModels.Dtos;
+using AguaSB.Pagos.ViewModels.Notificaciones;
 
 namespace AguaSB.Pagos.ViewModels
 {
     public class Agregar : ValidatableModel, IViewModel
     {
         #region Configuración
-        private static readonly TimeSpan TiempoEsperaBusqueda = TimeSpan.FromSeconds(1.5);
-        private const int CantidadOpciones = 15;
+        private static readonly TimeSpan TiempoEsperaBusqueda = TimeSpan.FromMilliseconds(300);
+        private const int CantidadOpciones = 10;
         #endregion
 
         #region Campos
+        private string textoBusqueda;
         private Busqueda<ResultadoBusquedaUsuariosConContrato> busquedaOpcionesUsuarios;
 
-        private string textoBusqueda;
         private OpcionesPago opcionesPago;
         private bool usuarioSeleccionado;
         private Pago pagoAnterior;
         #endregion
 
         #region Propiedades
-        public Busqueda<ResultadoBusquedaUsuariosConContrato> BusquedaOpcionesUsuarios
-        {
-            get { return busquedaOpcionesUsuarios; }
-            set { SetProperty(ref busquedaOpcionesUsuarios, value); }
-        }
-
         public string TextoBusqueda
         {
             get { return textoBusqueda; }
             set { SetProperty(ref textoBusqueda, value); }
+        }
+
+        public Busqueda<ResultadoBusquedaUsuariosConContrato> BusquedaOpcionesUsuarios
+        {
+            get { return busquedaOpcionesUsuarios; }
+            set { SetProperty(ref busquedaOpcionesUsuarios, value); }
         }
 
         public OpcionesPago OpcionesPago
@@ -86,53 +88,39 @@ namespace AguaSB.Pagos.ViewModels
 
         private IProveedorSugerenciasUsuarios SugerenciasUsuarios { get; }
         private IOperacionesPagos Pagos { get; }
-
-        private IDbContextScopeFactory Ambito { get; }
-
-        private IRepositorio<Usuario> UsuariosRepo { get; }
-        private IRepositorio<Contrato> ContratosRepo { get; }
-        private IRepositorio<Tarifa> TarifasRepo { get; }
-        private IRepositorio<Pago> PagosRepo { get; }
-        private IRepositorio<TipoNota> TiposNotaRepo { get; }
+        private ILocalizadorContratos Contratos { get; }
+        private ICalculadorAdeudos Adeudos { get; }
+        private ICalculadorMontos Montos { get; }
 
         private INavegador Navegador { get; }
         private IAdministradorNotificaciones Notificaciones { get; }
-        private IInformador<Pago> Informador { get; }
         #endregion
 
         #region Eventos
         public event EventHandler Enfocar;
-        public event EventHandler UsuarioCambiado;
         #endregion
 
         public INodo Nodo { get; }
 
-        public Agregar(IProveedorAmbito proveedor, IProveedorSugerenciasUsuarios sugerenciasUsuarios, IOperacionesPagos pagos, IDbContextScopeFactory ambito, IRepositorio<Usuario> usuariosRepo, IRepositorio<Contrato> contratosRepo, IRepositorio<Pago> pagosRepo,
-            IRepositorio<Tarifa> tarifasRepo, IRepositorio<TipoNota> tiposNotaRepo, INavegador navegador,
-            IAdministradorNotificaciones notificaciones, IInformador<Pago> informador)
+        public Agregar(IProveedorAmbito proveedor, IProveedorSugerenciasUsuarios sugerenciasUsuarios, IOperacionesPagos pagos,
+            ILocalizadorContratos contratos, ICalculadorAdeudos adeudos, ICalculadorMontos montos, INavegador navegador,
+            IAdministradorNotificaciones notificaciones)
         {
             Proveedor = proveedor ?? throw new ArgumentNullException(nameof(proveedor));
             SugerenciasUsuarios = sugerenciasUsuarios ?? throw new ArgumentNullException(nameof(sugerenciasUsuarios));
             Pagos = pagos ?? throw new ArgumentNullException(nameof(pagos));
-
-            Ambito = ambito ?? throw new ArgumentNullException(nameof(ambito));
-
-            UsuariosRepo = usuariosRepo ?? throw new ArgumentNullException(nameof(usuariosRepo));
-            ContratosRepo = contratosRepo ?? throw new ArgumentNullException(nameof(contratosRepo));
-            PagosRepo = pagosRepo ?? throw new ArgumentNullException(nameof(pagosRepo));
-            TarifasRepo = tarifasRepo ?? throw new ArgumentNullException(nameof(tarifasRepo));
-            TiposNotaRepo = tiposNotaRepo ?? throw new ArgumentNullException(nameof(tiposNotaRepo));
+            Contratos = contratos ?? throw new ArgumentNullException(nameof(contratos));
+            Adeudos = adeudos ?? throw new ArgumentNullException(nameof(adeudos));
+            Montos = montos ?? throw new ArgumentNullException(nameof(montos));
 
             Navegador = navegador ?? throw new ArgumentNullException(nameof(navegador));
             Notificaciones = notificaciones ?? throw new ArgumentNullException(nameof(notificaciones));
-
-            Informador = informador ?? throw new ArgumentNullException(nameof(informador));
 
             Nodo = new Nodo { Entrada = Entrar };
 
             BuscarEnListadoComando = new DelegateCommand(() => Navegador.Navegar("Usuarios/Listado", TextoBusqueda));
             PagarSeleccionComando = new DelegateCommand(PagarSeleccion, PuedePagarSeleccion);
-            PagarOtraCantidadComando = new DelegateCommand(PagarOtraCantidad, PuedePagarPorPropiedades);
+            PagarOtraCantidadComando = new DelegateCommand(PagarPorPropiedades, PuedePagarPorPropiedades);
             DeshacerPagoAnteriorComando = new DelegateCommand(DeshacerPagoAnterior, () => PagoAnterior != null);
 
             ActivarEscuchaCambioTexto();
@@ -144,18 +132,15 @@ namespace AguaSB.Pagos.ViewModels
                       .Concat(OpcionesPago?.PagoPorRangos?.PagosContratos ?? Enumerable.Empty<INotifyPropertyChanged>())
                       .Where(obs => obs != null),
                 () => new[] { PagarSeleccionComando, PagarOtraCantidadComando });
-
-            UsuarioSeleccionado = false;
         }
 
         private void ActivarEscuchaCambioTexto()
         {
-            this.ToObservableProperties()
-                .Where(p => p.Args.PropertyName == nameof(TextoBusqueda))
-                .Throttle(TiempoEsperaBusqueda)
-                .Select(_ => TextoBusqueda.Trim())
-                .DistinctUntilChanged()
-                .Where(_ => !string.IsNullOrWhiteSpace(TextoBusqueda))
+            var valoresBusqueda = from valor in this.ObservableProperty(vm => vm.TextoBusqueda).Throttle(TiempoEsperaBusqueda)
+                                  where !string.IsNullOrWhiteSpace(valor)
+                                  select valor.Trim();
+
+            valoresBusqueda.DistinctUntilChanged()
                 .ObserveOnDispatcher()
                 .Subscribe(async texto => await ObtenerOpcionesUsuarios(texto).ConfigureAwait(true));
         }
@@ -191,17 +176,8 @@ namespace AguaSB.Pagos.ViewModels
             await ObtencionOpcionesUsuarios.IntentarAsync(id, () => busqueda.BuscarAsync(() =>
             {
                 using (Proveedor.CrearSoloLectura())
-                    return new ResultadoBusquedaUsuariosConContrato(SugerenciasUsuarios.Obtener(nombreUsuario), 15);
-            }));
-
-            await ObtencionOpcionesUsuarios.IntentarAsync(id, () =>
-            {
-                var resultados = busqueda.Resultado.Resultados;
-                if (resultados.Count == 1)
-                    return SeleccionarUsuario(resultados.Single());
-                else
-                    return Task.CompletedTask;
-            });
+                    return new ResultadoBusquedaUsuariosConContrato(SugerenciasUsuarios.Obtener(nombreUsuario), CantidadOpciones);
+            })).ConfigureAwait(true);
         }
 
         private readonly Sincronizador ObtencionInformacionPagos = new Sincronizador();
@@ -210,11 +186,11 @@ namespace AguaSB.Pagos.ViewModels
         {
             Task<OpcionesPago> ObtenerInformacion() => Task.Run(() =>
             {
-                using (var baseDeDatos = Ambito.CreateReadOnly())
+                using (Proveedor.CrearSoloLectura())
                 {
-                    var tarifas = Tarifas.Obtener(TarifasRepo);
+                    var adeudosContratos = Contratos.ObtenerContratos(usuario).Select(Adeudos.ObtenerAdeudo).ToArray();
 
-                    return OpcionesPago.Para(UsuariosRepo.Datos.Single(u => u.Id == usuario.Id), tarifas);
+                    return new OpcionesPago(usuario, adeudosContratos, Montos);
                 }
             });
 
@@ -228,43 +204,39 @@ namespace AguaSB.Pagos.ViewModels
 
                 ObtencionInformacionPagos.Intentar(id,
                     () => OpcionesPago = informacion);
-
             }
 
             UsuarioSeleccionado = true;
-
-            // Invocar usuario cambiado
-            await Task.Delay(200).ConfigureAwait(true);
-            UsuarioCambiado?.Invoke(this, EventArgs.Empty);
         }
 
         private bool TieneContratoSeleccionado() => UsuarioSeleccionado && OpcionesPago?.PagoPorRangos.PagoContratoSeleccionado != null;
         private bool PuedePagarSeleccion() => TieneContratoSeleccionado() && OpcionesPago?.PagoPorRangos.PagoContratoSeleccionado?.RangoPagoSeleccionado != null;
+        private void PagarSeleccion() => ManejarPago(OpcionesPago.PagoPorRangos);
 
         private bool PuedePagarPorPropiedades() => TieneContratoSeleccionado() && OpcionesPago.PagoPorPropiedades != null && !OpcionesPago.PagoPorPropiedades.HasErrors;
-
-        private void PagarOtraCantidad() => ManejarPago(OpcionesPago.PagoPorPropiedades);
-
-        private void PagarSeleccion() => ManejarPago(OpcionesPago.PagoPorRangos);
+        private void PagarPorPropiedades() => ManejarPago(OpcionesPago.PagoPorPropiedades);
 
         private async void ManejarPago(OpcionPago opcionPago)
         {
+            Task HacerPago(Pago pago) => Task.Run(() =>
+            {
+                using (var baseDeDatos = Proveedor.Crear())
+                {
+                    Pagos.Hacer(pago);
+
+                    baseDeDatos.GuardarCambios();
+                }
+            });
+
             try
             {
                 using (var cubierta = ControladorCubierta.Mostrar("Realizando pago..."))
                 {
                     var pagoARealizar = opcionPago.GenerarPago();
 
-                    using (var baseDeDatos = Proveedor.Crear())
-                    {
-                        Pagos.Hacer(pagoARealizar);
-                        baseDeDatos.GuardarCambios();
-                    }
+                    await HacerPago(pagoARealizar).ConfigureAwait(true);
 
-                    var (pago, domicilio) = await HacerPago(pagoARealizar);
-
-                    Notificaciones.Lanzar(new PagoRealizado(pago, domicilio));
-                    PagoAnterior = pago;
+                    Notificaciones.Lanzar(new PagoRealizado(pagoARealizar));
                 }
 
                 OpcionesPago = null;
@@ -273,58 +245,28 @@ namespace AguaSB.Pagos.ViewModels
             }
             catch (Exception ex)
             {
-                Notificaciones.Lanzar(new NotificacionError { Titulo = "Error", Descripcion = ex.Message, Clase = "Pagos" });
+                Notificaciones.Lanzar(new NotificacionError
+                {
+                    Titulo = "Error",
+                    Descripcion = ex.Message,
+                    Clase = "Pagos"
+                });
                 //TODO: Log
             }
         }
-
-        private Task<(Pago Pago, string Domicilio)> HacerPago(Pago pago) => Task.Run(() =>
-        {
-            using (var baseDeDatos = Ambito.Create())
-            {
-                var datos = (from Contrato in ContratosRepo.Datos
-                             where Contrato.Id == pago.Contrato.Id
-                             select new { Contrato, Contrato.Usuario }).Single();
-
-                pago.Contrato = datos.Contrato;
-                pago.Contrato.Usuario = datos.Usuario;
-
-                var domicilioContrato = pago.Contrato.ToString();
-
-                PagosRepo.Agregar(pago);
-                Informador.Informar(pago);
-
-                baseDeDatos.SaveChanges();
-
-                return (pago, domicilioContrato);
-            }
-        });
 
         private async void DeshacerPagoAnterior()
         {
             try
             {
-                await Task.Run(() =>
-                {
-                    using (ControladorCubierta.Mostrar("Deshaciendo pago..."))
-                    using (var baseDeDatos = Ambito.Create())
-                    {
-                        var pago = PagosRepo.Datos.Where(p => p.Id == PagoAnterior.Id).Single();
-                        PagosRepo.Eliminar(pago);
-
-                        baseDeDatos.SaveChanges();
-                    }
-                }).ConfigureAwait(true);
-
-                await SeleccionarUsuario(PagoAnterior.Contrato.Usuario).ConfigureAwait(true);
-                PagoAnterior = null;
+                await Task.Run(() => Pagos.Deshacer(PagoAnterior)).ConfigureAwait(true);
             }
             catch (Exception ex)
             {
                 Notificaciones.Lanzar(new NotificacionError
                 {
                     Clase = "Pagos",
-                    Descripcion = $"No se pudo deshacer el pago: {ex.Message}",
+                    Descripcion = ex.Message,
                     Titulo = "Error"
                 });
             }

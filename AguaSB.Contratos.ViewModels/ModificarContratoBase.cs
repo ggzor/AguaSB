@@ -169,7 +169,7 @@ namespace AguaSB.Contratos.ViewModels
                     CallesAgrupadas = Domicilios.CallesAgrupadas(SeccionesRepo);
 
                     TiposContrato = (from tipo in TiposContratoRepo.Datos
-                                     orderby tipo.Nombre
+                                     orderby tipo.ClaseContrato, tipo.Nombre
                                      select tipo).ToList();
 
                     MostrarProgreso = false;

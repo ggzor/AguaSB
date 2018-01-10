@@ -144,6 +144,10 @@
       <Project>{10e1e718-ea42-4519-baa2-7cd3c21b442a}</Project>
       <Name>AguaSB.Nucleo</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AguaSB.Operaciones\AguaSB.Operaciones.csproj">
+      <Project>{ee89ae19-8f49-4f82-beab-6a8a75d1f907}</Project>
+      <Name>AguaSB.Operaciones</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AguaSB.Pagos.ViewModels\AguaSB.Pagos.ViewModels.csproj">
       <Project>{7cf5fc00-3477-4515-ab28-cec903806359}</Project>
       <Name>AguaSB.Pagos.ViewModels</Name>
@@ -159,6 +163,10 @@
     <ProjectReference Include="..\AguaSB.Views.Nucleo\AguaSB.Views.Nucleo.csproj">
       <Project>{dec797a6-bef8-476c-a469-2d828e1550cd}</Project>
       <Name>AguaSB.Views.Nucleo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AguaSB.Views.Operaciones\AguaSB.Views.Operaciones.csproj">
+      <Project>{ebd8a11d-f977-4f70-99a9-5bf5e58b5e67}</Project>
+      <Name>AguaSB.Views.Operaciones</Name>
     </ProjectReference>
     <ProjectReference Include="..\AguaSB.Views\AguaSB.Views.csproj">
       <Project>{2fb7cb7e-cab1-47cc-a509-8daa4408b580}</Project>

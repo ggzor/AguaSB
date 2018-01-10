@@ -3,7 +3,7 @@
                     xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
                     xmlns:Dtos="clr-namespace:AguaSB.Pagos.ViewModels.Dtos;assembly=AguaSB.Pagos.ViewModels"
                     xmlns:Util="clr-namespace:AguaSB.Views.Utilerias;assembly=AguaSB.Views"
-                    xmlns:ViewsNucleo="clr-namespace:AguaSB.Views.Nucleo;assembly=AguaSB.Views.Nucleo"
+                    xmlns:ViewsNucleo="clr-namespace:AguaSB.Views.Operaciones;assembly=AguaSB.Views.Operaciones"
                     xmlns:local="clr-namespace:AguaSB.Pagos.Views">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/AguaSB.Estilos;component/Resources/Estilos.xaml"/>

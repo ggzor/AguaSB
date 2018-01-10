@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Linq;
 
-using AguaSB.Nucleo.Pagos;
 using AguaSB.Utilerias;
+using AguaSB.Operaciones.Montos;
 
 namespace AguaSB.Pagos.ViewModels.Dtos
 {
@@ -13,9 +13,9 @@ namespace AguaSB.Pagos.ViewModels.Dtos
         public PagoContrato Padre { get; }
         public DateTime Hasta { get; set; }
         public decimal Monto { get; set; }
-        public IEnumerable<IDetallePago> Detalles { get; }
+        public IEnumerable<IDetalleMonto> Detalles { get; }
 
-        public RangoPago(PagoContrato padre, DateTime hasta, decimal monto, IEnumerable<IDetallePago> detalles)
+        public RangoPago(PagoContrato padre, DateTime hasta, decimal monto, IEnumerable<IDetalleMonto> detalles)
         {
             Padre = padre;
             Hasta = hasta;
@@ -32,7 +32,7 @@ namespace AguaSB.Pagos.ViewModels.Dtos
         public bool EsPrimeroConRestanteCero { get; set; }
         public bool NoEsPrimeroConRestanteCero => !EsPrimeroConRestanteCero;
 
-        public decimal AdeudoRestante => Math.Max(0.0m, Padre.Contrato.Adeudo - Monto);
+        public decimal AdeudoRestante => Math.Max(0.0m, Padre.Contrato.Cantidad - Monto);
 
         public bool Activo
         {

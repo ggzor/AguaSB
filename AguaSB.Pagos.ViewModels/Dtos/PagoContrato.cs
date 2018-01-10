@@ -6,17 +6,18 @@ using System.Reactive.Linq;
 
 using MoreLinq;
 
-using AguaSB.Nucleo;
 using AguaSB.Utilerias;
-using AguaSB.Nucleo.Pagos;
+
+using AguaSB.Operaciones.Adeudos;
+using AguaSB.Operaciones.Montos;
 
 namespace AguaSB.Pagos.ViewModels.Dtos
 {
     public class PagoContrato : Notificante
     {
         public PagoPorRangos Padre { get; }
-        public InformacionContrato Contrato { get; }
-        public Tarifa[] Tarifas { get; }
+        public Adeudo Contrato { get; }
+        public ICalculadorMontos Montos { get; }
 
         public IReadOnlyCollection<ColumnaRangosPago> Columnas { get; private set; }
         public IReadOnlyCollection<RangoPago> RangosPago { get; private set; }
@@ -37,12 +38,11 @@ namespace AguaSB.Pagos.ViewModels.Dtos
         }
         #endregion
 
-        public PagoContrato(PagoPorRangos padre, InformacionContrato contrato, Tarifa[] tarifas)
+        public PagoContrato(PagoPorRangos padre, Adeudo contrato, ICalculadorMontos montos)
         {
             Padre = padre ?? throw new ArgumentNullException(nameof(padre));
-            Contrato = contrato ?? throw new ArgumentNullException(nameof(contrato));
-            Tarifas = tarifas;
-
+            Contrato = contrato;
+            Montos = montos ?? throw new ArgumentNullException(nameof(montos));
             GenerarRangosPago();
             GenerarColumnas();
 
@@ -59,11 +59,12 @@ namespace AguaSB.Pagos.ViewModels.Dtos
             var primerMes = Fecha.MesDe(Contrato.UltimoPago.Hasta).AddMonths(1);
             var ultimoMes = Fecha.MesDe(Contrato.UltimoPago.Hasta).AddMonths(cantidadMeses);
 
-            var meses = Adeudos.CalcularMontosAcumuladosPorMes(primerMes, ultimoMes, Contrato.Contrato.TipoContrato, Tarifas);
+            var rangos = from dm in Enumerable.Range(0, cantidadMeses)
+                         let mes = primerMes.AddMonths(dm)
+                         let monto = Montos.CalcularPara(Contrato.Contrato, primerMes, mes)
+                         select new RangoPago(this, mes, monto.Cantidad, monto.Detalles);
 
-            RangosPago = meses
-                .Select(m => new RangoPago(this, m.Mes, m.Monto, DetallesPago.Obtener(primerMes, m.Mes, Contrato.Contrato.TipoContrato, Tarifas).ToArray()))
-                .ToArray();
+            RangosPago = rangos.ToArray();
 
             DecorarPrimerRangoPagoConRestanteCero();
         }
@@ -87,6 +88,6 @@ namespace AguaSB.Pagos.ViewModels.Dtos
                        .ToArray();
         }
 
-        public bool EsUnico => Padre.Contratos.Count == 1;
+        public bool EsUnico => Padre.AdeudosContratos.Count == 1;
     }
 }

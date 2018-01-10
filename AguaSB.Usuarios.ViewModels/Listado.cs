@@ -21,6 +21,7 @@ using System.Waf.Applications;
 using System.Waf.Foundation;
 using AguaSB.Reportes;
 using AguaSB.Notificaciones;
+using AguaSB.Operaciones.Adeudos;
 
 namespace AguaSB.Usuarios.ViewModels
 {
@@ -149,6 +150,8 @@ namespace AguaSB.Usuarios.ViewModels
         #region Eventos
         public event EventHandler<IOrdenamiento> OrdenamientoCambiado;
         public event EventHandler Enfocar;
+
+        public ICalculadorAdeudos CalculadorAdeudos { get; }
         #endregion
 
         #region Dependencias
@@ -166,9 +169,10 @@ namespace AguaSB.Usuarios.ViewModels
 
         public INodo Nodo { get; }
 
-        public Listado(IDbContextScopeFactory ambito, IRepositorio<Usuario> usuariosRepo, IRepositorio<Seccion> seccionesRepo, IRepositorio<TipoContrato> tiposContratoRepo,
+        public Listado(ICalculadorAdeudos calculadorAdeudos, IDbContextScopeFactory ambito, IRepositorio<Usuario> usuariosRepo, IRepositorio<Seccion> seccionesRepo, IRepositorio<TipoContrato> tiposContratoRepo,
             IRepositorio<Tarifa> tarifasRepo, INavegador navegador, IGeneradorTablas generadorTablas, IAdministradorNotificaciones administradorNotificaciones)
         {
+            CalculadorAdeudos = calculadorAdeudos ?? throw new ArgumentNullException(nameof(calculadorAdeudos));
             Ambito = ambito ?? throw new ArgumentNullException(nameof(ambito));
             UsuariosRepo = usuariosRepo ?? throw new ArgumentNullException(nameof(usuariosRepo));
             SeccionesRepo = seccionesRepo ?? throw new ArgumentNullException(nameof(seccionesRepo));
@@ -515,9 +519,8 @@ namespace AguaSB.Usuarios.ViewModels
             using (var baseDeDatos = Ambito.CreateReadOnly())
             {
                 var tarifas = Tarifas.Obtener(TarifasRepo);
-                CalculadorAdeudos calculadorAdeudos = (pagadoHasta, multiplicador) => Adeudos.Calcular(pagadoHasta, multiplicador, tarifas);
 
-                return new EjecutorSolicitud(solicitud, calculadorAdeudos).Ejecutar(UsuariosRepo.Datos.AsQueryable());
+                return new EjecutorSolicitud(solicitud, CalculadorAdeudos).Ejecutar(UsuariosRepo.Datos.AsQueryable());
             }
         }
 
