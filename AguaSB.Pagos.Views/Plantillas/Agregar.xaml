@@ -27,19 +27,19 @@
                         <TextBlock Margin="0 0 8 0" Text="Adeudo:" Opacity="0.6" Style="{StaticResource h4}"
                                    VerticalAlignment="Center"/>
 
-                        <TextBlock Text="{Binding Contrato.Adeudo, StringFormat={}{0:C}}" Style="{StaticResource wh4}" 
+                        <TextBlock Text="{Binding Contrato.Cantidad, StringFormat={}{0:C}}" Style="{StaticResource wh4}" 
                                    Foreground="{StaticResource MaterialRed}" FontWeight="DemiBold" Opacity="0.9"
-                                   Visibility="{Binding Contrato.TieneAdeudo, Converter={StaticResource BoolToVisibility}}"
+                                   Visibility="{Binding Contrato.Cantidad, Converter={StaticResource NotEqualsTo}, ConverterParameter=0.0}"
                                    VerticalAlignment="Center"/>
 
                         <TextBlock Text="Al corriente" Style="{StaticResource wh4}" 
                                    Foreground="{StaticResource MaterialBlue}" FontWeight="DemiBold" Opacity="0.9"
-                                   Visibility="{Binding Contrato.NoTieneAdeudo, Converter={StaticResource BoolToVisibility}}"
+                                   Visibility="{Binding Contrato.Cantidad, Converter={StaticResource NotEqu}}"
                                    VerticalAlignment="Center"/>
 
-                        <ViewsNucleo:DetallesPagoView Margin="8 0 0 0" DetallesPago="{Binding Contrato.DetallesAdeudo}" VerticalAlignment="Center"
+                        <ViewsNucleo:DetallesPagoView Margin="8 0 0 0" DetallesPago="{Binding Contrato.Detalles}" VerticalAlignment="Center"
                                                       ColorMontos="{StaticResource MaterialRed}"
-                                                      Visibility="{Binding Contrato.TieneAdeudo, Converter={StaticResource BoolToVisibility}}"/>
+                                                      Visibility="{Binding Contrato.Cantidad, Converter={StaticResource NotEqualsTo}, ConverterParameter=0.0}"/>
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal">

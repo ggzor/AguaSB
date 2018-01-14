@@ -6,6 +6,7 @@
     <local:DivideConverter x:Key="Divide"/>
     <local:EnumToIntConverter x:Key="EnumToInt"/>
     <local:EqualsToConverter x:Key="EqualsTo"/>
+    <local:NotEqualsToConverter x:Key="NotEqualsTo"/>
     <local:InvertBoolConverter x:Key="InvertBool"/>
     <local:IsNullConverter x:Key="IsNull"/>
     <local:IsNotNullConverter x:Key="IsNotNull"/>

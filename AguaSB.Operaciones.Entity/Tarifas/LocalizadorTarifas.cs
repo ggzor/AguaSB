@@ -12,7 +12,7 @@ namespace AguaSB.Operaciones.Tarifas.Entity
         {
         }
 
-        public IReadOnlyCollection<Tarifa> Tarifas { get; set; }
+        private IReadOnlyCollection<Tarifa> Tarifas { get; set; }
 
         public IReadOnlyCollection<Tarifa> Obtener()
         {

@@ -188,7 +188,9 @@ namespace AguaSB.Pagos.ViewModels
             {
                 using (Proveedor.CrearSoloLectura())
                 {
-                    var adeudosContratos = Contratos.ObtenerContratos(usuario).Select(Adeudos.ObtenerAdeudo).ToArray();
+                    var adeudosContratos = Contratos.ObtenerContratos(usuario)
+                        .Select(Adeudos.ObtenerAdeudo)
+                        .ToArray();
 
                     return new OpcionesPago(usuario, adeudosContratos, Montos);
                 }
