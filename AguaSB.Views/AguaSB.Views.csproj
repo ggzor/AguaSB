@@ -98,7 +98,7 @@
     <Compile Include="Utilerias\DictionaryConverter.cs" />
     <Compile Include="Utilerias\DivideConverter.cs" />
     <Compile Include="Utilerias\EnumToIntConverter.cs" />
-    <Compile Include="Utilerias\EqualsToConverter.cs" />
+    <Compile Include="Utilerias\EqualsToConverters.cs" />
     <Compile Include="Utilerias\Fade.cs" />
     <Compile Include="Utilerias\InvertBoolConverter.cs" />
     <Compile Include="Utilerias\ManejadorTeclas.cs" />
@@ -108,6 +108,7 @@
     <Compile Include="Utilerias\ToStringConverter.cs" />
     <Compile Include="Utilerias\TypedTemplateSelector.cs" />
     <Compile Include="Utilerias\VisualTreeUtils.cs" />
+    <Compile Include="Utilerias\ZeroConverters.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

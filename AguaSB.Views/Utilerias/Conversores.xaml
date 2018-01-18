@@ -6,11 +6,14 @@
     <local:DivideConverter x:Key="Divide"/>
     <local:EnumToIntConverter x:Key="EnumToInt"/>
     <local:EqualsToConverter x:Key="EqualsTo"/>
+    <local:NotEqualsToConverter x:Key="NotEqualsTo"/>
     <local:InvertBoolConverter x:Key="InvertBool"/>
     <local:IsNullConverter x:Key="IsNull"/>
     <local:IsNotNullConverter x:Key="IsNotNull"/>
     <local:IsNullToVisibilityConverter x:Key="IsNullToVisibility"/>
     <local:IsNotNullToVisibilityConverter x:Key="IsNotNullToVisibility"/>
     <local:ToStringConverter x:Key="ToString"/>
+    <local:IsNotZeroConverter x:Key="IsNotZero"/>
+    <local:IsZeroConverter x:Key="IsZero"/>
     <local:TypedTemplateSelector x:Key="TypedTS"/>
 </ResourceDictionary>
