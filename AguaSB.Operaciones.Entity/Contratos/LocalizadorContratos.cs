@@ -14,15 +14,26 @@ namespace AguaSB.Operaciones.Contratos.Entity
 
         public IReadOnlyCollection<Contrato> ObtenerContratos(Usuario usuario)
         {
-            var solicitud = from contrato in BaseDeDatos.Contratos
-                                .Include(nameof(Contrato.TipoContrato))
-                                .Include($"{nameof(Contrato.Domicilio)}.{nameof(Domicilio.Calle)}.{nameof(Calle.Seccion)}")
-                            where contrato.Usuario.Id == usuario.Id
-                            let domicilio = contrato.Domicilio
-                            orderby domicilio.Calle.Seccion.Orden, domicilio.Calle.Nombre, domicilio.Numero
-                            select contrato;
+            var solicitud = from Contrato in BaseDeDatos.Contratos
+                            where Contrato.Usuario.Id == usuario.Id
+                            let Domicilio = Contrato.Domicilio
+                            let DatosDomicilio = new { Domicilio, Domicilio.Calle, Domicilio.Calle.Seccion }
+                            let TipoContrato = Contrato.TipoContrato
+                            select new { Contrato, DatosDomicilio, TipoContrato };
 
-            return solicitud.ToArray();
+            return solicitud.ToArray().Select(datos =>
+            {
+                var contrato = datos.Contrato;
+
+                var domicilio = datos.DatosDomicilio.Domicilio;
+                domicilio.Calle = datos.DatosDomicilio.Calle;
+                domicilio.Calle.Seccion = datos.DatosDomicilio.Seccion;
+
+                contrato.Domicilio = domicilio;
+                contrato.TipoContrato = datos.TipoContrato;
+
+                return contrato;
+            }).ToArray();
         }
     }
 }
