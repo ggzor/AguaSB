@@ -14,6 +14,9 @@ namespace AguaSB.Operaciones.Entity.Ambitos
 
         public IAmbito Crear() => new Ambito(Ambito.Create());
 
+        public IAmbito CrearConTransaccion() => 
+            new Ambito(Ambito.Create(), crearTransaccion: true);
+
         public IAmbitoSoloLectura CrearSoloLectura() => new AmbitoSoloLectura(Ambito.CreateReadOnly());
     }
 }
