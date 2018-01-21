@@ -4,6 +4,7 @@ using Mehdime.Entity;
 
 using AguaSB.Nucleo;
 using AguaSB.Operaciones.Entity;
+using AguaSB.Utilerias;
 
 namespace AguaSB.Operaciones.Pagos.Entity
 {
@@ -17,7 +18,18 @@ namespace AguaSB.Operaciones.Pagos.Entity
 
         public void Hacer(Pago pago)
         {
-            //TODO: Implementar
+            var pagoNuevo = new Pago
+            {
+                CantidadPagada = pago.CantidadPagada,
+                Contrato = BaseDeDatos.Contratos.Find(pago.Contrato.Id),
+                Desde = pago.Desde,
+                FechaPago = pago.FechaPago,
+                FechaRegistro = Fecha.Ahora,
+                Hasta = pago.Hasta,
+                Monto = pago.Monto
+            };
+
+            BaseDeDatos.Pagos.Add(pagoNuevo);
         }
 
         public void Deshacer(Pago pago)

@@ -18,8 +18,8 @@ namespace AguaSB.Operaciones.Entity.Ambitos
 
         public void GuardarCambios()
         {
-            AmbitoTransaccion.Complete();
             AmbitoBaseDeDatos.SaveChanges();
+            AmbitoTransaccion.Complete();
         }
 
         public void Dispose()

@@ -93,6 +93,10 @@
       <Project>{ee89ae19-8f49-4f82-beab-6a8a75d1f907}</Project>
       <Name>AguaSB.Operaciones</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AguaSB.Utilerias\AguaSB.Utilerias.csproj">
+      <Project>{61188B63-728A-4C7B-B19D-11ABD1F64F4F}</Project>
+      <Name>AguaSB.Utilerias</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
