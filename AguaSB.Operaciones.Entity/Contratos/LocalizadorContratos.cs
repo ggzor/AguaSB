@@ -20,7 +20,7 @@ namespace AguaSB.Operaciones.Contratos.Entity
                             let DatosDomicilio = new { Domicilio, Domicilio.Calle, Domicilio.Calle.Seccion }
                             let TipoContrato = Contrato.TipoContrato
                             select new { Contrato, DatosDomicilio, TipoContrato };
-
+            
             return solicitud.ToArray().Select(datos =>
             {
                 var contrato = datos.Contrato;
@@ -31,6 +31,8 @@ namespace AguaSB.Operaciones.Contratos.Entity
 
                 contrato.Domicilio = domicilio;
                 contrato.TipoContrato = datos.TipoContrato;
+
+                contrato.Usuario = usuario;
 
                 return contrato;
             }).ToArray();

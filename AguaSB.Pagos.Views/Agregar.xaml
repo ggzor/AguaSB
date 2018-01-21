@@ -384,6 +384,12 @@
                                 <TextBlock Margin="8 0 0 0" Text="{Binding PagoAnterior.CantidadPagada, StringFormat=C}" Foreground="{StaticResource MaterialGreen}" 
                                            FontWeight="DemiBold" Style="{StaticResource wh5}"/>
                             </StackPanel>
+                            
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Pagado hasta:" Opacity="0.6" Style="{StaticResource h5}"/>
+                                <TextBlock Margin="8 0 0 0" Text="{Binding PagoAnterior.Hasta, ConverterCulture=es-MX, StringFormat=MMMM yyyy}"
+                                           Style="{StaticResource h5}"/>
+                            </StackPanel>
                         </StackPanel>
                     </DockPanel>
                 </Button>

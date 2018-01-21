@@ -32,6 +32,7 @@ namespace AguaSB.Legado
                 fila.Establecer(4, NumeroUsuario);
                 fila.Establecer(10, Solicitud.Meses);
                 fila.Establecer(13, Solicitud.CantidadMeses);
+                fila.Establecer(14, Solicitud.Monto);
 
                 preparingEnlistment.Prepared();
             }

@@ -30,7 +30,7 @@ namespace AguaSB.Pagos.ViewModels
     public class Agregar : ValidatableModel, IViewModel
     {
         #region Configuración
-        private static readonly TimeSpan TiempoEsperaBusqueda = TimeSpan.FromMilliseconds(300);
+        private static readonly TimeSpan TiempoEsperaBusqueda = TimeSpan.FromMilliseconds(500);
         private const int CantidadOpciones = 10;
         #endregion
 
@@ -140,10 +140,10 @@ namespace AguaSB.Pagos.ViewModels
         private void ActivarEscuchaCambioTexto()
         {
             var valoresBusqueda = from valor in this.ObservableProperty(vm => vm.TextoBusqueda).Throttle(TiempoEsperaBusqueda)
-                                  where !string.IsNullOrWhiteSpace(valor)
                                   select valor.Trim();
 
             valoresBusqueda.DistinctUntilChanged()
+                .SkipWhile(string.IsNullOrWhiteSpace)
                 .ObserveOnDispatcher()
                 .Subscribe(async texto => await ObtenerOpcionesUsuarios(texto).ConfigureAwait(true));
         }
@@ -169,6 +169,12 @@ namespace AguaSB.Pagos.ViewModels
 
         private async Task ObtenerOpcionesUsuarios(string nombreUsuario)
         {
+            if (string.IsNullOrWhiteSpace(nombreUsuario))
+            {
+                BusquedaOpcionesUsuarios = Busquedas.Nueva(ResultadoBusquedaUsuariosConContrato.Vacio);
+                return;
+            }
+
             var id = ObtencionOpcionesUsuarios.ObtenerId();
 
             var busqueda = Busquedas.Nueva(ResultadoBusquedaUsuariosConContrato.Vacio);
@@ -181,6 +187,14 @@ namespace AguaSB.Pagos.ViewModels
                 using (Proveedor.CrearSoloLectura())
                     return new ResultadoBusquedaUsuariosConContrato(SugerenciasUsuarios.Obtener(nombreUsuario), CantidadOpciones);
             })).ConfigureAwait(true);
+
+            await ObtencionOpcionesUsuarios.IntentarAsync(id, () =>
+            {
+                if (busqueda.Resultado.Total == 1)
+                    return SeleccionarUsuario(busqueda.Resultado.Resultados.Single());
+                else
+                    return Task.CompletedTask;
+            });
         }
 
         private readonly Sincronizador ObtencionInformacionPagos = new Sincronizador();
@@ -244,6 +258,7 @@ namespace AguaSB.Pagos.ViewModels
                     await HacerPago(pagoARealizar).ConfigureAwait(true);
 
                     Notificaciones.Lanzar(new PagoRealizado(pagoARealizar));
+                    PagoAnterior = pagoARealizar;
                 }
 
                 OpcionesPago = null;
