@@ -109,6 +109,7 @@
     <Compile Include="Utilerias\TypedTemplateSelector.cs" />
     <Compile Include="Utilerias\VisualTreeUtils.cs" />
     <Compile Include="Utilerias\ZeroConverters.cs" />
+    <Compile Include="Utilerias\ZeroToVisibilityConverters.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

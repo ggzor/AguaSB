@@ -15,5 +15,7 @@
     <local:ToStringConverter x:Key="ToString"/>
     <local:IsNotZeroConverter x:Key="IsNotZero"/>
     <local:IsZeroConverter x:Key="IsZero"/>
+    <local:IsNotZeroToVisibilityConverter x:Key="IsNotZeroToVisibility"/>
+    <local:IsZeroToVisibilityConverter x:Key="IsZeroToVisibility"/>
     <local:TypedTemplateSelector x:Key="TypedTS"/>
 </ResourceDictionary>
