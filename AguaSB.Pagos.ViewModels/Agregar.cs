@@ -23,6 +23,7 @@ using AguaSB.Operaciones.Usuarios;
 
 using AguaSB.Pagos.ViewModels.Dtos;
 using AguaSB.Pagos.ViewModels.Notificaciones;
+using AguaSB.Servicios;
 
 namespace AguaSB.Pagos.ViewModels
 {
@@ -83,7 +84,8 @@ namespace AguaSB.Pagos.ViewModels
         public DelegateCommand DeshacerPagoAnteriorComando { get; }
         #endregion
 
-        #region Servicios
+        #region Dependencias
+        public IInformador<Pago> Informador { get; }
         private IProveedorAmbito Proveedor { get; }
 
         private IProveedorSugerenciasUsuarios SugerenciasUsuarios { get; }
@@ -102,10 +104,11 @@ namespace AguaSB.Pagos.ViewModels
 
         public INodo Nodo { get; }
 
-        public Agregar(IProveedorAmbito proveedor, IProveedorSugerenciasUsuarios sugerenciasUsuarios, IOperacionesPagos pagos,
+        public Agregar(IInformador<Pago> informador, IProveedorAmbito proveedor, IProveedorSugerenciasUsuarios sugerenciasUsuarios, IOperacionesPagos pagos,
             ILocalizadorContratos contratos, ICalculadorAdeudos adeudos, ICalculadorMontos montos, INavegador navegador,
             IAdministradorNotificaciones notificaciones)
         {
+            Informador = informador ?? throw new ArgumentNullException(nameof(informador));
             Proveedor = proveedor ?? throw new ArgumentNullException(nameof(proveedor));
             SugerenciasUsuarios = sugerenciasUsuarios ?? throw new ArgumentNullException(nameof(sugerenciasUsuarios));
             Pagos = pagos ?? throw new ArgumentNullException(nameof(pagos));
@@ -188,7 +191,9 @@ namespace AguaSB.Pagos.ViewModels
             {
                 using (Proveedor.CrearSoloLectura())
                 {
-                    var adeudosContratos = Contratos.ObtenerContratos(usuario).Select(Adeudos.ObtenerAdeudo).ToArray();
+                    var adeudosContratos = Contratos.ObtenerContratos(usuario)
+                        .Select(Adeudos.ObtenerAdeudo)
+                        .ToArray();
 
                     return new OpcionesPago(usuario, adeudosContratos, Montos);
                 }
@@ -220,9 +225,11 @@ namespace AguaSB.Pagos.ViewModels
         {
             Task HacerPago(Pago pago) => Task.Run(() =>
             {
-                using (var baseDeDatos = Proveedor.Crear())
+                using (var baseDeDatos = Proveedor.CrearConTransaccion())
                 {
                     Pagos.Hacer(pago);
+
+                    Informador.Informar(pago);
 
                     baseDeDatos.GuardarCambios();
                 }

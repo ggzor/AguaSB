@@ -61,7 +61,8 @@
 
                                 <DockPanel>
                                     <icons:PackIconEntypo Kind="Address" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=Contrato}" Estilos:Icono.Enfocado="{Binding ElementName=Contrato, Path=IsKeyboardFocusWithin}"/>
-                                    <ComboBox Name="Contrato" Tag="Contrato" SelectedItem="{Binding Contrato, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Contratos}"
+                                    <ComboBox Name="Contrato" Tag="Contrato" SelectedItem="{Binding Contrato, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
+                                              ItemsSource="{Binding AdeudosContratos}"
                                               Estilos:Foco.SiguienteFoco="{Binding ElementName=PagarHasta}"/>
                                 </DockPanel>
 
@@ -78,19 +79,19 @@
                                         <TextBlock Text="Adeudo:" Opacity="0.6" Style="{StaticResource h4}"
                                                    VerticalAlignment="Center"/>
 
-                                        <TextBlock Text="{Binding Contrato.Adeudo, StringFormat={}{0:C}}" Style="{StaticResource wh4}" Margin="8 0 0 0"
+                                        <TextBlock Text="{Binding Contrato.Cantidad, StringFormat={}{0:C}}" Style="{StaticResource wh4}" Margin="8 0 0 0"
                                                    Foreground="{StaticResource MaterialRed}" FontWeight="DemiBold" Opacity="0.9"
-                                                   Visibility="{Binding Contrato.TieneAdeudo, Converter={StaticResource BoolToVisibility}}"
+                                                   Visibility="{Binding Contrato.Cantidad, Converter={StaticResource IsNotZeroToVisibility}}"
                                                    VerticalAlignment="Center"/>
 
                                         <TextBlock Text="Al corriente" Style="{StaticResource wh4}" 
                                                    Foreground="{StaticResource MaterialBlue}" FontWeight="DemiBold" Opacity="0.9"
-                                                   Visibility="{Binding Contrato.NoTieneAdeudo, Converter={StaticResource BoolToVisibility}}"
+                                                   Visibility="{Binding Contrato.Cantidad, Converter={StaticResource IsZeroToVisibility}}"
                                                    VerticalAlignment="Center"/>
 
-                                        <ViewsNucleo:DetallesPagoView Margin="8 0 0 0" DetallesPago="{Binding Contrato.DetallesAdeudo}" VerticalAlignment="Center"
+                                        <ViewsNucleo:DetallesPagoView Margin="8 0 0 0" DetallesPago="{Binding Contrato.Detalles}" VerticalAlignment="Center"
                                                                       ColorMontos="{StaticResource MaterialRed}"
-                                                                      Visibility="{Binding Contrato.TieneAdeudo, Converter={StaticResource BoolToVisibility}}"/>
+                                                                      Visibility="{Binding Contrato.Cantidad, Converter={StaticResource IsNotZeroToVisibility}}"/>
                                     </StackPanel>
                                 </DockPanel>
 

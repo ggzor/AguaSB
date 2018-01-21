@@ -11,5 +11,7 @@ namespace AguaSB.Operaciones.Adeudos
         public Pago UltimoPago { get; set; }
         public decimal Cantidad { get; set; }
         public IEnumerable<IDetalleMonto> Detalles { get; set; }
+
+        public override string ToString() => Contrato.ToString();
     }
 }
