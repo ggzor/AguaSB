@@ -22,6 +22,9 @@ namespace AguaSB.Legado
 
         public void Informar(AguaSB.Nucleo.Pago informacion)
         {
+            if (informacion.CantidadPagada == 0)
+                return;
+
             int idContrato = informacion.Contrato.Id;
             var nota = (from tipoNota in TiposNotaRepo.Datos
                         where tipoNota.Nombre == "_Contrato_Fila"

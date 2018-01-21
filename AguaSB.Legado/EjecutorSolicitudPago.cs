@@ -1,9 +1,11 @@
-﻿using AguaSB.Legado.Nucleo;
-using AguaSB.Servicios.Office;
-using OfficeOpenXml;
-using System;
+﻿using System;
 using System.IO;
-using System.Linq;
+using System.Transactions;
+
+using OfficeOpenXml;
+
+using AguaSB.Legado.Nucleo;
+using AguaSB.Nucleo.Utilerias;
 
 namespace AguaSB.Legado
 {
@@ -14,64 +16,39 @@ namespace AguaSB.Legado
         public EjecutorSolicitudPago(FileInfo archivo) =>
             Archivo = archivo ?? throw new ArgumentNullException(nameof(archivo));
 
+        private readonly Guid Id = Guid.NewGuid();
         private const string NombreHojaUsuarios = "CONCENTRADO";
         private const string NombreHojaPagos = "PAGOS 2018";
+        private const int InicioBusquedaFolios = 900;
 
         public Pago Ejecutar(SolicitudPago solicitudPago)
         {
-            var resultado = new Pago { FechaPago = solicitudPago.FechaPago };
-
-            using (var documento = new ExcelPackage(Archivo))
+            if (Transaction.Current is Transaction t)
             {
-                var hojaUsuarios = documento.Workbook.Worksheets[NombreHojaUsuarios];
-                var hojaPagos = documento.Workbook.Worksheets[NombreHojaPagos];
+                var control = new ControlArchivo(new ExcelPackage(Archivo));
+                var hojas = control.Archivo.Workbook.Worksheets;
 
-                ProcesarHojaUsuarios(solicitudPago, resultado, hojaUsuarios);
-                ProcesarHojaPagos(solicitudPago, resultado, hojaPagos);
+                var (fila, folio) = LecturaFolioPago.Obtener(hojas[NombreHojaPagos], InicioBusquedaFolios, 4, 2);
 
-                documento.Save();
+                var resultado = new Pago
+                {
+                    Folio = folio,
+                    FechaPago = solicitudPago.FechaPago,
+                    Cantidad = solicitudPago.Monto,
+                    CantidadLetra = CantidadALetra.Convertir(solicitudPago.Monto),
+                    Meses = solicitudPago.Meses,
+                    Usuario = LecturaUsuario.Leer(hojas[NombreHojaUsuarios], solicitudPago.Fila)
+                };
+
+                t.EnlistDurable(Guid.NewGuid(), new EscrituraFechasPago(control, NombreHojaUsuarios, solicitudPago), EnlistmentOptions.None);
+                t.EnlistDurable(Guid.NewGuid(), new EscrituraPago(control, NombreHojaPagos, fila, resultado.Usuario.Numero, solicitudPago), EnlistmentOptions.None);
+
+                return resultado;
             }
-
-            return resultado;
-        }
-
-        private void ProcesarHojaUsuarios(SolicitudPago solicitudPago, Pago resultado, ExcelWorksheet hojaUsuarios)
-        {
-            var filaUsuario = new EditorFilaExcel(hojaUsuarios, solicitudPago.Fila);
-
-            resultado.NumeroUsuario = filaUsuario.Obtener<int>(2);
-            resultado.Contrato = filaUsuario.Obtener<string>(3);
-            resultado.NombreUsuario = filaUsuario.Obtener<string>(6);
-            resultado.Seccion = filaUsuario.Obtener<string>(7);
-            resultado.Domicilio = filaUsuario.Obtener<string>(8);
-            resultado.TipoContrato = filaUsuario.Obtener<string>(11);
-
-            filaUsuario.Establecer<DateTime>(10, solicitudPago.FechaPago);
-            filaUsuario.Establecer<DateTime>(12, solicitudPago.MesFin);
-
-            resultado.Cantidad = solicitudPago.Monto;
-            resultado.Meses = solicitudPago.Meses;
-        }
-
-        private const int InicioPagos = 2;
-        private const int ConteoPagos = 3000;
-
-        private void ProcesarHojaPagos(SolicitudPago solicitudPago, Pago resultado, ExcelWorksheet hojaPagos)
-        {
-            int ObtenerSiguienteFilaPagos() => Enumerable.Range(InicioPagos, ConteoPagos)
-                .Select(i => (Indice: i, Valor: hojaPagos.Cells[i, 4].GetValue<int?>()))
-                .First(i => i.Valor == null)
-                .Indice;
-
-            var filaPagos = new EditorFilaExcel(hojaPagos, ObtenerSiguienteFilaPagos());
-
-            resultado.Folio = filaPagos.Obtener<int>(1);
-            filaPagos.Establecer(1, filaPagos.Fila - 1);
-            filaPagos.Establecer(2, filaPagos.Fila - 1);
-            filaPagos.Establecer(3, solicitudPago.FechaPago);
-            filaPagos.Establecer(4, resultado.NumeroUsuario);
-            filaPagos.Establecer(10, resultado.Meses);
-            filaPagos.Establecer(13, solicitudPago.CantidadMeses);
+            else
+            {
+                throw new InvalidOperationException("Esta operacion debe ejecutarse bajo una transacción.");
+            }
         }
     }
 }

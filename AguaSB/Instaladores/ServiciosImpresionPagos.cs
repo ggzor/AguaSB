@@ -11,7 +11,6 @@ using AguaSB.Utilerias;
 using AguaSB.Legado.Nucleo;
 using AguaSB.Legado;
 using AguaSB.Utilerias.IO;
-using AguaSB.Nucleo.Utilerias;
 
 namespace AguaSB.Instaladores
 {
@@ -91,14 +90,14 @@ namespace AguaSB.Instaladores
             public IReadOnlyDictionary<string, object> Extraer(Pago pago) => new Dictionary<string, object>
             {
                 ["%Id%"] = pago.Folio,
-                ["%Usuario%"] = pago.NumeroUsuario,
-                ["%Contrato%"] = pago.Contrato,
-                ["%Tipo%"] = pago.TipoContrato,
-                ["%Nombre%"] = pago.NombreUsuario,
-                ["%Domicilio%"] = pago.Domicilio,
-                ["%Seccion%"] = pago.Seccion,
+                ["%Usuario%"] = pago.Usuario.Numero,
+                ["%Contrato%"] = pago.Usuario.Contrato,
+                ["%Tipo%"] = pago.Usuario.TipoContrato,
+                ["%Nombre%"] = pago.Usuario.Nombre,
+                ["%Domicilio%"] = pago.Usuario.Direccion,
+                ["%Seccion%"] = pago.Usuario.Seccion,
                 ["%Cantidad%"] = pago.Cantidad.ToString("C"),
-                ["%CantidadLetra%"] = CantidadALetra.Convertir(pago.Cantidad).ToUpper(),
+                ["%CantidadLetra%"] = pago.CantidadLetra.ToUpper(),
                 ["%Meses%"] = pago.Meses,
                 ["%Dia%"] = pago.FechaPago.ToString("dd"),
                 ["%Mes%"] = pago.FechaPago.ToString("MMMM").ToUpper(),
@@ -106,7 +105,12 @@ namespace AguaSB.Instaladores
             };
 
             public string GenerarRuta(Pago pago) =>
-                Path.Combine(DirectorioPagosHoy, pago.NombreUsuario + ".docx");
+                Path.Combine(DirectorioPagosHoy, GenerarRutaPago(pago) + ".docx");
+
+            private string GenerarRutaPago(Pago pago)
+            {
+                return $"{pago.Folio} - {pago.Usuario.Nombre} - {pago.Usuario.Seccion}";
+            }
         }
     }
 }
