@@ -1,15 +1,16 @@
-﻿using AguaSB.Estilos;
-using AguaSB.Nucleo;
-using AguaSB.Pagos.ViewModels.Dtos;
-using AguaSB.Utilerias;
-using AguaSB.Views;
-using AguaSB.Views.Utilerias;
-using System;
+﻿using System;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+
+using AguaSB.Estilos;
+using AguaSB.Nucleo;
+using AguaSB.Pagos.ViewModels.Dtos;
+using AguaSB.Utilerias;
+using AguaSB.Views;
+using AguaSB.Views.Utilerias;
 
 namespace AguaSB.Pagos.Views
 {
@@ -31,8 +32,13 @@ namespace AguaSB.Pagos.Views
                 Busqueda.Focus();
                 Deslizar.HastaArriba(Deslizador);
             };
+            
+            viewModel.ObservableProperty(vm => vm.UsuarioSeleccionado)
+                .Where(b => b == true)
+                .Sample(TimeSpan.FromMilliseconds(100))
+                .ObserveOnDispatcher()
+                .Subscribe(o => Deslizar.HastaArriba(Deslizador));
 
-            viewModel.ObservableProperty(vm => vm.OpcionesPago).Where(o => o != null).Subscribe(o => Deslizar.HastaArriba(Deslizador));
             viewModel.ObservableProperty(vm => vm.BusquedaOpcionesUsuarios).Subscribe(ObservarBuscador);
             viewModel.ObservableProperty(vm => vm.UsuarioSeleccionado).Subscribe(seleccionado =>
             {
