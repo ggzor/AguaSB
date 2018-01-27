@@ -25,7 +25,7 @@ namespace AguaSB.Legado
         {
             if (Transaction.Current is Transaction t)
             {
-                var control = new ControlArchivo(new ExcelPackage(Archivo));
+                var control = new ControlArchivo(Archivo);
                 var hojas = control.Archivo.Workbook.Worksheets;
 
                 var (fila, folio) = LecturaFolioPago.Obtener(hojas[NombreHojaPagos], InicioBusquedaFolios, 4, 2);

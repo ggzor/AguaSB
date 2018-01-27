@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using OfficeOpenXml;
 
 namespace AguaSB.Legado
@@ -7,7 +8,18 @@ namespace AguaSB.Legado
     {
         public ExcelPackage Archivo { get; }
 
-        public ControlArchivo(ExcelPackage archivo) => Archivo = archivo ?? throw new ArgumentNullException(nameof(archivo));
+        public ControlArchivo(FileInfo archivo)
+        {
+            if (archivo == null)
+                throw new ArgumentNullException(nameof(archivo));
+
+            AsegurarPuedeLeerEscribir(archivo);
+
+            Archivo = new ExcelPackage(archivo);
+        }
+
+        private static void AsegurarPuedeLeerEscribir(FileInfo archivo) =>
+            archivo.Open(FileMode.Open, FileAccess.ReadWrite, FileShare.None).Dispose();
 
         private bool cerrado;
 
