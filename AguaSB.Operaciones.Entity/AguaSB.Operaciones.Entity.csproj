@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ambitos\AmbitoConTransaccion.cs" />
     <Compile Include="Ambitos\Ambito.cs" />
     <Compile Include="Ambitos\AmbitoSoloLectura.cs" />
     <Compile Include="Contratos\LocalizadorContratos.cs" />
