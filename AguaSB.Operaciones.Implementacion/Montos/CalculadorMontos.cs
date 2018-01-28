@@ -12,12 +12,12 @@ namespace AguaSB.Operaciones.Montos.Implementacion
         public static decimal Calcular(DateTime ultimoMesPagado, TipoContrato tipoContrato, Tarifa[] tarifasOrdenadas)
         {
             var primerMesAdeudo = Fecha.MesDe(ultimoMesPagado).AddMonths(1);
-            var esteMes = Fecha.MesDe(Fecha.Ahora);
+            var ultimoMesCalculado = Fecha.MesDe(Fecha.Ahora).AddMonths(-1);
 
-            if (primerMesAdeudo > esteMes)
+            if (primerMesAdeudo > ultimoMesCalculado)
                 return 0.0m;
             else
-                return CalcularMonto(primerMesAdeudo, esteMes, tipoContrato, tarifasOrdenadas);
+                return CalcularMonto(primerMesAdeudo, ultimoMesCalculado, tipoContrato, tarifasOrdenadas);
         }
 
         public static decimal CalcularMonto(DateTime desde, DateTime hasta, TipoContrato tipoContrato, Tarifa[] tarifasOrdenadas)

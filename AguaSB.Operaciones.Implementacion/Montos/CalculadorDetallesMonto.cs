@@ -59,12 +59,12 @@ namespace AguaSB.Operaciones.Montos.Implementacion
         {
 
             var primerMesAdeudo = Fecha.MesDe(ultimoMesPagado).AddMonths(1);
-            var esteMes = Fecha.MesDe(Fecha.Ahora);
+            var ultimoMesCalculado = Fecha.MesDe(Fecha.Ahora).AddMonths(-1);
 
-            if (primerMesAdeudo > esteMes)
+            if (primerMesAdeudo > ultimoMesCalculado)
                 return Enumerable.Empty<IDetalleMonto>();
             else
-                return Obtener(primerMesAdeudo, esteMes, tipoContrato, tarifas);
+                return Obtener(primerMesAdeudo, ultimoMesCalculado, tipoContrato, tarifas);
         }
     }
 }
