@@ -18,8 +18,20 @@ namespace AguaSB.Legado
             Archivo = new ExcelPackage(archivo);
         }
 
-        private static void AsegurarPuedeLeerEscribir(FileInfo archivo) =>
-            archivo.Open(FileMode.Open, FileAccess.ReadWrite, FileShare.None).Dispose();
+        private static void AsegurarPuedeLeerEscribir(FileInfo archivo)
+        {
+            try
+            {
+                archivo.Open(FileMode.Open, FileAccess.ReadWrite, FileShare.None).Dispose();
+            }
+            catch (IOException ex)
+            {
+                if (archivo.Exists)
+                    throw new Exception("El archivo está siendo utilizado. Cierre el archivo antes de realizar el pago.", ex);
+                else
+                    throw new Exception($"No se puede abrir el archivo {archivo.FullName}", ex);
+            }
+        }
 
         private bool cerrado;
 
