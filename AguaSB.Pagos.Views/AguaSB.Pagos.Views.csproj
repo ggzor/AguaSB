@@ -92,6 +92,9 @@
     <Compile Include="Listado.xaml.cs">
       <DependentUpon>Listado.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pagar.xaml.cs">
+      <DependentUpon>Pagar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -183,6 +186,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Listado.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pagar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

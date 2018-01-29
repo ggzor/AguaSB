@@ -78,6 +78,7 @@
     <Compile Include="Dtos\ResultadoBusquedaUsuariosConContrato.cs" />
     <Compile Include="Listado.cs" />
     <Compile Include="Notificaciones\PagoRealizado.cs" />
+    <Compile Include="Pagar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
