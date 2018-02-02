@@ -99,7 +99,7 @@ namespace AguaSB.Usuarios.Views
             ["Pagado hasta"] = new PackIconMaterial { Kind = PackIconMaterialKind.CalendarClock },
             ["Sección"] = new PackIconMaterial { Kind = PackIconMaterialKind.ViewGrid },
             ["Calle"] = new PackIconEntypo { Kind = PackIconEntypoKind.Address },
-            ["Número"] = new PackIconFontAwesome { Kind = PackIconFontAwesomeKind.Hashtag }
+            ["Número"] = new PackIconFontAwesome { Kind = PackIconFontAwesomeKind.HashtagSolid }
         };
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -41,7 +41,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Views:BarraSuperior Grid.ColumnSpan="3" Titulo="Listado de pagos" Icono="{icons:PackIconModern Kind=Money, Width=20, Height=20}" Foreground="White"/>
+        <Views:BarraSuperior Grid.ColumnSpan="3" Titulo="Listado de pagos" Icono="{icons:Modern Kind=Money, Width=20, Height=20}" Foreground="White"/>
 
         <material:DialogHost Name="Dialogo" Grid.Row="1">
             <Grid>

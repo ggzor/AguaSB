@@ -28,7 +28,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Views:BarraSuperior Grid.ColumnSpan="3" Titulo="Editar contrato" Foreground="White" Icono="{icons:PackIconMaterial Kind=Pen, Width=20, Height=20}"/>
+        <Views:BarraSuperior Grid.ColumnSpan="3" Titulo="Editar contrato" Foreground="White" Icono="{icons:Material Kind=Pen, Width=20, Height=20}"/>
 
         <ScrollViewer Name="Deslizador" Grid.Row="1" Padding="20 0">
             <Grid>

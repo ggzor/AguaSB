@@ -52,7 +52,7 @@
                 <DataTemplate DataType="{x:Type Nucleo:Contacto}">
                     <DockPanel>
                         <ContentControl Content="{Binding TipoContacto.Nombre, Converter={StaticResource Iconos}}" local:ContactosView.UnirCon="{Binding ElementName=Box}"/>
-                        <Button Margin="15 0 0 15" DockPanel.Dock="Right" Content="{icons:PackIconMaterial Kind=Delete}" 
+                        <Button Margin="15 0 0 15" DockPanel.Dock="Right" Content="{icons:Material Kind=Delete}" 
                                 ToolTip="Borrar" VerticalAlignment="Center" Style="{StaticResource UtilityButton}"
                                 Command="{Binding RelativeSource={RelativeSource AncestorType=local:ContactosView}, Path=BorrarContactoComando}"
                                 CommandParameter="{Binding}" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=local:ContactosView}, Path=Editable}"/>

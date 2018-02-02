@@ -29,7 +29,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Views:BarraSuperior Grid.ColumnSpan="3" Titulo="Agregar nuevo contrato" Foreground="White" Icono="{icons:PackIconModern Kind=Add, Width=20, Height=20}"/>
+        <Views:BarraSuperior Grid.ColumnSpan="3" Titulo="Agregar nuevo contrato" Foreground="White" Icono="{icons:Modern Kind=Add, Width=20, Height=20}"/>
 
         <ScrollViewer Name="Deslizador" Grid.Row="1" Padding="20 0">
             <Grid>

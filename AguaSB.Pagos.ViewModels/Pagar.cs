@@ -1,9 +1,11 @@
-﻿using AguaSB.ViewModels;
+﻿using ReactiveUI;
+
+using AguaSB.ViewModels;
 using AguaSB.Navegacion;
 
 namespace AguaSB.Pagos.ViewModels
 {
-    public class Pagar : IViewModel
+    public class Pagar : ReactiveObject, IViewModel
     {
         public INodo Nodo { get; }
 

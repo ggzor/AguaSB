@@ -31,7 +31,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Views:BarraSuperior Grid.ColumnSpan="3" Titulo="Agregar nuevo usuario" Foreground="White" Icono="{icons:PackIconModern Kind=Add, Width=20, Height=20}"/>
+        <Views:BarraSuperior Grid.ColumnSpan="3" Titulo="Agregar nuevo usuario" Foreground="White" Icono="{icons:Modern Kind=Add, Width=20, Height=20}"/>
 
         <ListBox Grid.Row="1" Name="TipoUsuario" Margin="0 10 0 5" HorizontalAlignment="Center" SelectedIndex="0" Style="{StaticResource ToggleList}">
             <Button Tag="Persona">

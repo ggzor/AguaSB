@@ -1,7 +1,7 @@
 ﻿using System;
 
 using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 using AguaSB.Operaciones.Montos;
 
 namespace AguaSB.Nucleo.Pagos.Tests

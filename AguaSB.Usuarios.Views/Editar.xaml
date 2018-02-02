@@ -29,7 +29,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Views:BarraSuperior Grid.ColumnSpan="3" Titulo="Editar usuario" Foreground="White" Icono="{icons:PackIconMaterial Kind=AccountEdit, Width=20, Height=20}"/>
+        <Views:BarraSuperior Grid.ColumnSpan="3" Titulo="Editar usuario" Foreground="White" Icono="{icons:Material Kind=AccountEdit, Width=20, Height=20}"/>
 
         <metro:FlipView Name="Campos" Grid.Column="1" Grid.Row="1" SelectedIndex="{Binding TipoUsuario, Mode=OneWay, Converter={StaticResource EnumToInt}}"  
                         IsBannerEnabled="False" IsNavigationEnabled="False" MouseHoverBorderEnabled="False">

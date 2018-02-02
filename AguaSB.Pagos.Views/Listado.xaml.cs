@@ -46,7 +46,7 @@ namespace AguaSB.Pagos.Views
             ["Pagado hasta"] = new PackIconMaterial { Kind = PackIconMaterialKind.CalendarClock },
             ["Sección"] = new PackIconMaterial { Kind = PackIconMaterialKind.ViewGrid },
             ["Calle"] = new PackIconEntypo { Kind = PackIconEntypoKind.Address },
-            ["Número"] = new PackIconFontAwesome { Kind = PackIconFontAwesomeKind.Hashtag }
+            ["Número"] = new PackIconFontAwesome { Kind = PackIconFontAwesomeKind.HashtagSolid }
         };
 
         private void Columna_Seleccionada(object sender, RoutedEventArgs e)

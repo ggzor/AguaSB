@@ -45,7 +45,7 @@
         </Grid.RowDefinitions>
 
         <Controles:BarraSuperior Grid.ColumnSpan="3" Titulo="Listado de usuarios" Foreground="White" 
-                                 Icono="{icons:PackIconModern Kind=PeopleProfile, Width=20, Height=20}"/>
+                                 Icono="{icons:Modern Kind=PeopleProfile, Width=20, Height=20}"/>
 
         <material:DialogHost x:Name="DetallesUsuario" Grid.Row="1" DialogContent="{Binding ElementName=ListaResultados, Path=SelectedItem}" CloseOnClickAway="True"
                              DialogClosing="CerrandoDetallesDeUsuario" DialogOpened="AbriendoDetallesDeUsuario">
@@ -212,10 +212,10 @@
 
                             <StackPanel Orientation="Horizontal">
                                 <Button Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:Listado}}, Path=UsuarioAnteriorComando}" 
-                                        ToolTip="Anterior" Content="{icons:PackIconMaterial Kind=ArrowLeft, Width=20, Height=20}" Style="{StaticResource UtilityButton}"/>
+                                        ToolTip="Anterior" Content="{icons:Material Kind=ArrowLeft, Width=20, Height=20}" Style="{StaticResource UtilityButton}"/>
 
                                 <Button Margin="8 0 0 0" Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:Listado}}, Path=UsuarioSiguienteComando}" 
-                                        ToolTip="Siguiente" Content="{icons:PackIconMaterial Kind=ArrowRight, Width=20, Height=20}" Style="{StaticResource UtilityButton}"/>
+                                        ToolTip="Siguiente" Content="{icons:Material Kind=ArrowRight, Width=20, Height=20}" Style="{StaticResource UtilityButton}"/>
                             </StackPanel>
                         </DockPanel>
                     </Grid>
@@ -243,7 +243,7 @@
 
                     <material:Card Margin="0 2 0 5" Grid.Column="1" VerticalAlignment="Stretch">
                         <DockPanel LastChildFill="True" Margin="0 8" Background="White">
-                            <Button Name="FiltrosBoton" DockPanel.Dock="Right" Margin="20 8 20 0" Content="{icons:PackIconMaterial Kind=Filter}" VerticalAlignment="Center" 
+                            <Button Name="FiltrosBoton" DockPanel.Dock="Right" Margin="20 8 20 0" Content="{icons:Material Kind=Filter}" VerticalAlignment="Center" 
                                     Click="MostrarFiltros" Style="{StaticResource UtilityButton}"/>
 
                             <icons:PackIconMaterial Margin="20 8 20 0" Kind="Magnify" Estilos:Icono.Enfocado="{Binding ElementName=Busqueda, Path=IsKeyboardFocusWithin}" VerticalAlignment="Center" 
@@ -379,11 +379,11 @@
 
                     <StackPanel Grid.Column="2" Margin="0 0 16 0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
                         <Button Name="Actualizar" Margin="0 0 10 0" ToolTip="Actualizar (F5)" Foreground="White" Style="{StaticResource UtilityButton}"
-                                Content="{icons:PackIconMaterial Kind=Refresh, Width=20, Height=20}" Click="Actualizar_Click"/>
+                                Content="{icons:Material Kind=Refresh, Width=20, Height=20}" Click="Actualizar_Click"/>
                         <Button Name="Exportar" Margin="0 0 10 0" ToolTip="Exportar a Excel" Foreground="White" Style="{StaticResource UtilityButton}"
-                                Content="{icons:PackIconModern Kind=OfficeExcel, Width=20, Height=20}" Click="Exportar_Click"/>
+                                Content="{icons:Modern Kind=OfficeExcel, Width=20, Height=20}" Click="Exportar_Click"/>
                         <Button Name="FiltrosColumnasBoton" ToolTip="Configuración" Click="MostrarFiltrosColumnas" Foreground="White" Style="{StaticResource UtilityButton}" 
-                                Content="{icons:PackIconMaterial Kind=Settings, Width=20, Height=20}"/>
+                                Content="{icons:Material Kind=Settings, Width=20, Height=20}"/>
 
                         <material:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Foreground="White" Style="{StaticResource MaterialDesignToolPopupBox}">
                             <StackPanel>
@@ -530,7 +530,7 @@
                             <TextBlock>
                             <Run>Clase:</Run> <Run Text="{Binding Filtros.ClaseContrato, Mode=OneWay}" FontWeight="DemiBold"/>
                             </TextBlock>
-                            <Button Content="{icons:PackIconMaterial Kind=Close}"/>
+                            <Button Content="{icons:Material Kind=Close}"/>
                         </StackPanel>
                     </Border>
 
@@ -539,7 +539,7 @@
                             <TextBlock>
                             <Run>Tipo:</Run> <Run Text="{Binding Filtros.TipoContrato, Mode=OneWay}" FontWeight="DemiBold"/>
                             </TextBlock>
-                            <Button Content="{icons:PackIconMaterial Kind=Close}"/>
+                            <Button Content="{icons:Material Kind=Close}"/>
                         </StackPanel>
                     </Border>
                     <Border Background="{StaticResource MaterialGreen}" Tag="{Binding Filtros.Seccion}">
@@ -547,7 +547,7 @@
                             <TextBlock>
                             <Run>Sección:</Run> <Run Text="{Binding Filtros.Seccion, Mode=OneWay}" FontWeight="DemiBold"/>
                             </TextBlock>
-                            <Button Content="{icons:PackIconMaterial Kind=Close}"/>
+                            <Button Content="{icons:Material Kind=Close}"/>
                         </StackPanel>
                     </Border>
 
@@ -556,7 +556,7 @@
                             <TextBlock>
                             <Run>Calle:</Run> <Run Text="{Binding Filtros.Calle, Mode=OneWay}" FontWeight="DemiBold"/>
                             </TextBlock>
-                            <Button Content="{icons:PackIconMaterial Kind=Close}"/>
+                            <Button Content="{icons:Material Kind=Close}"/>
                         </StackPanel>
                     </Border>
 
@@ -565,7 +565,7 @@
                             <TextBlock>
                             <Run>Adeudo:</Run> <Run Text="{Binding Filtros.Adeudo, Mode=OneWay}" FontWeight="DemiBold"/>
                             </TextBlock>
-                            <Button Content="{icons:PackIconMaterial Kind=Close}"/>
+                            <Button Content="{icons:Material Kind=Close}"/>
                         </StackPanel>
                     </Border>
 
@@ -574,7 +574,7 @@
                             <TextBlock>
                             <Run>Último mes pagado:</Run> <Run Text="{Binding Filtros.UltimoMesPagado, Mode=OneWay}" FontWeight="DemiBold"/>
                             </TextBlock>
-                            <Button Content="{icons:PackIconMaterial Kind=Close}"/>
+                            <Button Content="{icons:Material Kind=Close}"/>
                         </StackPanel>
                     </Border>
 
@@ -583,7 +583,7 @@
                             <TextBlock>
                             <Run>Último pago:</Run> <Run Text="{Binding Filtros.UltimoPago, Mode=OneWay}" FontWeight="DemiBold"/>
                             </TextBlock>
-                            <Button Content="{icons:PackIconMaterial Kind=Close}"/>
+                            <Button Content="{icons:Material Kind=Close}"/>
                         </StackPanel>
                     </Border>
 
@@ -592,14 +592,14 @@
                             <TextBlock>
                             <Run>Registro:</Run> <Run Text="{Binding Filtros.FechaRegistro, Mode=OneWay}" FontWeight="DemiBold"/>
                             </TextBlock>
-                            <Button Content="{icons:PackIconMaterial Kind=Close}"/>
+                            <Button Content="{icons:Material Kind=Close}"/>
                         </StackPanel>
                     </Border>
 
                     <Border Background="White">
                         <StackPanel>
                             <TextBlock Text="Desactivar todos" Foreground="#BB000000"/>
-                            <Button Content="{icons:PackIconMaterial Kind=Close}" Utilerias:UtileriasListado.DesactivarFiltro="False"
+                            <Button Content="{icons:Material Kind=Close}" Utilerias:UtileriasListado.DesactivarFiltro="False"
                                     Command="{Binding DesactivarFiltrosComando}" Foreground="#BB000000"/>
                         </StackPanel>
                     </Border>
@@ -715,7 +715,7 @@
                                                                 </TextBlock.RenderTransform>
                                                             </TextBlock>
 
-                                                            <icons:PackIconFontAwesome Margin="10 0 0 0" Kind="Building" VerticalAlignment="Center"
+                                                            <icons:PackIconFontAwesome Margin="10 0 0 0" Kind="BuildingSolid" VerticalAlignment="Center"
                                                                                        Foreground="{StaticResource MaterialLightBlue}" ToolTip="Negocio"
                                                                                        Visibility="{Binding EsNegocio, Converter={StaticResource BoolToVisibility}}"/>
                                                         </StackPanel>

@@ -27,7 +27,7 @@
         </DockPanel>
 
         <DockPanel>
-            <icons:PackIconFontAwesome Kind="Registered" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=Rfc}"
+            <icons:PackIconFontAwesome Kind="RegisteredSolid" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=Rfc}"
                                        Estilos:Icono.Enfocado="{Binding ElementName=Rfc, Path=IsKeyboardFocusWithin}"/>
             <TextBox Name="Rfc" Tag="Rfc" Estilos:Foco.SiguienteFoco="{Binding ElementName=This, Path=(Estilos:Foco.SiguienteFoco)}"
                      IsEnabled="{Binding ElementName=This, Path=Editable}"

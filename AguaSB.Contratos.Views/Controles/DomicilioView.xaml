@@ -36,7 +36,7 @@
         </DockPanel>
 
         <DockPanel>
-            <icons:PackIconFontAwesome Kind="Hashtag" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=Numero}"
+            <icons:PackIconFontAwesome Kind="HashtagSolid" Style="{StaticResource IconoLateral}" Tag="{Binding ElementName=Numero}"
                                        Estilos:Icono.Enfocado="{Binding ElementName=Numero, Path=IsKeyboardFocusWithin}"/>
             <TextBox Name="Numero" Tag="Número" Estilos:Foco.SiguienteFoco="{Binding ElementName=This, Path=(Estilos:Foco.SiguienteFoco)}"
                      IsEnabled="{Binding ElementName=This, Path=Editable}"
